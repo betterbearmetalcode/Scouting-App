@@ -111,7 +111,8 @@
         const eventKey = response.result.values[0];
         const targetSheetName = response.result.values[1];
         const tbaAPIKey = response.result.values[2];
-        let values = [content.slice(2,content.length)];
+        let values = [content.slice(3, content.length)];
+        let row = (content[1]-1)*6+content[0];
         alert(values[0].length);
         const body = {
           values: values,
@@ -120,7 +121,7 @@
         try {
           gapi.client.sheets.spreadsheets.values.update({
             spreadsheetId: spreadsheetId,
-            range: 'GirlsGen!N2:AL2',
+            range: 'GirlsGen!N' + row + ':AL' + row,
             valueInputOption: 'RAW',
             resource: body,
           }).then((response) => {

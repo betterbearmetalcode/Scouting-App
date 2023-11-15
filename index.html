@@ -72,7 +72,16 @@
   </style>
   <body>
     <script type="text/javascript" src="sheetsAPIInteraction.js"></script>
-    <button id="authorize_button" onclick="handleAuthClick()" >Sign In</button>
+    <label for="station-id">Choose Your Station Number:</label>
+    <select name="station-id" id="station-id">
+      <option value=0>Red 1</option>
+      <option value=1>Red 2</option>
+      <option value=2>Red 3</option>
+      <option value=3>Blue 1</option>
+      <option value=4>Blue 2</option>
+      <option value=5>Blue 3</option>
+    </select>
+
     <form id="converter" method="POST" action="localhost://getdata.php">
         <label for="teamNumber">Team Number</label>
         <input type="number" id="teamNumber" name="teamNumberField" value="2046" />
@@ -525,7 +534,9 @@
           function submitted() {
             
             event.preventDefault();
-            var data = [];
+            let data = [];
+            //Station Id
+            data.push(document.getElementById("station-id").value)
             //match num
             data.push(document.getElementById("matchNumber").value);
             //team num
