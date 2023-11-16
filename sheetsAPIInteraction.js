@@ -112,8 +112,8 @@
         const targetSheetName = response.result.values[1];
         const tbaAPIKey = response.result.values[2];
         let values = [content.slice(3, content.length)];
-        let row = (content[1]-1)*6+content[0];
-        alert(values[0].length);
+        let row = 2 + ((parseInt(content[1]) - 1) * 6 + parseInt(content[0]));
+        alert(row);
         const body = {
           values: values,
         };
