@@ -106,14 +106,14 @@
             range: 'Controls!B2:B4',
           });
         } catch (err) {
-          alert("Error getting name of control sheeet");
+          alert("Error getting name of control sheet");
         }
         const eventKey = response.result.values[0];
         const targetSheetName = response.result.values[1];
         const tbaAPIKey = response.result.values[2];
         let values = [content.slice(3, content.length)];
         let row = 2 + ((parseInt(content[1]) - 1) * 6 + parseInt(content[0]));
-        alert(row);
+
         const body = {
           values: values,
         };
