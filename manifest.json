@@ -3,7 +3,7 @@
     "name": "Bear Metal Scouting",
     "short_name": "Scouting",
     "description": "The most awsomeist scouting app ever",
-    "start_url": "https://x-man34.github.io/BearMetalScoutingApp/AppForScouts/index.html",
+    "start_url": "/AppForScouts",
     "background_color": "#2f3d58",
     "theme_color": "#2f3d58",
     "orientation": "any",

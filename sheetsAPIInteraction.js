@@ -33,8 +33,7 @@
           apiKey: API_KEY,
           discoveryDocs: [DISCOVERY_DOC],
         });
-        gapiInited = true;
-        maybeEnableButtons();
+        gapiInited = true;  
       }
 
       /**
@@ -47,17 +46,8 @@
           callback: '', // defined later
         });
         gisInited = true;
-        maybeEnableButtons();
       }
 
-      /**
-       * Enables user interaction after all libraries are loaded.
-       */
-      function maybeEnableButtons() {
-        if (gapiInited && gisInited) {
-          document.getElementById('authorize_button').style.visibility = 'visible';
-        }
-      }
 
       /**
        *  Sign in the user upon button click.
@@ -68,6 +58,8 @@
             throw (resp);
           }
           signedIn = true;
+          sendDataToSheets(arguments[0]);
+          return true;
         };
 
         if (gapi.client.getToken() === null) {
@@ -78,6 +70,7 @@
           // Skip display of account chooser and consent dialog for an existing session.
           tokenClient.requestAccessToken({prompt: ''});
         }
+        return signedIn;
       }
 
       /**
@@ -94,10 +87,17 @@
 
 
 
-      async function parseData(content) {
+      function parseData(content) {
         if (!signedIn) {
-          handleAuthClick();
+          handleAuthClick(content);
+        }else {
+          sendDataToSheets(content);
         }
+        
+      }
+
+
+      async function sendDataToSheets(content) {
         let response;
         try {
           // Fetch first 10 files
@@ -113,7 +113,6 @@
         const tbaAPIKey = response.result.values[2];
         let values = [content.slice(3, content.length)];
         let row = 2 + ((parseInt(content[1]) - 1) * 6 + parseInt(content[0]));
-        alert(row);
         const body = {
           values: values,
         };
@@ -127,7 +126,7 @@
           }).then((response) => {
             const result = response.result;
             console.log(`${result.updatedCells} cells updated.`);
-            if (callback) callback(response);
+            //if (callback) callback(response);
           });
         } catch (err) {
           alert("error posting data");
