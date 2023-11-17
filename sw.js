@@ -12,7 +12,6 @@ self.addEventListener('install', event => {
 });
 
 self.addEventListener('fetch', event => {
-  //SwUpdate.checkForUpdate();
   event.respondWith((async () => {
     const cache = await caches.open(CACHE_NAME);
 
