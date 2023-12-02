@@ -1,5 +1,6 @@
 # Bear Metal Scouting
 
+![Bear Metal Logo](composeApp/src/commonMain/resources/bearmetallogo.jpg)
 ## Scouting App info
 
 The Bear Metal Scouting App is a multiplatform application for Desktop, Android, and hopefully iOS.
