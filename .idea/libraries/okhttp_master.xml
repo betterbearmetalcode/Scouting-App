@@ -1,0 +1,24 @@
+<component name="libraryTable">
+  <library name="okhttp-master">
+    <CLASSES />
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://$USER_HOME$/defaultfolders/Downloads/okhttp-master/okhttp-master" />
+      <root url="file://$USER_HOME$/defaultfolders/Downloads/okhttp-master/okhttp-master/mockwebserver-deprecated/src/test/java" />
+      <root url="file://$USER_HOME$/defaultfolders/Downloads/okhttp-master/okhttp-master/okhttp-brotli/src/test/java" />
+      <root url="file://$USER_HOME$/defaultfolders/Downloads/okhttp-master/okhttp-master/okhttp-dnsoverhttps/src/test/java" />
+      <root url="file://$USER_HOME$/defaultfolders/Downloads/okhttp-master/okhttp-master/okhttp-hpacktests/src/test/java" />
+      <root url="file://$USER_HOME$/defaultfolders/Downloads/okhttp-master/okhttp-master/okhttp-logging-interceptor/src/test/java" />
+      <root url="file://$USER_HOME$/defaultfolders/Downloads/okhttp-master/okhttp-master/okhttp-sse/src/test/java" />
+      <root url="file://$USER_HOME$/defaultfolders/Downloads/okhttp-master/okhttp-master/okhttp-tls/src/test/java" />
+      <root url="file://$USER_HOME$/defaultfolders/Downloads/okhttp-master/okhttp-master/okhttp/src/jvmTest/java" />
+      <root url="file://$USER_HOME$/defaultfolders/Downloads/okhttp-master/okhttp-master/regression-test/src/androidTest/java" />
+      <root url="file://$USER_HOME$/defaultfolders/Downloads/okhttp-master/okhttp-master/samples/crawler/src/main/java" />
+      <root url="file://$USER_HOME$/defaultfolders/Downloads/okhttp-master/okhttp-master/samples/guide/src/main/java" />
+      <root url="file://$USER_HOME$/defaultfolders/Downloads/okhttp-master/okhttp-master/samples/simple-client/src/main/java" />
+      <root url="file://$USER_HOME$/defaultfolders/Downloads/okhttp-master/okhttp-master/samples/slack/src/main/java" />
+      <root url="file://$USER_HOME$/defaultfolders/Downloads/okhttp-master/okhttp-master/samples/static-server/src/main/java" />
+      <root url="file://$USER_HOME$/defaultfolders/Downloads/okhttp-master/okhttp-master/samples/unixdomainsockets/src/main/java" />
+    </SOURCES>
+  </library>
+</component>
