@@ -1,18 +1,28 @@
-import androidx.compose.foundation.layout.Column
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.unit.sp
-import org.jetbrains.compose.resources.ExperimentalResourceApi
+import androidx.compose.material.Colors
+import androidx.compose.material.darkColors
+import androidx.compose.ui.graphics.Color
 
-@Composable
-fun App() {
-    MaterialTheme {
-        Column {
-            Text(
-                text = "Bear Metal Scout App",
-                fontSize = 40.sp
-            )
-        }
-    }
+val theme = themeDefault()
+
+fun themeDefault(): Colors {
+    val primary = Color.Black
+    val primaryVarient = Color.Yellow
+    val secondary = Color.Yellow
+    val secondaryVarient = Color.Blue
+    val background = Color(50, 50, 50)
+    val error = Color.Red;
+    val theme = darkColors(primary = primary,
+        primaryVariant = primaryVarient,
+        secondary = secondary,
+        secondaryVariant = secondaryVarient,
+        background = background,
+        error = error)
+
+
+
+    return theme
+}
+
+fun getCurrentTheme() : Colors {
+    return theme
 }

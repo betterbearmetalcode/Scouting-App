@@ -5,6 +5,14 @@ plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsCompose)
+    id("kotlin-parcelize")
+}
+
+
+
+repositories {
+    google()
+    mavenCentral()
 }
 
 kotlin {
@@ -28,7 +36,7 @@ kotlin {
             isStatic = true
         }
     }
-    
+
     sourceSets {
         val desktopMain by getting
         
@@ -37,17 +45,26 @@ kotlin {
             implementation(libs.compose.ui.tooling.preview)
             implementation(libs.androidx.activity.compose)
         }
+
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)
         }
+
         commonMain.dependencies {
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.material)
             @OptIn(ExperimentalComposeLibrary::class)
             implementation(compose.components.resources)
+            implementation(libs.androidx.compiler)
+        }
 
-            implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.4.1")
+        val commonMain by getting {
+            dependencies {
+                implementation(libs.bumble.appyx.navigation)
+
+                api(libs.backstack)
+            }
         }
     }
 }
