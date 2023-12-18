@@ -87,7 +87,7 @@ class MainMenu(
                 },
                 modifier = Modifier.align(Alignment.CenterHorizontally).padding(horizontal = 50.dp, vertical = 50.dp),
 
-                )
+            )
 
             Button(
                 content = {
