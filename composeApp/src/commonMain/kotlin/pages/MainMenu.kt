@@ -1,7 +1,9 @@
 package pages
 
 import RootNode
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Button
 import androidx.compose.material.Divider
@@ -31,7 +33,6 @@ class MainMenu(
                     content = {
                         Text(
                             text = "i",
-                            color = theme.secondaryVariant,
                             fontSize = 12.sp
                         )
                     },
@@ -49,7 +50,6 @@ class MainMenu(
                     content = {
                         Text(
                             text = "s",
-                            color = theme.secondaryVariant,
                             fontSize = 12.sp
                         )
                     },
@@ -65,7 +65,6 @@ class MainMenu(
                 content = {
                     Text(
                         text = "Quantitative Scouting",
-                        color = theme.primaryVariant,
                         fontSize = 23.sp
                     )
                 },
@@ -79,7 +78,6 @@ class MainMenu(
                 content = {
                     Text(
                         text = "Pits Scouting",
-                        color = theme.primaryVariant,
                         fontSize = 22.sp
                     )
                 },
@@ -94,7 +92,6 @@ class MainMenu(
                 content = {
                     Text(
                         text = "Qualitative Scouting",
-                        color = theme.primaryVariant,
                         fontSize = 22.sp
                     )
                 },

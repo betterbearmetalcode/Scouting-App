@@ -15,6 +15,7 @@ import androidx.compose.ui.unit.ExperimentalUnitApi
 import com.bumble.appyx.navigation.integration.NodeActivity
 import com.bumble.appyx.navigation.integration.NodeHost
 import com.bumble.appyx.navigation.platform.AndroidLifecycle
+import getCurrentTheme
 
 @ExperimentalUnitApi
 @ExperimentalAnimationApi
@@ -27,7 +28,7 @@ class MainActivity : NodeActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            MaterialTheme {
+            MaterialTheme(colors = getCurrentTheme()) {
                 // A surface container using the 'background' color from the theme
                 Surface(color = MaterialTheme.colors.background) {
                     //CompositionLocalProvider(LocalNavigator provides navigator) {
