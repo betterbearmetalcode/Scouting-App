@@ -3,7 +3,7 @@ package pages
 import com.bumble.appyx.navigation.modality.BuildContext
 import com.bumble.appyx.navigation.node.Node
 
-class QuanScout(
+class QuanScoutMenu(
     buildContext: BuildContext
 ) : Node( buildContext = buildContext) {
 }
