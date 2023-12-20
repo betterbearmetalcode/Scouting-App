@@ -2,6 +2,7 @@ package pages
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Button
 import androidx.compose.material.Slider
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
@@ -10,13 +11,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.bumble.appyx.components.backstack.BackStack
+import com.bumble.appyx.components.backstack.operation.pop
 import com.bumble.appyx.navigation.modality.BuildContext
 import com.bumble.appyx.navigation.node.Node
 import getCurrentTheme
 import kotlin.math.round
 
 class QualScoutMenu(
-    buildContext: BuildContext
+    buildContext: BuildContext,
+    private val backStack: BackStack<RootNode.NavTarget>
 ) : Node( buildContext = buildContext) {
 
     @Composable
@@ -48,15 +52,26 @@ class QualScoutMenu(
                 valueRange = 0f..10f,
                 onValueChange = {
                     defenceScore = it
-                    defenceScore = round(defenceScore * 10) / 10f
+                    defenceScore = round(defenceScore)
                 },
                 steps = 9
             )
+
             Text(
                 text = defenceScore.toString(),
                 modifier = Modifier.padding(15.dp, 0.dp, 0.dp, 0.dp)
             )
 
+            Button(
+                onClick = {
+                    backStack.pop()
+                },
+                content = {
+                    Text(
+                        text = "Main Menu"
+                    )
+                }
+            )
         }
     }
 }

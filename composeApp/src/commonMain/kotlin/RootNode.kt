@@ -62,7 +62,7 @@ class RootNode(
             NavTarget.MainMenu -> MainMenu(buildContext, backStack)
             NavTarget.QuanScouting -> QuanScoutMenu(buildContext)
             NavTarget.PitsScouting -> PitsScoutMenu(buildContext)
-            NavTarget.QualScouting -> QualScoutMenu(buildContext)
+            NavTarget.QualScouting -> QualScoutMenu(buildContext, backStack)
         }
 
     @Composable
@@ -73,18 +73,7 @@ class RootNode(
                 appyxComponent = backStack,
                 modifier = Modifier.weight(0.9f)
             )
-            Row {
-                Button(
-                    onClick = {
-                        backStack.pop()
-                    },
-                    content = {
-                        Text(
-                            text = "Main Menu"
-                        )
-                    }
-                )
-            }
+
         }
 
     }
