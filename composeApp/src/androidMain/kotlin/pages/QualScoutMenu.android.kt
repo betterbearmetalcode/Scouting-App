@@ -1,25 +1,34 @@
 package pages
 
+import BackButton
+import LabeledSlider
 import RootNode
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Button
-import androidx.compose.material.Slider
 import androidx.compose.material.Text
+import androidx.compose.material.TextButton
 import androidx.compose.material.TextField
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
+import coil.compose.AsyncImagePainter
 import coil.compose.rememberAsyncImagePainter
+import coil.request.ImageRequest
 import com.bumble.appyx.components.backstack.BackStack
 import com.bumble.appyx.navigation.modality.BuildContext
 import com.bumble.appyx.navigation.node.Node
 import org.jetbrains.compose.resources.ExperimentalResourceApi
+import org.jetbrains.compose.resources.painterResource
 import org.json.JSONObject
 import qrcode.QRCode
 import java.io.File
@@ -40,7 +49,7 @@ actual class QualScoutMenu actual constructor(
         var offenceScore by remember { mutableFloatStateOf(5f) }
 
         val context = LocalContext.current
-        var qrCodeFile by remember { mutableStateOf(File("")) }
+        var qrCodeFile by remember { mutableStateOf(ImageRequest.Builder(context).build()) }
 
         Column (modifier = modifier) {
             TextField(
@@ -56,20 +65,18 @@ actual class QualScoutMenu actual constructor(
                     .padding(0.dp, 10.dp, 0.dp, 60.dp)
             )
 
-            Text(
-                text = "Defence Rating",
-                fontSize = 30.sp,
-                modifier = Modifier.padding(15.dp, 0.dp, 0.dp, 0.dp)
-            )
-
-            Slider(
-                value = defenceScore,
-                valueRange = 0f..10f,
+            LabeledSlider(label = {
+                Text(
+                    text = "Defence Rating",
+                    fontSize = 30.sp,
+                    modifier = Modifier.padding(15.dp, 0.dp, 0.dp, 0.dp)
+                )
+              },
+                sliderValue = defenceScore,
                 onValueChange = {
                     defenceScore = it
                     defenceScore = round(defenceScore)
-                },
-                steps = 9
+                }
             )
 
             Text(
@@ -77,21 +84,19 @@ actual class QualScoutMenu actual constructor(
                 modifier = Modifier.padding(15.dp, 0.dp, 0.dp, 0.dp)
             )
 
-
-            Text(
-                text = "Offence Rating",
-                fontSize = 30.sp,
-                modifier = Modifier.padding(15.dp, 0.dp, 0.dp, 0.dp)
-            )
-
-            Slider(
-                value = offenceScore,
-                valueRange = 0f..10f,
+            LabeledSlider(
+                label = {
+                    Text(
+                        text = "Offence Rating",
+                        fontSize = 30.sp,
+                        modifier = Modifier.padding(15.dp, 0.dp, 0.dp, 0.dp)
+                    )
+                },
+                sliderValue = offenceScore,
                 onValueChange = {
                     offenceScore = it
                     offenceScore = round(offenceScore)
-                },
-                steps = 9
+                }
             )
 
             Text(
@@ -103,6 +108,8 @@ actual class QualScoutMenu actual constructor(
 
             Button(
                 onClick = {
+
+                    val obj = qrCodeFile
 
                     val jsonObject = JSONObject()
 
@@ -118,13 +125,20 @@ actual class QualScoutMenu actual constructor(
 
                     val file = File(context.filesDir, "qrcode.png")
 
-                    file.delete()
+                    while (!file.delete())
+
                     file.createNewFile()
 
                     FileOutputStream(file).use { it.write(pngBytes.getBytes()) }
 
-                    qrCodeFile = file
 
+
+                    qrCodeFile = ImageRequest.Builder(context)
+                            .data(file)
+                            .build()
+
+                    if (obj.data == qrCodeFile.data)
+                        Log.d("Button", "File has not been changed")
                 },
                 content = {
                     Text(
@@ -133,13 +147,28 @@ actual class QualScoutMenu actual constructor(
                 }
             )
 
-            Image(
-                painter = rememberAsyncImagePainter(model = qrCodeFile),
-                contentDescription = "Qr Code"
+            BackButton(
+                backStack = backStack,
+                content = {
+                    Image(
+                        painter = painterResource(res = "back-arrow.png"),
+                        contentDescription = "Back Arrow",
+                        contentScale = ContentScale.Fit,
+                        modifier = Modifier.fillMaxSize(
+                            fraction = 1f/10f
+                        )
+                    )
+                }
             )
+
+            AsyncImage(
+                model = qrCodeFile,
+                contentDescription = "Qr Code",
+                onState = {
+                    Log.d("Qr Code", "Qr Code has changed")
+                }
+            )
+
         }
-
-
-
     }
 }
