@@ -44,6 +44,7 @@ kotlin {
             implementation(libs.compose.ui)
             implementation(libs.compose.ui.tooling.preview)
             implementation(libs.androidx.activity.compose)
+            implementation(libs.coil.compose)
         }
 
         desktopMain.dependencies {
@@ -62,6 +63,7 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation(libs.bumble.appyx.navigation)
+                implementation(libs.qrcode.kotlin)
 
                 api(libs.backstack)
             }

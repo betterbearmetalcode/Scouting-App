@@ -69,6 +69,7 @@ class RootNode(
     override fun View(modifier: Modifier) {
 
         Column {
+            
             AppyxComponent(
                 appyxComponent = backStack,
                 modifier = Modifier.weight(0.9f)
