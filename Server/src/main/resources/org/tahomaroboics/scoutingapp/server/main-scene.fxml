@@ -48,6 +48,7 @@
             <Menu mnemonicParsing="false" text="Actions">
               <items>
                 <MenuItem fx:id="enterFormEditButton" mnemonicParsing="false" onAction="#enterFormEditMode" onMenuValidation="#enterFormEditMode" text="Enter Form Edit Mode" />
+                  <MenuItem fx:id="getTBADataButton" mnemonicParsing="false" onAction="#getTBAData" text="FetchTBAData" />
               </items>
             </Menu>
          </menus>

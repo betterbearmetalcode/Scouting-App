@@ -4,7 +4,36 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4440000e-ba03-4b16-85cc-3bc2167bb23a" name="Changes" comment="" />
+    <list default="true" id="4440000e-ba03-4b16-85cc-3bc2167bb23a" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Server/src/main/java/org/tahomaroboics/scoutingapp/server/formeditor/APInteraction.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/src/main/java/org/tahomaroboics/scoutingapp/server/formeditor/SpreadsheetManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/.gradle/8.2/checksums/checksums.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Server/.gradle/8.2/checksums/checksums.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/.gradle/8.2/checksums/md5-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/Server/.gradle/8.2/checksums/md5-checksums.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/.gradle/8.2/checksums/sha1-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/Server/.gradle/8.2/checksums/sha1-checksums.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/.gradle/8.2/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/Server/.gradle/8.2/executionHistory/executionHistory.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/.gradle/8.2/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Server/.gradle/8.2/executionHistory/executionHistory.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/.gradle/8.2/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/Server/.gradle/8.2/fileHashes/fileHashes.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/.gradle/8.2/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Server/.gradle/8.2/fileHashes/fileHashes.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/.gradle/8.2/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/Server/.gradle/8.2/fileHashes/resourceHashesCache.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Server/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/Server/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/Server/.gradle/file-system.probe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/.gradle/workspace-id.txt.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Server/.gradle/workspace-id.txt.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/Server/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/build/classes/java/main/module-info.class" beforeDir="false" afterPath="$PROJECT_DIR$/Server/build/classes/java/main/module-info.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/build/classes/java/main/org/tahomaroboics/scoutingapp/server/MainController.class" beforeDir="false" afterPath="$PROJECT_DIR$/Server/build/classes/java/main/org/tahomaroboics/scoutingapp/server/MainController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/build/libs/Server-1.0-SNAPSHOT.jar" beforeDir="false" afterPath="$PROJECT_DIR$/Server/build/libs/Server-1.0-SNAPSHOT.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/build/resources/main/org/tahomaroboics/scoutingapp/server/main-scene.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/Server/build/resources/main/org/tahomaroboics/scoutingapp/server/main-scene.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/build/tmp/compileJava/compileTransaction/stash-dir/FormEditorController$SelectedWidgetType.class.uniqueId1" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/build/tmp/compileJava/compileTransaction/stash-dir/FormEditorController.class.uniqueId2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/build/tmp/compileJava/compileTransaction/stash-dir/module-info.class.uniqueId0" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/Server/build/tmp/compileJava/previous-compilation-data.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/module-info.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/main/java/org/tahomaroboics/scoutingapp/server/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/org/tahomaroboics/scoutingapp/server/MainController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/main/resources/org/tahomaroboics/scoutingapp/server/main-scene.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/resources/org/tahomaroboics/scoutingapp/server/main-scene.fxml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -52,6 +81,7 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
+<<<<<<< Updated upstream
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
@@ -62,6 +92,20 @@
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.15234375",
     "project.structure.side.proportion": "0.42791235"
+=======
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;2-addTBADataFetching&quot;,
+    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;17 (2)&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Caleb/defaultfolders/Downloads/jexcelapi_2_6_12/jxl.jar&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15234375&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.42791235&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;project.propDebugger&quot;
+>>>>>>> Stashed changes
   }
 }]]></component>
   <component name="RecentsManager">
@@ -69,7 +113,11 @@
       <recent name="C:\Users\Caleb\IdeaProjects\Scouting-App\Server\src\main\resources\org\tahomaroboics\scoutingapp\server\formeditor\widgets" />
     </key>
   </component>
+<<<<<<< Updated upstream
   <component name="RunManager" selected="Application.ScoutingServer">
+=======
+  <component name="RunManager" selected="Gradle.Server [run]">
+>>>>>>> Stashed changes
     <configuration name="ComposeDemo.composeApp" type="AndroidRunConfigurationType" factoryName="Android App">
       <module name="ComposeDemo.composeApp" />
       <option name="DEPLOY" value="true" />
@@ -218,7 +266,11 @@
         <option name="Android.Gradle.BeforeRunTask" enabled="true" />
       </method>
     </configuration>
+<<<<<<< Updated upstream
     <configuration name="ScoutingServer" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+=======
+    <configuration name="ScoutingServer" type="Application" factoryName="Application" nameIsGenerated="true">
+>>>>>>> Stashed changes
       <option name="MAIN_CLASS_NAME" value="org.tahomaroboics.scoutingapp.server.ScoutingServer" />
       <module name="Server.main" />
       <extension name="coverage">
@@ -230,6 +282,48 @@
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
+    </configuration>
+    <configuration name="C:/Users/Caleb/IdeaProjects/Scouting-App" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list />
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="Server [buildDependents]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/Server" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="buildDependents" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <method v="2" />
     </configuration>
     <configuration name="Server [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
@@ -253,18 +347,69 @@
       <RunAsTest>false</RunAsTest>
       <method v="2" />
     </configuration>
+    <configuration name="Server [clean]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/Server" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="clean" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="Server [run]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/Server" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="--scan --stacktrace" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="run" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <method v="2" />
+    </configuration>
     <list>
       <item itemvalue="Android App.ComposeDemo.composeApp" />
       <item itemvalue="Android App.ComposeDemo.composeApp.androidTest" />
       <item itemvalue="Android App.ComposeDemo.composeApp.main" />
       <item itemvalue="Android App.ComposeDemo.composeApp.unitTest" />
       <item itemvalue="Application.ScoutingServer" />
+      <item itemvalue="Gradle.C:/Users/Caleb/IdeaProjects/Scouting-App" />
+      <item itemvalue="Gradle.Server [clean]" />
+      <item itemvalue="Gradle.Server [run]" />
+      <item itemvalue="Gradle.Server [buildDependents]" />
       <item itemvalue="Gradle.Server [build]" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.ScoutingServer" />
+        <item itemvalue="Gradle.Server [run]" />
+        <item itemvalue="Gradle.C:/Users/Caleb/IdeaProjects/Scouting-App" />
         <item itemvalue="Gradle.Server [build]" />
+        <item itemvalue="Gradle.Server [clean]" />
+        <item itemvalue="Gradle.Server [buildDependents]" />
       </list>
     </recent_temporary>
   </component>
