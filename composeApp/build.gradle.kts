@@ -44,7 +44,6 @@ kotlin {
             implementation(libs.compose.ui)
             implementation(libs.compose.ui.tooling.preview)
             implementation(libs.androidx.activity.compose)
-            implementation(libs.coil.compose)
         }
 
         desktopMain.dependencies {
@@ -58,6 +57,7 @@ kotlin {
             @OptIn(ExperimentalComposeLibrary::class)
             implementation(compose.components.resources)
             implementation(libs.androidx.compiler)
+            implementation(libs.coil.compose)
         }
 
         val commonMain by getting {
