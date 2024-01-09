@@ -12,20 +12,40 @@
   </head>
 
   <style>
-    
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(7, 60px);
-      grid-auto-rows: 40px;
-      background-color: black;
 
-    }
+.value{
+    height: 50px;
+    min-width: 120px;
+    border-radius: 10px;
+    background-color: rgba(255, 0, 0, 0.187);
+    margin-top: 20px;
+    font-size: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
-    .rowLabel {
-      grid-column-end: span 3;
-      color: gold;
-    }
-
+.button{
+    height: 50px;
+    width: 120px;
+    padding: 0 40px;
+    border-radius: 10px;
+    font-size: 40px;
+    background-color: #eeeb1d;
+    border: 2px solid #eeeb1d;
+    color: white;
+    margin: 20px;
+}
+.counter{
+    display: flex;
+    justify-content: center;
+}
+.Auto, .Tele, .Endgame{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
     .modal {
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
@@ -87,611 +107,284 @@
       <option value=5>Blue 3</option>
     </select>
 
-    <form id="converter" method="POST" action="localhost://getdata.php">
+    <form id="scouting-form
+    " method="POST" action="localhost://getdata.php">
       <label for="teamNumber">Team Number</label>
       <input type="number" id="teamNumber" name="teamNumberField" value="2046" />
       <label for="matchNumber">Match Number</label>
       <input type="number" id="matchNumber" name="mathNumberField" value="1" />
 
+
+
       <div class="Auto">
-
-        <h2>Autonomous</h2>
-
-        <h4>Cones</h4>
-
-        <div class="grid">
-
-          <div class="rowLabel"></div>
-          <div class="grid-item">1</div>
-          <div class="grid-item">2</div>
-          <div class="grid-item">3</div>
-          <div class="grid-item">0</div>
-
-
-          <div class="rowLabel">Cones Top</div>
-
-          <div class="grid-item">
-            <label for="autoConesTop1"></label>
-            <input type="radio" name="autoConesTop" id="autoConesTop1" style="height:15px; width:15px; vertical-align: middle;" value="1">
-          </div>
-
-          <div class="grid-item">
-            <label for="autoConesTop2"></label>
-            <input type="radio" name="autoConesTop" id="autoConesTop2" style="height:15px; width:15px; vertical-align: middle;" value="2">
-          </div>
-
-          <div class="grid-item">
-            <label for="autoConesTop3"></label>
-            <input type="radio" name="autoConesTop" id="autoConesTop3" style="height:15px; width:15px; vertical-align: middle;" value="3">
-          </div>
-
-          <div class="grid-item">
-            <label for="autoConesTop0"></label>
-            <input type="radio" name="autoConesTop" id="autoConesTop0" style="height:15px; width:15px; vertical-align: middle;" value="0" checked>
-          </div>
-
-
-          <div class="rowLabel">Cones Mid</div>
-
-          <div class="grid-item">
-            <label for="autoConesMiddle1"></label>
-            <input type="radio" name="autoConesMiddle" id="autoConesMiddle1" style="height:15px; width:15px; vertical-align: middle;" value="1">
-          </div>
-
-          <div class="grid-item">
-            <label for="autoConesMiddle2"></label>
-            <input type="radio" name="autoConesMiddle" id="autoConesMiddle2" style="height:15px; width:15px; vertical-align: middle;" value="2">
-          </div>
-
-          <div class="grid-item">
-            <label for="autoConesMiddle3"></label>
-            <input type="radio" name="autoConesMiddle" id="autoConesMiddle3" style="height:15px; width:15px; vertical-align: middle;" value="3">
-          </div>
-
-          <div class="grid-item">
-            <label for="autoConesMiddle0"></label>
-            <input type="radio" name="autoConesMiddle" id="autoConesMiddle0" style="height:15px; width:15px; vertical-align: middle;" value="0" checked>
-          </div>
-
-
-          <div class="rowLabel">Cones Bottom</div>
-
-          <div class="grid-item">
-            <label for="autoConesBottom1"></label>
-            <input type="radio" name="autoConesBottom" id="autoConesBottom1" style="height:15px; width:15px; vertical-align: middle;" value="1">
-          </div>
-
-          <div class="grid-item">
-            <label for="autoConesBottom2"></label>
-            <input type="radio" name="autoConesBottom" id="autoConesBottom2" style="height:15px; width:15px; vertical-align: middle;" value="2">
-          </div>
-
-          <div class="grid-item">
-            <label for="autoConesBottom3"></label>
-            <input type="radio" name="autoConesBottom" id="autoConesBottom3" style="height:15px; width:15px; vertical-align: middle;" value="3">
-          </div>
-
-          <div class="grid-item">
-            <label for="autoConesBottom0"></label>
-            <input type="radio" name="autoConesBottom" id="autoConesBottom0" style="height:15px; width:15px; vertical-align: middle;" value="0" checked>
-          </div>
-
-
-          <div class="rowLabel">Cones Drop</div>
-
-          <div class="grid-item">
-            <label for="autoConesDrop1"></label>
-            <input type="radio" name="autoConesDrop" id="autoConesDrop1" style="height:15px; width:15px; vertical-align: middle;" value="1">
-          </div>
-
-          <div class="grid-item">
-            <label for="autoConesDrop2"></label>
-            <input type="radio" name="autoConesDrop" id="autoConesDrop2" style="height:15px; width:15px; vertical-align: middle;" value="2">
-          </div>
-
-          <div class="grid-item">
-            <label for="autoConesDrop3"></label>
-            <input type="radio" name="autoConesDrop" id="autoConesDrop3" style="height:15px; width:15px; vertical-align: middle;" value="3">
-          </div>
-
-          <div class="grid-item">
-            <label for="autoConesDrop0"></label>
-            <input type="radio" name="autoConesDrop" id="autoConesDrop0" style="height:15px; width:15px; vertical-align: middle;" value="0" checked>
-          </div>
-
+        <h2>Auto</h2>
+        <div class="counter" id="auto-speaker-counter">
+          <h3>  Speaker</h3>
+          <button class="button" id="increment-speaker-auto">+</button>
+          <div class="value" id="speaker-auto">0</div>
+          <button class="button" id="decrement-speaker-auto">-</button>
+          <button class="button" id="reset-speaker-auto">0</button>
+          
+          <script>
+            let counter = 0;
+            // To increment the value of counter
+            document.getElementById('increment-speaker-auto').addEventListener('click', () => {
+              
+              counter = document.getElementById('speaker-auto').innerHTML
+                document.getElementById('speaker-auto').innerHTML = ++counter;
+            });
+            
+            // To decrement the value of counter
+            document.getElementById('decrement-speaker-auto').addEventListener('click', () => {
+              counter = document.getElementById('speaker-auto').innerHTML
+              if (--counter >= 0) {
+                document.getElementById('speaker-auto').innerHTML = counter;
+              }
+            });
+            document.getElementById('reset-speaker-auto').addEventListener('click', () => {
+              document.getElementById('speaker-auto').innerHTML = 0;
+            });
+          </script>
+        </div>
+        <div class="counter" id="auto-amp-counter">
+          <h3>      Amp</h3>
+          <button class="button" id="increment-amp-auto">+</button>
+          <div class="value" id="amp-auto">0</div>
+          <button class="button" id="decrement-amp-auto">-</button>
+          <button class="button" id="reset-amp-auto">0</button>
+          
+          <script>
+            counter = 0;
+            // To increment the value of counter
+            document.getElementById('increment-amp-auto').addEventListener('click', () => {
+              
+              counter = document.getElementById('amp-auto').innerHTML
+                document.getElementById('amp-auto').innerHTML = ++counter;
+            });
+            
+            // To decrement the value of counter
+            document.getElementById('decrement-amp-auto').addEventListener('click', () => {
+              counter = document.getElementById('amp-auto').innerHTML
+              if (--counter >= 0) {
+                document.getElementById('amp-auto').innerHTML = counter;
+              }
+            });
+            document.getElementById('reset-amp-auto').addEventListener('click', () => {
+              document.getElementById('amp-auto').innerHTML = 0;
+            });
+          </script>
         </div>
 
-
-        <h4>Cubes</h4>
-
-        <div class="grid">
-
-          <div class="rowLabel"></div>
-          <div class="grid-item">1</div>
-          <div class="grid-item">2</div>
-          <div class="grid-item">3</div>
-          <div class="grid-item">0</div>
-
-
-          <div class="rowLabel">Cubes Top</div>
-
-          <div class="grid-item">
-            <label for="autoCubesTop1"></label>
-            <input type="radio" name="autoCubesTop" id="autoCubesTop1" style="height:15px; width:15px; vertical-align: middle;" value="1">
-          </div>
-
-          <div class="grid-item">
-            <label for="autoCubesTop2"></label>
-            <input type="radio" name="autoCubesTop" id="autoCubesTop2" style="height:15px; width:15px; vertical-align: middle;" value="2">
-          </div>
-
-          <div class="grid-item">
-            <label for="autoCubesTop3"></label>
-            <input type="radio" name="autoCubesTop" id="autoCubesTop3" style="height:15px; width:15px; vertical-align: middle;" value="3">
-          </div>
-
-          <div class="grid-item">
-            <label for="autoCubesTop0"></label>
-            <input type="radio" name="autoCubesTop" id="autoCubesTop0" style="height:15px; width:15px; vertical-align: middle;" value="0" checked>
-          </div>
-
-
-          <div class="rowLabel">Cubes Mid</div>
-
-          <div class="grid-item">
-            <label for="autoCubesMiddle1"></label>
-            <input type="radio" name="autoCubesMiddle" id="autoCubesMiddle1" style="height:15px; width:15px; vertical-align: middle;" value="1">
-          </div>
-
-          <div class="grid-item">
-            <label for="autoCubesMiddle2"></label>
-            <input type="radio" name="autoCubesMiddle" id="autoCubesMiddle2" style="height:15px; width:15px; vertical-align: middle;" value="2">
-          </div>
-
-          <div class="grid-item">
-            <label for="autoCubesMiddle3"></label>
-            <input type="radio" name="autoCubesMiddle" id="autoCubesMiddle3" style="height:15px; width:15px; vertical-align: middle;" value="3">
-          </div>
-
-          <div class="grid-item">
-            <label for="autoCubesMiddle0"></label>
-            <input type="radio" name="autoCubesMiddle" id="autoCubesMiddle0" style="height:15px; width:15px; vertical-align: middle;" value="0" checked>
-          </div>
-
-
-          <div class="rowLabel">Cubes Bottom</div>
-
-          <div class="grid-item">
-            <label for="autoCubesBottom1"></label>
-            <input type="radio" name="autoCubesBottom" id="autoCubesBottom1" style="height:15px; width:15px; vertical-align: middle;" value="1">
-          </div>
-
-          <div class="grid-item">
-            <label for="autoCubesBottom2"></label>
-            <input type="radio" name="autoCubesBottom" id="autoCubesBottom2" style="height:15px; width:15px; vertical-align: middle;" value="2">
-          </div>
-
-          <div class="grid-item">
-            <label for="autoCubesBottom3"></label>
-            <input type="radio" name="autoCubesBottom" id="autoCubesBottom3" style="height:15px; width:15px; vertical-align: middle;" value="3">
-          </div>
-
-          <div class="grid-item">
-            <label for="autoCubesBottom0"></label>
-            <input type="radio" name="autoCubesBottom" id="autoCubesBottom0" style="height:15px; width:15px; vertical-align: middle;" value="0" checked>
-          </div>
-
-
-          <div class="rowLabel">Cubes Drop</div>
-
-          <div class="grid-item">
-            <label for="autoCubesDrop1"></label>
-            <input type="radio" name="autoCubesDrop" id="autoCubesDrop1" style="height:15px; width:15px; vertical-align: middle;" value="1">
-          </div>
-
-          <div class="grid-item">
-            <label for="autoCubesDrop2"></label>
-            <input type="radio" name="autoCubesDrop" id="autoCubesDrop2" style="height:15px; width:15px; vertical-align: middle;" value="2">
-          </div>
-
-          <div class="grid-item">
-            <label for="autoCubesDrop3"></label>
-            <input type="radio" name="autoCubesDrop" id="autoCubesDrop3" style="height:15px; width:15px; vertical-align: middle;" value="3">
-          </div>
-
-          <div class="grid-item">
-            <label for="autoCubesDrop0"></label>
-            <input type="radio" name="autoCubesDrop" id="autoCubesDrop0" style="height:15px; width:15px; vertical-align: middle;" value="0" checked>
-          </div>
-
+        <div class="counter" id="auto-drop-counter">
+          <h3>Drop</h3>
+          <button class="button" id="increment-drop-auto">+</button>
+          <div class="value" id="drop-auto">0</div>
+          <button class="button" id="decrement-drop-auto">-</button>
+          <button class="button" id="reset-drop-auto">0</button>
+          
+          <script>
+            counter = 0;
+            // To increment the value of counter
+            document.getElementById('increment-drop-auto').addEventListener('click', () => {
+              
+              counter = document.getElementById('drop-auto').innerHTML
+                document.getElementById('drop-auto').innerHTML = ++counter;
+            });
+            
+            // To decrement the value of counter
+            document.getElementById('decrement-drop-auto').addEventListener('click', () => {
+              counter = document.getElementById('drop-auto').innerHTML
+              if (--counter >= 0) {
+                document.getElementById('drop-auto').innerHTML = counter;
+              }
+            });
+            document.getElementById('reset-drop-auto').addEventListener('click', () => {
+              document.getElementById('drop-auto').innerHTML = 0;
+            });
+          </script>
         </div>
+
 
       </div>
 
-      <div class="TeleNormal">
-
-          <h2>Tele</h2>
 
 
-          <h4>Cones</h4>
-
-          <div class="grid">
-
-            <div class="rowLabel"></div>
-            <div class="grid-item">1</div>
-            <div class="grid-item">2</div>
-            <div class="grid-item">3</div>
-            <div class="grid-item">0</div>
-
-
-            <div class="rowLabel">Cones Top</div>
-
-            <div class="grid-item">
-              <label for="teleConesTop1"></label>
-              <input type="radio" name="teleConesTop" id="teleConesTop1" style="height:15px; width:15px; vertical-align: middle;" value="1">
-            </div>
-
-            <div class="grid-item">
-              <label for="teleConesTop2"></label>
-              <input type="radio" name="teleConesTop" id="teleConesTop2" style="height:15px; width:15px; vertical-align: middle;" value="2">
-            </div>
-
-            <div class="grid-item">
-              <label for="teleConesTop3"></label>
-              <input type="radio" name="teleConesTop" id="teleConesTop3" style="height:15px; width:15px; vertical-align: middle;" value="3">
-            </div>
-
-            <div class="grid-item">
-              <label for="teleConesTop0"></label>
-              <input type="radio" name="teleConesTop" id="teleConesTop0" style="height:15px; width:15px; vertical-align: middle;" value="0" checked>
-            </div>
-
-
-            <div class="rowLabel">Cones Mid</div>
-
-            <div class="grid-item">
-              <label for="teleConesMiddle1"></label>
-              <input type="radio" name="teleConesMiddle" id="teleConesMiddle1" style="height:15px; width:15px; vertical-align: middle;" value="1">
-            </div>
-
-            <div class="grid-item">
-              <label for="teleConesMiddle2"></label>
-              <input type="radio" name="teleConesMiddle" id="teleConesMiddle2" style="height:15px; width:15px; vertical-align: middle;" value="2">
-            </div>
-
-            <div class="grid-item">
-              <label for="teleConesMiddle3"></label>
-              <input type="radio" name="teleConesMiddle" id="teleConesMiddle3" style="height:15px; width:15px; vertical-align: middle;" value="3">
-            </div>
-
-            <div class="grid-item">
-              <label for="teleConesMiddle0"></label>
-              <input type="radio" name="teleConesMiddle" id="teleConesMiddle0" style="height:15px; width:15px; vertical-align: middle;" value="0" checked>
-            </div>
-
-
-            <div class="rowLabel">Cones Bottom</div>
-
-            <div class="grid-item">
-              <label for="teleConesBottom1"></label>
-              <input type="radio" name="teleConesBottom" id="teleConesBottom1" style="height:15px; width:15px; vertical-align: middle;" value="1">
-            </div>
-
-            <div class="grid-item">
-              <label for="teleConesBottom2"></label>
-              <input type="radio" name="teleConesBottom" id="teleConesBottom2" style="height:15px; width:15px; vertical-align: middle;" value="2">
-            </div>
-
-            <div class="grid-item">
-              <label for="teleConesBottom3"></label>
-              <input type="radio" name="teleConesBottom" id="teleConesBottom3" style="height:15px; width:15px; vertical-align: middle;" value="3">
-            </div>
-
-            <div class="grid-item">
-              <label for="teleConesBottom0"></label>
-              <input type="radio" name="teleConesBottom" id="teleConesBottom0" style="height:15px; width:15px; vertical-align: middle;" value="0" checked>
-            </div>
-
-
-            <div class="rowLabel">Cones Drop</div>
-
-            <div class="grid-item">
-              <label for="teleConesDrop1"></label>
-              <input type="radio" name="teleConesDrop" id="teleConesDrop1" style="height:15px; width:15px; vertical-align: middle;" value="1">
-            </div>
-
-            <div class="grid-item">
-              <label for="teleConesDrop2"></label>
-              <input type="radio" name="teleConesDrop" id="teleConesDrop2" style="height:15px; width:15px; vertical-align: middle;" value="2">
-            </div>
-
-            <div class="grid-item">
-              <label for="teleConesDrop3"></label>
-              <input type="radio" name="teleConesDrop" id="teleConesDrop3" style="height:15px; width:15px; vertical-align: middle;" value="3">
-            </div>
-
-            <div class="grid-item">
-              <label for="teleConesDrop0"></label>
-              <input type="radio" name="teleConesDrop" id="teleConesDrop0" style="height:15px; width:15px; vertical-align: middle;" value="0" checked>
-            </div>
-
-          </div>
-
-
-          <h4>Cubes</h4>
-
-          <div class="grid">
-
-            <div class="rowLabel"></div>
-            <div class="grid-item">1</div>
-            <div class="grid-item">2</div>
-            <div class="grid-item">3</div>
-            <div class="grid-item">0</div>
-
-
-            <div class="rowLabel">Cubes Top</div>
-
-            <div class="grid-item">
-              <label for="teleCubesTop1"></label>
-              <input type="radio" name="teleCubesTop" id="teleCubesTop1" style="height:15px; width:15px; vertical-align: middle;" value="1">
-            </div>
-
-            <div class="grid-item">
-              <label for="teleCubesTop2"></label>
-              <input type="radio" name="teleCubesTop" id="teleCubesTop2" style="height:15px; width:15px; vertical-align: middle;" value="2">
-            </div>
-
-            <div class="grid-item">
-              <label for="teleCubesTop3"></label>
-              <input type="radio" name="teleCubesTop" id="teleCubesTop3" style="height:15px; width:15px; vertical-align: middle;" value="3">
-            </div>
-
-            <div class="grid-item">
-              <label for="teleCubesTop0"></label>
-              <input type="radio" name="teleCubesTop" id="teleCubesTop0" style="height:15px; width:15px; vertical-align: middle;" value="0" checked>
-            </div>
-
-
-            <div class="rowLabel">Cubes Mid</div>
-
-            <div class="grid-item">
-              <label for="teleCubesMiddle1"></label>
-              <input type="radio" name="teleCubesMiddle" id="teleCubesMiddle1" style="height:15px; width:15px; vertical-align: middle;" value="1">
-            </div>
-
-            <div class="grid-item">
-              <label for="teleCubesMiddle2"></label>
-              <input type="radio" name="teleCubesMiddle" id="teleCubesMiddle2" style="height:15px; width:15px; vertical-align: middle;" value="2">
-            </div>
-
-            <div class="grid-item">
-              <label for="teleCubesMiddle3"></label>
-              <input type="radio" name="teleCubesMiddle" id="teleCubesMiddle3" style="height:15px; width:15px; vertical-align: middle;" value="3">
-            </div>
-
-            <div class="grid-item">
-              <label for="teleCubesMiddle0"></label>
-              <input type="radio" name="teleCubesMiddle" id="teleCubesMiddle0" style="height:15px; width:15px; vertical-align: middle;" value="0" checked>
-            </div>
-
-
-            <div class="rowLabel">Cubes Bottom</div>
-
-            <div class="grid-item">
-              <label for="teleCubesBottom1"></label>
-              <input type="radio" name="teleCubesBottom" id="teleCubesBottom1" style="height:15px; width:15px; vertical-align: middle;" value="1">
-            </div>
-
-            <div class="grid-item">
-              <label for="teleCubesBottom2"></label>
-              <input type="radio" name="teleCubesBottom" id="teleCubesBottom2" style="height:15px; width:15px; vertical-align: middle;" value="2">
-            </div>
-
-            <div class="grid-item">
-              <label for="teleCubesBottom3"></label>
-              <input type="radio" name="teleCubesBottom" id="teleCubesBottom3" style="height:15px; width:15px; vertical-align: middle;" value="3">
-            </div>
-
-            <div class="grid-item">
-              <label for="teleCubesBottom0"></label>
-              <input type="radio" name="teleCubesBottom" id="teleCubesBottom0" style="height:15px; width:15px; vertical-align: middle;" value="0" checked>
-            </div>
-
-
-            <div class="rowLabel">Cubes Drop</div>
-
-            <div class="grid-item">
-              <label for="teleCubesDrop1"></label>
-              <input type="radio" name="teleCubesDrop" id="teleCubesDrop1" style="height:15px; width:15px; vertical-align: middle;" value="1">
-            </div>
-
-            <div class="grid-item">
-              <label for="teleCubesDrop2"></label>
-              <input type="radio" name="teleCubesDrop" id="teleCubesDrop2" style="height:15px; width:15px; vertical-align: middle;" value="2">
-            </div>
-
-            <div class="grid-item">
-              <label for="teleCubesDrop3"></label>
-              <input type="radio" name="teleCubesDrop" id="teleCubesDrop3" style="height:15px; width:15px; vertical-align: middle;" value="3">
-            </div>
-
-            <div class="grid-item">
-              <label for="teleCubesDrop0"></label>
-              <input type="radio" name="teleCubesDrop" id="teleCubesDrop0" style="height:15px; width:15px; vertical-align: middle;" value="0" checked>
-            </div>
-
-          </div>
-
+      <div class="Tele">
+        <h2>Tele</h2>
+        <div class="counter" id="tele-speaker-counter">
+          <h3>  Speaker</h3>
+          <button class="button" id="increment-speaker-tele">+</button>
+          <div class="value" id="speaker-tele">0</div>
+          <button class="button" id="decrement-speaker-tele">-</button>
+          <button class="button" id="reset-speaker-tele">0</button>
+          
+          <script>
+             counter = 0;
+            // To increment the value of counter
+            document.getElementById('increment-speaker-tele').addEventListener('click', () => {
+              
+              counter = document.getElementById('speaker-tele').innerHTML
+                document.getElementById('speaker-tele').innerHTML = ++counter;
+            });
+            
+            // To decrement the value of counter
+            document.getElementById('decrement-speaker-tele').addEventListener('click', () => {
+              counter = document.getElementById('speaker-tele').innerHTML
+              if (--counter >= 0) {
+                document.getElementById('speaker-tele').innerHTML = counter;
+              }
+            });
+            document.getElementById('reset-speaker-tele').addEventListener('click', () => {
+              document.getElementById('speaker-tele').innerHTML = 0;
+            });
+          </script>
         </div>
 
-      <div class="TeleSuperCharged">
-
-        <h2>Super Charges</h2>
-
-        <h4>Cones</h4>
-
-        <div class="grid">
-
-          <div class="rowLabel"></div>
-          <div class="grid-item">1</div>
-          <div class="grid-item">2</div>
-          <div class="grid-item">3</div>
-          <div class="grid-item">0</div>
-
-
-          <div class="rowLabel">Top</div>
-
-          <div class="grid-item">
-            <label for="superChargeConesTop1"></label>
-            <input type="radio" name="superChargeConesTop" id="superChargeConesTop1" style="height:15px; width:15px; vertical-align: middle;" value="1">
-          </div>
-
-          <div class="grid-item">
-            <label for="superChargeConesTop2"></label>
-            <input type="radio" name="superChargeConesTop" id="superChargeConesTop2" style="height:15px; width:15px; vertical-align: middle;" value="2">
-          </div>
-
-          <div class="grid-item">
-            <label for="superChargeConesTop3"></label>
-            <input type="radio" name="superChargeConesTop" id="superChargeConesTop3" style="height:15px; width:15px; vertical-align: middle;" value="3">
-          </div>
-
-          <div class="grid-item">
-            <label for="superChargeConesTop0"></label>
-            <input type="radio" name="superChargeConesTop" id="superChargeConesTop0" style="height:15px; width:15px; vertical-align: middle;" value="0" checked>
-          </div>
-
-
-          <div class="rowLabel">Mid</div>
-
-          <div class="grid-item">
-            <label for="superChargeConesMiddle1"></label>
-            <input type="radio" name="superChargeConesMiddle" id="superChargeConesMiddle1" style="height:15px; width:15px; vertical-align: middle;" value="1">
-          </div>
-
-          <div class="grid-item">
-            <label for="superChargeConesMiddle2"></label>
-            <input type="radio" name="superChargeConesMiddle" id="superChargeConesMiddle2" style="height:15px; width:15px; vertical-align: middle;" value="2">
-          </div>
-
-          <div class="grid-item">
-            <label for="superChargeConesMiddle3"></label>
-            <input type="radio" name="superChargeConesMiddle" id="superChargeConesMiddle3" style="height:15px; width:15px; vertical-align: middle;" value="3">
-          </div>
-
-          <div class="grid-item">
-            <label for="superChargeConesMiddle0"></label>
-            <input type="radio" name="superChargeConesMiddle" id="superChargeConesMiddle0" style="height:15px; width:15px; vertical-align: middle;" value="0" checked>
-          </div>
-
-
-          <div class="rowLabel">Bottom</div>
-
-          <div class="grid-item">
-            <label for="superChargeConesBottom1"></label>
-            <input type="radio" name="superChargeConesBottom" id="superChargeConesBottom1" style="height:15px; width:15px; vertical-align: middle;" value="1">
-          </div>
-
-          <div class="grid-item">
-            <label for="superChargeConesBottom2"></label>
-            <input type="radio" name="superChargeConesBottom" id="superChargeConesBottom2" style="height:15px; width:15px; vertical-align: middle;" value="2">
-          </div>
-
-          <div class="grid-item">
-            <label for="superChargeConesBottom3"></label>
-            <input type="radio" name="superChargeConesBottom" id="superChargeConesBottom3" style="height:15px; width:15px; vertical-align: middle;" value="3">
-          </div>
-
-          <div class="grid-item">
-            <label for="superChargeConesBottom0"></label>
-            <input type="radio" name="superChargeConesBottom" id="superChargeConesBottom0" style="height:15px; width:15px; vertical-align: middle;" value="0" checked>
-          </div>
-
+        <div class="counter" id="tele-amp-counter">
+          <h3>      Amp</h3>
+          <button class="button" id="increment-amp-tele">+</button>
+          <div class="value" id="amp-tele">0</div>
+          <button class="button" id="decrement-amp-tele">-</button>
+          <button class="button" id="reset-amp-tele">0</button>
+          
+          <script>
+            counter = 0;
+            // To increment the value of counter
+            document.getElementById('increment-amp-tele').addEventListener('click', () => {
+              
+              counter = document.getElementById('amp-tele').innerHTML
+                document.getElementById('amp-tele').innerHTML = ++counter;
+            });
+            
+            // To decrement the value of counter
+            document.getElementById('decrement-amp-tele').addEventListener('click', () => {
+              counter = document.getElementById('amp-tele').innerHTML
+              if (--counter >= 0) {
+                document.getElementById('amp-tele').innerHTML = counter;
+              }
+            });
+            document.getElementById('reset-amp-tele').addEventListener('click', () => {
+              document.getElementById('amp-tele').innerHTML = 0;
+            });
+          </script>
         </div>
 
-
-        <h4>Cubes</h4>
-
-        <div class="grid">
-
-          <div class="rowLabel"></div>
-          <div class="grid-item">1</div>
-          <div class="grid-item">2</div>
-          <div class="grid-item">3</div>
-          <div class="grid-item">0</div>
-
-
-          <div class="rowLabel">Cubes Top</div>
-
-          <div class="grid-item">
-            <label for="superChargeCubesTop1"></label>
-            <input type="radio" name="superChargeCubesTop" id="superChargeCubesTop1" style="height:15px; width:15px; vertical-align: middle;" value="1">
-          </div>
-
-          <div class="grid-item">
-            <label for="superChargeCubesTop2"></label>
-            <input type="radio" name="superChargeCubesTop" id="superChargeCubesTop2" style="height:15px; width:15px; vertical-align: middle;" value="2">
-          </div>
-
-          <div class="grid-item">
-            <label for="superChargeCubesTop3"></label>
-            <input type="radio" name="superChargeCubesTop" id="superChargeCubesTop3" style="height:15px; width:15px; vertical-align: middle;" value="3">
-          </div>
-
-          <div class="grid-item">
-            <label for="superChargeCubesTop0"></label>
-            <input type="radio" name="superChargeCubesTop" id="superChargeCubesTop0" style="height:15px; width:15px; vertical-align: middle;" value="0" checked>
-          </div>
-
-
-          <div class="rowLabel">Cubes Mid</div>
-
-          <div class="grid-item">
-            <label for="superChargeCubesMiddle1"></label>
-            <input type="radio" name="superChargeCubesMiddle" id="superChargeCubesMiddle1" style="height:15px; width:15px; vertical-align: middle;" value="1">
-          </div>
-
-          <div class="grid-item">
-            <label for="superChargeCubesMiddle2"></label>
-            <input type="radio" name="superChargeCubesMiddle" id="superChargeCubesMiddle2" style="height:15px; width:15px; vertical-align: middle;" value="2">
-          </div>
-
-          <div class="grid-item">
-            <label for="superChargeCubesMiddle3"></label>
-            <input type="radio" name="superChargeCubesMiddle" id="superChargeCubesMiddle3" style="height:15px; width:15px; vertical-align: middle;" value="3">
-          </div>
-
-          <div class="grid-item">
-            <label for="superChargeCubesMiddle0"></label>
-            <input type="radio" name="superChargeCubesMiddle" id="superChargeCubesMiddle0" style="height:15px; width:15px; vertical-align: middle;" value="0" checked>
-          </div>
-
-
-          <div class="rowLabel">Cubes Bottom</div>
-
-          <div class="grid-item">
-            <label for="superChargeCubesBottom1"></label>
-            <input type="radio" name="superChargeCubesBottom" id="superChargeCubesBottom1" style="height:15px; width:15px; vertical-align: middle;" value="1">
-          </div>
-
-          <div class="grid-item">
-            <label for="superChargeCubesBottom2"></label>
-            <input type="radio" name="superChargeCubesBottom" id="superChargeCubesBottom2" style="height:15px; width:15px; vertical-align: middle;" value="2">
-          </div>
-
-          <div class="grid-item">
-            <label for="superChargeCubesBottom3"></label>
-            <input type="radio" name="superChargeCubesBottom" id="superChargeCubesBottom3" style="height:15px; width:15px; vertical-align: middle;" value="3">
-          </div>
-
-          <div class="grid-item">
-            <label for="superChargeCubesBottom0"></label>
-            <input type="radio" name="superChargeCubesBottom" id="superChargeCubesBottom0" style="height:15px; width:15px; vertical-align: middle;" value="0" checked>
-          </div>
-
-          </div>
+        <div class="counter" id="tele-drop-counter">
+          <h3>Drop</h3>
+          <button class="button" id="increment-drop-tele">+</button>
+          <div class="value" id="drop-tele">0</div>
+          <button class="button" id="decrement-drop-tele">-</button>
+          <button class="button" id="reset-drop-tele">0</button>
+          
+          <script>
+            counter = 0;
+            // To increment the value of counter
+            document.getElementById('increment-drop-tele').addEventListener('click', () => {
+              
+              counter = document.getElementById('drop-tele').innerHTML
+                document.getElementById('drop-tele').innerHTML = ++counter;
+            });
+            
+            // To decrement the value of counter
+            document.getElementById('decrement-drop-tele').addEventListener('click', () => {
+              counter = document.getElementById('drop-tele').innerHTML
+              if (--counter >= 0) {
+                document.getElementById('drop-tele').innerHTML = counter;
+              }
+            });
+            document.getElementById('reset-drop-tele').addEventListener('click', () => {
+              document.getElementById('drop-tele').innerHTML = 0;
+            });
+          </script>
         </div>
 
+        <div class="counter" id="tele-amplified-counter">
+          <h3>Amplified</h3>
+          <button class="button" id="increment-amplified-tele">+</button>
+          <div class="value" id="amplified-tele">0</div>
+          <button class="button" id="decrement-amplified-tele">-</button>
+          <button class="button" id="reset-amplified-tele">0</button>
+          
+          <script>
+            counter = 0;
+            // To increment the value of counter
+            document.getElementById('increment-amplified-tele').addEventListener('click', () => {
+              
+              counter = document.getElementById('amplified-tele').innerHTML
+                document.getElementById('amplified-tele').innerHTML = ++counter;
+            });
+            
+            // To decrement the value of counter
+            document.getElementById('decrement-amplified-tele').addEventListener('click', () => {
+              counter = document.getElementById('amplified-tele').innerHTML
+              if (--counter >= 0) {
+                document.getElementById('amplified-tele').innerHTML = counter;
+              }
+            });
+            document.getElementById('reset-amplified-tele').addEventListener('click', () => {
+              document.getElementById('amplified-tele').innerHTML = 0;
+            });
+          </script>
+        </div>
+
+        <div class="counter" id="tele-trap-counter">
+          <h3>     Trap</h3>
+          <button class="button" id="increment-trap-tele">+</button>
+          <div class="value" id="trap-tele">0</div>
+          <button class="button" id="decrement-trap-tele">-</button>
+          <button class="button" id="reset-trap-tele">0</button>
+          
+          <script>
+            counter = 0;
+            // To increment the value of counter
+            document.getElementById('increment-trap-tele').addEventListener('click', () => {
+              
+              counter = document.getElementById('trap-tele').innerHTML
+                document.getElementById('trap-tele').innerHTML = ++counter;
+            });
+            
+            // To decrement the value of counter
+            document.getElementById('decrement-trap-tele').addEventListener('click', () => {
+              counter = document.getElementById('trap-tele').innerHTML
+              if (--counter >= 0) {
+                document.getElementById('trap-tele').innerHTML = counter;
+              }
+            });
+            document.getElementById('reset-trap-tele').addEventListener('click', () => {
+              document.getElementById('trap-tele').innerHTML = 0;
+            });
+          </script>
+        </div>
+      </div>
+
+     <div class="Endgame">
+      <h2>Endgame</h2>
+      <label for="climbField"></label>
+      <select id="climbField" name="climb">
+        <option value="0" selected>Parked</option>
+        <option value="1">Climbed</option>
+        <option value="2">Harmonized</option>
+        <option value="3">None</option>
+        <option value="4">Triple Climb</option>
+      </select>
+      
+      <div class="checkbox">
+        <label for="CooperatedCheckbox">Cooperated</label>
+        <input type="checkbox" class="button" id="CooperatedCheckbox" name="cooperated" value="false">
+       
+      </div>
+
+      <div class="checkbox">
+        <label for="DefenseCheckbox">Defended</label>
+        <input type="checkbox" class="button" id="DefenseCheckbox" name="defended" value="false">
+       
+      </div>
+
+      <div class="checkbox">
+        <label for="spotlightiedCheckbox">Spotlighted</label>
+        <input type="checkbox" class="button" id="spotlightiedCheckbox" name="spotlighted" value="false">
+       
+      </div>
       <label for="communicationField"></label>
       <select id="communicationField" name="communication">
         <option value="0" selected>Didn't lost communication</option>
@@ -701,6 +394,10 @@
       <label for="notes">Notes</label>
       <input type="text" id="notes" name="notesField" value="" />
 
+     </div>
+
+
+      
       <p style="text-align: center">
         <input type="submit" value="Submit" onclick="parseData(submitted())" >
       </p>
@@ -718,9 +415,10 @@
 
     </div>
 
+
     <script>
 
-      const form = document.getElementById('converter');
+      const form = document.getElementById('scouting-form');
       function submitted() {
 
         event.preventDefault();
@@ -732,36 +430,23 @@
         //team num
         data.push(document.getElementById("teamNumber").value);
         //auto
-        data.push(document.querySelector("input[type='radio'][name=autoConesTop]:checked").value);
-        data.push(document.querySelector("input[type='radio'][name=autoConesMiddle]:checked").value);
-        data.push(document.querySelector("input[type='radio'][name=autoConesBottom]:checked").value);
-        data.push(document.querySelector("input[type='radio'][name=autoConesDrop]:checked").value);
-        data.push(document.querySelector("input[type='radio'][name=autoCubesTop]:checked").value);
-        data.push(document.querySelector("input[type='radio'][name=autoCubesMiddle]:checked").value);
-        data.push(document.querySelector("input[type='radio'][name=autoCubesBottom]:checked").value);
-        data.push(document.querySelector("input[type='radio'][name=autoCubesDrop]:checked").value);
-
+        data.push(document.getElementById("speaker-auto").innerHTML);
+        data.push(document.getElementById("amp-auto").innerHTML);
+        data.push(document.getElementById("drop-auto").innerHTML);
 
         //tele
-        data.push(document.querySelector("input[type='radio'][name=teleConesTop]:checked").value);
-        data.push(document.querySelector("input[type='radio'][name=teleConesMiddle]:checked").value);
-        data.push(document.querySelector("input[type='radio'][name=teleConesBottom]:checked").value);
-        data.push(document.querySelector("input[type='radio'][name=teleConesDrop]:checked").value);
-        data.push(document.querySelector("input[type='radio'][name=teleCubesTop]:checked").value);
-        data.push(document.querySelector("input[type='radio'][name=teleCubesMiddle]:checked").value);
-        data.push(document.querySelector("input[type='radio'][name=teleCubesBottom]:checked").value);
-        data.push(document.querySelector("input[type='radio'][name=teleCubesDrop]:checked").value);
+        data.push(document.getElementById("speaker-tele").innerHTML);
+        data.push(document.getElementById("amp-tele").innerHTML);
+        data.push(document.getElementById("drop-tele").innerHTML);
+        data.push(document.getElementById("amplified-tele").innerHTML);
+        data.push(document.getElementById("trap-tele").innerHTML);
 
-        //superCharge
-        data.push(document.querySelector("input[type='radio'][name=superChargeConesTop]:checked").value);
-        data.push(document.querySelector("input[type='radio'][name=superChargeConesMiddle]:checked").value);
-        data.push(document.querySelector("input[type='radio'][name=superChargeConesBottom]:checked").value);
-        data.push(document.querySelector("input[type='radio'][name=superChargeCubesTop]:checked").value);
-        data.push(document.querySelector("input[type='radio'][name=superChargeCubesMiddle]:checked").value);
-        data.push(document.querySelector("input[type='radio'][name=superChargeCubesBottom]:checked").value);
+        //endgame
+        data.push(document.getElementById("climbField").value);
+        data.push(document.getElementById("CooperatedCheckbox").checked);
+        data.push(document.getElementById("DefenseCheckbox").checked);
+        data.push(document.getElementById("spotlightiedCheckbox").checked);
 
-        //i don't care about times over charge station cause i'm tired
-        data.push("0");
         //comms
         data.push(document.getElementById("communicationField").value);
 

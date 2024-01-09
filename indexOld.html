@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="en-US" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <link rel="shortcut icon" href="icon512.png" />
+    <title>Bear Metal Scouting</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="converter.css">
+
+    
+  </head>
+
+  <style>
+    
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(7, 60px);
+      grid-auto-rows: 40px;
+      background-color: black;
+
+    }
+
+    .rowLabel {
+      grid-column-end: span 3;
+      color: gold;
+    }
+
+    .modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    }
+
+    /* Modal Content/Box */
+    .modal-content {
+      background-color: #fefefe;
+      margin: 15% auto; /* 15% from the top and centered */
+      padding: 20px;
+      border: 1px solid #888;
+      width: 80%; /* Could be more or less, depending on screen size */
+    }
+
+    /* The Close Button */
+    .close {
+      color: gold;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+
+    }
+
+
+    .close:hover,
+    .close:focus {
+      color: black;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    input[type="submit"] {
+      color: black;
+      background-color: gold;
+      text-shadow: 0 0 0 black;
+      -webkit-text-fill-color: transparent;
+      text-align: center;
+    }
+
+
+  </style>
+  <body>
+    <script type="text/javascript" src="sheetsAPIInteraction.js"></script>
+    <label for="station-id">Choose Your Station Number:</label>
+    <select name="station-id" id="station-id">
+      <option value=0>Red 1</option>
+      <option value=1>Red 2</option>
+      <option value=2>Red 3</option>
+      <option value=3>Blue 1</option>
+      <option value=4>Blue 2</option>
+      <option value=5>Blue 3</option>
+    </select>
+
+    <form id="converter" method="POST" action="localhost://getdata.php">
+      <label for="teamNumber">Team Number</label>
+      <input type="number" id="teamNumber" name="teamNumberField" value="2046" />
+      <label for="matchNumber">Match Number</label>
+      <input type="number" id="matchNumber" name="mathNumberField" value="1" />
+
+      <div class="Auto">
+
+        <h2>Autonomous</h2>
+
+        <h4>Cones</h4>
+
+        <div class="grid">
+
+          <div class="rowLabel"></div>
+          <div class="grid-item">1</div>
+          <div class="grid-item">2</div>
+          <div class="grid-item">3</div>
+          <div class="grid-item">0</div>
+
+
+          <div class="rowLabel">Cones Top</div>
+
+          <div class="grid-item">
+            <label for="autoConesTop1"></label>
+            <input type="radio" name="autoConesTop" id="autoConesTop1" style="height:15px; width:15px; vertical-align: middle;" value="1">
+          </div>
+
+          <div class="grid-item">
+            <label for="autoConesTop2"></label>
+            <input type="radio" name="autoConesTop" id="autoConesTop2" style="height:15px; width:15px; vertical-align: middle;" value="2">
+          </div>
+
+          <div class="grid-item">
+            <label for="autoConesTop3"></label>
+            <input type="radio" name="autoConesTop" id="autoConesTop3" style="height:15px; width:15px; vertical-align: middle;" value="3">
+          </div>
+
+          <div class="grid-item">
+            <label for="autoConesTop0"></label>
+            <input type="radio" name="autoConesTop" id="autoConesTop0" style="height:15px; width:15px; vertical-align: middle;" value="0" checked>
+          </div>
+
+
+          <div class="rowLabel">Cones Mid</div>
+
+          <div class="grid-item">
+            <label for="autoConesMiddle1"></label>
+            <input type="radio" name="autoConesMiddle" id="autoConesMiddle1" style="height:15px; width:15px; vertical-align: middle;" value="1">
+          </div>
+
+          <div class="grid-item">
+            <label for="autoConesMiddle2"></label>
+            <input type="radio" name="autoConesMiddle" id="autoConesMiddle2" style="height:15px; width:15px; vertical-align: middle;" value="2">
+          </div>
+
+          <div class="grid-item">
+            <label for="autoConesMiddle3"></label>
+            <input type="radio" name="autoConesMiddle" id="autoConesMiddle3" style="height:15px; width:15px; vertical-align: middle;" value="3">
+          </div>
+
+          <div class="grid-item">
+            <label for="autoConesMiddle0"></label>
+            <input type="radio" name="autoConesMiddle" id="autoConesMiddle0" style="height:15px; width:15px; vertical-align: middle;" value="0" checked>
+          </div>
+
+
+          <div class="rowLabel">Cones Bottom</div>
+
+          <div class="grid-item">
+            <label for="autoConesBottom1"></label>
+            <input type="radio" name="autoConesBottom" id="autoConesBottom1" style="height:15px; width:15px; vertical-align: middle;" value="1">
+          </div>
+
+          <div class="grid-item">
+            <label for="autoConesBottom2"></label>
+            <input type="radio" name="autoConesBottom" id="autoConesBottom2" style="height:15px; width:15px; vertical-align: middle;" value="2">
+          </div>
+
+          <div class="grid-item">
+            <label for="autoConesBottom3"></label>
+            <input type="radio" name="autoConesBottom" id="autoConesBottom3" style="height:15px; width:15px; vertical-align: middle;" value="3">
+          </div>
+
+          <div class="grid-item">
+            <label for="autoConesBottom0"></label>
+            <input type="radio" name="autoConesBottom" id="autoConesBottom0" style="height:15px; width:15px; vertical-align: middle;" value="0" checked>
+          </div>
+
+
+          <div class="rowLabel">Cones Drop</div>
+
+          <div class="grid-item">
+            <label for="autoConesDrop1"></label>
+            <input type="radio" name="autoConesDrop" id="autoConesDrop1" style="height:15px; width:15px; vertical-align: middle;" value="1">
+          </div>
+
+          <div class="grid-item">
+            <label for="autoConesDrop2"></label>
+            <input type="radio" name="autoConesDrop" id="autoConesDrop2" style="height:15px; width:15px; vertical-align: middle;" value="2">
+          </div>
+
+          <div class="grid-item">
+            <label for="autoConesDrop3"></label>
+            <input type="radio" name="autoConesDrop" id="autoConesDrop3" style="height:15px; width:15px; vertical-align: middle;" value="3">
+          </div>
+
+          <div class="grid-item">
+            <label for="autoConesDrop0"></label>
+            <input type="radio" name="autoConesDrop" id="autoConesDrop0" style="height:15px; width:15px; vertical-align: middle;" value="0" checked>
+          </div>
+
+        </div>
+
+
+        <h4>Cubes</h4>
+
+        <div class="grid">
+
+          <div class="rowLabel"></div>
+          <div class="grid-item">1</div>
+          <div class="grid-item">2</div>
+          <div class="grid-item">3</div>
+          <div class="grid-item">0</div>
+
+
+          <div class="rowLabel">Cubes Top</div>
+
+          <div class="grid-item">
+            <label for="autoCubesTop1"></label>
+            <input type="radio" name="autoCubesTop" id="autoCubesTop1" style="height:15px; width:15px; vertical-align: middle;" value="1">
+          </div>
+
+          <div class="grid-item">
+            <label for="autoCubesTop2"></label>
+            <input type="radio" name="autoCubesTop" id="autoCubesTop2" style="height:15px; width:15px; vertical-align: middle;" value="2">
+          </div>
+
+          <div class="grid-item">
+            <label for="autoCubesTop3"></label>
+            <input type="radio" name="autoCubesTop" id="autoCubesTop3" style="height:15px; width:15px; vertical-align: middle;" value="3">
+          </div>
+
+          <div class="grid-item">
+            <label for="autoCubesTop0"></label>
+            <input type="radio" name="autoCubesTop" id="autoCubesTop0" style="height:15px; width:15px; vertical-align: middle;" value="0" checked>
+          </div>
+
+
+          <div class="rowLabel">Cubes Mid</div>
+
+          <div class="grid-item">
+            <label for="autoCubesMiddle1"></label>
+            <input type="radio" name="autoCubesMiddle" id="autoCubesMiddle1" style="height:15px; width:15px; vertical-align: middle;" value="1">
+          </div>
+
+          <div class="grid-item">
+            <label for="autoCubesMiddle2"></label>
+            <input type="radio" name="autoCubesMiddle" id="autoCubesMiddle2" style="height:15px; width:15px; vertical-align: middle;" value="2">
+          </div>
+
+          <div class="grid-item">
+            <label for="autoCubesMiddle3"></label>
+            <input type="radio" name="autoCubesMiddle" id="autoCubesMiddle3" style="height:15px; width:15px; vertical-align: middle;" value="3">
+          </div>
+
+          <div class="grid-item">
+            <label for="autoCubesMiddle0"></label>
+            <input type="radio" name="autoCubesMiddle" id="autoCubesMiddle0" style="height:15px; width:15px; vertical-align: middle;" value="0" checked>
+          </div>
+
+
+          <div class="rowLabel">Cubes Bottom</div>
+
+          <div class="grid-item">
+            <label for="autoCubesBottom1"></label>
+            <input type="radio" name="autoCubesBottom" id="autoCubesBottom1" style="height:15px; width:15px; vertical-align: middle;" value="1">
+          </div>
+
+          <div class="grid-item">
+            <label for="autoCubesBottom2"></label>
+            <input type="radio" name="autoCubesBottom" id="autoCubesBottom2" style="height:15px; width:15px; vertical-align: middle;" value="2">
+          </div>
+
+          <div class="grid-item">
+            <label for="autoCubesBottom3"></label>
+            <input type="radio" name="autoCubesBottom" id="autoCubesBottom3" style="height:15px; width:15px; vertical-align: middle;" value="3">
+          </div>
+
+          <div class="grid-item">
+            <label for="autoCubesBottom0"></label>
+            <input type="radio" name="autoCubesBottom" id="autoCubesBottom0" style="height:15px; width:15px; vertical-align: middle;" value="0" checked>
+          </div>
+
+
+          <div class="rowLabel">Cubes Drop</div>
+
+          <div class="grid-item">
+            <label for="autoCubesDrop1"></label>
+            <input type="radio" name="autoCubesDrop" id="autoCubesDrop1" style="height:15px; width:15px; vertical-align: middle;" value="1">
+          </div>
+
+          <div class="grid-item">
+            <label for="autoCubesDrop2"></label>
+            <input type="radio" name="autoCubesDrop" id="autoCubesDrop2" style="height:15px; width:15px; vertical-align: middle;" value="2">
+          </div>
+
+          <div class="grid-item">
+            <label for="autoCubesDrop3"></label>
+            <input type="radio" name="autoCubesDrop" id="autoCubesDrop3" style="height:15px; width:15px; vertical-align: middle;" value="3">
+          </div>
+
+          <div class="grid-item">
+            <label for="autoCubesDrop0"></label>
+            <input type="radio" name="autoCubesDrop" id="autoCubesDrop0" style="height:15px; width:15px; vertical-align: middle;" value="0" checked>
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="TeleNormal">
+
+          <h2>Tele</h2>
+
+
+          <h4>Cones</h4>
+
+          <div class="grid">
+
+            <div class="rowLabel"></div>
+            <div class="grid-item">1</div>
+            <div class="grid-item">2</div>
+            <div class="grid-item">3</div>
+            <div class="grid-item">0</div>
+
+
+            <div class="rowLabel">Cones Top</div>
+
+            <div class="grid-item">
+              <label for="teleConesTop1"></label>
+              <input type="radio" name="teleConesTop" id="teleConesTop1" style="height:15px; width:15px; vertical-align: middle;" value="1">
+            </div>
+
+            <div class="grid-item">
+              <label for="teleConesTop2"></label>
+              <input type="radio" name="teleConesTop" id="teleConesTop2" style="height:15px; width:15px; vertical-align: middle;" value="2">
+            </div>
+
+            <div class="grid-item">
+              <label for="teleConesTop3"></label>
+              <input type="radio" name="teleConesTop" id="teleConesTop3" style="height:15px; width:15px; vertical-align: middle;" value="3">
+            </div>
+
+            <div class="grid-item">
+              <label for="teleConesTop0"></label>
+              <input type="radio" name="teleConesTop" id="teleConesTop0" style="height:15px; width:15px; vertical-align: middle;" value="0" checked>
+            </div>
+
+
+            <div class="rowLabel">Cones Mid</div>
+
+            <div class="grid-item">
+              <label for="teleConesMiddle1"></label>
+              <input type="radio" name="teleConesMiddle" id="teleConesMiddle1" style="height:15px; width:15px; vertical-align: middle;" value="1">
+            </div>
+
+            <div class="grid-item">
+              <label for="teleConesMiddle2"></label>
+              <input type="radio" name="teleConesMiddle" id="teleConesMiddle2" style="height:15px; width:15px; vertical-align: middle;" value="2">
+            </div>
+
+            <div class="grid-item">
+              <label for="teleConesMiddle3"></label>
+              <input type="radio" name="teleConesMiddle" id="teleConesMiddle3" style="height:15px; width:15px; vertical-align: middle;" value="3">
+            </div>
+
+            <div class="grid-item">
+              <label for="teleConesMiddle0"></label>
+              <input type="radio" name="teleConesMiddle" id="teleConesMiddle0" style="height:15px; width:15px; vertical-align: middle;" value="0" checked>
+            </div>
+
+
+            <div class="rowLabel">Cones Bottom</div>
+
+            <div class="grid-item">
+              <label for="teleConesBottom1"></label>
+              <input type="radio" name="teleConesBottom" id="teleConesBottom1" style="height:15px; width:15px; vertical-align: middle;" value="1">
+            </div>
+
+            <div class="grid-item">
+              <label for="teleConesBottom2"></label>
+              <input type="radio" name="teleConesBottom" id="teleConesBottom2" style="height:15px; width:15px; vertical-align: middle;" value="2">
+            </div>
+
+            <div class="grid-item">
+              <label for="teleConesBottom3"></label>
+              <input type="radio" name="teleConesBottom" id="teleConesBottom3" style="height:15px; width:15px; vertical-align: middle;" value="3">
+            </div>
+
+            <div class="grid-item">
+              <label for="teleConesBottom0"></label>
+              <input type="radio" name="teleConesBottom" id="teleConesBottom0" style="height:15px; width:15px; vertical-align: middle;" value="0" checked>
+            </div>
+
+
+            <div class="rowLabel">Cones Drop</div>
+
+            <div class="grid-item">
+              <label for="teleConesDrop1"></label>
+              <input type="radio" name="teleConesDrop" id="teleConesDrop1" style="height:15px; width:15px; vertical-align: middle;" value="1">
+            </div>
+
+            <div class="grid-item">
+              <label for="teleConesDrop2"></label>
+              <input type="radio" name="teleConesDrop" id="teleConesDrop2" style="height:15px; width:15px; vertical-align: middle;" value="2">
+            </div>
+
+            <div class="grid-item">
+              <label for="teleConesDrop3"></label>
+              <input type="radio" name="teleConesDrop" id="teleConesDrop3" style="height:15px; width:15px; vertical-align: middle;" value="3">
+            </div>
+
+            <div class="grid-item">
+              <label for="teleConesDrop0"></label>
+              <input type="radio" name="teleConesDrop" id="teleConesDrop0" style="height:15px; width:15px; vertical-align: middle;" value="0" checked>
+            </div>
+
+          </div>
+
+
+          <h4>Cubes</h4>
+
+          <div class="grid">
+
+            <div class="rowLabel"></div>
+            <div class="grid-item">1</div>
+            <div class="grid-item">2</div>
+            <div class="grid-item">3</div>
+            <div class="grid-item">0</div>
+
+
+            <div class="rowLabel">Cubes Top</div>
+
+            <div class="grid-item">
+              <label for="teleCubesTop1"></label>
+              <input type="radio" name="teleCubesTop" id="teleCubesTop1" style="height:15px; width:15px; vertical-align: middle;" value="1">
+            </div>
+
+            <div class="grid-item">
+              <label for="teleCubesTop2"></label>
+              <input type="radio" name="teleCubesTop" id="teleCubesTop2" style="height:15px; width:15px; vertical-align: middle;" value="2">
+            </div>
+
+            <div class="grid-item">
+              <label for="teleCubesTop3"></label>
+              <input type="radio" name="teleCubesTop" id="teleCubesTop3" style="height:15px; width:15px; vertical-align: middle;" value="3">
+            </div>
+
+            <div class="grid-item">
+              <label for="teleCubesTop0"></label>
+              <input type="radio" name="teleCubesTop" id="teleCubesTop0" style="height:15px; width:15px; vertical-align: middle;" value="0" checked>
+            </div>
+
+
+            <div class="rowLabel">Cubes Mid</div>
+
+            <div class="grid-item">
+              <label for="teleCubesMiddle1"></label>
+              <input type="radio" name="teleCubesMiddle" id="teleCubesMiddle1" style="height:15px; width:15px; vertical-align: middle;" value="1">
+            </div>
+
+            <div class="grid-item">
+              <label for="teleCubesMiddle2"></label>
+              <input type="radio" name="teleCubesMiddle" id="teleCubesMiddle2" style="height:15px; width:15px; vertical-align: middle;" value="2">
+            </div>
+
+            <div class="grid-item">
+              <label for="teleCubesMiddle3"></label>
+              <input type="radio" name="teleCubesMiddle" id="teleCubesMiddle3" style="height:15px; width:15px; vertical-align: middle;" value="3">
+            </div>
+
+            <div class="grid-item">
+              <label for="teleCubesMiddle0"></label>
+              <input type="radio" name="teleCubesMiddle" id="teleCubesMiddle0" style="height:15px; width:15px; vertical-align: middle;" value="0" checked>
+            </div>
+
+
+            <div class="rowLabel">Cubes Bottom</div>
+
+            <div class="grid-item">
+              <label for="teleCubesBottom1"></label>
+              <input type="radio" name="teleCubesBottom" id="teleCubesBottom1" style="height:15px; width:15px; vertical-align: middle;" value="1">
+            </div>
+
+            <div class="grid-item">
+              <label for="teleCubesBottom2"></label>
+              <input type="radio" name="teleCubesBottom" id="teleCubesBottom2" style="height:15px; width:15px; vertical-align: middle;" value="2">
+            </div>
+
+            <div class="grid-item">
+              <label for="teleCubesBottom3"></label>
+              <input type="radio" name="teleCubesBottom" id="teleCubesBottom3" style="height:15px; width:15px; vertical-align: middle;" value="3">
+            </div>
+
+            <div class="grid-item">
+              <label for="teleCubesBottom0"></label>
+              <input type="radio" name="teleCubesBottom" id="teleCubesBottom0" style="height:15px; width:15px; vertical-align: middle;" value="0" checked>
+            </div>
+
+
+            <div class="rowLabel">Cubes Drop</div>
+
+            <div class="grid-item">
+              <label for="teleCubesDrop1"></label>
+              <input type="radio" name="teleCubesDrop" id="teleCubesDrop1" style="height:15px; width:15px; vertical-align: middle;" value="1">
+            </div>
+
+            <div class="grid-item">
+              <label for="teleCubesDrop2"></label>
+              <input type="radio" name="teleCubesDrop" id="teleCubesDrop2" style="height:15px; width:15px; vertical-align: middle;" value="2">
+            </div>
+
+            <div class="grid-item">
+              <label for="teleCubesDrop3"></label>
+              <input type="radio" name="teleCubesDrop" id="teleCubesDrop3" style="height:15px; width:15px; vertical-align: middle;" value="3">
+            </div>
+
+            <div class="grid-item">
+              <label for="teleCubesDrop0"></label>
+              <input type="radio" name="teleCubesDrop" id="teleCubesDrop0" style="height:15px; width:15px; vertical-align: middle;" value="0" checked>
+            </div>
+
+          </div>
+
+        </div>
+
+      <div class="TeleSuperCharged">
+
+        <h2>Super Charges</h2>
+
+        <h4>Cones</h4>
+
+        <div class="grid">
+
+          <div class="rowLabel"></div>
+          <div class="grid-item">1</div>
+          <div class="grid-item">2</div>
+          <div class="grid-item">3</div>
+          <div class="grid-item">0</div>
+
+
+          <div class="rowLabel">Top</div>
+
+          <div class="grid-item">
+            <label for="superChargeConesTop1"></label>
+            <input type="radio" name="superChargeConesTop" id="superChargeConesTop1" style="height:15px; width:15px; vertical-align: middle;" value="1">
+          </div>
+
+          <div class="grid-item">
+            <label for="superChargeConesTop2"></label>
+            <input type="radio" name="superChargeConesTop" id="superChargeConesTop2" style="height:15px; width:15px; vertical-align: middle;" value="2">
+          </div>
+
+          <div class="grid-item">
+            <label for="superChargeConesTop3"></label>
+            <input type="radio" name="superChargeConesTop" id="superChargeConesTop3" style="height:15px; width:15px; vertical-align: middle;" value="3">
+          </div>
+
+          <div class="grid-item">
+            <label for="superChargeConesTop0"></label>
+            <input type="radio" name="superChargeConesTop" id="superChargeConesTop0" style="height:15px; width:15px; vertical-align: middle;" value="0" checked>
+          </div>
+
+
+          <div class="rowLabel">Mid</div>
+
+          <div class="grid-item">
+            <label for="superChargeConesMiddle1"></label>
+            <input type="radio" name="superChargeConesMiddle" id="superChargeConesMiddle1" style="height:15px; width:15px; vertical-align: middle;" value="1">
+          </div>
+
+          <div class="grid-item">
+            <label for="superChargeConesMiddle2"></label>
+            <input type="radio" name="superChargeConesMiddle" id="superChargeConesMiddle2" style="height:15px; width:15px; vertical-align: middle;" value="2">
+          </div>
+
+          <div class="grid-item">
+            <label for="superChargeConesMiddle3"></label>
+            <input type="radio" name="superChargeConesMiddle" id="superChargeConesMiddle3" style="height:15px; width:15px; vertical-align: middle;" value="3">
+          </div>
+
+          <div class="grid-item">
+            <label for="superChargeConesMiddle0"></label>
+            <input type="radio" name="superChargeConesMiddle" id="superChargeConesMiddle0" style="height:15px; width:15px; vertical-align: middle;" value="0" checked>
+          </div>
+
+
+          <div class="rowLabel">Bottom</div>
+
+          <div class="grid-item">
+            <label for="superChargeConesBottom1"></label>
+            <input type="radio" name="superChargeConesBottom" id="superChargeConesBottom1" style="height:15px; width:15px; vertical-align: middle;" value="1">
+          </div>
+
+          <div class="grid-item">
+            <label for="superChargeConesBottom2"></label>
+            <input type="radio" name="superChargeConesBottom" id="superChargeConesBottom2" style="height:15px; width:15px; vertical-align: middle;" value="2">
+          </div>
+
+          <div class="grid-item">
+            <label for="superChargeConesBottom3"></label>
+            <input type="radio" name="superChargeConesBottom" id="superChargeConesBottom3" style="height:15px; width:15px; vertical-align: middle;" value="3">
+          </div>
+
+          <div class="grid-item">
+            <label for="superChargeConesBottom0"></label>
+            <input type="radio" name="superChargeConesBottom" id="superChargeConesBottom0" style="height:15px; width:15px; vertical-align: middle;" value="0" checked>
+          </div>
+
+        </div>
+
+
+        <h4>Cubes</h4>
+
+        <div class="grid">
+
+          <div class="rowLabel"></div>
+          <div class="grid-item">1</div>
+          <div class="grid-item">2</div>
+          <div class="grid-item">3</div>
+          <div class="grid-item">0</div>
+
+
+          <div class="rowLabel">Cubes Top</div>
+
+          <div class="grid-item">
+            <label for="superChargeCubesTop1"></label>
+            <input type="radio" name="superChargeCubesTop" id="superChargeCubesTop1" style="height:15px; width:15px; vertical-align: middle;" value="1">
+          </div>
+
+          <div class="grid-item">
+            <label for="superChargeCubesTop2"></label>
+            <input type="radio" name="superChargeCubesTop" id="superChargeCubesTop2" style="height:15px; width:15px; vertical-align: middle;" value="2">
+          </div>
+
+          <div class="grid-item">
+            <label for="superChargeCubesTop3"></label>
+            <input type="radio" name="superChargeCubesTop" id="superChargeCubesTop3" style="height:15px; width:15px; vertical-align: middle;" value="3">
+          </div>
+
+          <div class="grid-item">
+            <label for="superChargeCubesTop0"></label>
+            <input type="radio" name="superChargeCubesTop" id="superChargeCubesTop0" style="height:15px; width:15px; vertical-align: middle;" value="0" checked>
+          </div>
+
+
+          <div class="rowLabel">Cubes Mid</div>
+
+          <div class="grid-item">
+            <label for="superChargeCubesMiddle1"></label>
+            <input type="radio" name="superChargeCubesMiddle" id="superChargeCubesMiddle1" style="height:15px; width:15px; vertical-align: middle;" value="1">
+          </div>
+
+          <div class="grid-item">
+            <label for="superChargeCubesMiddle2"></label>
+            <input type="radio" name="superChargeCubesMiddle" id="superChargeCubesMiddle2" style="height:15px; width:15px; vertical-align: middle;" value="2">
+          </div>
+
+          <div class="grid-item">
+            <label for="superChargeCubesMiddle3"></label>
+            <input type="radio" name="superChargeCubesMiddle" id="superChargeCubesMiddle3" style="height:15px; width:15px; vertical-align: middle;" value="3">
+          </div>
+
+          <div class="grid-item">
+            <label for="superChargeCubesMiddle0"></label>
+            <input type="radio" name="superChargeCubesMiddle" id="superChargeCubesMiddle0" style="height:15px; width:15px; vertical-align: middle;" value="0" checked>
+          </div>
+
+
+          <div class="rowLabel">Cubes Bottom</div>
+
+          <div class="grid-item">
+            <label for="superChargeCubesBottom1"></label>
+            <input type="radio" name="superChargeCubesBottom" id="superChargeCubesBottom1" style="height:15px; width:15px; vertical-align: middle;" value="1">
+          </div>
+
+          <div class="grid-item">
+            <label for="superChargeCubesBottom2"></label>
+            <input type="radio" name="superChargeCubesBottom" id="superChargeCubesBottom2" style="height:15px; width:15px; vertical-align: middle;" value="2">
+          </div>
+
+          <div class="grid-item">
+            <label for="superChargeCubesBottom3"></label>
+            <input type="radio" name="superChargeCubesBottom" id="superChargeCubesBottom3" style="height:15px; width:15px; vertical-align: middle;" value="3">
+          </div>
+
+          <div class="grid-item">
+            <label for="superChargeCubesBottom0"></label>
+            <input type="radio" name="superChargeCubesBottom" id="superChargeCubesBottom0" style="height:15px; width:15px; vertical-align: middle;" value="0" checked>
+          </div>
+
+          </div>
+        </div>
+
+      <label for="communicationField"></label>
+      <select id="communicationField" name="communication">
+        <option value="0" selected>Didn't lost communication</option>
+        <option value="1">Lost Communication</option>
+      </select>
+
+      <label for="notes">Notes</label>
+      <input type="text" id="notes" name="notesField" value="" />
+
+      <p style="text-align: center">
+        <input type="submit" value="Submit" onclick="parseData(submitted())" >
+      </p>
+    </form>
+
+    <div id="myModal" class="modal">
+
+      <!-- Modal content -->
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <div id="qrcode">
+        </div>
+
+      </div>
+
+    </div>
+
+    <script>
+
+      const form = document.getElementById('converter');
+      function submitted() {
+
+        event.preventDefault();
+        let data = [];
+        //Station Id
+        data.push(document.getElementById("station-id").value)
+        //match num
+        data.push(document.getElementById("matchNumber").value);
+        //team num
+        data.push(document.getElementById("teamNumber").value);
+        //auto
+        data.push(document.querySelector("input[type='radio'][name=autoConesTop]:checked").value);
+        data.push(document.querySelector("input[type='radio'][name=autoConesMiddle]:checked").value);
+        data.push(document.querySelector("input[type='radio'][name=autoConesBottom]:checked").value);
+        data.push(document.querySelector("input[type='radio'][name=autoConesDrop]:checked").value);
+        data.push(document.querySelector("input[type='radio'][name=autoCubesTop]:checked").value);
+        data.push(document.querySelector("input[type='radio'][name=autoCubesMiddle]:checked").value);
+        data.push(document.querySelector("input[type='radio'][name=autoCubesBottom]:checked").value);
+        data.push(document.querySelector("input[type='radio'][name=autoCubesDrop]:checked").value);
+
+
+        //tele
+        data.push(document.querySelector("input[type='radio'][name=teleConesTop]:checked").value);
+        data.push(document.querySelector("input[type='radio'][name=teleConesMiddle]:checked").value);
+        data.push(document.querySelector("input[type='radio'][name=teleConesBottom]:checked").value);
+        data.push(document.querySelector("input[type='radio'][name=teleConesDrop]:checked").value);
+        data.push(document.querySelector("input[type='radio'][name=teleCubesTop]:checked").value);
+        data.push(document.querySelector("input[type='radio'][name=teleCubesMiddle]:checked").value);
+        data.push(document.querySelector("input[type='radio'][name=teleCubesBottom]:checked").value);
+        data.push(document.querySelector("input[type='radio'][name=teleCubesDrop]:checked").value);
+
+        //superCharge
+        data.push(document.querySelector("input[type='radio'][name=superChargeConesTop]:checked").value);
+        data.push(document.querySelector("input[type='radio'][name=superChargeConesMiddle]:checked").value);
+        data.push(document.querySelector("input[type='radio'][name=superChargeConesBottom]:checked").value);
+        data.push(document.querySelector("input[type='radio'][name=superChargeCubesTop]:checked").value);
+        data.push(document.querySelector("input[type='radio'][name=superChargeCubesMiddle]:checked").value);
+        data.push(document.querySelector("input[type='radio'][name=superChargeCubesBottom]:checked").value);
+
+        //i don't care about times over charge station cause i'm tired
+        data.push("0");
+        //comms
+        data.push(document.getElementById("communicationField").value);
+
+        //notes
+        data.push(document.getElementById('notes').value);
+        return data;
+      }
+    </script>
+    <script src="qrcode.js" type="text/javascript"></script>
+    <script async defer src="https://apis.google.com/js/api.js" onload="gapiLoaded()"></script>
+    <script async defer src="https://accounts.google.com/gsi/client" onload="gisLoaded()"></script>
+    <script>
+      if('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('sw.js', { scope: '/Scouting-App/' });
+      }
+    </script>
+  </body>
+</html>

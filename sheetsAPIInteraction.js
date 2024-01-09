@@ -14,8 +14,11 @@
       let tokenClient;
       let gapiInited = false;
       let gisInited = false;
+       
 
       let signedIn = false;
+
+
 
       /**
        * Callback after api.js is loaded.
@@ -33,7 +36,7 @@
           apiKey: API_KEY,
           discoveryDocs: [DISCOVERY_DOC],
         });
-        gapiInited = true;  
+        gapiInited = true; 
       }
 
       /**
@@ -126,6 +129,7 @@
           }).then((response) => {
             const result = response.result;
             console.log(`${result.updatedCells} cells updated.`);
+            alert("Data Posted.");
             //if (callback) callback(response);
           });
         } catch (err) {
