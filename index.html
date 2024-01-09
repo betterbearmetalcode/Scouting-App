@@ -107,7 +107,7 @@
       <option value=5>Blue 3</option>
     </select>
 
-    <form id="scouting-form" method="POST" action="localhost://getdata.php">
+    <form id="scouting-form" method="POST">
       <label for="teamNumber">Team Number</label>
       <input type="number" id="teamNumber" name="teamNumberField" value="2046" /><br>
 
@@ -145,11 +145,10 @@
           </script>
         </div>
         <div class="counter" id="auto-amp-counter">
-          <h3>      Amp</h3>
+          <h3>Amp</h3>
           <button class="button" id="increment-amp-auto">+</button>
           <div class="value" id="amp-auto">0</div>
           <button class="button" id="decrement-amp-auto">-</button>
-          <button class="button" id="reset-amp-auto">0</button>
           
           <script>
             counter = 0;
@@ -167,9 +166,6 @@
                 document.getElementById('amp-auto').innerHTML = counter;
               }
             });
-            document.getElementById('reset-amp-auto').addEventListener('click', () => {
-              document.getElementById('amp-auto').innerHTML = 0;
-            });
           </script>
         </div>
 
@@ -178,7 +174,6 @@
           <button class="button" id="increment-drop-auto">+</button>
           <div class="value" id="drop-auto">0</div>
           <button class="button" id="decrement-drop-auto">-</button>
-          <button class="button" id="reset-drop-auto">0</button>
           
           <script>
             counter = 0;
@@ -196,9 +191,6 @@
                 document.getElementById('drop-auto').innerHTML = counter;
               }
             });
-            document.getElementById('reset-drop-auto').addEventListener('click', () => {
-              document.getElementById('drop-auto').innerHTML = 0;
-            });
           </script>
         </div>
 
@@ -210,11 +202,10 @@
       <div class="Tele">
         <h2>Tele</h2>
         <div class="counter" id="tele-speaker-counter">
-          <h3>  Speaker</h3>
+          <h3>Speaker</h3>
           <button class="button" id="increment-speaker-tele">+</button>
           <div class="value" id="speaker-tele">0</div>
           <button class="button" id="decrement-speaker-tele">-</button>
-          <button class="button" id="reset-speaker-tele">0</button>
           
           <script>
              counter = 0;
@@ -232,18 +223,14 @@
                 document.getElementById('speaker-tele').innerHTML = counter;
               }
             });
-            document.getElementById('reset-speaker-tele').addEventListener('click', () => {
-              document.getElementById('speaker-tele').innerHTML = 0;
-            });
           </script>
         </div>
 
         <div class="counter" id="tele-amp-counter">
-          <h3>      Amp</h3>
+          <h3>Amp</h3>
           <button class="button" id="increment-amp-tele">+</button>
           <div class="value" id="amp-tele">0</div>
           <button class="button" id="decrement-amp-tele">-</button>
-          <button class="button" id="reset-amp-tele">0</button>
           
           <script>
             counter = 0;
@@ -261,9 +248,6 @@
                 document.getElementById('amp-tele').innerHTML = counter;
               }
             });
-            document.getElementById('reset-amp-tele').addEventListener('click', () => {
-              document.getElementById('amp-tele').innerHTML = 0;
-            });
           </script>
         </div>
 
@@ -272,7 +256,6 @@
           <button class="button" id="increment-drop-tele">+</button>
           <div class="value" id="drop-tele">0</div>
           <button class="button" id="decrement-drop-tele">-</button>
-          <button class="button" id="reset-drop-tele">0</button>
           
           <script>
             counter = 0;
@@ -290,9 +273,6 @@
                 document.getElementById('drop-tele').innerHTML = counter;
               }
             });
-            document.getElementById('reset-drop-tele').addEventListener('click', () => {
-              document.getElementById('drop-tele').innerHTML = 0;
-            });
           </script>
         </div>
 
@@ -301,7 +281,6 @@
           <button class="button" id="increment-amplified-tele">+</button>
           <div class="value" id="amplified-tele">0</div>
           <button class="button" id="decrement-amplified-tele">-</button>
-          <button class="button" id="reset-amplified-tele">0</button>
           
           <script>
             counter = 0;
@@ -319,18 +298,14 @@
                 document.getElementById('amplified-tele').innerHTML = counter;
               }
             });
-            document.getElementById('reset-amplified-tele').addEventListener('click', () => {
-              document.getElementById('amplified-tele').innerHTML = 0;
-            });
           </script>
         </div>
 
         <div class="counter" id="tele-trap-counter">
-          <h3>     Trap</h3>
+          <h3>Trap</h3>
           <button class="button" id="increment-trap-tele">+</button>
           <div class="value" id="trap-tele">0</div>
           <button class="button" id="decrement-trap-tele">-</button>
-          <button class="button" id="reset-trap-tele">0</button>
           
           <script>
             counter = 0;
@@ -347,9 +322,6 @@
               if (--counter >= 0) {
                 document.getElementById('trap-tele').innerHTML = counter;
               }
-            });
-            document.getElementById('reset-trap-tele').addEventListener('click', () => {
-              document.getElementById('trap-tele').innerHTML = 0;
             });
           </script>
         </div>
