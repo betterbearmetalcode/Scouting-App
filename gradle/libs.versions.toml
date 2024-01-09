@@ -1,5 +1,6 @@
 [versions]
 bumble-appyxNavigation = "2.0.0-alpha09"
+coilCompose = "2.5.0"
 compiler = "1.5.6"
 compose = "1.5.4"
 compose-plugin = "1.5.10"
@@ -23,6 +24,7 @@ kotlinxDatetime = "0.4.1"
 androidx-compiler = { module = "androidx.compose.compiler:compiler", version.ref = "compiler" }
 backstack = { module = "com.bumble.appyx:backstack", version.ref = "bumble-appyxNavigation" }
 bumble-appyx-navigation = { module = "com.bumble.appyx:appyx-navigation", version.ref = "bumble-appyxNavigation" }
+coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coilCompose" }
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 kotlin-test-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
