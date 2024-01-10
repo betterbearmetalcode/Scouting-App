@@ -1,6 +1,9 @@
 package pages
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.net.Uri
+import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.ScrollState
@@ -17,6 +20,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.core.content.ContextCompat
 import com.bumble.appyx.components.backstack.BackStack
 import com.bumble.appyx.navigation.modality.BuildContext
 import com.bumble.appyx.navigation.node.Node
@@ -30,7 +34,11 @@ actual class PitsScoutMenu actual constructor(
 {
     @Composable
     actual override fun View(modifier: Modifier) {
+        val launcher = rememberLauncherForActivityResult(
+            ActivityResultContracts.RequestPermission()
+        ) { _: Boolean ->
 
+        }
         var hasImage by remember {
             mutableStateOf(false)
         }
@@ -85,9 +93,20 @@ actual class PitsScoutMenu actual constructor(
                 Button(
                     modifier = Modifier.padding(top = 16.dp),
                     onClick = {
-                        val uri = ComposeFileProvider.getImageUri(context)
-                        imageUri = uri
-                        cameraLauncher.launch(uri)
+                        when (PackageManager.PERMISSION_GRANTED) {
+                            ContextCompat.checkSelfPermission(
+                                context,
+                                Manifest.permission.CAMERA
+                            ) -> {
+                                val uri = ComposeFileProvider.getImageUri(context)
+                                imageUri = uri
+                                cameraLauncher.launch(uri)
+                            }
+                            else -> {
+                                launcher.launch(Manifest.permission.CAMERA)
+                            }
+                        }
+
                     },
                 ) {
                     Text(
