@@ -5,7 +5,7 @@ import androidx.compose.ui.Modifier
 import com.bumble.appyx.navigation.modality.BuildContext
 import com.bumble.appyx.navigation.node.Node
 
-class PitsScout(
+class PitsScoutMenu(
     buildContext: BuildContext
 ) : Node(
     buildContext = buildContext
