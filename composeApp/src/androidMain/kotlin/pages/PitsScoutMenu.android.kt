@@ -5,10 +5,11 @@ import androidx.compose.ui.Modifier
 import com.bumble.appyx.navigation.modality.BuildContext
 import com.bumble.appyx.navigation.node.Node
 
-expect class PitsScoutMenu(
+actual class PitsScoutMenu actual constructor(
     buildContext: BuildContext
-) : Node {
+) : Node(buildContext) {
     @Composable
-    override fun View(modifier: Modifier)
+    actual override fun View(modifier: Modifier) {
+    }
 
 }

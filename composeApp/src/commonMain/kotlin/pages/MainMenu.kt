@@ -48,7 +48,7 @@ class MainMenu(
                 )
                 Text(
                     text = "Bear Metal Scout App",
-                    fontSize = 30.sp
+                    fontSize = 25.sp
                 )
                 Button(
                     content = {
@@ -58,7 +58,7 @@ class MainMenu(
                         )
                     },
                     onClick = {
-
+                        backStack.push(RootNode.NavTarget.SettingsMenu)
                     },
                     modifier = Modifier.padding(3.dp),
                     contentPadding = PaddingValues(3.dp)
