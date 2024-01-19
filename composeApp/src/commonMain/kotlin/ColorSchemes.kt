@@ -1,3 +1,6 @@
+import androidx.compose.material.Colors
+import androidx.compose.material.darkColors
+import androidx.compose.material.lightColors
 import androidx.compose.ui.graphics.Color
 
 val defaultPrimary = Color(39, 42, 89)
@@ -12,3 +15,13 @@ val defaultOnSecondary = Color(115, 50, 50)
 val defaultOnBackground = Color(242, 191, 94)
 val defaultOnSurface = Color(149, 147, 0)
 val defaultOnError = Color(177, 173, 0)
+
+fun getThemes() : List<Theme> {
+    return listOf(
+        Theme("default", themeDefault()),
+        Theme("dark", darkColors()),
+        Theme("light", lightColors())
+    )
+}
+
+data class Theme(val name: String, val colors: Colors)

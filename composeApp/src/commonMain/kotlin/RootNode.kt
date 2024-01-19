@@ -1,5 +1,8 @@
 import androidx.compose.foundation.layout.Column
-import androidx.compose.runtime.Composable
+import androidx.compose.material.Colors
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Surface
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import com.bumble.appyx.components.backstack.BackStack
 import com.bumble.appyx.components.backstack.BackStackModel
@@ -21,11 +24,13 @@ class RootNode(
             savedStateMap = buildContext.savedStateMap
         ),
         visualisation = { BackStackFader(it) }
-    )
+    ),
+
 ) : ParentNode<RootNode.NavTarget>(
     appyxComponent = backStack,
     buildContext = buildContext
 ) {
+
 
     /**
      * You can create this class inside the body of RootNode
@@ -62,14 +67,24 @@ class RootNode(
     @Composable
     override fun View(modifier: Modifier) {
 
-        Column {
-            
-            AppyxComponent(
-                appyxComponent = backStack,
-                modifier = Modifier.weight(0.9f)
-            )
+        var colors = remember { mutableStateOf(LocalColors.current) }
+        CompositionLocalProvider(LocalColors provides colors.value) {
+            MaterialTheme(colors = currentColors) {
+                // A surface container using the 'background' color from the theme
+                Surface(color = currentColors.background) {
+                    Column {
 
+                        AppyxComponent(
+                            appyxComponent = backStack,
+                            modifier = Modifier.weight(0.9f)
+                        )
+
+                    }
+                }
+            }
         }
 
     }
 }
+
+val LocalColors = compositionLocalOf { currentColors }

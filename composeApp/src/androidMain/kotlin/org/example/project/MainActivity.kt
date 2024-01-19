@@ -2,20 +2,22 @@ package org.example.project
 
 
 import RootNode
+import android.content.res.Configuration
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.ExperimentalComposeUiApi
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalLifecycleOwner
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.ExperimentalUnitApi
 import com.bumble.appyx.navigation.integration.NodeActivity
 import com.bumble.appyx.navigation.integration.NodeHost
 import com.bumble.appyx.navigation.platform.AndroidLifecycle
-import getCurrentTheme
+import currentColors
 
 @ExperimentalUnitApi
 @ExperimentalAnimationApi
@@ -28,9 +30,7 @@ class MainActivity : NodeActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            MaterialTheme(colors = getCurrentTheme()) {
-                // A surface container using the 'background' color from the theme
-                Surface(color = MaterialTheme.colors.background) {
+
                     //CompositionLocalProvider(LocalNavigator provides navigator) {
                     NodeHost(
                         lifecycle = AndroidLifecycle(LocalLifecycleOwner.current.lifecycle),
@@ -42,7 +42,5 @@ class MainActivity : NodeActivity() {
                     }
                     //}
                 }
-            }
-        }
     }
 }
