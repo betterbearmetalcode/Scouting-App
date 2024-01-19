@@ -45,6 +45,11 @@ kotlin {
             implementation(libs.compose.ui.tooling.preview)
             implementation(libs.androidx.activity.compose)
             implementation(libs.coil.compose)
+            implementation(libs.androidx.lifecycle.viewmodel.ktx)
+            implementation(libs.androidx.lifecycle.livedata)
+            implementation(libs.androidx.lifecycle.viewmodel.savedstate)
+            implementation(libs.androidx.lifecycle.compiler)
+            implementation(libs.androidx.lifecycle.viewmodel.compose)
         }
 
         desktopMain.dependencies {
@@ -58,10 +63,8 @@ kotlin {
             @OptIn(ExperimentalComposeLibrary::class)
             implementation(compose.components.resources)
             implementation(libs.androidx.compiler)
-            implementation(libs.androidx.lifecycle.viewmodel.ktx)
-            implementation(libs.androidx.lifecycle.livedata)
-            implementation(libs.androidx.lifecycle.viewmodel.savedstate)
-            implementation(libs.androidx.lifecycle.compiler)
+
+
 
         }
 

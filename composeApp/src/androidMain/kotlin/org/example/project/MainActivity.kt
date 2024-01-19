@@ -14,6 +14,7 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.unit.ExperimentalUnitApi
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.bumble.appyx.navigation.integration.NodeActivity
 import com.bumble.appyx.navigation.integration.NodeHost
 import com.bumble.appyx.navigation.platform.AndroidLifecycle
@@ -29,8 +30,11 @@ class MainActivity : NodeActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setContent {
 
+        setContent {
+            val themeViewModel: ThemeViewModel = viewModel()
+            MaterialTheme(themeViewModel.theme.value) {
+                Surface(color = themeViewModel.theme.value.background) {
                     //CompositionLocalProvider(LocalNavigator provides navigator) {
                     NodeHost(
                         lifecycle = AndroidLifecycle(LocalLifecycleOwner.current.lifecycle),
@@ -42,5 +46,7 @@ class MainActivity : NodeActivity() {
                     }
                     //}
                 }
+            }
+        }
     }
 }

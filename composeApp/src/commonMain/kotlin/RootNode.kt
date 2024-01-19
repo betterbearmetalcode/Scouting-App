@@ -67,24 +67,16 @@ class RootNode(
     @Composable
     override fun View(modifier: Modifier) {
 
-        var colors = remember { mutableStateOf(LocalColors.current) }
-        CompositionLocalProvider(LocalColors provides colors.value) {
-            MaterialTheme(colors = currentColors) {
-                // A surface container using the 'background' color from the theme
-                Surface(color = currentColors.background) {
-                    Column {
+        theme = mutableStateOf(currentColors)
+        Column {
 
-                        AppyxComponent(
-                            appyxComponent = backStack,
-                            modifier = Modifier.weight(0.9f)
-                        )
+            AppyxComponent(
+                appyxComponent = backStack,
+                modifier = Modifier.weight(0.9f)
+            )
 
-                    }
-                }
-            }
         }
-
     }
 }
 
-val LocalColors = compositionLocalOf { currentColors }
+lateinit var theme: MutableState<Colors>

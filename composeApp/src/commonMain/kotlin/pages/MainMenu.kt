@@ -27,87 +27,84 @@ class MainMenu(
 
     @Composable
     override fun View(modifier: Modifier) {
-        var theme by remember { mutableStateOf(currentColors) }
-        MaterialTheme(theme) {
-            Column(modifier = modifier) {
-                Row {
-                    Button(
-                        content = {
-                            Text(
-                                text = "i",
-                                fontSize = 12.sp
-                            )
-                        },
-                        onClick = {
-
-                        },
-                        modifier = Modifier.padding(3.dp),
-                        contentPadding = PaddingValues(3.dp)
-                    )
-                    Text(
-                        text = "Bear Metal Scout App",
-                        fontSize = 25.sp
-                    )
-                    Button(
-                        content = {
-                            Text(
-                                text = "s",
-                                fontSize = 12.sp
-                            )
-                        },
-                        onClick = {
-                            backStack.push(RootNode.NavTarget.SettingsMenu)
-                        },
-                        modifier = Modifier.padding(3.dp),
-                        contentPadding = PaddingValues(3.dp)
-                    )
-                }
-                Divider(color = theme.secondary, thickness = 2.dp)
+        Column(modifier = modifier) {
+            Row {
                 Button(
                     content = {
                         Text(
-                            text = "Quantitative Scouting",
-                            fontSize = 23.sp
+                            text = "i",
+                            fontSize = 12.sp
                         )
                     },
                     onClick = {
-                        backStack.push(RootNode.NavTarget.QuanScouting)
+
                     },
-                    modifier = Modifier.align(Alignment.CenterHorizontally)
-                        .padding(horizontal = 50.dp, vertical = 50.dp),
+                    modifier = Modifier.padding(3.dp),
+                    contentPadding = PaddingValues(3.dp)
                 )
-
+                Text(
+                    text = "Bear Metal Scout App",
+                    fontSize = 25.sp
+                )
                 Button(
                     content = {
                         Text(
-                            text = "Pits Scouting",
-                            fontSize = 22.sp
+                            text = "s",
+                            fontSize = 12.sp
                         )
                     },
                     onClick = {
-                        backStack.push(RootNode.NavTarget.PitsScouting)
+                        backStack.push(RootNode.NavTarget.SettingsMenu)
                     },
-                    modifier = Modifier.align(Alignment.CenterHorizontally)
-                        .padding(horizontal = 50.dp, vertical = 50.dp),
-
-                    )
-
-                Button(
-                    content = {
-                        Text(
-                            text = "Qualitative Scouting",
-                            fontSize = 22.sp
-                        )
-                    },
-                    onClick = {
-                        backStack.push(RootNode.NavTarget.QualScouting)
-                    },
-                    modifier = Modifier.align(Alignment.CenterHorizontally)
-                        .padding(horizontal = 50.dp, vertical = 50.dp),
-
-                    )
+                    modifier = Modifier.padding(3.dp),
+                    contentPadding = PaddingValues(3.dp)
+                )
             }
+            Divider(color = currentColors.secondary, thickness = 2.dp)
+            Button(
+                content = {
+                    Text(
+                        text = "Quantitative Scouting",
+                        fontSize = 23.sp
+                    )
+                },
+                onClick = {
+                    backStack.push(RootNode.NavTarget.QuanScouting)
+                },
+                modifier = Modifier.align(Alignment.CenterHorizontally)
+                    .padding(horizontal = 50.dp, vertical = 50.dp),
+            )
+
+            Button(
+                onClick = {
+                    backStack.push(RootNode.NavTarget.PitsScouting)
+                },
+                modifier = Modifier.align(Alignment.CenterHorizontally)
+                    .padding(horizontal = 50.dp, vertical = 50.dp),
+
+            ) {
+                Text(
+                    text = "Pits Scouting",
+                    fontSize = 22.sp
+                )
+            }
+
+            Button(
+                onClick = {
+                    backStack.push(RootNode.NavTarget.QualScouting)
+                },
+                modifier = Modifier.align(Alignment.CenterHorizontally)
+                    .padding(horizontal = 50.dp, vertical = 50.dp),
+
+            ) {
+                Text(
+                    text = "Qualitative Scouting",
+                    fontSize = 22.sp
+                )
+            }
+
         }
+
 
     }
 }
