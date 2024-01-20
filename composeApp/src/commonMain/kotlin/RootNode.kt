@@ -25,7 +25,7 @@ import pages.QuanScoutMenu
 
 class RootNode(
     buildContext: BuildContext,
-    private val backStack: BackStack<NavTarget> = BackStack(
+    val backStack: BackStack<NavTarget> = BackStack(
         model = BackStackModel(
             initialTarget = NavTarget.MainMenu,
             savedStateMap = buildContext.savedStateMap
@@ -36,6 +36,9 @@ class RootNode(
     appyxComponent = backStack,
     buildContext = buildContext
 ) {
+
+
+
 
     /**
      * You can create this class inside the body of RootNode
@@ -68,8 +71,8 @@ class RootNode(
     @Composable
     override fun View(modifier: Modifier) {
 
+
         Column {
-            
             AppyxComponent(
                 appyxComponent = backStack,
                 modifier = Modifier.weight(0.9f)
