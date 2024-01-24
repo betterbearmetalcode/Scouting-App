@@ -13,10 +13,12 @@ import androidx.compose.material.TextField
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.graphics.painter.BitmapPainter
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.loadImageBitmap
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.android.volley.toolbox.ImageRequest
 import com.bumble.appyx.components.backstack.BackStack
 import com.bumble.appyx.navigation.modality.BuildContext
 import com.bumble.appyx.navigation.node.Node
@@ -25,7 +27,11 @@ import org.jetbrains.compose.resources.painterResource
 import org.json.JSONObject
 import qrcode.QRCode
 import qrcode.color.Colors
+import java.io.BufferedWriter
 import java.io.File
+import java.io.FileOutputStream
+import java.io.FileWriter
+import java.io.Writer
 import kotlin.math.round
 
 actual class QualScoutMenu actual constructor(
@@ -40,9 +46,9 @@ actual class QualScoutMenu actual constructor(
         var collectionScore by remember { mutableFloatStateOf(5f) }
         var outtakeScore by remember { mutableFloatStateOf(5f) }
         var driverScore by remember { mutableFloatStateOf(5f) }
+        var file by remember { mutableStateOf(File("src/commonMain/resources/Empty Qr Code.png")) }
+        var imageBitmap by remember { mutableStateOf(loadImageBitmap(file.inputStream())) }
 
-
-        //var qrCodeFile by remember { mutableStateOf(ImageRequest.Builder(context).data(File("")).build()) }
 
 
         Column(modifier = modifier.verticalScroll(ScrollState(0))) {
@@ -88,7 +94,7 @@ actual class QualScoutMenu actual constructor(
                     sliderValue = collectionScore,
                     onValueChange = {
                         collectionScore = it
-                        collectionScore = round(collectionScore)
+                        collectionScore = round(collectionScore * 10f) / 10f
                     }
                 )
 
@@ -128,7 +134,7 @@ actual class QualScoutMenu actual constructor(
                     sliderValue = driverScore,
                     onValueChange = {
                         driverScore = it
-                        driverScore = round(driverScore)
+                        driverScore = round(driverScore * 10f) / 10f
                     }
                 )
 
@@ -141,7 +147,6 @@ actual class QualScoutMenu actual constructor(
 
                 Button(
                     onClick = {
-
                         val jsonObject = JSONObject()
 
                         jsonObject.put("Notes", notes)
@@ -156,23 +161,27 @@ actual class QualScoutMenu actual constructor(
 
                         val pngBytes = helloWorld.render()
 
-                        qrCodeFile = ImageRequest.Builder(context)
-                            .data(pngBytes.getBytes())
-                            .build()
+                        val image = File("C:\\Users\\tahom\\IdeaProjects\\Scouting-App\\composeApp\\src\\desktopMain\\resources\\qrCodeDesktop.png")
+                        image.delete()
+                        image.createNewFile()
 
+                        val fos = FileOutputStream(image)
+                        fos.write(pngBytes.getBytes())
+                        fos.close()
 
+                        file = image
+                        imageBitmap = loadImageBitmap(file.inputStream())
                     },
                     content = {
                         Text(
                             text = "Export Data (Qr Code)"
-
                         )
                     }
                 )
 
-                AsyncImage(
-                    model = qrCodeFile,
-                    contentDescription = "Qr Code",
+                Image(
+                    painter = BitmapPainter(imageBitmap),
+                    contentDescription = "QR Code",
                     contentScale = ContentScale.Fit,
                     modifier = Modifier
                         .fillMaxSize(1.25f)

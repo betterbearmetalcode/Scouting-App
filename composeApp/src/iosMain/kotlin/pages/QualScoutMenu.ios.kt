@@ -8,8 +8,8 @@ import com.bumble.appyx.navigation.node.Node
 
 actual class QualScoutMenu actual constructor(
     buildContext: BuildContext,
-    private val backStack: BackStack<RootNode.NavTarget>
-) : Node(buildContext = buildContext) {
+    backStack: BackStack<RootNode.NavTarget>
+) : Node(buildContext) {
     @Composable
     actual override fun View(modifier: Modifier) {
     }

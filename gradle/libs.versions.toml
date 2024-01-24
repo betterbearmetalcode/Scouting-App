@@ -1,6 +1,8 @@
 [versions]
 accompanistPermissions = "0.25.0"
+accompanistPlaceholderMaterial = "0.32.0"
 bumble-appyxNavigation = "2.0.0-alpha09"
+coil-kt-coilCompose = "1.4.0"
 coilCompose = "2.5.0"
 compiler = "1.5.8"
 compose = "1.5.4"
@@ -17,6 +19,7 @@ androidx-material = "1.11.0"
 androidx-constraintlayout = "2.1.4"
 androidx-test-junit = "1.1.5"
 androidx-espresso-core = "3.5.1"
+json-json = "20231013"
 kotlin = "1.9.20"
 junit = "4.13.2"
 kotlinxCoroutinesTest = "1.8.0-RC"
@@ -28,12 +31,22 @@ volley = "1.2.1"
 [libraries]
 accompanist-drawablepainter = { module = "com.google.accompanist:accompanist-drawablepainter", version.ref = "accompanistPermissions" }
 accompanist-permissions = { module = "com.google.accompanist:accompanist-permissions", version.ref = "accompanistPermissions" }
+accompanist-placeholder = { module = "com.google.accompanist:accompanist-placeholder", version.ref = "accompanistPlaceholderMaterial" }
+accompanist-placeholder-material = { module = "com.google.accompanist:accompanist-placeholder-material", version.ref = "accompanistPlaceholderMaterial" }
+androidx-appcompat-resources = { module = "androidx.appcompat:appcompat-resources", version.ref = "androidx-appcompat" }
 androidx-compiler = { module = "androidx.compose.compiler:compiler", version.ref = "compiler" }
 androidx-lifecycle-common = { module = "androidx.lifecycle:lifecycle-common", version.ref = "lifecycleCommon" }
+androidx-lifecycle-compiler = { module = "androidx.lifecycle:lifecycle-compiler", version.ref = "lifecycleCommon" }
+androidx-lifecycle-livedata = { module = "androidx.lifecycle:lifecycle-livedata", version.ref = "lifecycleCommon" }
+androidx-lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycleCommon" }
+androidx-lifecycle-viewmodel-ktx = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "lifecycleCommon" }
+androidx-lifecycle-viewmodel-savedstate = { module = "androidx.lifecycle:lifecycle-viewmodel-savedstate", version.ref = "lifecycleCommon" }
 androidx-ui-android = { module = "androidx.compose.ui:ui-android", version.ref = "compose" }
 backstack = { module = "com.bumble.appyx:backstack", version.ref = "bumble-appyxNavigation" }
 bumble-appyx-navigation = { module = "com.bumble.appyx:appyx-navigation", version.ref = "bumble-appyxNavigation" }
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coilCompose" }
+coil-compose-v140 = { module = "io.coil-kt:coil-compose", version.ref = "coil-kt-coilCompose" }
+json-json = { module = "org.json:json", version.ref = "json-json" }
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 kotlin-test-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
