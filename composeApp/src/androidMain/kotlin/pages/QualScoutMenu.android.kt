@@ -4,6 +4,7 @@ import BackButton
 import LabeledSlider
 import RootNode
 import android.annotation.SuppressLint
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.layout.*
@@ -40,6 +41,7 @@ actual class QualScoutMenu actual constructor(
     @SuppressLint("NewApi")
     @Composable
     actual override fun View(modifier: Modifier) {
+
         var notes by remember { mutableStateOf("") }
         var collectionScore by remember { mutableFloatStateOf(5f) }
         var outtakeScore by remember { mutableFloatStateOf(5f) }
@@ -92,7 +94,7 @@ actual class QualScoutMenu actual constructor(
                     sliderValue = collectionScore,
                     onValueChange = {
                         collectionScore = it
-                        collectionScore = round(collectionScore)
+                        collectionScore = round(collectionScore * 10f) / 10f
                     }
                 )
 
@@ -132,7 +134,7 @@ actual class QualScoutMenu actual constructor(
                     sliderValue = driverScore,
                     onValueChange = {
                         driverScore = it
-                        driverScore = round(driverScore)
+                        driverScore = round(driverScore * 10f) / 10f
                     }
                 )
 
