@@ -1,14 +1,20 @@
 package pages
 
 import RootNode
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Button
 import androidx.compose.material.Divider
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shadow
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.bumble.appyx.components.backstack.BackStack
@@ -24,13 +30,13 @@ class MainMenu(
 
     @Composable
     override fun View(modifier: Modifier) {
-        Column {
+        var theme by remember { mutableStateOf(getCurrentTheme()) }
+        Column(modifier = modifier) {
             Row {
                 Button(
                     content = {
                         Text(
                             text = "i",
-                            color = getCurrentTheme().secondaryVariant,
                             fontSize = 12.sp
                         )
                     },
@@ -48,7 +54,6 @@ class MainMenu(
                     content = {
                         Text(
                             text = "s",
-                            color = getCurrentTheme().secondaryVariant,
                             fontSize = 12.sp
                         )
                     },
@@ -59,12 +64,11 @@ class MainMenu(
                     contentPadding = PaddingValues(3.dp)
                 )
             }
-            Divider(color = getCurrentTheme().secondary, thickness = 2.dp)
+            Divider(color = theme.secondary, thickness = 2.dp)
             Button(
                 content = {
                     Text(
                         text = "Quantitative Scouting",
-                        color = getCurrentTheme().primaryVariant,
                         fontSize = 23.sp
                     )
                 },
@@ -78,7 +82,6 @@ class MainMenu(
                 content = {
                     Text(
                         text = "Pits Scouting",
-                        color = getCurrentTheme().primaryVariant,
                         fontSize = 22.sp
                     )
                 },
@@ -93,7 +96,6 @@ class MainMenu(
                 content = {
                     Text(
                         text = "Qualitative Scouting",
-                        color = getCurrentTheme().primaryVariant,
                         fontSize = 22.sp
                     )
                 },

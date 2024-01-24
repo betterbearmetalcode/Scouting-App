@@ -1,28 +1,65 @@
-import androidx.compose.desktop.ui.tooling.preview.Preview
-import androidx.compose.runtime.Composable
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Surface
+import androidx.compose.runtime.remember
+import androidx.compose.ui.input.key.*
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Window
-import androidx.compose.ui.window.WindowPosition
 import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberWindowState
+import com.bumble.appyx.components.backstack.operation.push
+import com.bumble.appyx.navigation.integration.DesktopNodeHost
+import kotlinx.coroutines.*
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.mapNotNull
+import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.test.setMain
 
+
+@OptIn(ExperimentalCoroutinesApi::class)
 fun main() = application {
-    val state = rememberWindowState(
-        size = DpSize(400.dp, 250.dp),
-        position = WindowPosition(300.dp, 300.dp)
-    )
+    val mainThreadSurrogate:CoroutineDispatcher = Dispatchers.Default
+    Dispatchers.setMain(mainThreadSurrogate)
+
+    val events: Channel<Events> = Channel()
+    val windowState = rememberWindowState(size = DpSize(480.dp, 640.dp))
+    val eventScope = remember { CoroutineScope(SupervisorJob() + Dispatchers.Main) }
+
     Window(
-        title = "Local Time App",
+        state = windowState,
         onCloseRequest = ::exitApplication,
-        state = state
+        onKeyEvent = {
+            // See back handling section in the docs below!
+            onKeyEvent(it, events, eventScope)
+        },
     ) {
-        App()
+        MaterialTheme(colors = getCurrentTheme()) {
+            Surface(color = MaterialTheme.colors.background) {
+                DesktopNodeHost(
+                    windowState = windowState,
+                    onBackPressedEvents = events.receiveAsFlow().mapNotNull {
+                        if (it is Events.OnBackPressed) Unit else null
+                    }
+                ) {
+                    RootNode(buildContext = it)
+                }
+            }
+        }
     }
 }
 
-@Preview
-@Composable
-fun AppDesktopPreview() {
-    App()
-}
+private fun onKeyEvent(
+    keyEvent: KeyEvent,
+    events: Channel<Events>,
+    coroutineScope: CoroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Main),
+): Boolean =
+    when {
+        // You can also register e.g. Key.Escape instead of BackSpace:
+        keyEvent.type == KeyEventType.KeyDown && keyEvent.key == Key.Backspace -> {
+            coroutineScope.launch { events.send(Events.OnBackPressed) }
+            true
+        }
+
+        else -> false
+    }

@@ -1,5 +1,6 @@
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.compose.ExperimentalComposeLibrary
+import kotlin.io.path.div
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
@@ -44,10 +45,21 @@ kotlin {
             implementation(libs.compose.ui)
             implementation(libs.compose.ui.tooling.preview)
             implementation(libs.androidx.activity.compose)
+            implementation(libs.coil.compose)
         }
 
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)
+            implementation(libs.androidx.lifecycle.common)
+            implementation(libs.kotlinx.coroutines.test)
+            implementation(libs.accompanist.drawablepainter)
+            implementation(libs.androidx.appcompat.resources)
+            implementation(libs.json.json)
+            implementation(libs.androidx.lifecycle.viewmodel.ktx)
+            implementation(libs.androidx.lifecycle.livedata)
+            implementation(libs.androidx.lifecycle.viewmodel.savedstate)
+            implementation(libs.androidx.lifecycle.compiler)
+            implementation(libs.androidx.lifecycle.viewmodel.compose)
         }
 
         commonMain.dependencies {
@@ -57,17 +69,17 @@ kotlin {
             @OptIn(ExperimentalComposeLibrary::class)
             implementation(compose.components.resources)
             implementation(libs.androidx.compiler)
-        }
+            implementation(libs.bumble.appyx.navigation)
+            implementation(libs.qrcode.kotlin)
 
-        val commonMain by getting {
-            dependencies {
-                implementation(libs.bumble.appyx.navigation)
 
-                api(libs.backstack)
-            }
+
+
+            api(libs.backstack)
         }
     }
 }
+
 
 android {
     namespace = "org.example.project"
@@ -110,10 +122,12 @@ android {
 }
 
 compose.desktop {
+
     application {
         mainClass = "MainKt"
 
         nativeDistributions {
+            appResourcesRootDir = (rootDir.toPath() / "desktopMain").toFile()
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
             packageName = "org.example.project"
             packageVersion = "1.0.0"
