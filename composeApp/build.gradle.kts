@@ -1,5 +1,6 @@
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.compose.ExperimentalComposeLibrary
+import kotlin.io.path.div
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
@@ -50,6 +51,8 @@ kotlin {
 
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)
+            implementation(libs.kotlinx.coroutines.test)
+            implementation(libs.json)
         }
 
         commonMain.dependencies {
@@ -111,15 +114,13 @@ android {
         debugImplementation(libs.compose.ui.tooling)
     }
 }
-dependencies {
-    implementation(libs.androidx.material3)
-}
 
 compose.desktop {
     application {
         mainClass = "MainKt"
 
         nativeDistributions {
+            appResourcesRootDir = (rootDir.toPath() / "desktopMain").toFile()
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
             packageName = "org.example.project"
             packageVersion = "1.0.0"

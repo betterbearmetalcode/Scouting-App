@@ -231,7 +231,13 @@ actual class QuanScoutMenu actual constructor(
                 Text("Export to QR code")
             }
 
-            AsyncImage(model = qrCodeFile, contentDescription = "QR Code")
+            AsyncImage(
+                model = qrCodeFile,
+                contentDescription = "QR Code",
+                contentScale = ContentScale.Fit,
+                modifier = Modifier
+                    .fillMaxSize(1.25f)
+            )
         }
     }
 }
