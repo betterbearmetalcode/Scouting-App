@@ -17,13 +17,16 @@ fun EnumerableValue(
     horizontalArrangement: Arrangement.Horizontal = Arrangement.Start
 ) {
     Row (
-        modifier = modifier,
-        horizontalArrangement = horizontalArrangement
+        modifier = modifier
+            .offset(0.dp,5.dp),
+        horizontalArrangement = horizontalArrangement,
     ) {
         Text(
             label,
             fontSize = 25.sp
         )
+    }
+    Row(horizontalArrangement = Arrangement.Center, modifier = Modifier.offset(130.dp,-30.dp)) {
         Button(
             onClick = {
                 value.value -= 1
