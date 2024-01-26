@@ -1,51 +1,35 @@
 [versions]
-accompanistPermissions = "0.25.0"
-accompanistPlaceholderMaterial = "0.32.0"
 bumble-appyxNavigation = "2.0.0-alpha09"
-coil-kt-coilCompose = "1.4.0"
 coilCompose = "2.5.0"
 compiler = "1.5.8"
 compose = "1.5.4"
-compose-plugin = "1.5.10"
-compose-compiler = "1.5.4"
-agp = "8.2.0-beta05"
-android-minSdk = "24"
+compose-compiler = "1.5.8"
+compose-plugin = "1.5.11"
+agp = "8.1.4"
 android-compileSdk = "34"
+android-minSdk = "24"
 android-targetSdk = "34"
 androidx-activityCompose = "1.8.2"
-androidx-core-ktx = "1.12.0"
 androidx-appcompat = "1.6.1"
-androidx-material = "1.11.0"
 androidx-constraintlayout = "2.1.4"
-androidx-test-junit = "1.1.5"
+androidx-core-ktx = "1.12.0"
 androidx-espresso-core = "3.5.1"
+androidx-material = "1.11.0"
+androidx-test-junit = "1.1.5"
 json-json = "20231013"
-kotlin = "1.9.20"
 junit = "4.13.2"
+kotlin = "1.9.21"
 kotlinxCoroutinesTest = "1.8.0-RC"
-kotlinxDatetime = "0.4.1"
 lifecycleCommon = "2.7.0"
 qrcodeKotlin = "4.0.6"
-volley = "1.2.1"
 
 [libraries]
-accompanist-drawablepainter = { module = "com.google.accompanist:accompanist-drawablepainter", version.ref = "accompanistPermissions" }
-accompanist-permissions = { module = "com.google.accompanist:accompanist-permissions", version.ref = "accompanistPermissions" }
-accompanist-placeholder = { module = "com.google.accompanist:accompanist-placeholder", version.ref = "accompanistPlaceholderMaterial" }
-accompanist-placeholder-material = { module = "com.google.accompanist:accompanist-placeholder-material", version.ref = "accompanistPlaceholderMaterial" }
-androidx-appcompat-resources = { module = "androidx.appcompat:appcompat-resources", version.ref = "androidx-appcompat" }
 androidx-compiler = { module = "androidx.compose.compiler:compiler", version.ref = "compiler" }
 androidx-lifecycle-common = { module = "androidx.lifecycle:lifecycle-common", version.ref = "lifecycleCommon" }
-androidx-lifecycle-compiler = { module = "androidx.lifecycle:lifecycle-compiler", version.ref = "lifecycleCommon" }
-androidx-lifecycle-livedata = { module = "androidx.lifecycle:lifecycle-livedata", version.ref = "lifecycleCommon" }
-androidx-lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycleCommon" }
-androidx-lifecycle-viewmodel-ktx = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "lifecycleCommon" }
-androidx-lifecycle-viewmodel-savedstate = { module = "androidx.lifecycle:lifecycle-viewmodel-savedstate", version.ref = "lifecycleCommon" }
 androidx-ui-android = { module = "androidx.compose.ui:ui-android", version.ref = "compose" }
 backstack = { module = "com.bumble.appyx:backstack", version.ref = "bumble-appyxNavigation" }
 bumble-appyx-navigation = { module = "com.bumble.appyx:appyx-navigation", version.ref = "bumble-appyxNavigation" }
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coilCompose" }
-coil-compose-v140 = { module = "io.coil-kt:coil-compose", version.ref = "coil-kt-coilCompose" }
 json-json = { module = "org.json:json", version.ref = "json-json" }
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 kotlin-test-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }
@@ -63,13 +47,11 @@ androidx-material = { group = "com.google.android.material", name = "material", 
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "androidx-constraintlayout" }
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activityCompose" }
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinxCoroutinesTest" }
-kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinxDatetime" }
 multiplatform = { module = "com.bumble.appyx:multiplatform", version.ref = "bumble-appyxNavigation" }
 qrcode-kotlin = { module = "io.github.g0dkar:qrcode-kotlin", version.ref = "qrcodeKotlin" }
-volley = { module = "com.android.volley:volley", version.ref = "volley" }
 
 [plugins]
-jetbrainsCompose = { id = "org.jetbrains.compose", version.ref = "compose-plugin" }
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 androidLibrary = { id = "com.android.library", version.ref = "agp" }
+jetbrainsCompose = { id = "org.jetbrains.compose", version.ref = "compose-plugin" }
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }

@@ -24,9 +24,9 @@ kotlin {
             }
         }
     }
-    
+
     jvm("desktop")
-    
+
     listOf(
         iosX64(),
         iosArm64(),
@@ -52,14 +52,7 @@ kotlin {
             implementation(compose.desktop.currentOs)
             implementation(libs.androidx.lifecycle.common)
             implementation(libs.kotlinx.coroutines.test)
-            implementation(libs.accompanist.drawablepainter)
-            implementation(libs.androidx.appcompat.resources)
             implementation(libs.json.json)
-            implementation(libs.androidx.lifecycle.viewmodel.ktx)
-            implementation(libs.androidx.lifecycle.livedata)
-            implementation(libs.androidx.lifecycle.viewmodel.savedstate)
-            implementation(libs.androidx.lifecycle.compiler)
-            implementation(libs.androidx.lifecycle.viewmodel.compose)
         }
 
         commonMain.dependencies {
@@ -96,12 +89,6 @@ android {
         versionCode = 1
         versionName = "1.0"
     }
-    buildFeatures {
-        compose = true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion = libs.versions.compose.compiler.get()
-    }
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
@@ -122,7 +109,6 @@ android {
 }
 
 compose.desktop {
-
     application {
         mainClass = "MainKt"
 
