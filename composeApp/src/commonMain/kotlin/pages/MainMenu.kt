@@ -28,7 +28,7 @@ class MainMenu(
     @Composable
     override fun View(modifier: Modifier) {
         Column(modifier = modifier) {
-            Row {
+            Row(modifier = Modifier.align(Alignment.CenterHorizontally)) {
                 Button(
                     content = {
                         Text(

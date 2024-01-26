@@ -13,6 +13,7 @@ plugins {
 repositories {
     google()
     mavenCentral()
+
 }
 
 kotlin {
@@ -54,6 +55,12 @@ kotlin {
 
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)
+            implementation(libs.kotlinx.coroutines.test)
+            implementation(libs.androidx.lifecycle.viewmodel.ktx)
+            implementation(libs.androidx.lifecycle.livedata)
+            implementation(libs.androidx.lifecycle.viewmodel.savedstate)
+            implementation(libs.androidx.lifecycle.compiler)
+            implementation(libs.androidx.lifecycle.viewmodel.compose)
         }
 
         commonMain.dependencies {
@@ -63,8 +70,7 @@ kotlin {
             @OptIn(ExperimentalComposeLibrary::class)
             implementation(compose.components.resources)
             implementation(libs.androidx.compiler)
-
-
+            implementation(libs.kottage)
 
         }
 
@@ -117,6 +123,10 @@ android {
     dependencies {
         debugImplementation(libs.compose.ui.tooling)
     }
+}
+dependencies {
+    implementation(libs.androidx.lifecycle.viewmodel.ktx)
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
 }
 
 compose.desktop {
