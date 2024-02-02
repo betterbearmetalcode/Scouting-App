@@ -1,5 +1,5 @@
-import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.compose.ExperimentalComposeLibrary
+import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import kotlin.io.path.div
 
 plugins {
@@ -116,7 +116,8 @@ compose.desktop {
             appResourcesRootDir = (rootDir.toPath() / "desktopMain").toFile()
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
             packageName = "org.example.project"
-            packageVersion = "1.0.0"
+            packageVersion = "1.0.12624"
         }
     }
+
 }

@@ -171,7 +171,6 @@ actual class QualScoutMenu actual constructor(
                     content = {
                         Text(
                             text = "Export Data (Qr Code)"
-
                         )
                     }
                 )

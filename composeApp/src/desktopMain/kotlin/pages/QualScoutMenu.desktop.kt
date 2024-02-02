@@ -13,7 +13,6 @@ import androidx.compose.material.TextField
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.painter.BitmapPainter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.loadImageBitmap
@@ -27,11 +26,8 @@ import org.jetbrains.compose.resources.painterResource
 import org.json.JSONObject
 import qrcode.QRCode
 import qrcode.color.Colors
-import java.io.BufferedWriter
 import java.io.File
 import java.io.FileOutputStream
-import java.io.FileWriter
-import java.io.Writer
 import kotlin.math.round
 
 actual class QualScoutMenu actual constructor(
@@ -46,8 +42,8 @@ actual class QualScoutMenu actual constructor(
         var collectionScore by remember { mutableFloatStateOf(5f) }
         var outtakeScore by remember { mutableFloatStateOf(5f) }
         var driverScore by remember { mutableFloatStateOf(5f) }
-        var file by remember { mutableStateOf(File("src/commonMain/resources/Empty Qr Code.png")) }
-        var imageBitmap by remember { mutableStateOf(loadImageBitmap(file.inputStream())) }
+        var file by remember { mutableStateOf(javaClass.classLoader.getResourceAsStream("Empty Qr Code.png")) }
+        var imageBitmap by remember { mutableStateOf(loadImageBitmap(file)) }
 
 
 
@@ -161,7 +157,7 @@ actual class QualScoutMenu actual constructor(
 
                         val pngBytes = helloWorld.render()
 
-                        val image = File("C:\\Users\\tahom\\IdeaProjects\\Scouting-App\\composeApp\\src\\desktopMain\\resources\\qrCodeDesktop.png")
+                        val image = File("app/resources/qrCodeDesktop.png")
                         image.delete()
                         image.createNewFile()
 
@@ -169,8 +165,8 @@ actual class QualScoutMenu actual constructor(
                         fos.write(pngBytes.getBytes())
                         fos.close()
 
-                        file = image
-                        imageBitmap = loadImageBitmap(file.inputStream())
+                        file = image.inputStream()
+                        imageBitmap = loadImageBitmap(file)
                     },
                     content = {
                         Text(

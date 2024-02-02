@@ -1,15 +1,8 @@
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.material.Button
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.bumble.appyx.components.backstack.BackStack
 import com.bumble.appyx.components.backstack.BackStackModel
-import com.bumble.appyx.components.backstack.operation.pop
-import com.bumble.appyx.components.backstack.operation.push
 import com.bumble.appyx.components.backstack.ui.fader.BackStackFader
 import com.bumble.appyx.navigation.composable.AppyxComponent
 import com.bumble.appyx.navigation.modality.BuildContext
@@ -25,7 +18,7 @@ import pages.QuanScoutMenu
 
 class RootNode(
     buildContext: BuildContext,
-    val backStack: BackStack<NavTarget> = BackStack(
+    private val backStack: BackStack<NavTarget> = BackStack(
         model = BackStackModel(
             initialTarget = NavTarget.MainMenu,
             savedStateMap = buildContext.savedStateMap
