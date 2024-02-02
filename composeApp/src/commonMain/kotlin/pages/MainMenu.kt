@@ -1,17 +1,14 @@
 package pages
 
 import RootNode
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Button
-import androidx.compose.material.Divider
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.*
+import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.bumble.appyx.components.backstack.BackStack
@@ -19,12 +16,15 @@ import com.bumble.appyx.components.backstack.operation.push
 import com.bumble.appyx.navigation.modality.BuildContext
 import com.bumble.appyx.navigation.node.Node
 import currentColors
+import org.jetbrains.compose.resources.ExperimentalResourceApi
+import org.jetbrains.compose.resources.painterResource
 
 class MainMenu(
     buildContext: BuildContext,
     private val backStack: BackStack<RootNode.NavTarget>
 ) : Node( buildContext = buildContext) {
 
+    @OptIn(ExperimentalResourceApi::class)
     @Composable
     override fun View(modifier: Modifier) {
         Column(modifier = modifier) {
@@ -37,7 +37,7 @@ class MainMenu(
                         )
                     },
                     onClick = {
-
+                        backStack.push(RootNode.NavTarget.InfoPage)
                     },
                     modifier = Modifier.padding(3.dp),
                     contentPadding = PaddingValues(3.dp)
@@ -46,21 +46,23 @@ class MainMenu(
                     text = "Bear Metal Scout App",
                     fontSize = 25.sp
                 )
-                Button(
+                TextButton(
                     content = {
-                        Text(
-                            text = "s",
-                            fontSize = 12.sp
+                        Image(
+                            painter = painterResource(res = "settingsicon.png" ),
+                            contentDescription = "Settings",
                         )
                     },
                     onClick = {
                         backStack.push(RootNode.NavTarget.SettingsMenu)
                     },
-                    modifier = Modifier.padding(3.dp),
+                    modifier = Modifier
+                        .padding(3.dp)
+                        .size(50.dp),
                     contentPadding = PaddingValues(3.dp)
                 )
             }
-            Divider(color = currentColors.secondary, thickness = 2.dp)
+            Divider(color  = currentColors.secondary, thickness = 2.dp)
             Button(
                 content = {
                     Text(

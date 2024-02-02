@@ -90,7 +90,7 @@ actual class SettingsMenu actual constructor(
                 )
             }
             Text(
-                text = "Appearence",
+                text = "Appearance",
                 fontSize = 35.sp,
                 modifier = Modifier
                     .align(Alignment.CenterHorizontally)
@@ -157,24 +157,24 @@ actual class SettingsMenu actual constructor(
                 )
             }
             Text(
-                text = "Accesability",
+                text = "Accessibility",
                 fontSize = 35.sp,
                 modifier = Modifier
                     .align(Alignment.CenterHorizontally)
             )
-            /* Row {
-            Switch(
-                checked = highContrastChecked,
-                onCheckedChange = { highContrastChecked = !highContrastChecked },
-                modifier = Modifier
-                    .scale(2f)
-            )
-            Text(
-                text = "High Contrast",
-                fontSize = 25.sp,
-                modifier = Modifier
-            )
-        } */
+//             Row {
+//            Switch(
+//                checked = highContrastChecked,
+//                onCheckedChange = { highContrastChecked = !highContrastChecked },
+//                modifier = Modifier
+//                    .scale(2f)
+//            )
+//            Text(
+//                text = "High Contrast",
+//                fontSize = 25.sp,
+//                modifier = Modifier
+//            )
+//        }
             Button(
                 content = {
                     Text(

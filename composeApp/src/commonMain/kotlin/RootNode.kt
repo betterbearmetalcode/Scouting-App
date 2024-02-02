@@ -1,7 +1,5 @@
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.Colors
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import com.bumble.appyx.components.backstack.BackStack
@@ -53,6 +51,9 @@ class RootNode(
 
         @Parcelize
         data object SettingsMenu : NavTarget()
+
+        @Parcelize
+        data object InfoPage : NavTarget()
     }
 
     override fun resolve(interactionTarget: NavTarget, buildContext: BuildContext): Node =
@@ -62,6 +63,7 @@ class RootNode(
             NavTarget.PitsScouting -> PitsScoutMenu(buildContext)
             NavTarget.QualScouting -> QualScoutMenu(buildContext, backStack)
             NavTarget.SettingsMenu -> SettingsMenu(buildContext, backStack)
+            NavTarget.InfoPage -> InfoPage(buildContext,backStack)
         }
 
     @Composable
