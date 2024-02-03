@@ -14,6 +14,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.BitmapPainter
+import androidx.compose.ui.graphics.toComposeImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.loadImageBitmap
 import androidx.compose.ui.unit.dp
@@ -42,9 +43,7 @@ actual class QualScoutMenu actual constructor(
         var collectionScore by remember { mutableFloatStateOf(5f) }
         var outtakeScore by remember { mutableFloatStateOf(5f) }
         var driverScore by remember { mutableFloatStateOf(5f) }
-        var file by remember { mutableStateOf(javaClass.classLoader.getResourceAsStream("Empty Qr Code.png")) }
-        var imageBitmap by remember { mutableStateOf(loadImageBitmap(file)) }
-
+        var qrCode by remember { mutableStateOf(File("src/commonMain/resources/Empty Qr Code.png").readBytes()) }
 
 
         Column(modifier = modifier.verticalScroll(ScrollState(0))) {
@@ -157,26 +156,17 @@ actual class QualScoutMenu actual constructor(
 
                         val pngBytes = helloWorld.render()
 
-                        val image = File("app/resources/qrCodeDesktop.png")
-                        image.delete()
-                        image.createNewFile()
-
-                        val fos = FileOutputStream(image)
-                        fos.write(pngBytes.getBytes())
-                        fos.close()
-
-                        file = image.inputStream()
-                        imageBitmap = loadImageBitmap(file)
-                    },
-                    content = {
-                        Text(
-                            text = "Export Data (Qr Code)"
-                        )
+                        qrCode = pngBytes.getBytes()
                     }
-                )
+                ) {
+                    Text(
+                        text = "Export Data (Qr Code)"
+                    )
+                }
+
 
                 Image(
-                    painter = BitmapPainter(imageBitmap),
+                    painter = BitmapPainter(org.jetbrains.skia.Image.makeFromEncoded(qrCode).toComposeImageBitmap()),
                     contentDescription = "QR Code",
                     contentScale = ContentScale.Fit,
                     modifier = Modifier
