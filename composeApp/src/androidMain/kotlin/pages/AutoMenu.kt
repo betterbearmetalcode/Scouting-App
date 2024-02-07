@@ -4,7 +4,6 @@ import BackButton
 import CheckBox
 import EnumerableValue
 import RootNode
-import android.util.Log
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
@@ -31,9 +30,15 @@ import java.io.File
 import java.nio.charset.Charset
 import java.util.zip.Deflater
 
-actual class QuanScoutMenu actual constructor(
+actual class AutoMenu actual constructor(
     buildContext: BuildContext,
-    private val backStack: BackStack<RootNode.NavTarget>
+    private val backStack: BackStack<AutoTeleSelectorMenu.NavTarget>,
+    match: MutableState<String>,
+    team: MutableState<String>,
+    allianceColor: MutableState<Boolean>,
+    autoSpeakerNum: MutableState<Int>,
+    autoAmpNum: MutableState<Int>,
+    quanNotes: MutableState<String>
 ) : Node(buildContext) {
     @OptIn(ExperimentalResourceApi::class, ExperimentalFoundationApi::class)
     @Composable
