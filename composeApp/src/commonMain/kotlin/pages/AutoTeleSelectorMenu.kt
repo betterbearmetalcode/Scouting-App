@@ -1,5 +1,6 @@
 package pages
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.*
@@ -7,6 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.bumble.appyx.components.backstack.BackStack
 import com.bumble.appyx.components.backstack.BackStackModel
 import com.bumble.appyx.components.backstack.operation.pop
@@ -21,6 +23,7 @@ import com.bumble.appyx.utils.multiplatform.Parcelize
 
 class AutoTeleSelectorMenu(
     buildContext: BuildContext,
+    var robotStartPosition: MutableIntState,
     private val backStack: BackStack<NavTarget> = BackStack(
     model = BackStackModel(
         initialTarget = NavTarget.AutoScouting,
@@ -35,7 +38,6 @@ class AutoTeleSelectorMenu(
 
     var match = mutableStateOf("")
     var team = mutableStateOf("")
-    var allianceColor = mutableStateOf(false)
     val autoSpeakerNum = mutableIntStateOf(0)
     val autoAmpNum = mutableIntStateOf(0)
     val teleSpeakerNum  =  mutableIntStateOf(0)
@@ -57,15 +59,26 @@ class AutoTeleSelectorMenu(
 
     override fun resolve(interactionTarget: NavTarget, buildContext: BuildContext): Node =
         when (interactionTarget) {
-            NavTarget.AutoScouting -> AutoMenu(buildContext, backStack, match, team, allianceColor, autoSpeakerNum, autoAmpNum, autoNotes)
-            NavTarget.TeleScouting -> TeleMenu(buildContext, backStack, match, team, allianceColor, autoSpeakerNum, autoAmpNum, autoNotes, teleSpeakerNum, teleAmpNum, teleAmplified, teleTrapNum, selectedEndPos, teleNotes, lostComms)
+            NavTarget.AutoScouting -> AutoMenu(buildContext, backStack, match, team, robotStartPosition, autoSpeakerNum, autoAmpNum, autoNotes)
+            NavTarget.TeleScouting -> TeleMenu(buildContext, backStack, match, team, robotStartPosition, autoSpeakerNum, autoAmpNum, autoNotes, teleSpeakerNum, teleAmpNum, teleAmplified, teleTrapNum, selectedEndPos, teleNotes, lostComms)
 
         }
 
     @Composable
     override fun View(modifier: Modifier) {
         var selectAuto by remember { mutableStateOf(false) }
+        var selectedPlacement by remember { mutableStateOf(false) }
         var pageName by remember { mutableStateOf("Auto") }
+        var positionName by remember { mutableStateOf("") }
+
+        when (robotStartPosition.value){
+            0 -> {positionName = "Red 1"}
+            1 -> {positionName = "Red 2"}
+            2 -> {positionName = "Red 3"}
+            3 -> {positionName = "Blue 1"}
+            4 -> {positionName = "Blue 2"}
+            5 -> {positionName = "Blue 3"}
+        }
         pageName = if (!selectAuto) {
             "Auto"
         } else {
@@ -91,19 +104,6 @@ class AutoTeleSelectorMenu(
                     onValueChange = { team.value = it },
                     modifier = Modifier.fillMaxWidth(1f/2f)
                 )
-                Switch(
-                    checked = allianceColor.value,
-                    onCheckedChange = { allianceColor.value = it },
-                    colors = SwitchDefaults.colors(
-                        uncheckedThumbColor = Color.Blue,
-                        uncheckedTrackColor = Color(38, 95, 240),
-                        checkedThumbColor = Color.Red,
-                        checkedTrackColor = Color(252,40,62)
-                    ),
-                    modifier = Modifier
-                        .scale(1.5f)
-                        .padding(15.dp)
-                )
             }
             Row {
                 Switch(
@@ -124,6 +124,12 @@ class AutoTeleSelectorMenu(
                     text = pageName,
                     modifier = Modifier.scale(1.25f)
                 )
+                Button(
+                    onClick = {selectedPlacement = true}
+                ){
+                    Text("Position:  $positionName" )
+                }
+
             }
             Divider(
                 color = Color.Yellow,

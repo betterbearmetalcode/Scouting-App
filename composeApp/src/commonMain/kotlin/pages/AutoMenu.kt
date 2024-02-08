@@ -1,6 +1,7 @@
 package pages
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableIntState
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
 import com.bumble.appyx.components.backstack.BackStack
@@ -12,9 +13,9 @@ expect class AutoMenu(
     backStack: BackStack<AutoTeleSelectorMenu.NavTarget>,
     match: MutableState<String>,
     team: MutableState<String>,
-    allianceColor: MutableState<Boolean>,
-    autoSpeakerNum: MutableState<Int>,
-    autoAmpNum: MutableState<Int>,
+    robotStartPosition: MutableIntState,
+    autoSpeakerNum: MutableIntState,
+    autoAmpNum: MutableIntState,
     quanNotes: MutableState<String>
 ) : Node {
 

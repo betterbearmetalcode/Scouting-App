@@ -2,12 +2,13 @@ package pages
 
 import RootNode
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -23,11 +24,13 @@ import getCurrentTheme
 
 class MainMenu(
     buildContext: BuildContext,
-    private val backStack: BackStack<RootNode.NavTarget>
+    private val backStack: BackStack<RootNode.NavTarget>,
+    private val robotStartPosition: MutableIntState
 ) : Node( buildContext = buildContext) {
 
     @Composable
     override fun View(modifier: Modifier) {
+        var selectedPlacement by remember { mutableStateOf(false) }
         Column {
             Row (modifier = Modifier.align(Alignment.CenterHorizontally)) {
                 Button(
@@ -70,7 +73,7 @@ class MainMenu(
                 colors = ButtonDefaults.buttonColors(backgroundColor = defaultSecondary),
                 contentPadding = PaddingValues(horizontal = 60.dp, vertical = 5.dp),
                 onClick = {
-                    backStack.push(RootNode.NavTarget.QuanScouting)
+                   selectedPlacement = true
                 },
                 modifier = Modifier.align(Alignment.CenterHorizontally).padding(horizontal = 50.dp, vertical = 50.dp),
             ) {
@@ -79,6 +82,25 @@ class MainMenu(
                     color = getCurrentTheme().primaryVariant,
                     fontSize = 35.sp
                 )
+            }
+
+            DropdownMenu(
+                expanded = selectedPlacement,
+                onDismissRequest = {selectedPlacement = false},
+                modifier = Modifier.size(100.dp, 166.dp).background(color = Color(0,0,0))
+            ) {
+                Row {
+                    DropdownMenuItem(onClick = {robotStartPosition.value= 0; backStack.push(RootNode.NavTarget.QuanScouting)}, modifier = Modifier.size(50.dp,50.dp)) {Text("R1", fontSize = 11.sp)}
+                    DropdownMenuItem(onClick = {robotStartPosition.value= 3; backStack.push(RootNode.NavTarget.QuanScouting)}, modifier = Modifier.size(50.dp,50.dp)/*.background(color = Color.Blue) */) {Text("B1", fontSize = 11.sp)}
+                }
+                Row {
+                    DropdownMenuItem(onClick = {robotStartPosition.value= 1; backStack.push(RootNode.NavTarget.QuanScouting)}, modifier = Modifier.size(50.dp,50.dp)) {Text("R2", fontSize = 11.sp)}
+                    DropdownMenuItem(onClick = {robotStartPosition.value= 4; backStack.push(RootNode.NavTarget.QuanScouting)}, modifier = Modifier.size(50.dp,50.dp)) {Text("B2", fontSize = 11.sp)}
+                }
+                Row {
+                    DropdownMenuItem(onClick = {robotStartPosition.value= 2; backStack.push(RootNode.NavTarget.QuanScouting)}, modifier = Modifier.size(50.dp,50.dp)) {Text("R3", fontSize = 11.sp)}
+                    DropdownMenuItem(onClick = {robotStartPosition.value= 5; backStack.push(RootNode.NavTarget.QuanScouting)}, modifier = Modifier.size(50.dp,50.dp)) {Text("B3", fontSize = 11.sp)}
+                }
             }
 
             OutlinedButton(

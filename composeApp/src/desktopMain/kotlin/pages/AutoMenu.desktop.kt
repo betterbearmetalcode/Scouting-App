@@ -20,9 +20,9 @@ actual class AutoMenu actual constructor(
     private val backStack: BackStack<AutoTeleSelectorMenu.NavTarget>,
     private val match: MutableState<String>,
     private val team: MutableState<String>,
-    private val allianceColor: MutableState<Boolean>,
-    private val autoSpeakerNum: MutableState<Int>,
-    private val autoAmpNum: MutableState<Int>,
+    private val robotStartPosition: MutableIntState,
+    private val autoSpeakerNum: MutableIntState,
+    private val autoAmpNum: MutableIntState,
     private val quanNotes: MutableState<String>
 ) : Node(buildContext) {
     @Composable
@@ -30,7 +30,7 @@ actual class AutoMenu actual constructor(
         val scrollState = rememberScrollState(0)
         var isScrollEnabled by remember{ mutableStateOf(true) }
         val isKeyboardOpen by keyboardAsState()
-
+        var allianceColor by remember { mutableStateOf(false) }
         data class EndPosition(val endPos: String)
 
         fun endPosition() = listOf(
@@ -64,19 +64,6 @@ actual class AutoMenu actual constructor(
                     value = team.value,
                     onValueChange = { team.value = it },
                     modifier = Modifier.fillMaxWidth(1f/2f)
-                )
-                Switch(
-                    checked = allianceColor.value,
-                    onCheckedChange = { allianceColor.value = it },
-                    colors = SwitchDefaults.colors(
-                        uncheckedThumbColor = Color.Blue,
-                        uncheckedTrackColor = Color(38, 95, 240),
-                        checkedThumbColor = Color.Red,
-                        checkedTrackColor = Color(252,40,62)
-                    ),
-                    modifier = Modifier
-                        .scale(1.5f)
-                        .padding(15.dp)
                 )
             }
 

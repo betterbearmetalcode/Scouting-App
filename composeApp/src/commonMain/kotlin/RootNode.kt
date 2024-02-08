@@ -1,5 +1,6 @@
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.ui.Modifier
 import com.bumble.appyx.components.backstack.BackStack
 import com.bumble.appyx.components.backstack.BackStackModel
@@ -27,12 +28,8 @@ class RootNode(
     buildContext = buildContext
 ) {
 
-    /**
-     * You can create this class inside the body of RootNode
-     *
-     * Note: You must apply the 'kotlin-parcelize' plugin to use @Parcelize
-     * https://developer.android.com/kotlin/parcelize
-     */
+    var robotStartPosition = mutableIntStateOf(-1)
+
     sealed class NavTarget : Parcelable {
         @Parcelize
         data object MainMenu : NavTarget()
@@ -49,8 +46,8 @@ class RootNode(
 
     override fun resolve(interactionTarget: NavTarget, buildContext: BuildContext): Node =
         when (interactionTarget) {
-            NavTarget.MainMenu -> MainMenu(buildContext, backStack)
-            NavTarget.QuanScouting -> AutoTeleSelectorMenu(buildContext)
+            NavTarget.MainMenu -> MainMenu(buildContext, backStack, robotStartPosition)
+            NavTarget.QuanScouting -> AutoTeleSelectorMenu(buildContext, robotStartPosition)
             NavTarget.PitsScouting -> PitsScoutMenu(buildContext)
             NavTarget.QualScouting -> QualScoutMenu(buildContext)
         }

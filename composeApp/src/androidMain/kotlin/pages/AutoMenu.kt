@@ -3,7 +3,6 @@ package pages
 import BackButton
 import CheckBox
 import EnumerableValue
-import RootNode
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
@@ -35,9 +34,9 @@ actual class AutoMenu actual constructor(
     private val backStack: BackStack<AutoTeleSelectorMenu.NavTarget>,
     match: MutableState<String>,
     team: MutableState<String>,
-    allianceColor: MutableState<Boolean>,
-    autoSpeakerNum: MutableState<Int>,
-    autoAmpNum: MutableState<Int>,
+    robotStartPosition: MutableIntState,
+    autoSpeakerNum: MutableIntState,
+    autoAmpNum: MutableIntState,
     quanNotes: MutableState<String>
 ) : Node(buildContext) {
     @OptIn(ExperimentalResourceApi::class, ExperimentalFoundationApi::class)
@@ -82,18 +81,6 @@ actual class AutoMenu actual constructor(
                 .verticalScroll(state = scrollState, enabled = isScrollEnabled,)
                 .padding(20.dp)) {
             Row {
-                BackButton(
-                    backStack = backStack
-                ) {
-                    Image(
-                        painter = painterResource(res = "back-arrow.png"),
-                        contentDescription = "Back Arrow",
-                        contentScale = ContentScale.Fit,
-                        modifier = Modifier
-                            .fillMaxWidth(1f / 8f)
-                            .fillMaxHeight(1f / 16f)
-                    )
-                }
                 Text(
                     text = "Match" + ""//blue alliance
                 )

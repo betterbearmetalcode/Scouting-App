@@ -11,12 +11,10 @@ import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.BitmapPainter
 import androidx.compose.ui.graphics.toComposeImageBitmap
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.loadImageBitmap
 import androidx.compose.ui.unit.dp
 import com.bumble.appyx.components.backstack.BackStack
 import com.bumble.appyx.navigation.modality.BuildContext
@@ -26,7 +24,6 @@ import org.json.JSONObject
 import qrcode.QRCode
 import qrcode.color.Colors
 import java.io.File
-import java.io.FileOutputStream
 import java.nio.charset.Charset
 import java.util.zip.Deflater
 
@@ -35,19 +32,18 @@ actual class TeleMenu actual constructor(
     private val backStack: BackStack<AutoTeleSelectorMenu.NavTarget>,
     private val match: MutableState<String>,
     private val team: MutableState<String>,
-    private val allianceColor: MutableState<Boolean>,
-    private val autoSpeakerNum: MutableState<Int>,
-    private val autoAmpNum: MutableState<Int>,
+    private val robotStartPosition: MutableIntState,
+    private val autoSpeakerNum: MutableIntState,
+    private val autoAmpNum: MutableIntState,
     private val autoNotes: MutableState<String>,
 
-    private val teleSpeakerNum: MutableState<Int>,
-    private val teleAmpNum: MutableState<Int>,
-    private val teleAmplified: MutableState<Int>,
-    private val teleTrapNum: MutableState<Int>,
+    private val teleSpeakerNum: MutableIntState,
+    private val teleAmpNum: MutableIntState,
+    private val teleAmplified: MutableIntState,
+    private val teleTrapNum: MutableIntState,
     private val selectedEndPos: MutableState<String>,
     private val teleNotes: MutableState<String>,
     private val lostComms: MutableState<Boolean>
-
 
 ) : Node(buildContext) {
     @OptIn(ExperimentalResourceApi::class)
@@ -57,8 +53,11 @@ actual class TeleMenu actual constructor(
         val scrollState = rememberScrollState(0)
         var isScrollEnabled by remember{ mutableStateOf(true) }
         val isKeyboardOpen by keyboardAsState()
+        var allianceColor by remember { mutableStateOf(false) }
         var qrCodeBytes by remember{ mutableStateOf(File("src/commonMain/resources/Empty Qr Code.png").readBytes())}
         data class EndPosition(val endPos: String)
+
+
 
         fun endPosition() = listOf(
             EndPosition("None"),
@@ -130,7 +129,7 @@ actual class TeleMenu actual constructor(
 
                     jsonObject.put("M", match.value)
                     jsonObject.put("T", team.value)
-                    jsonObject.put("A", allianceColor.value)
+                    jsonObject.put("A", allianceColor)
                     jsonObject.put("AS", autoSpeakerNum.value)
                     jsonObject.put("AA", autoAmpNum.value)
                     jsonObject.put("TS", teleSpeakerNum.value)
@@ -141,6 +140,11 @@ actual class TeleMenu actual constructor(
                     jsonObject.put("LC", lostComms.value)
                     jsonObject.put("AN", autoNotes.value)
                     jsonObject.put("TN", teleNotes.value)
+
+                    val outputString: String = match.value + "," +
+                            team.value + "," + robotStartPosition.value + "," +
+                            autoSpeakerNum.value + ","
+
 
                     var inputString = jsonObject.toString()
                     var input = inputString.toByteArray(Charset.defaultCharset())
