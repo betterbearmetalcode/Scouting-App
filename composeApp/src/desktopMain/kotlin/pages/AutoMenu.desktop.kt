@@ -19,7 +19,7 @@ actual class AutoMenu actual constructor(
     buildContext: BuildContext,
     private val backStack: BackStack<AutoTeleSelectorMenu.NavTarget>,
     private val match: MutableState<String>,
-    private val team: MutableState<String>,
+    private val team: MutableIntState,
     private val robotStartPosition: MutableIntState,
     private val autoSpeakerNum: MutableIntState,
     private val autoAmpNum: MutableIntState,
@@ -30,7 +30,6 @@ actual class AutoMenu actual constructor(
         val scrollState = rememberScrollState(0)
         var isScrollEnabled by remember{ mutableStateOf(true) }
         val isKeyboardOpen by keyboardAsState()
-        var allianceColor by remember { mutableStateOf(false) }
         data class EndPosition(val endPos: String)
 
         fun endPosition() = listOf(
@@ -48,24 +47,6 @@ actual class AutoMenu actual constructor(
             modifier
                 .verticalScroll(state = scrollState, enabled = isScrollEnabled,)
                 .padding(20.dp)) {
-            Row {
-                Text(
-                    text = "Match" + ""//blue alliance
-                )
-                TextField(
-                    value = match.value,
-                    onValueChange = { match.value = it },
-                    modifier = Modifier.fillMaxWidth(1f/4f)
-                )
-                Text(
-                    text = "Team" + ""//blue alliance
-                )
-                TextField(
-                    value = team.value,
-                    onValueChange = { team.value = it },
-                    modifier = Modifier.fillMaxWidth(1f/2f)
-                )
-            }
 
             EnumerableValue(label = "Speaker", value = autoSpeakerNum)
             EnumerableValue(label = "Amp", value = autoAmpNum)
