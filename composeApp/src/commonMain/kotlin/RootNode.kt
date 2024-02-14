@@ -12,7 +12,10 @@ import com.bumble.appyx.navigation.node.Node
 import com.bumble.appyx.navigation.node.ParentNode
 import com.bumble.appyx.utils.multiplatform.Parcelable
 import com.bumble.appyx.utils.multiplatform.Parcelize
-import pages.*
+import pages.AutoTeleSelectorMenu
+import pages.MainMenu
+import pages.PitsScoutMenu
+import pages.QualScoutMenu
 
 
 class RootNode(
@@ -50,7 +53,7 @@ class RootNode(
     override fun resolve(interactionTarget: NavTarget, buildContext: BuildContext): Node =
         when (interactionTarget) {
             NavTarget.MainMenu -> MainMenu(buildContext, backStack, robotStartPosition, match, team)
-            NavTarget.QuanScouting -> AutoTeleSelectorMenu(buildContext, robotStartPosition, match, team)
+            NavTarget.QuanScouting -> AutoTeleSelectorMenu(buildContext, robotStartPosition, team)
             NavTarget.PitsScouting -> PitsScoutMenu(buildContext)
             NavTarget.QualScouting -> QualScoutMenu(buildContext)
         }
@@ -69,3 +72,4 @@ class RootNode(
 
     }
 }
+
