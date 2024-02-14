@@ -1,6 +1,6 @@
 package pages
 
-import EnumerableValue
+import composables.EnumerableValue
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size

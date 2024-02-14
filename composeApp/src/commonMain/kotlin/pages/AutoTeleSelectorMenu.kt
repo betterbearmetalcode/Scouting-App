@@ -38,7 +38,7 @@ class AutoTeleSelectorMenu(
     buildContext = buildContext
 ) {
 
-    private var match = mutableStateOf("")
+    private var match = mutableStateOf("1")
     private val autoSpeakerNum = mutableIntStateOf(0)
     private val autoAmpNum = mutableIntStateOf(0)
     private val teleSpeakerNum  =  mutableIntStateOf(0)
@@ -67,6 +67,7 @@ class AutoTeleSelectorMenu(
 
     @Composable
     override fun View(modifier: Modifier) {
+        setTeam(team, match, robotStartPosition.value)
         var selectAuto by remember { mutableStateOf(false) }
         var selectedPlacement by remember { mutableStateOf(false) }
         var pageName by remember { mutableStateOf("Auto") }
@@ -90,12 +91,12 @@ class AutoTeleSelectorMenu(
         Column {
             Row {
                 Text(
-                    text = "Match" + ""//blue alliance
+                    text = "Match"
                 )
                 TextField(
                     value = match.value,
-                    onValueChange = {
-                        match.value = it
+                    onValueChange = { value ->
+                        match.value = value.filter { it.isDigit() }
                         setTeam(team, match, robotStartPosition.value)
                     },
                     modifier = Modifier.fillMaxWidth(1f/4f)

@@ -16,22 +16,27 @@ import com.bumble.appyx.components.backstack.BackStack
 import com.bumble.appyx.components.backstack.operation.push
 import com.bumble.appyx.navigation.modality.BuildContext
 import com.bumble.appyx.navigation.node.Node
+import composables.InternetErrorAlert
 import defaultSecondary
 import getCurrentTheme
-import setTeam
 import sync
 
 class MainMenu(
     buildContext: BuildContext,
     private val backStack: BackStack<RootNode.NavTarget>,
-    private val robotStartPosition: MutableIntState,
-    private val match: MutableState<String>,
-    private val teamNum: MutableIntState
+    private val robotStartPosition: MutableIntState
 ) : Node(buildContext = buildContext) {
 
     @Composable
     override fun View(modifier: Modifier) {
         var selectedPlacement by remember { mutableStateOf(false) }
+        var openError = remember { mutableStateOf(false) }
+
+        when {
+            openError.value -> {
+                InternetErrorAlert { openError.value = false }
+            }
+        }
         Column {
             Text(
                 text = "Bear Metal Scout App",
@@ -46,7 +51,7 @@ class MainMenu(
                 contentPadding = PaddingValues(horizontal = 60.dp, vertical = 5.dp),
                 onClick = {
                     selectedPlacement = true
-                    sync(false)
+                    openError.value = !sync(false)
                 },
                 modifier = Modifier.align(Alignment.CenterHorizontally).padding(horizontal = 50.dp, vertical = 50.dp),
             ) {
@@ -63,16 +68,16 @@ class MainMenu(
                 modifier = Modifier.size(100.dp, 166.dp).background(color = Color(0,0,0))
             ) {
                 Row {
-                    DropdownMenuItem(onClick = {robotStartPosition.value= 0; backStack.push(RootNode.NavTarget.QuanScouting); setTeam(teamNum, match, robotStartPosition.value)}, modifier = Modifier.size(50.dp,50.dp)) {Text("R1", fontSize = 11.sp)}
-                    DropdownMenuItem(onClick = {robotStartPosition.value= 3; backStack.push(RootNode.NavTarget.QuanScouting); setTeam(teamNum, match, robotStartPosition.value)}, modifier = Modifier.size(50.dp,50.dp)) {Text("B1", fontSize = 11.sp)}
+                    DropdownMenuItem(onClick = {robotStartPosition.value= 0; backStack.push(RootNode.NavTarget.QuanScouting);}, modifier = Modifier.size(50.dp,50.dp)) {Text("R1", fontSize = 11.sp)}
+                    DropdownMenuItem(onClick = {robotStartPosition.value= 3; backStack.push(RootNode.NavTarget.QuanScouting);}, modifier = Modifier.size(50.dp,50.dp)) {Text("B1", fontSize = 11.sp)}
                 }
                 Row {
-                    DropdownMenuItem(onClick = {robotStartPosition.value= 1; backStack.push(RootNode.NavTarget.QuanScouting); setTeam(teamNum, match, robotStartPosition.value)}, modifier = Modifier.size(50.dp,50.dp)) {Text("R2", fontSize = 11.sp)}
-                    DropdownMenuItem(onClick = {robotStartPosition.value= 4; backStack.push(RootNode.NavTarget.QuanScouting); setTeam(teamNum, match, robotStartPosition.value)}, modifier = Modifier.size(50.dp,50.dp)) {Text("B2", fontSize = 11.sp)}
+                    DropdownMenuItem(onClick = {robotStartPosition.value= 1; backStack.push(RootNode.NavTarget.QuanScouting);}, modifier = Modifier.size(50.dp,50.dp)) {Text("R2", fontSize = 11.sp)}
+                    DropdownMenuItem(onClick = {robotStartPosition.value= 4; backStack.push(RootNode.NavTarget.QuanScouting);}, modifier = Modifier.size(50.dp,50.dp)) {Text("B2", fontSize = 11.sp)}
                 }
                 Row {
-                    DropdownMenuItem(onClick = {robotStartPosition.value= 2; backStack.push(RootNode.NavTarget.QuanScouting); setTeam(teamNum, match, robotStartPosition.value)}, modifier = Modifier.size(50.dp,50.dp)) {Text("R3", fontSize = 11.sp)}
-                    DropdownMenuItem(onClick = {robotStartPosition.value= 5; backStack.push(RootNode.NavTarget.QuanScouting); setTeam(teamNum, match, robotStartPosition.value)}, modifier = Modifier.size(50.dp,50.dp)) {Text("B3", fontSize = 11.sp)}
+                    DropdownMenuItem(onClick = {robotStartPosition.value= 2; backStack.push(RootNode.NavTarget.QuanScouting);}, modifier = Modifier.size(50.dp,50.dp)) {Text("R3", fontSize = 11.sp)}
+                    DropdownMenuItem(onClick = {robotStartPosition.value= 5; backStack.push(RootNode.NavTarget.QuanScouting);}, modifier = Modifier.size(50.dp,50.dp)) {Text("B3", fontSize = 11.sp)}
                 }
             }
 
@@ -100,7 +105,7 @@ class MainMenu(
                 contentPadding = PaddingValues(horizontal = 80.dp, vertical = 5.dp),
                 colors = ButtonDefaults.buttonColors(backgroundColor = defaultSecondary),
                 onClick = {
-                    sync(true)
+                    openError.value = !sync(false)
                 },
                 modifier = Modifier.align(Alignment.CenterHorizontally).padding(horizontal = 50.dp, vertical = 50.dp),
             ) {
