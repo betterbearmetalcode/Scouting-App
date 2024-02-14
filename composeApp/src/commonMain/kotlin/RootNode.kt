@@ -35,21 +35,19 @@ class RootNode(
         data object MainMenu : NavTarget()
 
         @Parcelize
-        data object QuanScouting : NavTarget()
+        data object MatchScouting : NavTarget()
 
         @Parcelize
         data object PitsScouting : NavTarget()
 
-        @Parcelize
-        data object QualScouting : NavTarget()
+
     }
 
     override fun resolve(interactionTarget: NavTarget, buildContext: BuildContext): Node =
         when (interactionTarget) {
             NavTarget.MainMenu -> MainMenu(buildContext, backStack, robotStartPosition)
-            NavTarget.QuanScouting -> AutoTeleSelectorMenu(buildContext, robotStartPosition)
+            NavTarget.MatchScouting -> AutoTeleSelectorMenu(buildContext,robotStartPosition,backStack)
             NavTarget.PitsScouting -> PitsScoutMenu(buildContext)
-            NavTarget.QualScouting -> QualScoutMenu(buildContext)
         }
 
     @Composable

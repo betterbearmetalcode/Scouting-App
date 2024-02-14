@@ -11,6 +11,7 @@ import com.bumble.appyx.navigation.node.Node
 expect class AutoMenu(
     buildContext: BuildContext,
     backStack: BackStack<AutoTeleSelectorMenu.NavTarget>,
+    mainMenuBackStack: BackStack<RootNode.NavTarget>,
     match: MutableState<String>,
     team: MutableState<String>,
     robotStartPosition: MutableIntState,

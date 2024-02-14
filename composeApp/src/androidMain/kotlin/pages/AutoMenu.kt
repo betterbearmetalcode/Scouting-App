@@ -32,12 +32,13 @@ import java.util.zip.Deflater
 actual class AutoMenu actual constructor(
     buildContext: BuildContext,
     private val backStack: BackStack<AutoTeleSelectorMenu.NavTarget>,
-    match: MutableState<String>,
-    team: MutableState<String>,
-    robotStartPosition: MutableIntState,
-    autoSpeakerNum: MutableIntState,
-    autoAmpNum: MutableIntState,
-    quanNotes: MutableState<String>
+    private val mainMenuBackStack: BackStack<RootNode.NavTarget>,
+    private val match: MutableState<String>,
+    private val team: MutableState<String>,
+    private val robotStartPosition: MutableIntState,
+    private val autoSpeakerNum: MutableIntState,
+    private val autoAmpNum: MutableIntState,
+    private val quanNotes: MutableState<String>
 ) : Node(buildContext) {
     @OptIn(ExperimentalResourceApi::class, ExperimentalFoundationApi::class)
     @Composable

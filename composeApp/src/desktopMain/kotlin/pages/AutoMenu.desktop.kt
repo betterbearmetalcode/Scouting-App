@@ -1,8 +1,13 @@
 package pages
 
 import EnumerableValue
+import RootNode
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.runtime.*
@@ -10,14 +15,19 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.unit.dp
 import com.bumble.appyx.components.backstack.BackStack
+import com.bumble.appyx.components.backstack.operation.pop
 import com.bumble.appyx.navigation.modality.BuildContext
 import com.bumble.appyx.navigation.node.Node
+import defaultSecondary
+import org.w3c.dom.Text
 
 actual class AutoMenu actual constructor(
     buildContext: BuildContext,
     private val backStack: BackStack<AutoTeleSelectorMenu.NavTarget>,
+    private val mainMenuBackStack: BackStack<RootNode.NavTarget>,
     private val match: MutableState<String>,
     private val team: MutableState<String>,
     private val robotStartPosition: MutableIntState,
@@ -48,24 +58,6 @@ actual class AutoMenu actual constructor(
             modifier
                 .verticalScroll(state = scrollState, enabled = isScrollEnabled,)
                 .padding(20.dp)) {
-            Row {
-                Text(
-                    text = "Match" + ""//blue alliance
-                )
-                TextField(
-                    value = match.value,
-                    onValueChange = { match.value = it },
-                    modifier = Modifier.fillMaxWidth(1f/4f)
-                )
-                Text(
-                    text = "Team" + ""//blue alliance
-                )
-                TextField(
-                    value = team.value,
-                    onValueChange = { team.value = it },
-                    modifier = Modifier.fillMaxWidth(1f/2f)
-                )
-            }
 
             EnumerableValue(label = "Speaker", value = autoSpeakerNum)
             EnumerableValue(label = "Amp", value = autoAmpNum)
@@ -83,6 +75,21 @@ actual class AutoMenu actual constructor(
                     .align(Alignment.CenterHorizontally)
                     .size(400.dp, 200.dp)
             )
+
+            OutlinedButton(
+                border = BorderStroke(2.dp, color = Color.Yellow),
+                shape = CircleShape,
+                colors = ButtonDefaults.buttonColors(backgroundColor = defaultSecondary),
+                onClick = {
+                    mainMenuBackStack.pop()
+                },
+                modifier = Modifier.align(Alignment.CenterHorizontally)
+            ){
+                Text(
+                    text = "Back",
+                    color = Color.Yellow
+                )
+            }
         }
     }
 }

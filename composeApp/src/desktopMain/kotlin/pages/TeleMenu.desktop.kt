@@ -75,8 +75,6 @@ actual class TeleMenu actual constructor(
                 .verticalScroll(state = scrollState, enabled = isScrollEnabled,)
                 .padding(20.dp)) {
 
-            Divider(color = Color(255, 191, 0), thickness = 1.dp)
-
             EnumerableValue(label ="Speaker" , value = teleSpeakerNum)//No worky?
             EnumerableValue(label ="Amp" , value = teleAmpNum)
             EnumerableValue(label ="Amplified" , value = teleAmplified)
@@ -125,43 +123,23 @@ actual class TeleMenu actual constructor(
             )
             Button(
                 onClick = {
-                    val jsonObject = JSONObject()
 
-                    jsonObject.put("M", match.value)
-                    jsonObject.put("T", team.value)
-                    jsonObject.put("A", allianceColor)
-                    jsonObject.put("AS", autoSpeakerNum.value)
-                    jsonObject.put("AA", autoAmpNum.value)
-                    jsonObject.put("TS", teleSpeakerNum.value)
-                    jsonObject.put("TA", teleAmpNum.value)
-                    jsonObject.put("TA2", teleAmplified.value)
-                    jsonObject.put("TT", teleTrapNum.value)
-                    jsonObject.put("EP", selectedEndPos.value)
-                    jsonObject.put("LC", lostComms.value)
-                    jsonObject.put("AN", autoNotes.value)
-                    jsonObject.put("TN", teleNotes.value)
-
-                    val outputString: String = match.value + "," +
-                            team.value + "," + robotStartPosition.value + "," +
-                            autoSpeakerNum.value + ","
+                    val outputString: String = match.value + "/" +
+                            team.value + "/" + robotStartPosition.value + "/" +
+                            autoSpeakerNum.value + "/" + autoAmpNum.value + "/" +
+                            teleSpeakerNum.value + "/" + teleAmpNum.value + "/" +
+                            teleAmplified.value + "/" + teleTrapNum.value + "/" +
+                            selectedEndPos.value + "/" + lostComms.value + "/" +
+                            autoNotes.value + "/" + teleNotes.value
 
 
-                    var inputString = jsonObject.toString()
-                    var input = inputString.toByteArray(Charset.defaultCharset())
-
-                    var output = ByteArray(100)
-                    val compressor = Deflater()
-                    compressor.setInput(input)
-                    compressor.finish()
-                    val compressedDataLength = compressor.deflate(output)
-                    compressor.end()
 
 
                     val qrCode = QRCode.ofRoundedSquares()
                         .withSize(12)
                         .withBackgroundColor(Colors.BLACK)
                         .withColor(Colors.GOLD)
-                        .build(String(output, 0, compressedDataLength, Charset.defaultCharset()) + "&$compressedDataLength")
+                        .build(outputString)
 
                     val pngBytes = qrCode.render()
 
