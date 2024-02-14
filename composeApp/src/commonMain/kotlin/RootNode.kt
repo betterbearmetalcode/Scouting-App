@@ -11,10 +11,7 @@ import com.bumble.appyx.navigation.node.Node
 import com.bumble.appyx.navigation.node.ParentNode
 import com.bumble.appyx.utils.multiplatform.Parcelable
 import com.bumble.appyx.utils.multiplatform.Parcelize
-import pages.AutoTeleSelectorMenu
-import pages.MainMenu
-import pages.PitsScoutMenu
-import pages.QualScoutMenu
+import pages.*
 
 
 class RootNode(
@@ -31,29 +28,27 @@ class RootNode(
     buildContext = buildContext
 ) {
 
-    var team = mutableIntStateOf(1)
-    var robotStartPosition = mutableIntStateOf(-1)
+    private var team = mutableIntStateOf(1)
+    private var robotStartPosition = mutableIntStateOf(-1)
 
     sealed class NavTarget : Parcelable {
         @Parcelize
         data object MainMenu : NavTarget()
 
         @Parcelize
-        data object QuanScouting : NavTarget()
+        data object MatchScouting : NavTarget()
 
         @Parcelize
         data object PitsScouting : NavTarget()
 
-        @Parcelize
-        data object QualScouting : NavTarget()
+
     }
 
     override fun resolve(interactionTarget: NavTarget, buildContext: BuildContext): Node =
         when (interactionTarget) {
             NavTarget.MainMenu -> MainMenu(buildContext, backStack, robotStartPosition)
-            NavTarget.QuanScouting -> AutoTeleSelectorMenu(buildContext, robotStartPosition, team)
+            NavTarget.MatchScouting -> AutoTeleSelectorMenu(buildContext,robotStartPosition, team, backStack)
             NavTarget.PitsScouting -> PitsScoutMenu(buildContext)
-            NavTarget.QualScouting -> QualScoutMenu(buildContext)
         }
 
     @Composable
@@ -70,4 +65,3 @@ class RootNode(
 
     }
 }
-

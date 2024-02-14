@@ -16,6 +16,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
+import com.bumble.appyx.components.backstack.BackStack
 import com.bumble.appyx.navigation.modality.BuildContext
 import com.bumble.appyx.navigation.node.Node
 import composables.CheckBox
@@ -29,6 +30,7 @@ import java.util.zip.Deflater
 
 actual class AutoMenu actual constructor(
     buildContext: BuildContext,
+    private val mainMenuBackStack: BackStack<RootNode.NavTarget>,
     autoSpeakerNum: MutableIntState,
     autoAmpNum: MutableIntState,
     quanNotes: MutableState<String>
@@ -221,7 +223,6 @@ actual class AutoMenu actual constructor(
                 contentDescription = "QR Code",
                 contentScale = ContentScale.Fit,
                 modifier = Modifier
-                    .fillMaxSize(1.25f)
             )
         }
     }

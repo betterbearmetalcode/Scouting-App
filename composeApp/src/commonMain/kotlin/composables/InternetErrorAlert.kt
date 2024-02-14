@@ -25,7 +25,7 @@ fun InternetErrorAlert(
                 }
             ) {
                 Text(
-                    "Confirm",
+                    "OK",
                     fontSize = 15.sp
                 )
             }

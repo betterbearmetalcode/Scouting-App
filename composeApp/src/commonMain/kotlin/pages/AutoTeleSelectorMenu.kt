@@ -3,6 +3,7 @@ package pages
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.offset
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -26,6 +27,7 @@ class AutoTeleSelectorMenu(
     buildContext: BuildContext,
     private var robotStartPosition: MutableIntState,
     private val team: MutableIntState,
+    private val mainMenuBackStack: BackStack<RootNode.NavTarget>,
     private val backStack: BackStack<NavTarget> = BackStack(
         model = BackStackModel(
             initialTarget = NavTarget.AutoScouting,
@@ -60,7 +62,7 @@ class AutoTeleSelectorMenu(
 
     override fun resolve(interactionTarget: NavTarget, buildContext: BuildContext): Node =
         when (interactionTarget) {
-            NavTarget.AutoScouting -> AutoMenu(buildContext, autoSpeakerNum, autoAmpNum, autoNotes)
+            NavTarget.AutoScouting -> AutoMenu(buildContext, mainMenuBackStack, autoSpeakerNum, autoAmpNum, autoNotes)
             NavTarget.TeleScouting -> TeleMenu(buildContext, backStack, match, team, robotStartPosition, autoSpeakerNum, autoAmpNum, autoNotes, teleSpeakerNum, teleAmpNum, teleAmplified, teleTrapNum, selectedEndPos, teleNotes, lostComms)
 
         }
@@ -116,19 +118,20 @@ class AutoTeleSelectorMenu(
                             backStack.push(NavTarget.TeleScouting)
                     },
                     colors = SwitchDefaults.colors(
-                        uncheckedTrackColor = Color.Black,
-                        checkedTrackColor = Color.Yellow
+                        uncheckedTrackColor = Color.Yellow,
+                        uncheckedThumbColor = Color(15,31,47),
+                        checkedTrackColor = Color(15,31,47)
                     )
                 )
                 Text(
                     text = pageName,
                     modifier = Modifier.scale(1.25f)
                 )
-                Button(
-                    onClick = {selectedPlacement = true}
-                ){
-                    Text("Position:  $positionName" )
-                }
+                    Text(
+                        text ="Position:  $positionName",
+                        modifier=Modifier.scale(1.2f).offset(x = 100.dp, y = 0.dp)
+                        )
+
 
             }
             Divider(
