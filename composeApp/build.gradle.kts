@@ -26,17 +26,6 @@ kotlin {
     }
     
     jvm("desktop")
-    
-    listOf(
-        iosX64(),
-        iosArm64(),
-        iosSimulatorArm64()
-    ).forEach { iosTarget ->
-        iosTarget.binaries.framework {
-            baseName = "ComposeApp"
-            isStatic = true
-        }
-    }
 
     sourceSets {
         val desktopMain by getting
@@ -46,13 +35,11 @@ kotlin {
             implementation(libs.compose.ui.tooling.preview)
             implementation(libs.androidx.activity.compose)
             implementation(libs.coil.compose)
-
         }
 
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)
             implementation(libs.kotlinx.coroutines.test)
-            implementation(libs.json)
         }
 
         commonMain.dependencies {
@@ -63,14 +50,11 @@ kotlin {
             implementation(compose.components.resources)
             implementation(libs.androidx.compiler)
             implementation(libs.qrcode.kotlin)
-        }
+            implementation(libs.okhttp)
+            implementation(libs.json)
+            implementation(libs.bumble.appyx.navigation)
 
-        val commonMain by getting {
-            dependencies {
-                implementation(libs.bumble.appyx.navigation)
-
-                api(libs.backstack)
-            }
+            api(libs.backstack)
         }
     }
 }
@@ -113,6 +97,9 @@ android {
     dependencies {
         debugImplementation(libs.compose.ui.tooling)
     }
+}
+dependencies {
+    implementation(libs.androidx.material3.desktop)
 }
 
 compose.desktop {

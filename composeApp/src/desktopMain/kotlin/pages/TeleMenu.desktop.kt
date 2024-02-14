@@ -1,7 +1,7 @@
 package pages
 
-import CheckBox
-import EnumerableValue
+import composables.CheckBox
+import composables.EnumerableValue
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -31,7 +31,7 @@ actual class TeleMenu actual constructor(
     buildContext: BuildContext,
     private val backStack: BackStack<AutoTeleSelectorMenu.NavTarget>,
     private val match: MutableState<String>,
-    private val team: MutableState<String>,
+    private val team: MutableIntState,
     private val robotStartPosition: MutableIntState,
     private val autoSpeakerNum: MutableIntState,
     private val autoAmpNum: MutableIntState,

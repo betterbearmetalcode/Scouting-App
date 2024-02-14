@@ -5,7 +5,6 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
@@ -18,53 +17,33 @@ import com.bumble.appyx.components.backstack.BackStack
 import com.bumble.appyx.components.backstack.operation.push
 import com.bumble.appyx.navigation.modality.BuildContext
 import com.bumble.appyx.navigation.node.Node
+import composables.InternetErrorAlert
 import defaultSecondary
 import getCurrentTheme
+import sync
 
 class MainMenu(
     buildContext: BuildContext,
     private val backStack: BackStack<RootNode.NavTarget>,
     private val robotStartPosition: MutableIntState
-) : Node( buildContext = buildContext) {
+) : Node(buildContext = buildContext) {
 
     @Composable
     override fun View(modifier: Modifier) {
         var selectedPlacement by remember { mutableStateOf(false) }
-        Column {
-            Row (modifier = Modifier.align(Alignment.CenterHorizontally)) {
-                Button(
-                    content = {
-                        Text(
-                            text = "i",
-                            color = getCurrentTheme().secondaryVariant,
-                            fontSize = 12.sp
-                        )
-                    },
-                    onClick = {
+        val openError = remember { mutableStateOf(false) }
 
-                    },
-                    modifier = Modifier.padding(3.dp),
-                    contentPadding = PaddingValues(3.dp)
-                )
-                Text(
-                    text = "Bear Metal Scout App",
-                    fontSize = 30.sp
-                )
-                Button(
-                    content = {
-                        Text(
-                            text = "s",
-                            color = getCurrentTheme().secondaryVariant,
-                            fontSize = 12.sp
-                        )
-                    },
-                    onClick = {
-
-                    },
-                    modifier = Modifier.padding(3.dp),
-                    contentPadding = PaddingValues(3.dp)
-                )
+        when {
+            openError.value -> {
+                InternetErrorAlert { openError.value = false }
             }
+        }
+        Column {
+            Text(
+                text = "Bear Metal Scout App",
+                fontSize = 30.sp,
+                modifier = Modifier.align(Alignment.CenterHorizontally)
+            )
             Divider(color = getCurrentTheme().onSurface, thickness = 2.dp)
             OutlinedButton(
                 border = BorderStroke(3.dp, Color.Yellow),
@@ -72,7 +51,9 @@ class MainMenu(
                 colors = ButtonDefaults.buttonColors(backgroundColor = defaultSecondary),
                 contentPadding = PaddingValues(horizontal = 60.dp, vertical = 5.dp),
                 onClick = {
-                   selectedPlacement = true
+                    openError.value = !sync(false)
+                    if (!openError.value)
+                        selectedPlacement = true
                 },
                 modifier = Modifier.align(Alignment.CenterHorizontally).padding(horizontal = 50.dp, vertical = 50.dp),
             ) {
@@ -82,7 +63,8 @@ class MainMenu(
                     fontSize = 35.sp
                 )
             }
-            Box(modifier=Modifier.align(Alignment.CenterHorizontally).offset(-100.dp,-50.dp)) {
+
+            Box(modifier=Modifier.align(Alignment.CenterHorizontally).offset((-100).dp, (-50).dp)) {
                 DropdownMenu(
                     expanded = selectedPlacement,
                     onDismissRequest = { selectedPlacement = false },
@@ -148,14 +130,30 @@ class MainMenu(
                 },
                 modifier = Modifier.align(Alignment.CenterHorizontally).padding(horizontal = 50.dp, vertical = 50.dp),
 
-            ) {
+                ) {
                 Text(
                     text = "Pits",
                     color = getCurrentTheme().primaryVariant,
                     fontSize = 35.sp
                 )
             }
-        }
 
+            OutlinedButton(
+                border = BorderStroke(3.dp, Color.Yellow),
+                shape = RoundedCornerShape(25.dp),
+                contentPadding = PaddingValues(horizontal = 80.dp, vertical = 5.dp),
+                colors = ButtonDefaults.buttonColors(backgroundColor = defaultSecondary),
+                onClick = {
+                    openError.value = !sync(true)
+                },
+                modifier = Modifier.align(Alignment.CenterHorizontally).padding(horizontal = 50.dp, vertical = 50.dp),
+            ) {
+                Text(
+                    text = "Sync",
+                    color = getCurrentTheme().primaryVariant,
+                    fontSize = 35.sp
+                )
+            }
+        }
     }
 }

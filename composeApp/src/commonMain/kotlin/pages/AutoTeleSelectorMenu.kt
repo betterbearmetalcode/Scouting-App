@@ -1,14 +1,15 @@
 package pages
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.offset
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.bumble.appyx.components.backstack.BackStack
 import com.bumble.appyx.components.backstack.BackStackModel
 import com.bumble.appyx.components.backstack.operation.pop
@@ -20,34 +21,36 @@ import com.bumble.appyx.navigation.node.Node
 import com.bumble.appyx.navigation.node.ParentNode
 import com.bumble.appyx.utils.multiplatform.Parcelable
 import com.bumble.appyx.utils.multiplatform.Parcelize
+import setTeam
 
 class AutoTeleSelectorMenu(
     buildContext: BuildContext,
-    var robotStartPosition: MutableIntState,
+    private var robotStartPosition: MutableIntState,
+    private val team: MutableIntState,
     private val mainMenuBackStack: BackStack<RootNode.NavTarget>,
     private val backStack: BackStack<NavTarget> = BackStack(
-    model = BackStackModel(
-        initialTarget = NavTarget.AutoScouting,
-        savedStateMap = buildContext.savedStateMap
-    ),
-    visualisation = { BackStackFader(it) }
-)
+        model = BackStackModel(
+            initialTarget = NavTarget.AutoScouting,
+            savedStateMap = buildContext.savedStateMap
+        ),
+        visualisation = { BackStackFader(it) }
+    )
 ) : ParentNode<AutoTeleSelectorMenu.NavTarget>(
     appyxComponent = backStack,
     buildContext = buildContext
 ) {
-    var match = mutableStateOf("")
-    var team = mutableStateOf("")
-    val autoSpeakerNum = mutableIntStateOf(0)
-    val autoAmpNum = mutableIntStateOf(0)
-    val teleSpeakerNum  =  mutableIntStateOf(0)
-    val teleAmpNum  = mutableIntStateOf(0)
-    val teleAmplified =  mutableIntStateOf(0)
-    val teleTrapNum = mutableIntStateOf(0)
-    var selectedEndPos = mutableStateOf("None")
-    val lostComms = mutableStateOf(false)
-    var autoNotes = mutableStateOf("")
-    var teleNotes = mutableStateOf("")
+
+    private var match = mutableStateOf("1")
+    private val autoSpeakerNum = mutableIntStateOf(0)
+    private val autoAmpNum = mutableIntStateOf(0)
+    private val teleSpeakerNum  =  mutableIntStateOf(0)
+    private val teleAmpNum  = mutableIntStateOf(0)
+    private val teleAmplified =  mutableIntStateOf(0)
+    private val teleTrapNum = mutableIntStateOf(0)
+    private var selectedEndPos = mutableStateOf("None")
+    private val lostComms = mutableStateOf(false)
+    private var autoNotes = mutableStateOf("")
+    private var teleNotes = mutableStateOf("")
 
     sealed class NavTarget : Parcelable {
         @Parcelize
@@ -59,13 +62,14 @@ class AutoTeleSelectorMenu(
 
     override fun resolve(interactionTarget: NavTarget, buildContext: BuildContext): Node =
         when (interactionTarget) {
-            NavTarget.AutoScouting -> AutoMenu(buildContext, backStack, mainMenuBackStack, match, team, robotStartPosition, autoSpeakerNum, autoAmpNum, autoNotes)
+            NavTarget.AutoScouting -> AutoMenu(buildContext, mainMenuBackStack, autoSpeakerNum, autoAmpNum, autoNotes)
             NavTarget.TeleScouting -> TeleMenu(buildContext, backStack, match, team, robotStartPosition, autoSpeakerNum, autoAmpNum, autoNotes, teleSpeakerNum, teleAmpNum, teleAmplified, teleTrapNum, selectedEndPos, teleNotes, lostComms)
 
         }
 
     @Composable
     override fun View(modifier: Modifier) {
+        setTeam(team, match, robotStartPosition.value)
         var selectAuto by remember { mutableStateOf(false) }
         var selectedPlacement by remember { mutableStateOf(false) }
         var pageName by remember { mutableStateOf("Auto") }
@@ -89,20 +93,18 @@ class AutoTeleSelectorMenu(
         Column {
             Row {
                 Text(
-                    text = "Match" + ""//blue alliance
+                    text = "Match"
                 )
                 TextField(
                     value = match.value,
-                    onValueChange = { match.value = it },
+                    onValueChange = { value ->
+                        match.value = value.filter { it.isDigit() }
+                        setTeam(team, match, robotStartPosition.value)
+                    },
                     modifier = Modifier.fillMaxWidth(1f/4f)
                 )
                 Text(
-                    text = "Team" + ""//blue alliance
-                )
-                TextField(
-                    value = team.value,
-                    onValueChange = { team.value = it },
-                    modifier = Modifier.fillMaxWidth(1f/2f)
+                    text = "Team" + team.value
                 )
             }
             Row {
