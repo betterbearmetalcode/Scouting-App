@@ -1,6 +1,5 @@
 [versions]
 bumble-appyxNavigation = "2.0.0-alpha09"
-coilCompose = "2.5.0"
 compiler = "1.5.6"
 compose = "1.5.4"
 compose-plugin = "1.5.10"
@@ -16,21 +15,14 @@ androidx-material = "1.10.0"
 androidx-constraintlayout = "2.1.4"
 androidx-test-junit = "1.1.5"
 androidx-espresso-core = "3.5.1"
-json = "20231013"
 kotlin = "1.9.20"
 junit = "4.13.2"
-kotlinxCoroutinesTest = "1.8.0-RC"
 kotlinxDatetime = "0.4.1"
-qrcodeKotlin = "4.0.6"
-uiDesktop = "1.5.10"
-material3 = "1.1.2"
 
 [libraries]
 androidx-compiler = { module = "androidx.compose.compiler:compiler", version.ref = "compiler" }
 backstack = { module = "com.bumble.appyx:backstack", version.ref = "bumble-appyxNavigation" }
 bumble-appyx-navigation = { module = "com.bumble.appyx:appyx-navigation", version.ref = "bumble-appyxNavigation" }
-coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coilCompose" }
-json = { module = "org.json:json", version.ref = "json" }
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 kotlin-test-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -46,12 +38,8 @@ androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version
 androidx-material = { group = "com.google.android.material", name = "material", version.ref = "androidx-material" }
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "androidx-constraintlayout" }
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activityCompose" }
-kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinxCoroutinesTest" }
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinxDatetime" }
 multiplatform = { module = "com.bumble.appyx:multiplatform", version.ref = "bumble-appyxNavigation" }
-qrcode-kotlin = { module = "io.github.g0dkar:qrcode-kotlin", version.ref = "qrcodeKotlin" }
-ui-desktop = { module = "org.jetbrains.compose.ui:ui-desktop", version.ref = "uiDesktop" }
-androidx-material3 = { group = "androidx.compose.material3", name = "material3", version.ref = "material3" }
 
 [plugins]
 jetbrainsCompose = { id = "org.jetbrains.compose", version.ref = "compose-plugin" }
