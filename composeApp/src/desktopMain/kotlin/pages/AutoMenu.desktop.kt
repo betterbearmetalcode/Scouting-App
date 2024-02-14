@@ -1,54 +1,41 @@
 package pages
 
-import EnumerableValue
 import RootNode
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.*
+import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.OutlinedButton
+import androidx.compose.material.Text
+import androidx.compose.material.TextField
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.unit.dp
 import com.bumble.appyx.components.backstack.BackStack
 import com.bumble.appyx.components.backstack.operation.pop
 import com.bumble.appyx.navigation.modality.BuildContext
 import com.bumble.appyx.navigation.node.Node
+import composables.EnumerableValue
 import defaultSecondary
-import org.w3c.dom.Text
 
 actual class AutoMenu actual constructor(
     buildContext: BuildContext,
-    private val backStack: BackStack<AutoTeleSelectorMenu.NavTarget>,
     private val mainMenuBackStack: BackStack<RootNode.NavTarget>,
-    private val match: MutableState<String>,
-    private val team: MutableState<String>,
-    private val robotStartPosition: MutableIntState,
     private val autoSpeakerNum: MutableIntState,
     private val autoAmpNum: MutableIntState,
-    private val quanNotes: MutableState<String>
+    private val quanNotes: MutableState<String>,
 ) : Node(buildContext) {
     @Composable
     actual override fun View(modifier: Modifier) {
         val scrollState = rememberScrollState(0)
         var isScrollEnabled by remember{ mutableStateOf(true) }
         val isKeyboardOpen by keyboardAsState()
-        var allianceColor by remember { mutableStateOf(false) }
-        data class EndPosition(val endPos: String)
-
-        fun endPosition() = listOf(
-            EndPosition("None"),
-            EndPosition("Parked"),
-            EndPosition("Climbed"),
-            EndPosition("Harmonized")
-        )
 
         if(!isKeyboardOpen){
             isScrollEnabled = true

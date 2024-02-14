@@ -28,7 +28,8 @@ class RootNode(
     buildContext = buildContext
 ) {
 
-    var robotStartPosition = mutableIntStateOf(-1)
+    private var team = mutableIntStateOf(1)
+    private var robotStartPosition = mutableIntStateOf(-1)
 
     sealed class NavTarget : Parcelable {
         @Parcelize
@@ -46,7 +47,7 @@ class RootNode(
     override fun resolve(interactionTarget: NavTarget, buildContext: BuildContext): Node =
         when (interactionTarget) {
             NavTarget.MainMenu -> MainMenu(buildContext, backStack, robotStartPosition)
-            NavTarget.MatchScouting -> AutoTeleSelectorMenu(buildContext,robotStartPosition,backStack)
+            NavTarget.MatchScouting -> AutoTeleSelectorMenu(buildContext,robotStartPosition, team, backStack)
             NavTarget.PitsScouting -> PitsScoutMenu(buildContext)
         }
 

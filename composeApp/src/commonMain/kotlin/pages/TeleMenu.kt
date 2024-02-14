@@ -12,7 +12,7 @@ expect class TeleMenu(
     buildContext: BuildContext,
     backStack: BackStack<AutoTeleSelectorMenu.NavTarget>,
     match: MutableState<String>,
-    team: MutableState<String>,
+    team: MutableIntState,
     robotStartPosition: MutableIntState,
     autoSpeakerNum: MutableIntState,
     autoAmpNum: MutableIntState,

@@ -1,10 +1,9 @@
 package pages
 
-import BackButton
-import CheckBox
-import EnumerableValue
-import androidx.compose.foundation.*
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -20,8 +19,8 @@ import coil.request.ImageRequest
 import com.bumble.appyx.components.backstack.BackStack
 import com.bumble.appyx.navigation.modality.BuildContext
 import com.bumble.appyx.navigation.node.Node
-import org.jetbrains.compose.resources.ExperimentalResourceApi
-import org.jetbrains.compose.resources.painterResource
+import composables.CheckBox
+import composables.EnumerableValue
 import org.json.JSONObject
 import qrcode.QRCode
 import qrcode.color.Colors
@@ -31,16 +30,11 @@ import java.util.zip.Deflater
 
 actual class AutoMenu actual constructor(
     buildContext: BuildContext,
-    private val backStack: BackStack<AutoTeleSelectorMenu.NavTarget>,
     private val mainMenuBackStack: BackStack<RootNode.NavTarget>,
-    private val match: MutableState<String>,
-    private val team: MutableState<String>,
-    private val robotStartPosition: MutableIntState,
-    private val autoSpeakerNum: MutableIntState,
-    private val autoAmpNum: MutableIntState,
-    private val quanNotes: MutableState<String>
+    autoSpeakerNum: MutableIntState,
+    autoAmpNum: MutableIntState,
+    quanNotes: MutableState<String>
 ) : Node(buildContext) {
-    @OptIn(ExperimentalResourceApi::class, ExperimentalFoundationApi::class)
     @Composable
     actual override fun View(modifier: Modifier) {
         var match by remember { mutableStateOf("") }
@@ -229,7 +223,6 @@ actual class AutoMenu actual constructor(
                 contentDescription = "QR Code",
                 contentScale = ContentScale.Fit,
                 modifier = Modifier
-                    .fillMaxSize(1.25f)
             )
         }
     }

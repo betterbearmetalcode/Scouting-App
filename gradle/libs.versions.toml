@@ -1,23 +1,30 @@
 [versions]
 bumble-appyxNavigation = "2.0.0-alpha09"
 compiler = "1.5.6"
-compose = "1.5.4"
-compose-plugin = "1.5.10"
+compose = "1.6.1"
+compose-plugin = "1.5.11"
 compose-compiler = "1.5.4"
-agp = "8.1.4"
+agp = "8.2.2"
 android-minSdk = "24"
 android-compileSdk = "34"
 android-targetSdk = "34"
-androidx-activityCompose = "1.8.1"
+androidx-activityCompose = "1.8.2"
 androidx-core-ktx = "1.12.0"
 androidx-appcompat = "1.6.1"
-androidx-material = "1.10.0"
+androidx-material = "1.11.0"
 androidx-constraintlayout = "2.1.4"
 androidx-test-junit = "1.1.5"
 androidx-espresso-core = "3.5.1"
+json = "20231013"
 kotlin = "1.9.20"
 junit = "4.13.2"
+kotlinxCoroutinesTest = "1.8.0-RC"
 kotlinxDatetime = "0.4.1"
+okhttp = "4.12.0"
+qrcodeKotlin = "4.0.6"
+uiDesktop = "1.5.11"
+material3 = "1.2.0"
+material3Desktop = "1.2.0"
 
 [libraries]
 androidx-compiler = { module = "androidx.compose.compiler:compiler", version.ref = "compiler" }
@@ -40,6 +47,11 @@ androidx-constraintlayout = { group = "androidx.constraintlayout", name = "const
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activityCompose" }
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinxDatetime" }
 multiplatform = { module = "com.bumble.appyx:multiplatform", version.ref = "bumble-appyxNavigation" }
+okhttp = { module = "com.squareup.okhttp3:okhttp", version.ref = "okhttp" }
+qrcode-kotlin = { module = "io.github.g0dkar:qrcode-kotlin", version.ref = "qrcodeKotlin" }
+ui-desktop = { module = "org.jetbrains.compose.ui:ui-desktop", version.ref = "uiDesktop" }
+androidx-material3 = { group = "androidx.compose.material3", name = "material3", version.ref = "material3" }
+androidx-material3-desktop = { group = "androidx.compose.material3", name = "material3-desktop", version.ref = "material3Desktop" }
 
 [plugins]
 jetbrainsCompose = { id = "org.jetbrains.compose", version.ref = "compose-plugin" }
