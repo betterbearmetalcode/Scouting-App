@@ -48,7 +48,7 @@ class RootNode(
         when (interactionTarget) {
             NavTarget.MainMenu -> MainMenu(buildContext, backStack, robotStartPosition)
             NavTarget.MatchScouting -> AutoTeleSelectorMenu(buildContext,robotStartPosition, team, backStack)
-            NavTarget.PitsScouting -> PitsScoutMenu(buildContext)
+            NavTarget.PitsScouting -> PitsScoutMenu(buildContext,backStack)
         }
 
     @Composable

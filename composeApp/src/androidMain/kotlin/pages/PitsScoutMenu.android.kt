@@ -1,10 +1,9 @@
 package pages
 
+import RootNode
 import android.Manifest
 import android.content.pm.PackageManager
 import android.net.Uri
-import android.util.Log
-import android.widget.ImageView
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.ScrollState
@@ -22,10 +21,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
+import coil.compose.AsyncImage
 import com.bumble.appyx.components.backstack.BackStack
 import com.bumble.appyx.navigation.modality.BuildContext
 import com.bumble.appyx.navigation.node.Node
-import coil.compose.AsyncImage
 import org.example.project.ComposeFileProvider
 
 actual class PitsScoutMenu actual constructor(

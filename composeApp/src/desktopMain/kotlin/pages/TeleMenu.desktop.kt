@@ -20,12 +20,8 @@ import com.bumble.appyx.components.backstack.BackStack
 import com.bumble.appyx.navigation.modality.BuildContext
 import com.bumble.appyx.navigation.node.Node
 import org.jetbrains.compose.resources.ExperimentalResourceApi
-import org.json.JSONObject
 import qrcode.QRCode
-import qrcode.color.Colors
 import java.io.File
-import java.nio.charset.Charset
-import java.util.zip.Deflater
 
 actual class TeleMenu actual constructor(
     buildContext: BuildContext,
@@ -137,8 +133,8 @@ actual class TeleMenu actual constructor(
 
                     val qrCode = QRCode.ofRoundedSquares()
                         .withSize(12)
-                        .withBackgroundColor(Colors.BLACK)
-                        .withColor(Colors.GOLD)
+                        .withBackgroundColor(qrcode.color.Colors.BLACK)
+                        .withColor(qrcode.color.Colors.GOLD)
                         .build(outputString)
 
                     val pngBytes = qrCode.render()

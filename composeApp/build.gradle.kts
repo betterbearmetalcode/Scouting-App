@@ -1,6 +1,5 @@
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.compose.ExperimentalComposeLibrary
-import kotlin.io.path.div
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
@@ -24,12 +23,13 @@ kotlin {
             }
         }
     }
-    
+
     jvm("desktop")
+
 
     sourceSets {
         val desktopMain by getting
-        
+
         androidMain.dependencies {
             implementation(libs.compose.ui)
             implementation(libs.compose.ui.tooling.preview)
@@ -49,6 +49,8 @@ kotlin {
             @OptIn(ExperimentalComposeLibrary::class)
             implementation(compose.components.resources)
             implementation(libs.androidx.compiler)
+            implementation(libs.kotlinx.coroutines.core)
+            implementation(libs.bumble.appyx.navigation)
             implementation(libs.qrcode.kotlin)
             implementation(libs.okhttp)
             implementation(libs.json)
@@ -107,7 +109,6 @@ compose.desktop {
         mainClass = "MainKt"
 
         nativeDistributions {
-            appResourcesRootDir = (rootDir.toPath() / "desktopMain").toFile()
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
             packageName = "org.example.project"
             packageVersion = "1.0.0"

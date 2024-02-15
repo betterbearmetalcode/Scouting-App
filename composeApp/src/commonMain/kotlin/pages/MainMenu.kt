@@ -31,6 +31,7 @@ class MainMenu(
     @Composable
     override fun View(modifier: Modifier) {
         var selectedPlacement by remember { mutableStateOf(false) }
+        var pitsSelectedPlacement by remember { mutableStateOf(false) }
         val openError = remember { mutableStateOf(false) }
 
         when {
@@ -137,7 +138,19 @@ class MainMenu(
                     fontSize = 35.sp
                 )
             }
-
+            DropdownMenu(
+                expanded = pitsSelectedPlacement,
+                onDismissRequest = { pitsSelectedPlacement = false },
+                modifier = Modifier.size(200.dp, 332.dp).background(color = Color(0, 0, 0))
+            ) {
+                DropdownMenuItem(
+                    onClick = {
+                        robotStartPosition.value = 0; backStack.push(RootNode.NavTarget.PitsScouting)
+                    },
+                    modifier = Modifier.border(BorderStroke(color = Color.Yellow, width = 3.dp))
+                        .size(100.dp, 100.dp).background(color = Color(60, 30, 30))
+                ) { Text("R1", fontSize = 22.sp) }
+            }
             OutlinedButton(
                 border = BorderStroke(3.dp, Color.Yellow),
                 shape = RoundedCornerShape(25.dp),
@@ -154,6 +167,7 @@ class MainMenu(
                     fontSize = 35.sp
                 )
             }
+
         }
     }
 }
