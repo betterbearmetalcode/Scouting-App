@@ -59,7 +59,7 @@ class MainMenu(
             ) {
                 Text(
                     text = "Match",
-                    color = getCurrentTheme().primaryVariant,
+                    color = getCurrentTheme().onPrimary,
                     fontSize = 35.sp
                 )
             }
@@ -133,7 +133,7 @@ class MainMenu(
                 ) {
                 Text(
                     text = "Pits",
-                    color = getCurrentTheme().primaryVariant,
+                    color = getCurrentTheme().onPrimary,
                     fontSize = 35.sp
                 )
             }
@@ -150,8 +150,12 @@ class MainMenu(
             ) {
                 Text(
                     text = "Sync",
-                    color = getCurrentTheme().primaryVariant,
+                    color = getCurrentTheme().onPrimary,
                     fontSize = 35.sp
+                )
+
+                Text(
+                    text = ""
                 )
             }
         }

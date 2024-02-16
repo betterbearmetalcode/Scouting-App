@@ -34,7 +34,7 @@ fun EnumerableValue(
             fontSize = 25.sp
         )
     }
-    Row(horizontalArrangement = Arrangement.Center, modifier = Modifier.offset(130.dp,-30.dp)) {
+    Row(horizontalArrangement = Arrangement.Center, modifier = Modifier.offset(130.dp, (-30).dp)) {
         OutlinedButton(
             border = BorderStroke(2.dp, color = Color.Yellow),
             shape = RoundedCornerShape(5.dp),
@@ -51,7 +51,7 @@ fun EnumerableValue(
         Text(
             text = value.value.toString(),
             fontSize = 30.sp,
-            modifier = Modifier.padding(5.dp)
+            modifier = Modifier.padding(5.dp).offset(y = (-2.5).dp)
         )
         OutlinedButton(
             border = BorderStroke(2.dp, color = Color.Yellow),

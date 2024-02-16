@@ -71,7 +71,6 @@ class AutoTeleSelectorMenu(
     override fun View(modifier: Modifier) {
         setTeam(team, match, robotStartPosition.value)
         var selectAuto by remember { mutableStateOf(false) }
-        var selectedPlacement by remember { mutableStateOf(false) }
         var pageName by remember { mutableStateOf("Auto") }
         var positionName by remember { mutableStateOf("") }
 
@@ -104,7 +103,7 @@ class AutoTeleSelectorMenu(
                     modifier = Modifier.fillMaxWidth(1f/4f)
                 )
                 Text(
-                    text = "Team" + team.value
+                    text = "Team: " + team.value
                 )
             }
             Row {

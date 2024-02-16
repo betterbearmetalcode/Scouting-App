@@ -100,6 +100,7 @@ android {
 }
 dependencies {
     implementation(libs.androidx.material3.desktop)
+    implementation(libs.androidx.databinding.compiler)
 }
 
 compose.desktop {

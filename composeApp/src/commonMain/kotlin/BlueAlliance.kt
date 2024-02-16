@@ -5,6 +5,8 @@ import okhttp3.OkHttpClient
 import okhttp3.Request
 import org.json.JSONArray
 import org.json.JSONObject
+import java.io.FileNotFoundException
+import java.util.*
 
 
 /**
@@ -22,17 +24,32 @@ fun sync(refresh: Boolean): Boolean {
         matchData?.let {
             return true
         }
+        try {
+            openFile()
+        } catch (e: FileNotFoundException) {
+            return false
+        }
     }
+    val apiKey = String(Base64.getDecoder().decode(apiKeyEncoded))
     try {
-        val matches = run("$url/event/2016nytr/matches/simple", Headers.headersOf("X-TBA-Auth-Key", apiKey))
+        val matches = run("$url/event/2016nytr/matches/simple",
+            Headers.headersOf("X-TBA-Auth-Key",
+                apiKey
+            )
+        )
         matchData = JSONObject("{\"matches\":$matches}")
+        createFile()
     } catch (e: java.net.UnknownHostException) {
-        return false
+        try {
+            openFile()
+        } catch (e: FileNotFoundException) {
+            return false
+        }
     }
     return true
 }
 
-private var matchData: JSONObject? = null;
+var matchData: JSONObject? = null;
 
 private const val url = "https://www.thebluealliance.com/api/v3"
 private val client = OkHttpClient()
@@ -76,4 +93,7 @@ fun setTeam(teamNum: MutableIntState, match: MutableState<String>, robotStartPos
 }
 
 
-private const val apiKey = "xLTlR6TM0H8zmSr8gyVyfDTw8njfHyJeEnVgLO0QCIizAk8mx4EQUNJcZfKibK9z"
+
+
+
+private const val apiKeyEncoded = "eEtWS2RkemlRaTlJWkJhYXMxU0M0cUdlVkVTMXdaams3VDhUckZ1amFSODFmQlFIUXgybTdzTGJoZ0lnQVNPRw=="

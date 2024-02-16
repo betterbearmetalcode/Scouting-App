@@ -19,13 +19,11 @@ import androidx.compose.ui.unit.dp
 import com.bumble.appyx.components.backstack.BackStack
 import com.bumble.appyx.navigation.modality.BuildContext
 import com.bumble.appyx.navigation.node.Node
+import keyboardAsState
 import org.jetbrains.compose.resources.ExperimentalResourceApi
-import org.json.JSONObject
 import qrcode.QRCode
 import qrcode.color.Colors
 import java.io.File
-import java.nio.charset.Charset
-import java.util.zip.Deflater
 
 actual class TeleMenu actual constructor(
     buildContext: BuildContext,
@@ -75,10 +73,10 @@ actual class TeleMenu actual constructor(
                 .verticalScroll(state = scrollState, enabled = isScrollEnabled,)
                 .padding(20.dp)) {
 
-            EnumerableValue(label ="Speaker" , value = teleSpeakerNum)//No worky?
-            EnumerableValue(label ="Amp" , value = teleAmpNum)
-            EnumerableValue(label ="Amplified" , value = teleAmplified)
-            EnumerableValue(label ="Trap" , value = teleTrapNum)
+            EnumerableValue(label = "Speaker" , value = teleSpeakerNum)//It no worky?
+            EnumerableValue(label = "Amp" , value = teleAmpNum)
+            EnumerableValue(label = "Amplified" , value = teleAmplified)
+            EnumerableValue(label = "Trap" , value = teleTrapNum)
 
             Divider(color = Color.Black, thickness = 4.dp)
             Row{
@@ -118,7 +116,6 @@ actual class TeleMenu actual constructor(
                     isScrollEnabled = false
                 },
                 modifier = Modifier
-                    .align(Alignment.CenterHorizontally)
                     .size(400.dp, 200.dp)
             )
             Button(

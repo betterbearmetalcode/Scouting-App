@@ -23,6 +23,7 @@ import com.bumble.appyx.navigation.modality.BuildContext
 import com.bumble.appyx.navigation.node.Node
 import composables.EnumerableValue
 import defaultSecondary
+import keyboardAsState
 
 actual class AutoMenu actual constructor(
     buildContext: BuildContext,

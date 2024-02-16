@@ -21,6 +21,7 @@ import com.bumble.appyx.navigation.modality.BuildContext
 import com.bumble.appyx.navigation.node.Node
 import composables.CheckBox
 import composables.EnumerableValue
+import keyboardAsState
 import org.json.JSONObject
 import qrcode.QRCode
 import qrcode.color.Colors
@@ -168,7 +169,7 @@ actual class AutoMenu actual constructor(
                       Text("Write Here")
                     },
                 onValueChange = {
-                    quanNotes = it;
+                    quanNotes = it
                     isScrollEnabled = false
                 },
                 modifier = Modifier
