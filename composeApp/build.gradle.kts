@@ -43,6 +43,7 @@ kotlin {
         }
 
         commonMain.dependencies {
+            implementation("com.github.sarxos:webcam-capture:0.3.10")
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.material)
@@ -55,7 +56,6 @@ kotlin {
             implementation(libs.okhttp)
             implementation(libs.json)
             implementation(libs.bumble.appyx.navigation)
-
             api(libs.backstack)
         }
     }
