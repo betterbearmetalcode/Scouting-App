@@ -13,6 +13,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.bumble.appyx.components.backstack.BackStack
 import com.bumble.appyx.components.backstack.operation.pop
 import com.bumble.appyx.navigation.modality.BuildContext
@@ -51,10 +52,10 @@ class AutoMenu (
                 .padding(20.dp)
         ) {
             Box(Modifier.fillMaxWidth()) {
-                Text("Leave?", Modifier.align(Alignment.CenterStart))
+                Text("Leave?", Modifier.align(Alignment.CenterStart), fontSize = 25.sp)
 
                 Row (Modifier.align(Alignment.Center)){
-                    Text ("Y")
+                    Text ("Y", Modifier.align(Alignment.CenterVertically))
                     Switch(
                         checked = left.value,
                         onCheckedChange = {
@@ -69,7 +70,7 @@ class AutoMenu (
                             checkedTrackAlpha = 1f
                         )
                     )
-                    Text("N")
+                    Text("N", Modifier.align(Alignment.CenterVertically))
                 }
             }
 

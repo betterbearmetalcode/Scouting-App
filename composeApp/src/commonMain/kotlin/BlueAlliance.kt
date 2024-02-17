@@ -23,14 +23,54 @@ import java.util.*
  * @return Returns true if ping is successful,
  *         or if match data isn't null
  */
+
 fun sync(refresh: Boolean): Boolean {
+    var error = syncTeams(refresh)
+    error = error || syncMatches(refresh)
+    if (!error) {
+        createFile()
+        lastSynced.value = Instant.now()
+    }
+    return error
+}
+
+fun syncTeams(refresh: Boolean): Boolean {
+    if (!refresh){
+        teamData?.let {
+            return true
+        }
+        try {
+            openFile()
+            return true
+        } catch (e: FileNotFoundException) {
+            return false
+        }
+    }
+    val apiKey = String(Base64.getDecoder().decode(apiKeyEncoded))
+    try {
+        val teams = run("$url/event/$comp/teams/simple",
+            Headers.headersOf("X-TBA-Auth-Key",
+                apiKey
+            )
+        )
+        teamData = JSONObject("{\"teams\":$teams}")
+    } catch (e: java.net.UnknownHostException) {
+        try {
+            openFile()
+        } catch (e: FileNotFoundException) {
+            return false
+        }
+    }
+    return true
+}
+
+fun syncMatches(refresh: Boolean): Boolean {
     if (!refresh){
         matchData?.let {
             return true
         }
         try {
             openFile()
-            lastSynced.value = Instant.now()
             return true
         } catch (e: FileNotFoundException) {
             return false
@@ -44,7 +84,6 @@ fun sync(refresh: Boolean): Boolean {
             )
         )
         matchData = JSONObject("{\"matches\":$matches}")
-        createFile()
     } catch (e: java.net.UnknownHostException) {
         try {
             openFile()
@@ -52,13 +91,13 @@ fun sync(refresh: Boolean): Boolean {
             return false
         }
     }
-    lastSynced.value = Instant.now()
     return true
 }
 
 var comp = "2016ntyr"
 
 var matchData: JSONObject? = null
+var teamData: JSONObject? = null
 
 private const val url = "https://www.thebluealliance.com/api/v3"
 private val client = OkHttpClient()
