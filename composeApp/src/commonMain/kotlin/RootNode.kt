@@ -1,6 +1,7 @@
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Modifier
 import com.bumble.appyx.components.backstack.BackStack
 import com.bumble.appyx.components.backstack.BackStackModel
@@ -30,6 +31,7 @@ class RootNode(
 
     private var team = mutableIntStateOf(1)
     private var robotStartPosition = mutableIntStateOf(-1)
+    private var pitsPerson = mutableStateOf("P1")
 
     sealed class NavTarget : Parcelable {
         @Parcelize
@@ -48,7 +50,7 @@ class RootNode(
         when (interactionTarget) {
             NavTarget.MainMenu -> MainMenu(buildContext, backStack, robotStartPosition)
             NavTarget.MatchScouting -> AutoTeleSelectorMenu(buildContext,robotStartPosition, team, backStack)
-            NavTarget.PitsScouting -> PitsScoutMenu(buildContext,backStack)
+            NavTarget.PitsScouting -> PitsScoutMenu(buildContext,backStack,pitsPerson)
         }
 
     @Composable
