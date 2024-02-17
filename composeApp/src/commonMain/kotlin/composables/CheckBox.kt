@@ -1,6 +1,5 @@
 package composables
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.offset
 import androidx.compose.material.Checkbox
@@ -13,9 +12,7 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun CheckBox(
     label: String,
-    ifChecked: MutableState<Boolean>,
-    modifier: Modifier = Modifier,
-    horizontalArrangement: Arrangement.Horizontal = Arrangement.Start
+    ifChecked: MutableState<Boolean>
 ){
     Row {
         Text(

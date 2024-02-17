@@ -1,7 +1,10 @@
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
+import androidx.compose.material.Typography
 import androidx.compose.runtime.remember
 import androidx.compose.ui.input.key.*
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.platform.Font
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Window
@@ -21,7 +24,7 @@ fun main() = application {
     Dispatchers.setMain(mainThreadSurrogate)
 
     val events: Channel<Events> = Channel()
-    val windowState = rememberWindowState(size = DpSize(480.dp, 640.dp))
+    val windowState = rememberWindowState(size = DpSize(480.dp, 680.dp))
     val eventScope = remember { CoroutineScope(SupervisorJob() + Dispatchers.Main) }
 
     Window(
@@ -32,7 +35,14 @@ fun main() = application {
             onKeyEvent(it, events, eventScope)
         },
     ) {
-        MaterialTheme(colors = getCurrentTheme()) {
+        MaterialTheme(
+            colors = getCurrentTheme(),
+            typography = Typography(
+                defaultFontFamily = FontFamily(
+                    Font("font/Xolonium-Regular.otf")
+                )
+            )
+        ) {
             Surface(color = MaterialTheme.colors.background) {
                 DesktopNodeHost(
                     windowState = windowState,

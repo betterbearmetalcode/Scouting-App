@@ -1,10 +1,16 @@
 import androidx.compose.runtime.MutableIntState
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
 import okhttp3.Headers
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import org.json.JSONArray
 import org.json.JSONObject
+import java.io.FileNotFoundException
+import java.time.Instant
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
+import java.util.*
 
 
 /**
@@ -22,17 +28,37 @@ fun sync(refresh: Boolean): Boolean {
         matchData?.let {
             return true
         }
+        try {
+            openFile()
+            lastSynced.value = Instant.now()
+            return true
+        } catch (e: FileNotFoundException) {
+            return false
+        }
     }
+    val apiKey = String(Base64.getDecoder().decode(apiKeyEncoded))
     try {
-        val matches = run("$url/event/2016nytr/matches/simple", Headers.headersOf("X-TBA-Auth-Key", apiKey))
+        val matches = run("$url/event/$comp/matches/simple",
+            Headers.headersOf("X-TBA-Auth-Key",
+                apiKey
+            )
+        )
         matchData = JSONObject("{\"matches\":$matches}")
+        createFile()
     } catch (e: java.net.UnknownHostException) {
-        return false
+        try {
+            openFile()
+        } catch (e: FileNotFoundException) {
+            return false
+        }
     }
+    lastSynced.value = Instant.now()
     return true
 }
 
-private var matchData: JSONObject? = null;
+var comp = "2016ntyr"
+
+var matchData: JSONObject? = null
 
 private const val url = "https://www.thebluealliance.com/api/v3"
 private val client = OkHttpClient()
@@ -75,5 +101,18 @@ fun setTeam(teamNum: MutableIntState, match: MutableState<String>, robotStartPos
     }
 }
 
+private var lastSynced = mutableStateOf(Instant.now())
 
-private const val apiKey = "xLTlR6TM0H8zmSr8gyVyfDTw8njfHyJeEnVgLO0QCIizAk8mx4EQUNJcZfKibK9z"
+fun getLastSynced() : String {
+    val formatter = DateTimeFormatter.ofPattern(PATTERN_FORMAT)
+        .withZone(ZoneId.systemDefault())
+
+    return formatter.format(lastSynced.value)
+}
+
+private const val PATTERN_FORMAT = "dd/MM/yyyy @ hh:mm"
+
+
+
+
+private const val apiKeyEncoded = "eEtWS2RkemlRaTlJWkJhYXMxU0M0cUdlVkVTMXdaams3VDhUckZ1amFSODFmQlFIUXgybTdzTGJoZ0lnQVNPRw=="
