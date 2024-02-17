@@ -1,9 +1,7 @@
 package pages
 
 import RootNode
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
@@ -20,6 +18,10 @@ import com.bumble.appyx.navigation.node.Node
 import composables.InternetErrorAlert
 import defaultSecondary
 import getCurrentTheme
+import getLastSynced
+import matchData
+import org.jetbrains.compose.resources.ExperimentalResourceApi
+import org.jetbrains.compose.resources.painterResource
 import sync
 
 class MainMenu(
@@ -28,17 +30,19 @@ class MainMenu(
     private val robotStartPosition: MutableIntState
 ) : Node(buildContext = buildContext) {
 
+    @OptIn(ExperimentalResourceApi::class)
     @Composable
     override fun View(modifier: Modifier) {
         var selectedPlacement by remember { mutableStateOf(false) }
         val openError = remember { mutableStateOf(false) }
+        var matchSyncedResource by remember { mutableStateOf(if (matchData == null) "crossmark.png" else "checkmark.png") }
 
         when {
             openError.value -> {
                 InternetErrorAlert { openError.value = false }
             }
         }
-        Column {
+        Column (modifier = Modifier.verticalScroll(ScrollState(0))) {
             Text(
                 text = "Bear Metal Scout App",
                 fontSize = 30.sp,
@@ -54,6 +58,8 @@ class MainMenu(
                     openError.value = !sync(false)
                     if (!openError.value)
                         selectedPlacement = true
+                    else
+                        matchSyncedResource = "checkmark.png"
                 },
                 modifier = Modifier.align(Alignment.CenterHorizontally).padding(horizontal = 50.dp, vertical = 50.dp),
             ) {
@@ -141,22 +147,51 @@ class MainMenu(
             OutlinedButton(
                 border = BorderStroke(3.dp, Color.Yellow),
                 shape = RoundedCornerShape(25.dp),
-                contentPadding = PaddingValues(horizontal = 80.dp, vertical = 5.dp),
+                contentPadding = PaddingValues(horizontal = 10.dp, vertical = 15.dp),
                 colors = ButtonDefaults.buttonColors(backgroundColor = defaultSecondary),
                 onClick = {
                     openError.value = !sync(true)
+                    if (!openError.value) matchSyncedResource = "checkmark.png"
                 },
                 modifier = Modifier.align(Alignment.CenterHorizontally).padding(horizontal = 50.dp, vertical = 50.dp),
             ) {
-                Text(
-                    text = "Sync",
-                    color = getCurrentTheme().onPrimary,
-                    fontSize = 35.sp
-                )
+                Column {
+                    Text(
+                        text = "Sync",
+                        color = getCurrentTheme().onPrimary,
+                        fontSize = 35.sp,
+                        modifier = Modifier.align(Alignment.CenterHorizontally)
+                    )
 
-                Text(
-                    text = ""
-                )
+                    Text(
+                        text = "Last synced ${getLastSynced()}",
+                        fontSize = 12.sp,
+                    )
+
+                    Spacer(modifier = Modifier.height(10.dp))
+
+                    Row {
+                        Text ("Robot List")
+
+                        Image(
+                            painterResource(res = "crossmark.png"),
+                            contentDescription = "status",
+                            modifier = Modifier.size(30.dp).offset(x=100.dp, y=(-5).dp)
+                        )
+                    }
+
+                    Spacer(modifier = Modifier.height(10.dp))
+
+                    Row {
+                        Text ("Match List")
+
+                        Image(
+                            painterResource(res = matchSyncedResource),
+                            contentDescription = "status",
+                            modifier = Modifier.size(30.dp).offset(x=(98.5).dp),
+                        )
+                    }
+                }
             }
         }
     }
