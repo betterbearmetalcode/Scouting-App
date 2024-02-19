@@ -40,11 +40,22 @@ class MainMenu(
             }
         }
         Column {
+            Box(modifier = Modifier.fillMaxWidth()){
             Text(
                 text = "Bear Metal Scout App",
                 fontSize = 30.sp,
-                modifier = Modifier.align(Alignment.CenterHorizontally)
+                modifier = Modifier.align(Alignment.Center)
             )
+                OutlinedButton(
+                    onClick = {
+                        backStack.push(RootNode.NavTarget.LoginPage)
+                    }
+                ){
+                    Text(
+                        text = "Login"
+                    )
+                }
+        }
             Divider(color = getCurrentTheme().onSurface, thickness = 2.dp)
             OutlinedButton(
                 border = BorderStroke(3.dp, Color.Yellow),

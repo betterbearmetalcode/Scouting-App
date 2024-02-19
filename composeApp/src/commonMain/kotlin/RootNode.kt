@@ -19,7 +19,7 @@ class RootNode(
     buildContext: BuildContext,
     private val backStack: BackStack<NavTarget> = BackStack(
         model = BackStackModel(
-            initialTarget = NavTarget.MainMenu,
+            initialTarget = NavTarget.LoginPage,
             savedStateMap = buildContext.savedStateMap
         ),
         visualisation = { BackStackFader(it) }
@@ -43,14 +43,18 @@ class RootNode(
         @Parcelize
         data object PitsScouting : NavTarget()
 
+        data object LoginPage : NavTarget()
+
 
     }
 
     override fun resolve(interactionTarget: NavTarget, buildContext: BuildContext): Node =
         when (interactionTarget) {
+            NavTarget.LoginPage -> LoginPage(buildContext,backStack)
             NavTarget.MainMenu -> MainMenu(buildContext, backStack, robotStartPosition)
             NavTarget.MatchScouting -> AutoTeleSelectorMenu(buildContext,robotStartPosition, team, backStack)
             NavTarget.PitsScouting -> PitsScoutMenu(buildContext,backStack,pitsPerson)
+
         }
 
     @Composable
