@@ -16,28 +16,35 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.bumble.appyx.components.backstack.BackStack
 import com.bumble.appyx.components.backstack.operation.pop
+import com.bumble.appyx.components.backstack.operation.push
 import com.bumble.appyx.navigation.modality.BuildContext
 import com.bumble.appyx.navigation.node.Node
 import composables.EnumerableValue
-import defaultBackground
 import defaultOnBackground
 import defaultSecondary
+import exportScoutData
 import keyboardAsState
+import matchScoutArray
 
 class AutoMenu (
     buildContext: BuildContext,
+    private val backStack: BackStack<AutoTeleSelectorMenu.NavTarget>,
     private val mainMenuBackStack: BackStack<RootNode.NavTarget>,
-    private val left: MutableState<Boolean>,
-    private val autoSpeakerNum: MutableIntState,
-    private val autoAmpNum: MutableIntState,
-    private val collected: MutableIntState,
-    private val sMissed: MutableIntState,
-    private val aMissed: MutableIntState,
-    private val quanNotes: MutableState<String>,
 
-    ) : Node(buildContext) {
+    private val selectAuto: MutableState<Boolean>,
+
+    private val match: MutableState<String>,
+    private val team: MutableIntState,
+    private val robotStartPosition: MutableIntState,
+) : Node(buildContext) {
     @Composable
     override fun View(modifier: Modifier) {
+        fun bob() {
+            mainMenuBackStack.pop()
+            matchScoutArray[Integer.parseInt(match.value)] = createOutput(team, robotStartPosition)
+            exportScoutData()
+        }
+
         val scrollState = rememberScrollState(0)
         val isScrollEnabled = remember{ mutableStateOf(true) }
         val isKeyboardOpen by keyboardAsState()
@@ -55,22 +62,22 @@ class AutoMenu (
                 Text("Leave?", Modifier.align(Alignment.CenterStart), fontSize = 25.sp)
 
                 Row (Modifier.align(Alignment.Center)){
-                    Text ("Y", Modifier.align(Alignment.CenterVertically))
+                    Text ("N", Modifier.align(Alignment.CenterVertically))
                     Switch(
                         checked = left.value,
                         onCheckedChange = {
                             left.value = it
                         },
                         colors = SwitchDefaults.colors(
-                            uncheckedTrackColor = defaultOnBackground,
-                            uncheckedThumbColor = defaultBackground,
+                            uncheckedTrackColor = Color(50, 50, 50),
+                            uncheckedThumbColor = defaultOnBackground,
                             uncheckedTrackAlpha = 1f,
-                            checkedTrackColor = defaultOnBackground,
-                            checkedThumbColor = defaultBackground,
+                            checkedTrackColor = Color(50, 50, 50),
+                            checkedThumbColor = defaultOnBackground,
                             checkedTrackAlpha = 1f
                         )
                     )
-                    Text("N", Modifier.align(Alignment.CenterVertically))
+                    Text("Y", Modifier.align(Alignment.CenterVertically))
                 }
             }
 
@@ -78,17 +85,37 @@ class AutoMenu (
             EnumerableValue(label = "Amp", value = autoAmpNum)
             EnumerableValue(label = "Collected", value = collected)
             Spacer(modifier = Modifier.height(30.dp))
-            EnumerableValue(label = "S Missed", value = sMissed)
-            EnumerableValue(label = "A Missed", value = aMissed)
+            EnumerableValue(label = "S Missed", value = autoSMissed)
+            EnumerableValue(label = "A Missed", value = autoAMissed)
 
-            Notes(quanNotes, isScrollEnabled)
+            Notes(autoNotes, isScrollEnabled)
 
             OutlinedButton(
                 border = BorderStroke(2.dp, color = Color.Yellow),
                 shape = CircleShape,
                 colors = ButtonDefaults.buttonColors(backgroundColor = defaultSecondary),
                 onClick = {
-                    mainMenuBackStack.pop()
+                    backStack.push(AutoTeleSelectorMenu.NavTarget.TeleScouting)
+                    selectAuto.value = true
+                },
+                modifier = Modifier.align(Alignment.CenterHorizontally)
+            ){
+                Text(
+                    text = "Tele",
+                    color = Color.Yellow,
+                    fontSize = 35.sp
+                )
+            }
+
+            Spacer(Modifier.height(25.dp))
+
+            OutlinedButton(
+                border = BorderStroke(2.dp, color = Color.Yellow),
+                shape = CircleShape,
+                colors = ButtonDefaults.buttonColors(backgroundColor = defaultSecondary),
+                onClick = {
+                    exportScoutData()
+                    bob()
                 },
                 modifier = Modifier.align(Alignment.CenterHorizontally)
             ){

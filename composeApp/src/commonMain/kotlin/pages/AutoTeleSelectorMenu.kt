@@ -43,26 +43,8 @@ class AutoTeleSelectorMenu(
     appyxComponent = backStack,
     buildContext = buildContext
 ) {
-
-
     private val selectAuto = mutableStateOf(false)
 
-    private val match = mutableStateOf("1")
-    private var left = mutableStateOf(false)
-    private val autoSpeakerNum = mutableIntStateOf(0)
-    private val autoAmpNum = mutableIntStateOf(0)
-    private val autoCollected = mutableIntStateOf(0)
-    private val autoSMissed = mutableIntStateOf(0)
-    private val autoAMissed = mutableIntStateOf(0)
-    private val teleSpeakerNum  =  mutableIntStateOf(0)
-    private val teleAmpNum  = mutableIntStateOf(0)
-    private val teleTrapNum = mutableIntStateOf(0)
-    private val teleSMissed = mutableIntStateOf(0)
-    private val teleAMissed = mutableIntStateOf(0)
-    private val selectedEndPos = mutableStateOf("None")
-    private val lostComms = mutableStateOf(false)
-    private var autoNotes = mutableStateOf("")
-    private var teleNotes = mutableStateOf("")
 
     sealed class NavTarget : Parcelable {
         @Parcelize
@@ -74,9 +56,8 @@ class AutoTeleSelectorMenu(
 
     override fun resolve(interactionTarget: NavTarget, buildContext: BuildContext): Node =
         when (interactionTarget) {
-            NavTarget.AutoScouting -> AutoMenu(buildContext, mainMenuBackStack, left, autoSpeakerNum, autoAmpNum, autoCollected, autoSMissed, autoAMissed, autoNotes)
-            NavTarget.TeleScouting -> TeleMenu(buildContext, backStack, mainMenuBackStack, selectAuto, match, team, robotStartPosition, left, autoSpeakerNum, autoAmpNum, autoCollected, autoSMissed, autoAMissed, autoNotes, teleSpeakerNum, teleAmpNum, teleTrapNum, teleSMissed, teleAMissed, selectedEndPos, teleNotes, lostComms)
-
+            NavTarget.AutoScouting -> AutoMenu(buildContext, backStack, mainMenuBackStack, selectAuto, match, team, robotStartPosition)
+            NavTarget.TeleScouting -> TeleMenu(buildContext, backStack, selectAuto, match, team, robotStartPosition)
         }
 
     @Composable
@@ -175,11 +156,11 @@ class AutoTeleSelectorMenu(
                                 backStack.push(NavTarget.TeleScouting)
                         },
                         colors = SwitchDefaults.colors(
-                            uncheckedTrackColor = defaultOnBackground,
-                            uncheckedThumbColor = defaultBackground,
+                            uncheckedTrackColor = Color(50, 50, 50),
+                            uncheckedThumbColor = defaultOnBackground,
                             uncheckedTrackAlpha = 1f,
-                            checkedTrackColor = defaultOnBackground,
-                            checkedThumbColor = defaultBackground,
+                            checkedTrackColor = Color(50, 50, 50),
+                            checkedThumbColor = defaultOnBackground,
                             checkedTrackAlpha = 1f
                         )
                     )
@@ -195,10 +176,42 @@ class AutoTeleSelectorMenu(
                 appyxComponent = backStack,
                 modifier = Modifier.weight(0.9f)
             )
-
-
-
         }
     }
+
+
+
+}
+
+val match = mutableStateOf("1")
+var left = mutableStateOf(false)
+val autoSpeakerNum = mutableIntStateOf(0)
+val autoAmpNum = mutableIntStateOf(0)
+val collected = mutableIntStateOf(0)
+val autoSMissed = mutableIntStateOf(0)
+val autoAMissed = mutableIntStateOf(0)
+val teleSpeakerNum  =  mutableIntStateOf(0)
+val teleAmpNum  = mutableIntStateOf(0)
+val teleTrapNum = mutableIntStateOf(0)
+val teleSMissed = mutableIntStateOf(0)
+val teleAMissed = mutableIntStateOf(0)
+val selectedEndPos = mutableStateOf("None")
+var autoNotes = mutableStateOf("")
+var teleNotes = mutableStateOf("")
+
+fun createOutput(team: MutableIntState, robotStartPosition: MutableIntState): String {
+    val teleNotesFinal = if (teleNotes.value == "") "No Comments" else teleNotes.value
+    val autoNotesFinal = if (autoNotes.value == "") "No Comments" else autoNotes.value
+    return match.value + "/" +
+            team.value + "/" + robotStartPosition.value + "/" +
+            (if (left.value) 1 else 0) + "/" + autoSpeakerNum.value + "/" +
+            autoAmpNum.value + "/" + collected.value + "/" +
+            autoSMissed.value + "/" + autoAMissed.value + "/" +
+            teleSpeakerNum.value + "/" + teleAmpNum.value + "/" +
+            teleTrapNum.value + "/" + teleSMissed.value + "/" +
+            teleAMissed.value + "/" + when (selectedEndPos.value) {
+        "None" -> 0; "Parked" -> 1; "Climbed" -> 2; "Harmony" -> 3; else -> 0
+    } + "/" +
+            autoNotesFinal + "/" + teleNotesFinal
 
 }

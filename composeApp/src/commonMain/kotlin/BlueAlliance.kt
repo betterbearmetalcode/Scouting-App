@@ -25,8 +25,8 @@ import java.util.*
  */
 
 fun sync(refresh: Boolean): Boolean {
-    var error = syncTeams(refresh)
-    error = error || syncMatches(refresh)
+    //var error = syncTeams(refresh)
+    val error = syncMatches(refresh)
     if (!error) {
         createFile()
         lastSynced.value = Instant.now()

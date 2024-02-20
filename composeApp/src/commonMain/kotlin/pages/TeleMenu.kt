@@ -1,9 +1,7 @@
 package pages
 
-import RootNode
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
@@ -19,42 +17,26 @@ import com.bumble.appyx.components.backstack.BackStack
 import com.bumble.appyx.components.backstack.operation.pop
 import com.bumble.appyx.navigation.modality.BuildContext
 import com.bumble.appyx.navigation.node.Node
-import composables.CheckBox
 import composables.EnumerableValue
 import composables.Notes
 import defaultSecondary
+import exportScoutData
 import keyboardAsState
+import matchScoutArray
 import qrcode.QRCode
 import qrcode.color.Colors
 import java.io.File
+import java.lang.Integer.parseInt
 
 class TeleMenu(
     buildContext: BuildContext,
     private val backStack: BackStack<AutoTeleSelectorMenu.NavTarget>,
-    private val mainMenuBackStack: BackStack<RootNode.NavTarget>,
 
     private val selectAuto: MutableState<Boolean>,
 
     private val match: MutableState<String>,
     private val team: MutableIntState,
-    private val robotStartPosition: MutableIntState,
-    private val left: MutableState<Boolean>,
-    private val autoSpeakerNum: MutableIntState,
-    private val autoAmpNum: MutableIntState,
-    private val collected: MutableIntState,
-    private val autoSMissed: MutableIntState,
-    private val autoAMissed: MutableIntState,
-    private val autoNotes: MutableState<String>,
-
-    private val teleSpeakerNum: MutableIntState,
-    private val teleAmpNum: MutableIntState,
-    private val teleTrapNum: MutableIntState,
-    private val teleSMissed: MutableIntState,
-    private val teleAMissed: MutableIntState,
-    private val selectedEndPos: MutableState<String>,
-    private val teleNotes: MutableState<String>,
-    private val lostComms: MutableState<Boolean>
-
+    private val robotStartPosition: MutableIntState
 ) : Node(buildContext) {
     @Composable
     override fun View(modifier: Modifier) {
@@ -117,24 +99,15 @@ class TeleMenu(
                     }
                 }
             }
-            CheckBox(label ="Lost Comms:", ifChecked = lostComms )
 
             Notes(teleNotes, isScrollEnabled)
 
-            Button(
+            OutlinedButton(
+                border = BorderStroke(3.dp, Color.Yellow),
+                shape = RoundedCornerShape(25.dp),
+                colors = ButtonDefaults.buttonColors(backgroundColor = defaultSecondary),
                 onClick = {
-                    val teleNotesFinal = if (teleNotes.value == "") "No Notes" else teleNotes.value
-                    val autoNotesFinal = if (autoNotes.value == "") "No Notes" else autoNotes.value
-
-                    val outputString: String = match.value + "/" +
-                            team.value + "/" + robotStartPosition.value + "/" +
-                            (if(left.value) 1 else 0) + "/" + autoSpeakerNum.value + "/" +
-                            autoAmpNum.value + "/" + collected.value + "/" +
-                            autoSMissed.value + "/" + autoAMissed.value + "/" +
-                            teleSpeakerNum.value + "/" + teleAmpNum.value + "/" +
-                            teleTrapNum.value + "/" + teleSMissed.value + "/" +
-                            teleAMissed.value + "/" + when (selectedEndPos.value) {"None" -> 0; "Parked" -> 1; "Climbed" -> 2; "Harmony" -> 3; else -> 0} + "/" +
-                            autoNotesFinal + "/" + teleNotesFinal
+                    val outputString = createOutput(team, robotStartPosition)
 
                     val qrCode = QRCode.ofSquares()
                         .withSize(12)
@@ -166,7 +139,8 @@ class TeleMenu(
                 contentPadding = PaddingValues(horizontal = 10.dp, vertical = 15.dp),
                 colors = ButtonDefaults.buttonColors(backgroundColor = defaultSecondary),
                 onClick = {
-                    match.value = (Integer.parseInt(match.value) + 1).toString()
+                    matchScoutArray[parseInt(match.value)] = createOutput(team, robotStartPosition)
+                    match.value = (parseInt(match.value) + 1).toString()
                     left.value = false
                     autoSpeakerNum.value = 0
                     autoAmpNum.value = 0
@@ -182,28 +156,13 @@ class TeleMenu(
                     selectedEndPos.value = "None"
                     teleNotes.value = ""
                     selectAuto.value = false
+                    exportScoutData()
                     backStack.pop()
                 },
                 modifier = Modifier.align(Alignment.CenterHorizontally)
             ) {
                 Text("Next Match", fontSize = 20.sp)
             }
-
-            OutlinedButton(
-                border = BorderStroke(2.dp, color = Color.Yellow),
-                shape = CircleShape,
-                colors = ButtonDefaults.buttonColors(backgroundColor = defaultSecondary),
-                onClick = {
-                    mainMenuBackStack.pop()
-                },
-                modifier = Modifier.align(Alignment.CenterHorizontally)
-            ){
-                Text(
-                    text = "Back",
-                    color = Color.Yellow
-                )
-            }
         }
     }
-
 }

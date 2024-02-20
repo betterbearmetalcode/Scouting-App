@@ -39,6 +39,8 @@ fun EnumerableValue(
                 ),
                 onClick = {
                     value.value -= 1
+                    if (value.value < 0)
+                        value.value = 0
                 }
             ) {
                 Text(

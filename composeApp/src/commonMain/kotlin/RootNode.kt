@@ -65,3 +65,5 @@ class RootNode(
 
     }
 }
+
+val matchScoutArray = HashMap<Int, String>()

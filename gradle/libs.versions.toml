@@ -16,6 +16,7 @@ androidx-material = "1.11.0"
 androidx-constraintlayout = "2.1.4"
 androidx-test-junit = "1.1.5"
 androidx-espresso-core = "3.5.1"
+gson = "2.10.1"
 json = "20231013"
 kotlin = "1.9.21"
 junit = "4.13.2"
@@ -35,6 +36,7 @@ androidx-compiler = { module = "androidx.compose.compiler:compiler", version.ref
 backstack = { module = "com.bumble.appyx:backstack", version.ref = "bumble-appyxNavigation" }
 bumble-appyx-navigation = { module = "com.bumble.appyx:appyx-navigation", version.ref = "bumble-appyxNavigation" }
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coilCompose" }
+gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
 json = { module = "org.json:json", version.ref = "json" }
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 kotlin-test-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }

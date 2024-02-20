@@ -52,6 +52,7 @@ kotlin {
             implementation(libs.qrcode.kotlin)
             implementation(libs.okhttp)
             implementation(libs.json)
+            implementation(libs.gson)
             implementation(libs.bumble.appyx.navigation)
 
             api(libs.backstack)

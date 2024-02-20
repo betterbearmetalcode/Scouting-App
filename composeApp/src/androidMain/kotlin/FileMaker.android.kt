@@ -36,3 +36,6 @@ actual fun openFile() {
     }
     startActivityForResult(Activity(), intent, PICK_PDF_FILE, null)
 }
+
+actual fun exportScoutData() {
+}
