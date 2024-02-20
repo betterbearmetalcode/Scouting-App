@@ -25,13 +25,13 @@ import java.util.*
  */
 
 fun sync(refresh: Boolean): Boolean {
-    //var error = syncTeams(refresh)
-    val error = syncMatches(refresh)
-    if (!error) {
+    val teamError = syncTeams(refresh)
+    val matchError = syncMatches(refresh)
+    if (teamError && matchError) {
         createFile()
         lastSynced.value = Instant.now()
     }
-    return error
+    return teamError || matchError
 }
 
 fun syncTeams(refresh: Boolean): Boolean {
@@ -94,7 +94,7 @@ fun syncMatches(refresh: Boolean): Boolean {
     return true
 }
 
-var comp = "2016ntyr"
+var comp = "2024wasam"
 
 var matchData: JSONObject? = null
 var teamData: JSONObject? = null

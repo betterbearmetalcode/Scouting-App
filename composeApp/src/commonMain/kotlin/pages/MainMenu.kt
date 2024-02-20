@@ -23,6 +23,7 @@ import matchData
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 import sync
+import teamData
 
 class MainMenu(
     buildContext: BuildContext,
@@ -36,6 +37,7 @@ class MainMenu(
         var selectedPlacement by remember { mutableStateOf(false) }
         val openError = remember { mutableStateOf(false) }
         var matchSyncedResource by remember { mutableStateOf(if (matchData == null) "crossmark.png" else "checkmark.png") }
+        var teamSyncedResource by remember { mutableStateOf(if (teamData == null) "crossmark.png" else "checkmark.png") }
 
         when {
             openError.value -> {
@@ -151,7 +153,8 @@ class MainMenu(
                 colors = ButtonDefaults.buttonColors(backgroundColor = defaultSecondary),
                 onClick = {
                     openError.value = !sync(true)
-                    if (!openError.value) matchSyncedResource = "checkmark.png"
+                    if (teamData != null) teamSyncedResource = "checkmark.png"
+                    if (matchData != null) matchSyncedResource = "checkmark.png"
                 },
                 modifier = Modifier.align(Alignment.CenterHorizontally).padding(horizontal = 50.dp, vertical = 50.dp),
             ) {
@@ -174,7 +177,7 @@ class MainMenu(
                         Text ("Robot List")
 
                         Image(
-                            painterResource(res = "crossmark.png"),
+                            painterResource(res = teamSyncedResource),
                             contentDescription = "status",
                             modifier = Modifier.size(30.dp).offset(x=100.dp, y=(-5).dp)
                         )
