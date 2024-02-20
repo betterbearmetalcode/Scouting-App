@@ -102,7 +102,8 @@ class AutoTeleSelectorMenu(
                 Text(
                     text = "${team.value}",
                     modifier = Modifier.align(Alignment.CenterVertically).padding(horizontal = 35.dp),
-                    fontSize = 30.sp
+                    fontSize = 33.sp,
+                    color = Color(red = 0.1f, green = Color.Cyan.green-0.4f, blue = Color.Cyan.blue-0.2f)
                 )
 
                 Divider(
@@ -124,7 +125,7 @@ class AutoTeleSelectorMenu(
                         match.value = value.filter { it.isDigit() }
                         setTeam(team, match, robotStartPosition.value)
                     },
-                    modifier = Modifier.fillMaxWidth(1f/4f),
+                    modifier = Modifier.fillMaxWidth(1f/4f).size(50.dp, 40.dp),
                     colors = TextFieldDefaults.textFieldColors(backgroundColor = defaultBackground),
                     singleLine = true,
                     textStyle = TextStyle.Default.copy(fontSize = 30.sp)
