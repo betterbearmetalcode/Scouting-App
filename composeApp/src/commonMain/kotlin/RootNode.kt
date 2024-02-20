@@ -1,5 +1,6 @@
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Modifier
@@ -32,7 +33,8 @@ class RootNode(
     private var team = mutableIntStateOf(1)
     private var robotStartPosition = mutableIntStateOf(-1)
     private var pitsPerson = mutableStateOf("P1")
-
+    private var scoutName =  mutableStateOf("")
+    private var comp =  mutableStateOf("")
     sealed class NavTarget : Parcelable {
         @Parcelize
         data object MainMenu : NavTarget()
@@ -50,7 +52,7 @@ class RootNode(
 
     override fun resolve(interactionTarget: NavTarget, buildContext: BuildContext): Node =
         when (interactionTarget) {
-            NavTarget.LoginPage -> LoginPage(buildContext,backStack)
+            NavTarget.LoginPage -> LoginPage(buildContext,backStack, scoutName,comp)
             NavTarget.MainMenu -> MainMenu(buildContext, backStack, robotStartPosition)
             NavTarget.MatchScouting -> AutoTeleSelectorMenu(buildContext,robotStartPosition, team, backStack)
             NavTarget.PitsScouting -> PitsScoutMenu(buildContext,backStack,pitsPerson)

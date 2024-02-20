@@ -3,12 +3,14 @@ package pages
 import RootNode
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clipToBounds
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -22,36 +24,88 @@ import defaultPrimaryVariant
 class LoginPage constructor(
     buildContext: BuildContext,
     private val backStack: BackStack<RootNode.NavTarget>,
+    private var scoutName: MutableState<String>,
+    private var comp:  MutableState<String>
 ) : Node(buildContext) {
     @Composable
     override fun View(modifier: Modifier) {
-
+        var compDD by remember { mutableStateOf(false) }
         Column(){
-            Image(painter = painterResource("bearmetallogo.jpg"),
-                contentDescription = "Bear Metal",
-                modifier = Modifier.fillMaxSize(1f/2f).align(Alignment.CenterHorizontally)
-            )
+                Image(
+                    painter = painterResource("2046logo.png"),
+                    contentDescription = "Bear Metal",
+                    modifier = Modifier.size(200.dp,200.dp).align(Alignment.CenterHorizontally)
+                )
             Text(
                 text = "Login",
                 fontSize = 45.sp,
-                modifier = Modifier.align(Alignment.CenterHorizontally)
+                modifier = Modifier.align(Alignment.CenterHorizontally).offset(0.dp,-15.dp)
             )
             Divider(
-                color = defaultPrimaryVariant
+                color = defaultPrimaryVariant,
+                modifier = Modifier.offset(0.dp,-15.dp)
             )
+            Row(modifier = Modifier.align(Alignment.CenterHorizontally)) {
+                Text(text = "Name", color = defaultOnPrimary)
+                OutlinedTextField(
+                    value = scoutName.value,
+                    onValueChange = {scoutName.value = it},
+                    shape = RoundedCornerShape(15.dp),
+                    colors = TextFieldDefaults.outlinedTextFieldColors(backgroundColor = Color.Black, focusedBorderColor = Color.Yellow, textColor = defaultOnPrimary),
+                )
+            }
+            Box(modifier = Modifier.padding(15.dp).fillMaxWidth()) {
+                OutlinedButton(
+                    onClick = { compDD = true },
+                    shape = RoundedCornerShape(15.dp),
+                    border = BorderStroke(3.dp, color = defaultPrimaryVariant)
+                ) {
+                    Box(modifier = Modifier.fillMaxWidth()) {
+                        Text(
+                            text = "Competition: ${comp.value}",
+                            color = defaultOnPrimary,
+                            modifier = Modifier.align(Alignment.CenterStart)
+                        )
+                        Text(
+                            text = "V",
+                            color = defaultOnPrimary,
+                            modifier = Modifier.align(Alignment.CenterEnd)
+                        )
+                    }
+                }
+                DropdownMenu(expanded = compDD, onDismissRequest = { compDD = false }) {
+                    DropdownMenuItem(
+                        onClick = { comp.value = "Bonney Lake"; compDD = false }
+                    ) { Text(text = "Bonney Lake") }
+                    DropdownMenuItem(
+                        onClick = { comp.value = "Lake Sammamish"; compDD = false }
+                    ) { Text(text = "Lake Sammamish") }
+                    DropdownMenuItem(
+                        onClick = { comp.value = "Portland"; compDD = false }
+                    ) { Text(text = "Portland") }
+                    DropdownMenuItem(
+                        onClick = { comp.value = "Salem"; compDD = false }
+                    ) { Text(text = "Salem") }
+                    DropdownMenuItem(
+                        onClick = { comp.value = "Houston" }
+                    ) { Text(text = "Houston") }
+                }
 
+            }
+            Divider(
+                color = defaultPrimaryVariant,
+            )
             OutlinedButton(
                 onClick = {
                     backStack.push(RootNode.NavTarget.MainMenu)
                 },
                 border = BorderStroke(color = defaultPrimaryVariant, width = 2.dp)
-            ){
+            ) {
                 Text(
                     text = "Submit",
                     color = defaultOnPrimary
                 )
             }
-
         }
     }
 }
