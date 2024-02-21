@@ -20,7 +20,6 @@ import com.bumble.appyx.components.backstack.operation.push
 import com.bumble.appyx.navigation.modality.BuildContext
 import com.bumble.appyx.navigation.node.Node
 import composables.EnumerableValue
-import defaultOnBackground
 import defaultSecondary
 import exportScoutData
 import keyboardAsState
@@ -58,28 +57,7 @@ class AutoMenu (
                 .verticalScroll(state = scrollState, enabled = isScrollEnabled.value)
                 .padding(20.dp)
         ) {
-            Box(Modifier.fillMaxWidth()) {
-                Text("Leave?", Modifier.align(Alignment.CenterStart), fontSize = 25.sp)
 
-                Row (Modifier.align(Alignment.Center)){
-                    Text ("N", Modifier.align(Alignment.CenterVertically))
-                    Switch(
-                        checked = left.value,
-                        onCheckedChange = {
-                            left.value = it
-                        },
-                        colors = SwitchDefaults.colors(
-                            uncheckedTrackColor = Color(50, 50, 50),
-                            uncheckedThumbColor = defaultOnBackground,
-                            uncheckedTrackAlpha = 1f,
-                            checkedTrackColor = Color(50, 50, 50),
-                            checkedThumbColor = defaultOnBackground,
-                            checkedTrackAlpha = 1f
-                        )
-                    )
-                    Text("Y", Modifier.align(Alignment.CenterVertically))
-                }
-            }
 
             EnumerableValue(label = "Speaker", value = autoSpeakerNum)
             EnumerableValue(label = "Amp", value = autoAmpNum)

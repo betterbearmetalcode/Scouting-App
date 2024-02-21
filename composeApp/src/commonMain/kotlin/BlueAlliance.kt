@@ -78,7 +78,7 @@ fun syncMatches(refresh: Boolean): Boolean {
     }
     val apiKey = String(Base64.getDecoder().decode(apiKeyEncoded))
     try {
-        val matches = run("$url/event/$comp/matches/simple",
+        val matches = run("$url/event/$comp/matches",
             Headers.headersOf("X-TBA-Auth-Key",
                 apiKey
             )
@@ -94,7 +94,7 @@ fun syncMatches(refresh: Boolean): Boolean {
     return true
 }
 
-var comp = "2024wasam"
+var comp = "2024week0"
 
 var matchData: JSONObject? = null
 var teamData: JSONObject? = null

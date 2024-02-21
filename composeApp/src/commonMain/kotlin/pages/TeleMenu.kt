@@ -40,21 +40,10 @@ class TeleMenu(
 ) : Node(buildContext) {
     @Composable
     override fun View(modifier: Modifier) {
-        var endGameDropDown by remember { mutableStateOf(false) }
         val scrollState = rememberScrollState(0)
         val isScrollEnabled = remember{ mutableStateOf(true) }
         val isKeyboardOpen by keyboardAsState()
         var qrCodeBytes by remember{ mutableStateOf(File("src/commonMain/resources/Empty Qr Code.png").readBytes())}
-        data class EndPosition(val endPos: String)
-
-
-
-        fun endPosition() = listOf(
-            EndPosition("None"),
-            EndPosition("Parked"),
-            EndPosition("Climbed"),
-            EndPosition("Harmonized")
-        )
 
         if(!isKeyboardOpen){
             isScrollEnabled.value = true
@@ -74,31 +63,6 @@ class TeleMenu(
 
 
             Divider(color = Color.Black, thickness = 4.dp)
-            Row{
-                Button(
-                    onClick = {endGameDropDown = !endGameDropDown},
-                    content = {
-                        Text(text = "v  " + selectedEndPos.value)
-
-                    }
-                )
-                DropdownMenu(
-                    expanded = endGameDropDown,
-                    onDismissRequest = {endGameDropDown = false},
-                    modifier = Modifier.background(MaterialTheme.colors.background)
-                ){
-                    endPosition().forEach { (endPos) ->
-                        DropdownMenuItem(
-                            onClick = {
-                                endGameDropDown = false
-                                selectedEndPos.value = endPos
-                            }
-                        ){
-                            Text(text = endPos)
-                        }
-                    }
-                }
-            }
 
             Notes(teleNotes, isScrollEnabled)
 
