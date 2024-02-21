@@ -34,6 +34,7 @@ kotlin {
             implementation(libs.compose.ui)
             implementation(libs.compose.ui.tooling.preview)
             implementation(libs.androidx.activity.compose)
+            implementation(libs.androidx.material3.android)
             implementation(libs.coil.compose)
         }
 
@@ -84,6 +85,7 @@ android {
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
+            excludes += "/META-INF/LICENSE.md"
         }
     }
     buildTypes {
@@ -99,12 +101,13 @@ android {
         debugImplementation(libs.compose.ui.tooling)
     }
 }
-dependencies {
-    implementation(libs.androidx.material3.desktop)
-    implementation(libs.androidx.databinding.compiler)
-    implementation(libs.androidx.material3.android)
-    implementation(libs.androidx.ui.unit.android)
-}
+
+//dependencies {
+//    implementation(libs.androidx.material3.desktop)
+//    implementation(libs.androidx.databinding.compiler)
+//    implementation(libs.androidx.material3.android)
+//    implementation(libs.androidx.ui.unit.android)
+//}
 
 compose.desktop {
     application {

@@ -1,6 +1,9 @@
 import androidx.compose.runtime.MutableIntState
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import okhttp3.Headers
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -24,15 +27,7 @@ import java.util.*
  *         or if match data isn't null
  */
 
-fun sync(refresh: Boolean): Boolean {
-    val teamError = syncTeams(refresh)
-    val matchError = syncMatches(refresh)
-    if (teamError && matchError) {
-        createFile()
-        lastSynced.value = Instant.now()
-    }
-    return teamError || matchError
-}
+
 
 fun syncTeams(refresh: Boolean): Boolean {
     if (!refresh){
@@ -103,6 +98,8 @@ private const val url = "https://www.thebluealliance.com/api/v3"
 private val client = OkHttpClient()
 
 private fun run(url: String, headers: Headers): String {
+
+
     val request = Request.Builder().url(url).headers(headers).build()
 
     client.newCall(request).execute().use {
@@ -111,7 +108,6 @@ private fun run(url: String, headers: Headers): String {
 }
 
 fun setTeam(teamNum: MutableIntState, match: MutableState<String>, robotStartPosition: Int) {
-    sync(false)
     var jsonObject = JSONObject()
     matchData ?.let {
         jsonObject = it
@@ -140,7 +136,7 @@ fun setTeam(teamNum: MutableIntState, match: MutableState<String>, robotStartPos
     }
 }
 
-private var lastSynced = mutableStateOf(Instant.now())
+var lastSynced = mutableStateOf(Instant.now())
 
 fun getLastSynced() : String {
     val formatter = DateTimeFormatter.ofPattern(PATTERN_FORMAT)

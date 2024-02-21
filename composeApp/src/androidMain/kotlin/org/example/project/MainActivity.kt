@@ -1,7 +1,7 @@
 package org.example.project
 
 
-import RootNode
+import nodes.RootNode
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.compose.animation.ExperimentalAnimationApi
@@ -10,17 +10,13 @@ import androidx.compose.material.MaterialTheme
 //noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.Surface
 //noinspection UsingMaterialAndMaterial3Libraries
-import androidx.compose.material.Typography
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.platform.LocalLifecycleOwner
-import androidx.compose.ui.text.font.Font
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.ExperimentalUnitApi
 import com.bumble.appyx.navigation.integration.NodeActivity
 import com.bumble.appyx.navigation.integration.NodeHost
 import com.bumble.appyx.navigation.platform.AndroidLifecycle
 import getCurrentTheme
-import java.io.File
 
 @ExperimentalUnitApi
 @ExperimentalAnimationApi
@@ -33,11 +29,11 @@ class MainActivity : NodeActivity() {
         setContent {
             MaterialTheme(
                 colors = getCurrentTheme(),
-                typography = Typography(
-                defaultFontFamily = FontFamily(
-                    Font(File("/src/commonMain/resources/font/Xolonium-Bold.otf"))
-                )
-            )
+//                typography = Typography(
+//                defaultFontFamily = FontFamily(
+//                    Font(File("/src/commonMain/resources/font/Xolonium-Bold.otf"))
+//                )
+//            )
             ) {
                 // A surface container using the 'background' color from the theme
                 Surface(color = MaterialTheme.colors.background) {
@@ -54,3 +50,4 @@ class MainActivity : NodeActivity() {
         }
     }
 }
+
