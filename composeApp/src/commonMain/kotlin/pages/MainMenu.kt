@@ -18,6 +18,8 @@ import com.bumble.appyx.components.backstack.operation.push
 import com.bumble.appyx.navigation.modality.BuildContext
 import com.bumble.appyx.navigation.node.Node
 import composables.InternetErrorAlert
+import defaultOnPrimary
+import defaultPrimaryVariant
 import defaultSecondary
 import getCurrentTheme
 import sync
@@ -25,7 +27,9 @@ import sync
 class MainMenu(
     buildContext: BuildContext,
     private val backStack: BackStack<RootNode.NavTarget>,
-    private val robotStartPosition: MutableIntState
+    private val robotStartPosition: MutableIntState,
+    private var scoutName: MutableState<String>,
+    private var comp: MutableState<String>
 ) : Node(buildContext = buildContext) {
 
     @Composable
@@ -33,6 +37,7 @@ class MainMenu(
         var selectedPlacement by remember { mutableStateOf(false) }
         var pitsSelectedPlacement by remember { mutableStateOf(false) }
         val openError = remember { mutableStateOf(false) }
+
 
         when {
             openError.value -> {
@@ -49,14 +54,17 @@ class MainMenu(
                 OutlinedButton(
                     onClick = {
                         backStack.push(RootNode.NavTarget.LoginPage)
-                    }
+                    },
+                    modifier = Modifier.align(Alignment.CenterStart)
                 ){
                     Text(
-                        text = "Login"
+                        text = "Login",
+                        color = defaultOnPrimary
                     )
                 }
         }
             Divider(color = getCurrentTheme().onSurface, thickness = 2.dp)
+            Text(text = "Hello ${scoutName.value}", color = defaultPrimaryVariant, modifier = Modifier.align(Alignment.CenterHorizontally))
             OutlinedButton(
                 border = BorderStroke(3.dp, Color.Yellow),
                 shape = RoundedCornerShape(25.dp),
@@ -178,7 +186,9 @@ class MainMenu(
                     fontSize = 35.sp
                 )
             }
-
+            Box(modifier = Modifier.fillMaxSize()) {
+                Text(text ="Competition: ${comp.value}",modifier=Modifier.align(Alignment.BottomCenter))
+            }
         }
     }
 }

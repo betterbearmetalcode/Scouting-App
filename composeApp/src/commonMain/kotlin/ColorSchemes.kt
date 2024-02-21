@@ -13,15 +13,15 @@ import androidx.compose.ui.graphics.Color
 //val defaultOnSurface = Color(149, 147, 0)
 //val defaultOnError = Color(177, 173, 0)
 
-val defaultPrimary = Color.Black
+val defaultPrimary = Color(6,9,13)
 val defaultPrimaryVariant = Color.Yellow
 val defaultSecondary = Color(15,31,47)
 val defaultSecondaryVariant = Color.Yellow
-val defaultBackground = Color.Black
-val defaultSurface = Color.Black
+val defaultBackground = Color(6,9,13)
+val defaultSurface = Color(6,9,13)
 val defaultError = Color(255, 209, 220)
 val defaultOnPrimary = Color.White
 val defaultOnSecondary = Color.Yellow
 val defaultOnBackground = Color.Yellow
 val defaultOnSurface = Color.Yellow
-val defaultOnError = Color.Black
+val defaultOnError = Color(6,9,13)

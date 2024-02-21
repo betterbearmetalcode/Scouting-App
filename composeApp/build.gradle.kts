@@ -43,7 +43,7 @@ kotlin {
         }
 
         commonMain.dependencies {
-            implementation("com.github.sarxos:webcam-capture:0.3.10")
+            implementation(libs.webcam.capture)
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.material)
@@ -102,6 +102,10 @@ android {
 }
 dependencies {
     implementation(libs.androidx.material3.desktop)
+    implementation(libs.androidx.material3.android)
+    implementation(libs.core)
+    implementation(libs.filament.android)
+    implementation(libs.androidx.cardview)
 }
 
 compose.desktop {

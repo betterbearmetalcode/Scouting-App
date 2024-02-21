@@ -29,7 +29,7 @@ fun CheckBox(
             colors = CheckboxDefaults.colors(
                 checkedColor = Color.Cyan,
             ),
-            onCheckedChange = { ifChecked.value = !ifChecked.value },
+            onCheckedChange = { ifChecked.value = it },
         )
     }
 }
