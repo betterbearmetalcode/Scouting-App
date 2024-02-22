@@ -14,16 +14,18 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.painter.BitmapPainter
+import androidx.compose.ui.graphics.toComposeImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import defaultOnPrimary
 import defaultPrimaryVariant
+import java.awt.image.BufferedImage
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun Profile(
-    photoArray: MutableState<ArrayList<ImageBitmap>>,
+    photoArray: MutableState<ArrayList<BufferedImage>>,
     teamName: String,
     teamNumber: String,
     driveType: String,
@@ -40,7 +42,7 @@ fun Profile(
     SwipeToDismiss(background = {}, state = DismissState(DismissValue.Default)) {
         Card(elevation = 2.dp, backgroundColor = Color(15, 15, 15)) {
             Column {
-                Image(painter = BitmapPainter(photoArray.value[0]), contentDescription = "Robot Image", modifier = Modifier.clip(RoundedCornerShape(7.5.dp)))
+                Image(painter = BitmapPainter(photoArray.value[0].toComposeImageBitmap()), contentDescription = "Robot Image", modifier = Modifier.clip(RoundedCornerShape(7.5.dp)))
                 Divider(color = Color.Gray)
                 Row {
                     Box(modifier = Modifier.fillMaxWidth()) {
@@ -68,7 +70,7 @@ fun Profile(
                 Row(modifier = Modifier.horizontalScroll(ScrollState(0))) {
                     photoArray.value.forEach {
                         Image(
-                            painter = BitmapPainter(it),
+                            painter = BitmapPainter(it.toComposeImageBitmap()),
                             contentDescription = "Robot image",
                             contentScale = ContentScale.Fit,
                             modifier = Modifier

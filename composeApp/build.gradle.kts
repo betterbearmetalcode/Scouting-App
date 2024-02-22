@@ -106,6 +106,7 @@ dependencies {
     implementation(libs.core)
     implementation(libs.filament.android)
     implementation(libs.androidx.cardview)
+    implementation(libs.volley)
 }
 
 compose.desktop {
