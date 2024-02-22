@@ -51,6 +51,7 @@ class RootNode(
         @Parcelize
         data object PitsScouting : NavTarget()
 
+        @Parcelize
         data object LoginPage : NavTarget()
 
 
