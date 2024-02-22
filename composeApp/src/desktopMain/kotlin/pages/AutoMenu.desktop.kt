@@ -69,17 +69,66 @@ actual class AutoMenu actual constructor(
                 Text ("Auto Collect", Modifier.align(Alignment.CenterVertically), fontSize = 25.sp)
                 Column {
                     Spacer(modifier = Modifier.height(10.dp))
+                    val color = CheckboxDefaults.colors(
+                        checkedColor = Color.Cyan,
+                    )
                     Row {
-                        repeat(3) {
-                            CheckBox((it + 1).toString(), dummyBool)
-                            Spacer(Modifier.width(15.dp))
-                        }
+                        Text(1.toString(), Modifier.align(Alignment.CenterVertically))
+                        Checkbox(
+                            when(f1.intValue) {0 -> false; 1 -> true; else -> false},
+                            colors = color,
+                            onCheckedChange = { when(it) {true -> f1.intValue = 1; false -> f1.intValue = 0}}
+                        )
+                        Spacer(Modifier.width(15.dp))
+                        Text(2.toString(), Modifier.align(Alignment.CenterVertically))
+                        Checkbox(
+                            when(f2.intValue) {0 -> false; 1 -> true; else -> false},
+                            colors = color,
+                            onCheckedChange = { when(it) {true -> f2.intValue = 1; false -> f2.intValue = 0}}
+                        )
+                        Spacer(Modifier.width(15.dp))
+                        Text(3.toString(), Modifier.align(Alignment.CenterVertically))
+                        Checkbox(
+                            when(f3.intValue) {0 -> false; 1 -> true; else -> false},
+                            colors = color,
+                            onCheckedChange = { when(it) {true -> f3.intValue = 1; false -> f3.intValue = 0}}
+                        )
                     }
                     Row {
-                        repeat(5) {
-                            CheckBox((it + 1).toString(), dummyBool)
-                            Spacer(Modifier.width(15.dp))
-                        }
+                        Text(1.toString(), Modifier.align(Alignment.CenterVertically))
+                        Checkbox(
+                            when(m1.intValue) {0 -> false; 1 -> true; else -> false},
+                            colors = color,
+                            onCheckedChange = { when(it) {true -> m1.intValue = 1; false -> m1.intValue = 0}}
+                        )
+                        Spacer(Modifier.width(15.dp))
+                        Text(2.toString(), Modifier.align(Alignment.CenterVertically))
+                        Checkbox(
+                            when(m2.intValue) {0 -> false; 1 -> true; else -> false},
+                            colors = color,
+                            onCheckedChange = { when(it) {true -> m2.intValue = 1; false -> m2.intValue = 0}}
+                        )
+                        Spacer(Modifier.width(15.dp))
+                        Text(3.toString(), Modifier.align(Alignment.CenterVertically))
+                        Checkbox(
+                            when(m3.intValue) {0 -> false; 1 -> true; else -> false},
+                            colors = color,
+                            onCheckedChange = { when(it) {true -> m3.intValue = 1; false -> m3.intValue = 0}}
+                        )
+                        Spacer(Modifier.width(15.dp))
+                        Text(4.toString(), Modifier.align(Alignment.CenterVertically))
+                        Checkbox(
+                            when(m4.intValue) {0 -> false; 1 -> true; else -> false},
+                            colors = color,
+                            onCheckedChange = { when(it) {true -> m4.intValue = 1; false -> m4.intValue = 0}}
+                        )
+                        Spacer(Modifier.width(15.dp))
+                        Text(5.toString(), Modifier.align(Alignment.CenterVertically))
+                        Checkbox(
+                            when(m5.intValue) {0 -> false; 1 -> true; else -> false},
+                            colors = color,
+                            onCheckedChange = { when(it) {true -> m5.intValue = 1; false -> m5.intValue = 0}}
+                        )
                     }
                 }
             }

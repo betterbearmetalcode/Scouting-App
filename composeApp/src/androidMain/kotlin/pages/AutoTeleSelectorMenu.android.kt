@@ -16,6 +16,7 @@ import com.bumble.appyx.components.backstack.operation.push
 import com.bumble.appyx.interactions.core.AppyxComponent
 import defaultBackground
 import defaultOnBackground
+import defaultOnPrimary
 import defaultPrimaryVariant
 import nodes.*
 import setTeam
@@ -61,7 +62,7 @@ actual fun AutoTeleSelectorMenu(
                 color = defaultPrimaryVariant,
                 thickness = 3.dp
             )
-            
+
             Text(
                 text = "${team.intValue}",
                 modifier = Modifier.align(Alignment.CenterVertically).padding(horizontal = 35.dp),
@@ -86,10 +87,12 @@ actual fun AutoTeleSelectorMenu(
                     match.value = value.filter { it.isDigit() }
                     setTeam(team, match, robotStartPosition.intValue)
                 },
-                modifier = Modifier.fillMaxWidth(1f / 4f),
+                modifier = Modifier.fillMaxWidth(),
                 colors = TextFieldDefaults.colors(
                     focusedContainerColor = defaultBackground,
-                    unfocusedContainerColor = defaultBackground
+                    unfocusedContainerColor = defaultBackground,
+                    focusedTextColor = defaultOnPrimary,
+                    unfocusedTextColor = defaultOnPrimary
                 ),
                 singleLine = true,
                 textStyle = TextStyle.Default.copy(fontSize = 30.sp)
@@ -111,6 +114,8 @@ actual fun AutoTeleSelectorMenu(
 
                 Text("A", fontSize = 25.sp, modifier = Modifier.align(Alignment.CenterVertically))
 
+                Spacer(Modifier.width(5.dp))
+
                 Switch(
                     checked = selectAuto.value,
                     onCheckedChange = {
@@ -128,18 +133,14 @@ actual fun AutoTeleSelectorMenu(
                     )
                 )
 
+                Spacer(Modifier.width(5.dp))
+
                 Text("T", fontSize = 25.sp, modifier = Modifier.align(Alignment.CenterVertically))
             }
         }
         HorizontalDivider(
             color = Color.Yellow,
             thickness = 2.dp
-        )
-        AppyxComponent(
-            appyxComponent = backStack,
-            modifier = Modifier.weight(0.9f),
-            screenHeightPx = -1,
-            screenWidthPx = -1
         )
     }
 }

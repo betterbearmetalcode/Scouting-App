@@ -24,7 +24,7 @@ fun createFile() {
     teamWriter.close()
 }
 
-actual fun openFile() {
+fun openFile() {
     val homeDir = System.getProperty("user.home")
     matchData = JSONObject(String(FileInputStream(File("$homeDir/Documents/match_data.json")).readAllBytes()))
 
@@ -32,7 +32,7 @@ actual fun openFile() {
 
 }
 
-actual fun exportScoutData() {
+fun exportScoutData() {
     val homeDir = System.getProperty("user.home")
     val file = File("$homeDir/Documents/match_scouting_data.json")
     file.delete()

@@ -5,18 +5,25 @@ import nodes.RootNode
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.compose.animation.ExperimentalAnimationApi
-//noinspection UsingMaterialAndMaterial3Libraries
-import androidx.compose.material.MaterialTheme
-//noinspection UsingMaterialAndMaterial3Libraries
-import androidx.compose.material.Surface
-//noinspection UsingMaterialAndMaterial3Libraries
+import androidx.compose.material3.ColorScheme
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.material3.darkColorScheme
 import androidx.compose.ui.ExperimentalComposeUiApi
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.unit.ExperimentalUnitApi
 import com.bumble.appyx.navigation.integration.NodeActivity
 import com.bumble.appyx.navigation.integration.NodeHost
 import com.bumble.appyx.navigation.platform.AndroidLifecycle
-import getCurrentTheme
+import defaultBackground
+import defaultOnBackground
+import defaultOnPrimary
+import defaultOnSecondary
+import defaultOnSurface
+import defaultPrimary
+import defaultSecondary
+import defaultSurface
 
 @ExperimentalUnitApi
 @ExperimentalAnimationApi
@@ -28,15 +35,10 @@ class MainActivity : NodeActivity() {
 
         setContent {
             MaterialTheme(
-                colors = getCurrentTheme(),
-//                typography = Typography(
-//                defaultFontFamily = FontFamily(
-//                    Font(File("/src/commonMain/resources/font/Xolonium-Bold.otf"))
-//                )
-//            )
+                colorScheme = defaultScheme
             ) {
                 // A surface container using the 'background' color from the theme
-                Surface(color = MaterialTheme.colors.background) {
+                Surface(color = MaterialTheme.colorScheme.background) {
                     NodeHost(
                         lifecycle = AndroidLifecycle(LocalLifecycleOwner.current.lifecycle),
                         integrationPoint = appyxV2IntegrationPoint,
@@ -50,4 +52,25 @@ class MainActivity : NodeActivity() {
         }
     }
 }
+
+val defaultScheme = darkColorScheme(
+    primary = defaultPrimary,
+    onPrimary = defaultOnPrimary,
+    primaryContainer = defaultPrimary,
+    onPrimaryContainer = defaultOnPrimary,
+    inversePrimary = defaultOnPrimary,
+    secondary = defaultSecondary,
+    onSecondary = defaultOnSecondary,
+    secondaryContainer = defaultSecondary,
+    onSecondaryContainer = defaultOnSecondary,
+    tertiary = Color(15,15,15),
+    onTertiary = Color(0xfff4f3ef),
+    tertiaryContainer = Color(15,15,15),
+    onTertiaryContainer = Color(0xfff4f3ef),
+    background = defaultBackground,
+    onBackground = defaultOnBackground,
+    surface = defaultSurface,
+    onSurface = defaultOnSurface,
+    outline = defaultSecondary
+)
 

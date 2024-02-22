@@ -12,6 +12,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.bumble.appyx.components.backstack.BackStack
@@ -39,12 +40,13 @@ actual class AutoMenu actual constructor(
 ) : Node(buildContext) {
     @Composable
     actual override fun View(modifier: Modifier) {
+        val context = LocalContext.current
         fun bob() {
             mainMenuBackStack.pop()
             matchScoutArray[Integer.parseInt(match.value)] = createOutput(team, robotStartPosition)
-            exportScoutData()
+            exportScoutData(context)
         }
-
+        var dummyBool by remember{mutableStateOf(false)}
         val scrollState = rememberScrollState(0)
         val isScrollEnabled = remember{ mutableStateOf(true) }
         val isKeyboardOpen by keyboardAsState()
@@ -62,12 +64,82 @@ actual class AutoMenu actual constructor(
 
             EnumerableValue(label = "Speaker", value = autoSpeakerNum)
             EnumerableValue(label = "Amp", value = autoAmpNum)
-            EnumerableValue(label = "Collected", value = collected)
-            Spacer(modifier = Modifier.height(30.dp))
+
+
+            Spacer(modifier = Modifier.height(10.dp))
+            Column (Modifier.align(Alignment.CenterHorizontally)) {
+                val color = CheckboxDefaults.colors(
+                    checkedColor = Color.Cyan,
+                )
+                Row {
+                    Text(
+                        "Auto Collect",
+                        Modifier.align(Alignment.CenterVertically),
+                        fontSize = 20.sp
+                    )
+                    Spacer(Modifier.width(10.dp))
+                    Text(1.toString(), Modifier.align(Alignment.CenterVertically))
+                    Checkbox(
+                        when(f1.intValue) {0 -> false; 1 -> true; else -> false},
+                        colors = color,
+                        onCheckedChange = { when(it) {true -> f1.intValue = 1; false -> f1.intValue = 0}}
+                    )
+                    Text(2.toString(), Modifier.align(Alignment.CenterVertically))
+                    Checkbox(
+                        when(f2.intValue) {0 -> false; 1 -> true; else -> false},
+                        colors = color,
+                        onCheckedChange = { when(it) {true -> f2.intValue = 1; false -> f2.intValue = 0}}
+                    )
+                    Text(3.toString(), Modifier.align(Alignment.CenterVertically))
+                    Checkbox(
+                        when(f3.intValue) {0 -> false; 1 -> true; else -> false},
+                        colors = color,
+                        onCheckedChange = { when(it) {true -> f3.intValue = 1; false -> f3.intValue = 0}}
+                    )
+                }
+                Row {
+                    Spacer(Modifier.width(10.dp))
+                    Text(1.toString(), Modifier.align(Alignment.CenterVertically))
+                    Checkbox(
+                        when(m1.intValue) {0 -> false; 1 -> true; else -> false},
+                        colors = color,
+                        onCheckedChange = { when(it) {true -> m1.intValue = 1; false -> m1.intValue = 0}}
+                    )
+                    Text(2.toString(), Modifier.align(Alignment.CenterVertically))
+                    Checkbox(
+                        when(m2.intValue) {0 -> false; 1 -> true; else -> false},
+                        colors = color,
+                        onCheckedChange = { when(it) {true -> m2.intValue = 1; false -> m2.intValue = 0}}
+                    )
+                    Text(3.toString(), Modifier.align(Alignment.CenterVertically))
+                    Checkbox(
+                        when(m3.intValue) {0 -> false; 1 -> true; else -> false},
+                        colors = color,
+                        onCheckedChange = { when(it) {true -> m3.intValue = 1; false -> m3.intValue = 0}}
+                    )
+                    Text(4.toString(), Modifier.align(Alignment.CenterVertically))
+                    Checkbox(
+                        when(m4.intValue) {0 -> false; 1 -> true; else -> false},
+                        colors = color,
+                        onCheckedChange = { when(it) {true -> m4.intValue = 1; false -> m4.intValue = 0}}
+                    )
+                    Text(5.toString(), Modifier.align(Alignment.CenterVertically))
+                    Checkbox(
+                        when(m5.intValue) {0 -> false; 1 -> true; else -> false},
+                        colors = color,
+                        onCheckedChange = { when(it) {true -> m5.intValue = 1; false -> m5.intValue = 0}}
+                    )
+
+
+                }
+            }
+
             EnumerableValue(label = "S Missed", value = autoSMissed)
             EnumerableValue(label = "A Missed", value = autoAMissed)
 
             Notes(autoNotes, isScrollEnabled)
+
+            Spacer(Modifier.height(5.dp))
 
             OutlinedButton(
                 border = BorderStroke(2.dp, color = Color.Yellow),
@@ -93,12 +165,12 @@ actual class AutoMenu actual constructor(
                 shape = CircleShape,
                 colors = ButtonDefaults.buttonColors(containerColor = defaultSecondary),
                 onClick = {
-                    exportScoutData()
+                    exportScoutData(context)
                     bob()
                 },
                 modifier = Modifier.align(Alignment.CenterHorizontally)
             ) {
-                androidx.compose.material.Text(
+                Text(
                     text = "Back",
                     color = Color.Yellow
                 )

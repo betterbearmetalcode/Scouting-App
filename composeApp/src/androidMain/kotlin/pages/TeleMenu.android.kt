@@ -120,7 +120,7 @@ actual class TeleMenu actual constructor(
                     teleAMissed.intValue = 0
                     teleNotes.value = ""
                     selectAuto.value = false
-                    exportScoutData()
+                    exportScoutData(context)
                     backStack.pop()
                 },
                 modifier = Modifier.align(Alignment.CenterHorizontally)

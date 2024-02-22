@@ -65,6 +65,16 @@ class AutoTeleSelectorNode(
     }
 }
 
+
+val f1 = mutableIntStateOf(0)
+val f2 = mutableIntStateOf(0)
+val f3 = mutableIntStateOf(0)
+val m1 = mutableIntStateOf(0)
+val m2 = mutableIntStateOf(0)
+val m3 = mutableIntStateOf(0)
+val m4 = mutableIntStateOf(0)
+val m5 = mutableIntStateOf(0)
+
 val match = mutableStateOf("1")
 val autoSpeakerNum = mutableIntStateOf(0)
 val autoAmpNum = mutableIntStateOf(0)
@@ -82,11 +92,14 @@ var teleNotes = mutableStateOf("")
 fun createOutput(team: MutableIntState, robotStartPosition: MutableIntState): String {
     val teleNotesFinal = if (teleNotes.value == "") "No Comments" else teleNotes.value
     val autoNotesFinal = if (autoNotes.value == "") "No Comments" else autoNotes.value
-    return match.value + "/" +
-            team.value + "/" + robotStartPosition.value + "/" +
-            autoSpeakerNum.value + "/" + autoAmpNum.value + "/" +
-            collected.value + "/" + autoSMissed.value + "/" +
-            autoAMissed.value + "/" + teleSpeakerNum.value + "/" +
+    return match.value + "/" + team.value + "/" +
+            robotStartPosition.value + "/" + autoSpeakerNum.value + "/" +
+            autoAmpNum.value + "/" + autoSMissed.value + "/" +
+            autoAMissed.value + "/" + f1.value + "/" +
+            f2.value + "/" + f3.value + "/" +
+            m1.value + "/" + m2.value + "/" +
+            m3.value + "/" + m4.value + "/" +
+            m5.value + "/" + teleSpeakerNum.value + "/" +
             teleAmpNum.value + "/" + teleTrapNum.value + "/" +
             teleSMissed.value + "/" + teleAMissed.value + "/" +
             autoNotesFinal + "/" + teleNotesFinal
