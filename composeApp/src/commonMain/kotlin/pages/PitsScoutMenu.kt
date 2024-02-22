@@ -29,9 +29,6 @@ import composables.CheckBox
 import composables.Profile
 import defaultOnPrimary
 import defaultPrimaryVariant
-import org.jetbrains.skia.Bitmap
-import org.jetbrains.skia.Canvas
-import sun.security.krb5.Config
 
 
 class PitsScoutMenu(
