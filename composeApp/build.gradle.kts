@@ -40,11 +40,16 @@ kotlin {
 
     sourceSets {
         val desktopMain by getting
-        
+
+
+    sourceSets {
+        val desktopMain by getting
+
         androidMain.dependencies {
             implementation(libs.compose.ui)
             implementation(libs.compose.ui.tooling.preview)
             implementation(libs.androidx.activity.compose)
+            implementation(libs.androidx.material3)
             implementation(libs.coil.compose)
         }
 
@@ -56,6 +61,11 @@ kotlin {
         }
 
         commonMain.dependencies {
+            implementation(libs.kotlinx.coroutines.test)
+        }
+
+        commonMain.dependencies {
+            implementation(libs.webcam.capture)
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.material)
@@ -68,6 +78,12 @@ kotlin {
 
 
 
+            implementation(libs.kotlinx.coroutines.core)
+            implementation(libs.bumble.appyx.navigation)
+            implementation(libs.qrcode.kotlin)
+            implementation(libs.okhttp)
+            implementation(libs.json)
+            implementation(libs.bumble.appyx.navigation)
             api(libs.backstack)
         }
     }
@@ -88,6 +104,12 @@ android {
         targetSdk = libs.versions.android.targetSdk.get().toInt()
         versionCode = 1
         versionName = "1.0"
+    }
+    buildFeatures {
+        compose = true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = libs.versions.compose.compiler.get()
     }
     packaging {
         resources {

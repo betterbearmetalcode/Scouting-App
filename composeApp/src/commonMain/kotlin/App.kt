@@ -3,6 +3,8 @@ import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Colors
 import androidx.compose.material.darkColors
 import androidx.compose.ui.graphics.Color
+import androidx.compose.material.Colors
+import androidx.compose.material.darkColors
 
 val theme = themeDefault()
 

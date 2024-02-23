@@ -10,6 +10,12 @@ import com.bumble.appyx.components.backstack.BackStack
 import com.bumble.appyx.components.backstack.BackStackModel
 import com.bumble.appyx.components.backstack.operation.pop
 import com.bumble.appyx.components.backstack.operation.push
+import androidx.compose.foundation.layout.Column
+import androidx.compose.runtime.*
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.ImageBitmap
+import com.bumble.appyx.components.backstack.BackStack
+import com.bumble.appyx.components.backstack.BackStackModel
 import com.bumble.appyx.components.backstack.ui.fader.BackStackFader
 import com.bumble.appyx.navigation.composable.AppyxComponent
 import com.bumble.appyx.navigation.modality.BuildContext
@@ -17,17 +23,17 @@ import com.bumble.appyx.navigation.node.Node
 import com.bumble.appyx.navigation.node.ParentNode
 import com.bumble.appyx.utils.multiplatform.Parcelable
 import com.bumble.appyx.utils.multiplatform.Parcelize
+import pages.AutoTeleSelectorMenu
+import pages.LoginPage
 import pages.MainMenu
 import pages.PitsScoutMenu
-import pages.QualScoutMenu
-import pages.QuanScoutMenu
 
 
 class RootNode(
     buildContext: BuildContext,
-    val backStack: BackStack<NavTarget> = BackStack(
+    private val backStack: BackStack<NavTarget> = BackStack(
         model = BackStackModel(
-            initialTarget = NavTarget.MainMenu,
+            initialTarget = NavTarget.LoginPage,
             savedStateMap = buildContext.savedStateMap
         ),
         visualisation = { BackStackFader(it) }
@@ -37,42 +43,43 @@ class RootNode(
     buildContext = buildContext
 ) {
 
-
-
-
-    /**
-     * You can create this class inside the body of RootNode
-     *
-     * Note: You must apply the 'kotlin-parcelize' plugin to use @Parcelize
-     * https://developer.android.com/kotlin/parcelize
-     */
+    private var team = mutableIntStateOf(1)
+    private var robotStartPosition = mutableIntStateOf(-1)
+    private var pitsPerson = mutableStateOf("P1")
+    private var scoutName =  mutableStateOf("")
+    private var comp =  mutableStateOf("")
+    private val ampStrength = mutableStateOf(false)
+    private val speakerStrength = mutableStateOf(false)
+    private val climbStrength = mutableStateOf(false)
+    private val trapStrength = mutableStateOf(false)
+    private val photoArray = mutableStateOf(ArrayList<ImageBitmap>())
     sealed class NavTarget : Parcelable {
         @Parcelize
         data object MainMenu : NavTarget()
 
         @Parcelize
-        data object QuanScouting : NavTarget()
+        data object MatchScouting : NavTarget()
 
         @Parcelize
         data object PitsScouting : NavTarget()
 
         @Parcelize
-        data object QualScouting : NavTarget()
+        data object LoginPage : NavTarget()
     }
 
     override fun resolve(interactionTarget: NavTarget, buildContext: BuildContext): Node =
         when (interactionTarget) {
-            NavTarget.MainMenu -> MainMenu(buildContext, backStack)
-            NavTarget.QuanScouting -> QuanScoutMenu(buildContext)
-            NavTarget.PitsScouting -> PitsScoutMenu(buildContext)
-            NavTarget.QualScouting -> QualScoutMenu(buildContext, backStack)
+            NavTarget.LoginPage -> LoginPage(buildContext,backStack, scoutName,comp)
+            NavTarget.MainMenu -> MainMenu(buildContext, backStack, robotStartPosition,scoutName,comp)
+            NavTarget.MatchScouting -> AutoTeleSelectorMenu(buildContext,robotStartPosition, team, backStack)
+            NavTarget.PitsScouting -> PitsScoutMenu(buildContext,backStack,pitsPerson, ampStrength,speakerStrength, climbStrength, trapStrength,scoutName)
         }
 
     @Composable
     override fun View(modifier: Modifier) {
 
-
         Column {
+
             AppyxComponent(
                 appyxComponent = backStack,
                 modifier = Modifier.weight(0.9f)
