@@ -2,13 +2,6 @@ package pages
 
 import RootNode
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Button
-import androidx.compose.material.Divider
-import androidx.compose.material.Text
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
@@ -18,8 +11,6 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Shadow
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.bumble.appyx.components.backstack.BackStack
@@ -54,7 +45,7 @@ class MainMenu(
             }
         }
         Column {
-            Box(modifier = Modifier.fillMaxWidth()) {
+            Box(modifier = Modifier.fillMaxWidth()){
                 Text(
                     text = "Bear Metal Scout App",
                     fontSize = 30.sp,
@@ -65,7 +56,7 @@ class MainMenu(
                         backStack.push(RootNode.NavTarget.LoginPage)
                     },
                     modifier = Modifier.align(Alignment.CenterStart)
-                ) {
+                ){
                     Text(
                         text = "Login",
                         color = defaultOnPrimary
@@ -73,11 +64,7 @@ class MainMenu(
                 }
             }
             Divider(color = getCurrentTheme().onSurface, thickness = 2.dp)
-            Text(
-                text = "Hello ${scoutName.value}",
-                color = defaultPrimaryVariant,
-                modifier = Modifier.align(Alignment.CenterHorizontally)
-            )
+            Text(text = "Hello ${scoutName.value}", color = defaultPrimaryVariant, modifier = Modifier.align(Alignment.CenterHorizontally))
             OutlinedButton(
                 border = BorderStroke(3.dp, Color.Yellow),
                 shape = RoundedCornerShape(25.dp),
@@ -97,7 +84,7 @@ class MainMenu(
                 )
             }
 
-            Box(modifier = Modifier.align(Alignment.CenterHorizontally).offset((-100).dp, (-50).dp)) {
+            Box(modifier=Modifier.align(Alignment.CenterHorizontally).offset((-100).dp, (-50).dp)) {
                 DropdownMenu(
                     expanded = selectedPlacement,
                     onDismissRequest = { selectedPlacement = false },
@@ -159,12 +146,48 @@ class MainMenu(
                 contentPadding = PaddingValues(horizontal = 80.dp, vertical = 5.dp),
                 colors = ButtonDefaults.buttonColors(backgroundColor = defaultSecondary),
                 onClick = {
-                    backStack.push(RootNode.NavTarget.P)
-                }
-            ){
+                    backStack.push(RootNode.NavTarget.PitsScouting)
+                },
+                modifier = Modifier.align(Alignment.CenterHorizontally).padding(horizontal = 50.dp, vertical = 50.dp),
+
+                ) {
                 Text(
-                    text = "Pits"
+                    text = "Pits",
+                    color = getCurrentTheme().primaryVariant,
+                    fontSize = 35.sp
                 )
+            }
+            DropdownMenu(
+                expanded = pitsSelectedPlacement,
+                onDismissRequest = { pitsSelectedPlacement = false },
+                modifier = Modifier.size(200.dp, 332.dp).background(color = Color(0, 0, 0))
+            ) {
+                DropdownMenuItem(
+                    onClick = {
+                        robotStartPosition.value = 0; backStack.push(RootNode.NavTarget.PitsScouting)
+                    },
+                    modifier = Modifier.border(BorderStroke(color = Color.Yellow, width = 3.dp))
+                        .size(100.dp, 100.dp).background(color = Color(60, 30, 30))
+                ) { Text("R1", fontSize = 22.sp) }
+            }
+            OutlinedButton(
+                border = BorderStroke(3.dp, Color.Yellow),
+                shape = RoundedCornerShape(25.dp),
+                contentPadding = PaddingValues(horizontal = 80.dp, vertical = 5.dp),
+                colors = ButtonDefaults.buttonColors(backgroundColor = defaultSecondary),
+                onClick = {
+                    openError.value = !sync(true)
+                },
+                modifier = Modifier.align(Alignment.CenterHorizontally).padding(horizontal = 50.dp, vertical = 50.dp),
+            ) {
+                Text(
+                    text = "Sync",
+                    color = getCurrentTheme().primaryVariant,
+                    fontSize = 35.sp
+                )
+            }
+            Box(modifier = Modifier.fillMaxSize()) {
+                Text(text ="Competition: ${comp.value}",modifier=Modifier.align(Alignment.BottomCenter))
             }
         }
     }

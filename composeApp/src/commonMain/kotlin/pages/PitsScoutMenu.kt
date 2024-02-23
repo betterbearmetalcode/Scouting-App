@@ -7,18 +7,6 @@ import com.bumble.appyx.navigation.node.Node
 import RootNode
 import androidx.compose.runtime.MutableState
 import com.bumble.appyx.components.backstack.BackStack
-
-class PitsScoutMenu(
-    buildContext: BuildContext
-) : Node(
-    buildContext = buildContext
-) {
-    @Composable
-    override fun View(modifier: Modifier) {
-
-    }
-
-
 expect class PitsScoutMenu(
     buildContext: BuildContext,
     backStack: BackStack<RootNode.NavTarget>,
@@ -32,5 +20,4 @@ expect class PitsScoutMenu(
     @Composable
     override fun View(modifier: Modifier)
 
-    }
 }

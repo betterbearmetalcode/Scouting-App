@@ -123,7 +123,7 @@ actual class PitsScoutMenu actual constructor(
                                     pitsPerson.value = "P$x"
                                 },
                                 text ={
-                                    Text("P$x")
+                                    Text("P$x",color = defaultOnPrimary)
                                 }
                             )
                         }
@@ -217,21 +217,21 @@ actual class PitsScoutMenu actual constructor(
                             robotTypeDropDown = false
                             robotType = "Swerve"
                         },
-                        text = { Text("Swerve") }
+                        text = { Text("Swerve",color = defaultOnPrimary) }
                     )
                     DropdownMenuItem(
                         onClick = {
                             robotTypeDropDown = false
                             robotType = "Tank"
                         },
-                        text = { Text("Tank") }
+                        text = { Text("Tank",color = defaultOnPrimary) }
                     )
                     DropdownMenuItem(
                         onClick = {
                             robotTypeDropDown = false
                             robotType = "Mecanum"
                         },
-                        text = { Text("Mecanum") }
+                        text = { Text("Mecanum",color = defaultOnPrimary) }
                     )
                 }
             }
@@ -354,21 +354,21 @@ actual class PitsScoutMenu actual constructor(
                             collectPrefDD = false
                             collectPreference = "OverTheBumper"
                         },
-                        text ={ Text("Over The Bumper") }
+                        text ={ Text("Over The Bumper",color = defaultOnPrimary) }
                     )
                     DropdownMenuItem(
                         onClick = {
                             collectPrefDD = false
                             collectPreference = "UnderTheBumper"
                         },
-                        text ={ Text("Under The Bumper") }
+                        text ={ Text("Under The Bumper",color = defaultOnPrimary) }
                     )
                     DropdownMenuItem(
                         onClick = {
                             collectPrefDD = false
                             collectPreference = "from the Feeder Station"
                         },
-                        text = { Text("Feeder Station") }
+                        text = { Text("Feeder Station",color = defaultOnPrimary) }
                     )
                 }
             }
