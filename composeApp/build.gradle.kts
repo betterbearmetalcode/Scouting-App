@@ -34,6 +34,7 @@ kotlin {
             implementation(libs.compose.ui)
             implementation(libs.compose.ui.tooling.preview)
             implementation(libs.androidx.activity.compose)
+            implementation(libs.androidx.material3)
             implementation(libs.coil.compose)
         }
 
@@ -99,14 +100,6 @@ android {
     dependencies {
         debugImplementation(libs.compose.ui.tooling)
     }
-}
-dependencies {
-    implementation(libs.androidx.material3.desktop)
-    implementation(libs.androidx.material3.android)
-    implementation(libs.core)
-    implementation(libs.filament.android)
-    implementation(libs.androidx.cardview)
-    implementation(libs.volley)
 }
 
 compose.desktop {

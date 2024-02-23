@@ -10,6 +10,8 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.graphics.painter.BitmapPainter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -20,6 +22,7 @@ import com.bumble.appyx.navigation.node.Node
 import defaultBackground
 import defaultOnPrimary
 import defaultPrimaryVariant
+import java.io.File
 
 class LoginPage(
     buildContext: BuildContext,
@@ -29,7 +32,8 @@ class LoginPage(
 ) : Node(buildContext) {
     @Composable
     override fun View(modifier: Modifier) {
-        var compDD by remember { mutableStateOf(false) }
+        val logo = File("Logo.png")
+        var compDD by remember { mutableStateOf(false)}
         var compKey by remember { mutableStateOf("") }
         val tbaMatches = listOf(
             "2024wabon",
@@ -39,11 +43,7 @@ class LoginPage(
 
         )
         Column {
-                Image(
-                    painter = painterResource("2046logo.png"),
-                    contentDescription = "Bear Metal",
-                    modifier = Modifier.size(200.dp,200.dp).align(Alignment.CenterHorizontally)
-                )
+
             Text(
                 text = "Login",
                 fontSize = 45.sp,

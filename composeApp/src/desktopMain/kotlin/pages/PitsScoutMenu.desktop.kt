@@ -27,6 +27,7 @@ import com.bumble.appyx.navigation.node.Node
 import com.github.sarxos.webcam.Webcam
 import composables.CheckBox
 import composables.Profile
+import defaultError
 import defaultOnPrimary
 import defaultPrimaryVariant
 import java.awt.image.BufferedImage
@@ -43,7 +44,7 @@ actual class PitsScoutMenu actual constructor(
 ) : Node(buildContext = buildContext) {
     @Composable
     actual override fun View(modifier: Modifier) {
-        val photoArray = mutableStateOf(ArrayList<BufferedImage>())
+        val photoArray = mutableStateOf(ArrayList<ImageBitmap>())
         var pitsPersonDD by remember { mutableStateOf(false) }
         val numOfPitsPeople by remember { mutableStateOf(6) }
         var scoutedTeamName by remember { mutableStateOf("") }
@@ -55,12 +56,12 @@ actual class PitsScoutMenu actual constructor(
         var collectPrefDD by remember{ mutableStateOf(false)}
         var collectPreference by remember { mutableStateOf("None Selected") }
         var concerns by remember { mutableStateOf("") }
-        val currentI by remember{mutableStateOf(0)}
         val webcam = Webcam.getDefault()
         var photoAmount by remember { mutableStateOf(0) }
         val scrollState = rememberScrollState(0)
         val isScrollEnabled by remember{ mutableStateOf(true)}
         var robotCard by remember {mutableStateOf(false)}
+        var photoAlert by remember { mutableStateOf(false) }
         Column(modifier = Modifier.verticalScroll(state = scrollState, enabled = isScrollEnabled).padding(5.dp)) {
             Box( modifier = Modifier.offset(20.dp, 15.dp).fillMaxWidth()) {
                 Text(
@@ -204,13 +205,13 @@ actual class PitsScoutMenu actual constructor(
                     if(photoAmount<3) {
                         if (webcam != null) {
                             webcam.open()
-                            photoArray.value.add(webcam.image)
+                            photoArray.value.add(webcam.image.toComposeImageBitmap())
                             webcam.close()
                             photoAmount++
 
                         }
                     }else{
-                        println("Too many photos")
+                        photoAlert = true
                     }
                 }
             ) {
@@ -231,23 +232,25 @@ actual class PitsScoutMenu actual constructor(
                     )
                 }
             }
+            if(photoAlert){
+            AlertDialog(title = {Text(text ="TOO MANY PHOTOS!!!")}, onDismissRequest = {photoAlert = false}, buttons = { Box(modifier = Modifier.fillMaxWidth()){Button(onClick = {photoAlert = false},modifier = Modifier.align(Alignment.Center)){Text(text="Dismiss",color = defaultError)}}}, modifier = Modifier.clip(
+                RoundedCornerShape(5.dp)).border(BorderStroke(3.dp,defaultPrimaryVariant),RoundedCornerShape(5.dp)))
+            }
             Row(modifier = Modifier.horizontalScroll(ScrollState(0))) {
-                photoArray.value.forEach {
-                    Box {
+                    photoArray.value.forEach {
                         Image(
-                            painter = BitmapPainter(it.toComposeImageBitmap()),
-                            contentDescription = "Robor image",
+                            painter = BitmapPainter(it),
+                            contentDescription = "Robot image",
                             contentScale = ContentScale.Fit,
                             modifier = Modifier
-                                .fillMaxSize(1.25f)
                                 .clip(RoundedCornerShape(7.5.dp))
+                                .fillMaxSize()
                         )
                         TextButton(
                             onClick = {
                                 photoArray.value.remove(it)
                                 photoAmount--
                             },
-                            modifier = Modifier.scale(0.25f).align(Alignment.BottomStart)
                         ) {
                             Image(
                                 painter = painterResource("trash.png"),
@@ -255,7 +258,6 @@ actual class PitsScoutMenu actual constructor(
                             )
                         }
                     }
-                }
             }
             if (photoAmount >= 1){
                 Box(modifier = Modifier.fillMaxWidth()){

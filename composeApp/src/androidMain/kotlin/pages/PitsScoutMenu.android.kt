@@ -1,6 +1,13 @@
+@file:Suppress("EXPECT_ACTUAL_CLASSIFIERS_ARE_IN_BETA_WARNING")
+
 package pages
 
 import RootNode
+import android.Manifest
+import android.content.pm.PackageManager
+import android.net.Uri
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
@@ -12,26 +19,26 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.ImageBitmap
-import androidx.compose.ui.graphics.painter.BitmapPainter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.content.ContextCompat
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.bumble.appyx.components.backstack.BackStack
 import com.bumble.appyx.components.backstack.operation.push
 import com.bumble.appyx.navigation.modality.BuildContext
 import com.bumble.appyx.navigation.node.Node
-import com.github.sarxos.webcam.Webcam
 import composables.CheckBox
 import composables.Profile
 import defaultOnPrimary
 import defaultPrimaryVariant
+import org.example.project.ComposeFileProvider
 import java.io.File
 
+@Suppress("VARIABLE_WITH_REDUNDANT_INITIALIZER")
 actual class PitsScoutMenu actual constructor(
     buildContext: BuildContext,
     private val backStack: BackStack<RootNode.NavTarget>,
@@ -44,7 +51,18 @@ actual class PitsScoutMenu actual constructor(
 ) : Node(buildContext = buildContext) {
     @Composable
     actual override fun View(modifier: Modifier) {
-        val photoArray by remember { mutableStateOf(ArrayList<ImageRequest>()) }
+        val launcher = rememberLauncherForActivityResult(
+            ActivityResultContracts.RequestPermission()
+        ) { _: Boolean ->
+
+        }
+        var hasImage by remember { mutableStateOf(false) }
+        var imageUri by remember { mutableStateOf<Uri?>(null) }
+        val cameraLauncher = rememberLauncherForActivityResult(
+            contract = ActivityResultContracts.TakePicture(),
+            onResult = {hasImage = it }
+        )
+        val photoArray = remember { mutableStateListOf(Uri.EMPTY) }
         var pitsPersonDD by remember { mutableStateOf(false) }
         val numOfPitsPeople by remember { mutableIntStateOf(6) }
         var scoutedTeamName by remember { mutableStateOf("") }
@@ -56,8 +74,6 @@ actual class PitsScoutMenu actual constructor(
         var collectPrefDD by remember{ mutableStateOf(false)}
         var collectPreference by remember { mutableStateOf("None Selected") }
         var concerns by remember { mutableStateOf("") }
-        val currentI by remember{ mutableIntStateOf(0) }
-        val webcam = Webcam.getDefault()
         var photoAmount by remember { mutableIntStateOf(0) }
         val scrollState = rememberScrollState(0)
         val isScrollEnabled by remember{ mutableStateOf(true)}
@@ -118,24 +134,26 @@ actual class PitsScoutMenu actual constructor(
                 Text(
                     text="Team Name: ",
                     fontSize = 20.sp,
+                    color = defaultOnPrimary
                 )
                 OutlinedTextField(
                     value = scoutedTeamName,
                     onValueChange ={ scoutedTeamName = it},
                     textStyle = TextStyle.Default.copy(fontSize = 20.sp),
-                    colors = TextFieldDefaults.colors(focusedContainerColor = Color(6,9,13),focusedTextColor = defaultOnPrimary),
+                    colors = TextFieldDefaults.colors(focusedContainerColor = Color(6,9,13), unfocusedContainerColor = Color(6,9,13) ,focusedTextColor = defaultOnPrimary, unfocusedTextColor = defaultOnPrimary),
                     shape = RoundedCornerShape(15.dp),
                     modifier = Modifier.size(85.dp,60.dp)
                 )
                 Text(
                     text="Team Number: ",
                     fontSize = 20.sp,
+                    color = defaultOnPrimary,
                 )
                 OutlinedTextField(
                     value = scoutedTeamNumber,
                     onValueChange ={ scoutedTeamNumber = it},
                     textStyle = TextStyle.Default.copy(fontSize = 20.sp),
-                    colors = TextFieldDefaults.colors(focusedContainerColor = Color(6,9,13),focusedTextColor = defaultOnPrimary),
+                    colors = TextFieldDefaults.colors(focusedContainerColor = Color(6,9,13), unfocusedContainerColor = Color(6,9,13) ,focusedTextColor = defaultOnPrimary, unfocusedTextColor = defaultOnPrimary),
                     shape = RoundedCornerShape(15.dp),
                     modifier = Modifier.size(85.dp,60.dp)
                 )
@@ -145,12 +163,13 @@ actual class PitsScoutMenu actual constructor(
             Spacer(modifier = Modifier.height(7.5.dp))
             Row {
                 Text(
-                    text="Dimensions"
+                    text="Dimensions",
+                    color = defaultOnPrimary,
                 )
                 OutlinedTextField(
                     value = robotLength + "in",
                     onValueChange ={ text -> robotLength = text.filter { it.isDigit()}},
-                    colors = TextFieldDefaults.colors(focusedContainerColor = Color(6,9,13),focusedTextColor = defaultOnPrimary),
+                    colors = TextFieldDefaults.colors(focusedContainerColor = Color(6,9,13), unfocusedContainerColor = Color(6,9,13) ,focusedTextColor = defaultOnPrimary, unfocusedTextColor = defaultOnPrimary),
                     shape = RoundedCornerShape(15.dp),
                     modifier = Modifier
                         .size(80.dp, 60.dp)
@@ -162,7 +181,7 @@ actual class PitsScoutMenu actual constructor(
                 OutlinedTextField(
                     value = robotWidth + "in",
                     onValueChange ={ text -> robotWidth = text.filter { it.isDigit()}},
-                    colors = TextFieldDefaults.colors(focusedContainerColor = Color(6,9,13),focusedTextColor = defaultOnPrimary),
+                    colors = TextFieldDefaults.colors(focusedContainerColor = Color(6,9,13), unfocusedContainerColor = Color(6,9,13) ,focusedTextColor = defaultOnPrimary, unfocusedTextColor = defaultOnPrimary),
                     shape = RoundedCornerShape(15.dp),
                     modifier = Modifier
                         .size(80.dp, 60.dp)
@@ -220,19 +239,30 @@ actual class PitsScoutMenu actual constructor(
                 border = BorderStroke(2.dp, color = Color.Yellow),
                 shape = RoundedCornerShape(10.dp),
                 onClick = {
-                    if(photoAmount<3) {
-                        if (webcam != null) {
-                            webcam.open()
-                            photoArray.add(ImageRequest.Builder(context).data(webcam.image).build())
-                            webcam.close()
-                            photoAmount++
 
+                    when (PackageManager.PERMISSION_GRANTED) {
+                        ContextCompat.checkSelfPermission(
+                            context,
+                            Manifest.permission.CAMERA
+                        ) -> {
+                            if (photoAmount < 3) {//moved up
+                            var uri = Uri.EMPTY
+
+                            uri = ComposeFileProvider.getImageUri(context)
+                            imageUri = uri
+                            cameraLauncher.launch(uri)
+
+                                    photoArray.add(photoAmount, uri)
+                                photoAmount++
+                                hasImage = false
+                            }
                         }
-                    }else{
-                        println("Too many photos")
+                        else -> {
+                            launcher.launch(Manifest.permission.CAMERA)
+                        }
                     }
                 }
-            ) {
+                ) {
                 AsyncImage(
                     model = cam,
                     contentDescription = "Camera"
@@ -251,15 +281,17 @@ actual class PitsScoutMenu actual constructor(
                 }
             }
             Row(modifier = Modifier.horizontalScroll(ScrollState(0))) {
+                if(hasImage){//helps update Box
                 photoArray.forEach {
                     Box {
                         AsyncImage(
                             model = it,
-                            contentDescription = "Robor image",
+                            contentDescription = "Robot image",
                             contentScale = ContentScale.Fit,
                             modifier = Modifier
                                 .fillMaxSize()
                                 .clip(RoundedCornerShape(7.5.dp))
+                                .size(height = 200.dp, width = 300.dp)
                         )
                         TextButton(
                             onClick = {
@@ -275,6 +307,7 @@ actual class PitsScoutMenu actual constructor(
                                 contentDescription = "Delete",
                             )
                         }
+                    }
                     }
                 }
             }
@@ -348,7 +381,7 @@ actual class PitsScoutMenu actual constructor(
             OutlinedTextField(
                 value = concerns,
                 onValueChange ={ concerns = it},
-                colors = TextFieldDefaults.colors(focusedContainerColor = Color(6,9,13),focusedTextColor = defaultOnPrimary),
+                colors = TextFieldDefaults.colors(focusedContainerColor = Color(6,9,13), unfocusedContainerColor = Color(6,9,13) ,focusedTextColor = defaultOnPrimary, unfocusedTextColor = defaultOnPrimary),
                 shape = RoundedCornerShape(15.dp),
                 modifier = Modifier
                     .fillMaxWidth(9f / 10f)
@@ -362,14 +395,14 @@ actual class PitsScoutMenu actual constructor(
                 OutlinedButton(onClick = { backStack.push(RootNode.NavTarget.MainMenu) }) { Text(text = "Back", color = defaultOnPrimary)
                 }
             }
-//            if(robotCard){
-//                Box(modifier = Modifier.padding(5.dp)) {
-//                    Profile(
-//                        photoArray,  scoutedTeamName, scoutedTeamNumber, robotType, collectPreference,
-//                        robotLength, robotWidth, ampStrength.value, speakerStrength.value,
-//                        climbStrength.value, trapStrength.value, concerns,scoutName.value)
-//                }
-//            }
+            if(robotCard){
+                Box(modifier = Modifier.padding(5.dp)) {
+                    Profile(
+                        photoArray,  scoutedTeamName, scoutedTeamNumber, robotType, collectPreference,
+                        robotLength, robotWidth, ampStrength.value, speakerStrength.value,
+                        climbStrength.value, trapStrength.value, concerns,scoutName.value)
+                }
+            }
         }
     }
 }
