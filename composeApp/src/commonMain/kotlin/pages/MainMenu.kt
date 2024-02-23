@@ -54,26 +54,30 @@ class MainMenu(
             }
         }
         Column {
-            Box(modifier = Modifier.fillMaxWidth()){
-            Text(
-                text = "Bear Metal Scout App",
-                fontSize = 30.sp,
-                modifier = Modifier.align(Alignment.Center)
-            )
+            Box(modifier = Modifier.fillMaxWidth()) {
+                Text(
+                    text = "Bear Metal Scout App",
+                    fontSize = 30.sp,
+                    modifier = Modifier.align(Alignment.Center)
+                )
                 OutlinedButton(
                     onClick = {
                         backStack.push(RootNode.NavTarget.LoginPage)
                     },
                     modifier = Modifier.align(Alignment.CenterStart)
-                ){
+                ) {
                     Text(
                         text = "Login",
                         color = defaultOnPrimary
                     )
                 }
-        }
+            }
             Divider(color = getCurrentTheme().onSurface, thickness = 2.dp)
-            Text(text = "Hello ${scoutName.value}", color = defaultPrimaryVariant, modifier = Modifier.align(Alignment.CenterHorizontally))
+            Text(
+                text = "Hello ${scoutName.value}",
+                color = defaultPrimaryVariant,
+                modifier = Modifier.align(Alignment.CenterHorizontally)
+            )
             OutlinedButton(
                 border = BorderStroke(3.dp, Color.Yellow),
                 shape = RoundedCornerShape(25.dp),
@@ -93,7 +97,7 @@ class MainMenu(
                 )
             }
 
-            Box(modifier=Modifier.align(Alignment.CenterHorizontally).offset((-100).dp, (-50).dp)) {
+            Box(modifier = Modifier.align(Alignment.CenterHorizontally).offset((-100).dp, (-50).dp)) {
                 DropdownMenu(
                     expanded = selectedPlacement,
                     onDismissRequest = { selectedPlacement = false },
@@ -154,115 +158,14 @@ class MainMenu(
                 shape = RoundedCornerShape(25.dp),
                 contentPadding = PaddingValues(horizontal = 80.dp, vertical = 5.dp),
                 colors = ButtonDefaults.buttonColors(backgroundColor = defaultSecondary),
-import getCurrentTheme
-
-class MainMenu(
-    buildContext: BuildContext,
-    private val backStack: BackStack<RootNode.NavTarget>
-) : Node( buildContext = buildContext) {
-
-    @Composable
-    override fun View(modifier: Modifier) {
-        var theme by remember { mutableStateOf(getCurrentTheme()) }
-        Column(modifier = modifier) {
-            Row {
-                Button(
-                    content = {
-                        Text(
-                            text = "i",
-                            fontSize = 12.sp
-                        )
-                    },
-                    onClick = {
-
-                    },
-                    modifier = Modifier.padding(3.dp),
-                    contentPadding = PaddingValues(3.dp)
-                )
-                Text(
-                    text = "Bear Metal Scout App",
-                    fontSize = 30.sp
-                )
-                Button(
-                    content = {
-                        Text(
-                            text = "s",
-                            fontSize = 12.sp
-                        )
-                    },
-                    onClick = {
-
-                    },
-                    modifier = Modifier.padding(3.dp),
-                    contentPadding = PaddingValues(3.dp)
-                )
-            }
-            Divider(color = theme.secondary, thickness = 2.dp)
-            Button(
-                content = {
-                    Text(
-                        text = "Quantitative Scouting",
-                        fontSize = 23.sp
-                    )
-                },
                 onClick = {
-                    backStack.push(RootNode.NavTarget.QuanScouting)
-                },
-                modifier = Modifier.align(Alignment.CenterHorizontally).padding(horizontal = 50.dp, vertical = 50.dp),
-            )
-
-            Button(
-                content = {
-                    Text(
-                        text = "Pits Scouting",
-                        fontSize = 22.sp
-                    )
-                },
-                onClick = {
-                    backStack.push(RootNode.NavTarget.PitsScouting)
-                },
-                modifier = Modifier.align(Alignment.CenterHorizontally).padding(horizontal = 50.dp, vertical = 50.dp),
-
-                ) {
+                    backStack.push(RootNode.NavTarget.P)
+                }
+            ){
                 Text(
-                    text = "Pits",
-                    color = getCurrentTheme().primaryVariant,
-                    fontSize = 35.sp
+                    text = "Pits"
                 )
-            }
-            DropdownMenu(
-                expanded = pitsSelectedPlacement,
-                onDismissRequest = { pitsSelectedPlacement = false },
-                modifier = Modifier.size(200.dp, 332.dp).background(color = Color(0, 0, 0))
-            ) {
-                DropdownMenuItem(
-                    onClick = {
-                        robotStartPosition.value = 0; backStack.push(RootNode.NavTarget.PitsScouting)
-                    },
-                    modifier = Modifier.border(BorderStroke(color = Color.Yellow, width = 3.dp))
-                        .size(100.dp, 100.dp).background(color = Color(60, 30, 30))
-                ) { Text("R1", fontSize = 22.sp) }
-            }
-            OutlinedButton(
-                border = BorderStroke(3.dp, Color.Yellow),
-                shape = RoundedCornerShape(25.dp),
-                contentPadding = PaddingValues(horizontal = 80.dp, vertical = 5.dp),
-                colors = ButtonDefaults.buttonColors(backgroundColor = defaultSecondary),
-                onClick = {
-                    openError.value = !sync(true)
-                },
-                modifier = Modifier.align(Alignment.CenterHorizontally).padding(horizontal = 50.dp, vertical = 50.dp),
-            ) {
-                Text(
-                    text = "Sync",
-                    color = getCurrentTheme().primaryVariant,
-                    fontSize = 35.sp
-                )
-            }
-            Box(modifier = Modifier.fillMaxSize()) {
-                Text(text ="Competition: ${comp.value}",modifier=Modifier.align(Alignment.BottomCenter))
             }
         }
-
     }
 }

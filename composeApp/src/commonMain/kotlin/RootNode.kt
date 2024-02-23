@@ -1,21 +1,9 @@
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.material.Button
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.bumble.appyx.components.backstack.BackStack
 import com.bumble.appyx.components.backstack.BackStackModel
-import com.bumble.appyx.components.backstack.operation.pop
-import com.bumble.appyx.components.backstack.operation.push
-import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.*
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.ImageBitmap
-import com.bumble.appyx.components.backstack.BackStack
-import com.bumble.appyx.components.backstack.BackStackModel
 import com.bumble.appyx.components.backstack.ui.fader.BackStackFader
 import com.bumble.appyx.navigation.composable.AppyxComponent
 import com.bumble.appyx.navigation.modality.BuildContext
@@ -41,8 +29,7 @@ class RootNode(
 ) : ParentNode<RootNode.NavTarget>(
     appyxComponent = backStack,
     buildContext = buildContext
-) {
-
+){
     private var team = mutableIntStateOf(1)
     private var robotStartPosition = mutableIntStateOf(-1)
     private var pitsPerson = mutableStateOf("P1")
@@ -52,7 +39,6 @@ class RootNode(
     private val speakerStrength = mutableStateOf(false)
     private val climbStrength = mutableStateOf(false)
     private val trapStrength = mutableStateOf(false)
-    private val photoArray = mutableStateOf(ArrayList<ImageBitmap>())
     sealed class NavTarget : Parcelable {
         @Parcelize
         data object MainMenu : NavTarget()
@@ -72,7 +58,7 @@ class RootNode(
             NavTarget.LoginPage -> LoginPage(buildContext,backStack, scoutName,comp)
             NavTarget.MainMenu -> MainMenu(buildContext, backStack, robotStartPosition,scoutName,comp)
             NavTarget.MatchScouting -> AutoTeleSelectorMenu(buildContext,robotStartPosition, team, backStack)
-            NavTarget.PitsScouting -> PitsScoutMenu(buildContext,backStack,pitsPerson, ampStrength,speakerStrength, climbStrength, trapStrength,scoutName)
+            NavTarget.PitsScouting -> PitsScoutMenu(buildContext,backStack)
         }
 
     @Composable
