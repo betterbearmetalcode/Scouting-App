@@ -13,12 +13,20 @@ import nodes.AutoTeleSelectorNode
 expect class TeleMenu(
     buildContext: BuildContext,
     backStack: BackStack<AutoTeleSelectorNode.NavTarget>,
-
     selectAuto: MutableState<Boolean>,
-
     match: MutableState<String>,
     team: MutableIntState,
-    robotStartPosition: MutableIntState
+    robotStartPosition: MutableIntState,
+    autoAmpNum: MutableIntState,
+    autoSpeakerNum: MutableIntState,
+    autoNotes: MutableState<String>,
+    teleSpeakerNum: MutableIntState,
+    teleAmpNum: MutableIntState,
+    teleAmplified: MutableIntState,
+    teleTrapNum: MutableState<Int>,
+    selectedEndPos: MutableState<String>,
+    teleNotes: MutableState<String>,
+    lostComms: MutableState<Boolean>
 ) : Node {
     @Composable
     override fun View(modifier: Modifier)

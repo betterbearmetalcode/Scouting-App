@@ -11,7 +11,9 @@ import org.jetbrains.compose.resources.ExperimentalResourceApi
 expect class MainMenu(
     buildContext: BuildContext,
     backStack: BackStack<RootNode.NavTarget>,
-    robotStartPosition: MutableIntState
+    robotStartPosition: MutableIntState,
+    scoutName: MutableState<String>,
+    comp: MutableState<String>
 ) : Node {
 
     @Composable

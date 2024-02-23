@@ -26,7 +26,6 @@ qrcodeKotlin = "4.0.6"
 okhttp = "4.12.0"
 uiDesktop = "1.5.11"
 material3 = "1.2.0"
-uiDesktop = "1.5.11"
 #material3 = "1.2.0"
 material3Desktop = "1.2.0"
 webcamCapture = "0.3.10"
@@ -36,7 +35,6 @@ filamentAndroid = "1.17.1"
 cardview = "1.0.0"
 volley = "1.2.1"
 databindingCompiler = "8.2.2"
-material3Android = "1.2.0"
 uiUnitAndroid = "1.6.1"
 
 [libraries]
@@ -44,7 +42,7 @@ androidx-compiler = { module = "androidx.compose.compiler:compiler", version.ref
 backstack = { module = "com.bumble.appyx:backstack", version.ref = "bumble-appyxNavigation" }
 bumble-appyx-navigation = { module = "com.bumble.appyx:appyx-navigation", version.ref = "bumble-appyxNavigation" }
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coilCompose" }
-json = { module = "org.json:json", version.ref = "json-json" }
+json = { module = "org.json:json", version.ref = "json" }
 gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 kotlin-test-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }

@@ -19,7 +19,6 @@ import com.bumble.appyx.components.backstack.operation.pop
 import com.bumble.appyx.components.backstack.operation.push
 import com.bumble.appyx.navigation.modality.BuildContext
 import com.bumble.appyx.navigation.node.Node
-import composables.CheckBox
 import composables.EnumerableValue
 import defaultSecondary
 import exportScoutData
@@ -29,14 +28,14 @@ import nodes.*
 
 actual class AutoMenu actual constructor(
     buildContext: BuildContext,
-    private val backStack: BackStack<AutoTeleSelectorNode.NavTarget>,
-    private val mainMenuBackStack: BackStack<RootNode.NavTarget>,
+    private backStack: BackStack<AutoTeleSelectorNode.NavTarget>,
+    private mainMenuBackStack: BackStack<RootNode.NavTarget>,
 
-    private val selectAuto: MutableState<Boolean>,
+    private selectAuto: MutableState<Boolean>,
 
-    private val match: MutableState<String>,
-    private val team: MutableIntState,
-    private val robotStartPosition: MutableIntState,
+    private match: MutableState<String>,
+    private team: MutableIntState,
+    private robotStartPosition: MutableIntState,
 ) : Node(buildContext) {
     @Composable
     actual override fun View(modifier: Modifier) {

@@ -1,6 +1,5 @@
 package pages
 
-import RootNode
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
@@ -30,6 +29,7 @@ import composables.Profile
 import defaultError
 import defaultOnPrimary
 import defaultPrimaryVariant
+import nodes.RootNode
 import java.awt.image.BufferedImage
 
 actual class PitsScoutMenu actual constructor(
