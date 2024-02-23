@@ -56,6 +56,7 @@ kotlin {
             implementation(libs.qrcode.kotlin)
             implementation(libs.okhttp)
             implementation(libs.json)
+            implementation(libs.gson)
             implementation(libs.bumble.appyx.navigation)
             api(libs.backstack)
         }
@@ -86,6 +87,7 @@ android {
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
+            excludes += "/META-INF/LICENSE.md"
         }
     }
     buildTypes {
@@ -102,11 +104,19 @@ android {
     }
 }
 
+//dependencies {
+//    implementation(libs.androidx.material3.desktop)
+//    implementation(libs.androidx.databinding.compiler)
+//    implementation(libs.androidx.material3.android)
+//    implementation(libs.androidx.ui.unit.android)
+//}
+
 compose.desktop {
     application {
         mainClass = "MainKt"
 
         nativeDistributions {
+            appResourcesRootDir = (rootDir.toPath() / "desktopMain").toFile()
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
             packageName = "org.example.project"
             packageVersion = "1.0.0"

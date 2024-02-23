@@ -16,9 +16,9 @@ androidx-material = "1.11.0"
 androidx-constraintlayout = "2.1.4"
 androidx-test-junit = "1.1.5"
 androidx-espresso-core = "3.5.1"
+gson = "2.10.1"
 json = "20231013"
-json-json = "20231013"
-kotlin = "1.9.20"
+kotlin = "1.9.21"
 junit = "4.13.2"
 kotlinxCoroutinesCore = "1.8.0-RC2"
 kotlinxDatetime = "0.4.1"
@@ -26,6 +26,8 @@ qrcodeKotlin = "4.0.6"
 okhttp = "4.12.0"
 uiDesktop = "1.5.11"
 material3 = "1.2.0"
+uiDesktop = "1.5.11"
+#material3 = "1.2.0"
 material3Desktop = "1.2.0"
 webcamCapture = "0.3.10"
 material3Android = "1.2.0"
@@ -33,6 +35,9 @@ core = "1.41.0"
 filamentAndroid = "1.17.1"
 cardview = "1.0.0"
 volley = "1.2.1"
+databindingCompiler = "8.2.2"
+material3Android = "1.2.0"
+uiUnitAndroid = "1.6.1"
 
 [libraries]
 androidx-compiler = { module = "androidx.compose.compiler:compiler", version.ref = "compiler" }
@@ -40,6 +45,7 @@ backstack = { module = "com.bumble.appyx:backstack", version.ref = "bumble-appyx
 bumble-appyx-navigation = { module = "com.bumble.appyx:appyx-navigation", version.ref = "bumble-appyxNavigation" }
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coilCompose" }
 json = { module = "org.json:json", version.ref = "json-json" }
+gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 kotlin-test-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -64,8 +70,10 @@ qrcode-kotlin = { module = "io.github.g0dkar:qrcode-kotlin", version.ref = "qrco
 ui-desktop = { module = "org.jetbrains.compose.ui:ui-desktop", version.ref = "uiDesktop" }
 androidx-material3 = { group = "androidx.compose.material3", name = "material3", version.ref = "material3" }
 androidx-material3-desktop = { group = "androidx.compose.material3", name = "material3-desktop", version.ref = "material3Desktop" }
+androidx-databinding-compiler = { group = "androidx.databinding", name = "databinding-compiler", version.ref = "databindingCompiler" }
+#androidx-material3-android = { group = "androidx.compose.material3", name = "material3-android", version.ref = "material3Android" }
+androidx-ui-unit-android = { group = "androidx.compose.ui", name = "ui-unit-android", version.ref = "uiUnitAndroid" }
 webcam-capture = { module = "com.github.sarxos:webcam-capture", version.ref = "webcamCapture" }
-androidx-material3-android = { group = "androidx.compose.material3", name = "material3-android", version.ref = "material3Android" }
 core = { group = "com.google.ar", name = "core", version.ref = "core" }
 filament-android = { group = "com.google.ar.sceneform", name = "filament-android", version.ref = "filamentAndroid" }
 androidx-cardview = { group = "androidx.cardview", name = "cardview", version.ref = "cardview" }

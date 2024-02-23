@@ -1,5 +1,8 @@
+package nodes
+
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.ui.Modifier
 import com.bumble.appyx.components.backstack.BackStack
 import com.bumble.appyx.components.backstack.BackStackModel
@@ -11,10 +14,7 @@ import com.bumble.appyx.navigation.node.Node
 import com.bumble.appyx.navigation.node.ParentNode
 import com.bumble.appyx.utils.multiplatform.Parcelable
 import com.bumble.appyx.utils.multiplatform.Parcelize
-import pages.AutoTeleSelectorMenu
-import pages.LoginPage
-import pages.MainMenu
-import pages.PitsScoutMenu
+import pages.*
 
 
 class RootNode(
@@ -75,3 +75,4 @@ class RootNode(
 
     }
 }
+val matchScoutArray = HashMap<Int, String>()
