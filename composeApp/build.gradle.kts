@@ -100,19 +100,23 @@ android {
         targetCompatibility = JavaVersion.VERSION_1_8
     }
     dependencies {
-    debugImplementation(libs.compose.ui.tooling)
+        debugImplementation(libs.compose.ui.tooling)
+    }
+}
+
+//dependencies {
 //    implementation(libs.androidx.material3.desktop)
 //    implementation(libs.androidx.databinding.compiler)
 //    implementation(libs.androidx.material3.android)
 //    implementation(libs.androidx.ui.unit.android)
-    }
-}
+//}
+
 compose.desktop {
     application {
         mainClass = "MainKt"
 
         nativeDistributions {
-            // appResourcesRootDir = (rootDir.toPath() / "desktopMain").toFile()
+            appResourcesRootDir = (rootDir.toPath() / "desktopMain").toFile()
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
             packageName = "org.example.project"
             packageVersion = "1.0.0"

@@ -32,21 +32,13 @@ import java.lang.Integer.parseInt
 
 actual class TeleMenu actual constructor(
     buildContext: BuildContext,
-    backStack: BackStack<AutoTeleSelectorNode.NavTarget>,
-    selectAuto: MutableState<Boolean>,
-    match: MutableState<String>,//parse
-    team: MutableIntState,
-    robotStartPosition: MutableIntState,
-    autoAmpNum: MutableIntState,
-    autoSpeakerNum: MutableIntState,
-    autoNotes: MutableState<String>,
-    teleSpeakerNum: MutableIntState,
-    teleAmpNum: MutableIntState,
-    teleAmplified: MutableIntState,
-    teleTrapNum: MutableState<Int>,
-    selectedEndPos: MutableState<String>,
-    teleNotes: MutableState<String>,
-    lostComms: MutableState<Boolean>
+    private val backStack: BackStack<AutoTeleSelectorNode.NavTarget>,
+
+    private val selectAuto: MutableState<Boolean>,
+
+    private val match: MutableState<String>,
+    private val team: MutableIntState,
+    private val robotStartPosition: MutableIntState
 ) : Node(buildContext) {
     @Composable
     actual override fun View(modifier: Modifier) {
@@ -127,7 +119,7 @@ actual class TeleMenu actual constructor(
                     teleSMissed.intValue = 0
                     teleAMissed.intValue = 0
                     teleNotes.value = ""
-                    selectAuto = false
+                    selectAuto.value = false
                     exportScoutData(context)
                     backStack.pop()
                 },

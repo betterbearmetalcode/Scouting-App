@@ -10,7 +10,7 @@ import com.bumble.appyx.navigation.modality.BuildContext
 import com.bumble.appyx.navigation.node.Node
 import nodes.AutoTeleSelectorNode
 
-expect class AutoMenu(
+expect class AutoMenu (
     buildContext: BuildContext,
     backStack: BackStack<AutoTeleSelectorNode.NavTarget>,
     mainMenuBackStack: BackStack<RootNode.NavTarget>,

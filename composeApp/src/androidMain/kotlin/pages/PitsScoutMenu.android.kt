@@ -2,7 +2,7 @@
 
 package pages
 
-import nodes.RootNode
+import RootNode
 import android.Manifest
 import android.content.pm.PackageManager
 import android.net.Uri

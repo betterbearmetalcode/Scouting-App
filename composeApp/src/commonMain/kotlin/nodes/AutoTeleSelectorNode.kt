@@ -36,9 +36,7 @@ class AutoTeleSelectorNode(
     buildContext = buildContext
 ) {
     private val selectAuto = mutableStateOf(false)
-    private val teleAmplified = mutableIntStateOf(0)
-    private val selectedEndPos = mutableStateOf(1)
-    private val lostComms = mutableStateOf(false)
+
 
     sealed class NavTarget : Parcelable {
         @Parcelize
@@ -51,15 +49,14 @@ class AutoTeleSelectorNode(
     override fun resolve(interactionTarget: NavTarget, buildContext: BuildContext): Node =
         when (interactionTarget) {
             NavTarget.AutoScouting -> AutoMenu(buildContext, backStack, mainMenuBackStack, selectAuto, match, team, robotStartPosition)
-            NavTarget.TeleScouting -> TeleMenu(
-                buildContext, backStack, selectAuto, match, team, robotStartPosition, autoAmpNum, autoSpeakerNum, autoNotes, teleSpeakerNum, teleAmplified, teleTrapNum, selectedEndPos, teleNotes, lostComms)
+            NavTarget.TeleScouting -> TeleMenu(buildContext, backStack, selectAuto, match, team, robotStartPosition)
         }
 
     @Composable
     override fun View(modifier: Modifier) {
 
-        Column() {
-            AutoTeleSelectorMenu(buildContext,robotStartPosition,team,mainMenuBackStack,backStack)//TODO get buildContext working... My BRaIn DiEd
+        Column {
+            AutoTeleSelectorMenu(team, robotStartPosition, selectAuto, backStack)
             AppyxComponent(
                 appyxComponent = backStack,
                 modifier = Modifier.weight(0.9f)
