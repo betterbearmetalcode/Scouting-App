@@ -3,6 +3,7 @@ package pages
 import nodes.RootNode
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
@@ -22,6 +23,7 @@ import com.bumble.appyx.navigation.node.Node
 import defaultBackground
 import defaultOnPrimary
 import defaultPrimaryVariant
+import getCurrentTheme
 import java.io.File
 
 class LoginPage(
@@ -43,11 +45,14 @@ class LoginPage(
 
         )
         Column {
-
+//            Image(
+//                painter = BitmapPainter(logo),//turn into bitmap
+//                contentDescription = "Logo"
+//            )
             Text(
                 text = "Login",
                 fontSize = 45.sp,
-                color = defaultOnPrimary,
+                color = getCurrentTheme().onPrimary,
                 modifier = Modifier.align(Alignment.CenterHorizontally).offset(0.dp, (-28).dp)
             )
             Divider(
@@ -61,41 +66,42 @@ class LoginPage(
                     value = scoutName.value,
                     onValueChange = {scoutName.value = it},
                     shape = RoundedCornerShape(15.dp),
-                    colors = TextFieldDefaults.outlinedTextFieldColors(backgroundColor = defaultBackground, focusedBorderColor = Color.Yellow, textColor = defaultOnPrimary),
+                    colors = TextFieldDefaults.outlinedTextFieldColors(backgroundColor = getCurrentTheme().background, focusedBorderColor = getCurrentTheme().onSecondary, unfocusedBorderColor = getCurrentTheme().onSecondary, textColor = getCurrentTheme().onPrimary, cursorColor = getCurrentTheme().onSecondary),
                 )
             }
             Box(modifier = Modifier.padding(15.dp).fillMaxWidth()) {
                 OutlinedButton(
                     onClick = { compDD = true },
                     shape = RoundedCornerShape(15.dp),
-                    border = BorderStroke(3.dp, color = defaultPrimaryVariant)
+                    border = BorderStroke(3.dp, color = defaultPrimaryVariant),
+                    colors = ButtonDefaults.buttonColors(backgroundColor = getCurrentTheme().primary)
                 ) {
                     Box(modifier = Modifier.fillMaxWidth()) {
                         Text(
                             text = "Competition: ${comp.value}",
-                            color = defaultOnPrimary,
+                            color = getCurrentTheme().onPrimary,
                             modifier = Modifier.align(Alignment.CenterStart)
                         )
                         Text(
                             text = "V",
-                            color = defaultOnPrimary,
+                            color = getCurrentTheme().onPrimary,
                             modifier = Modifier.align(Alignment.CenterEnd)
                         )
                     }
                 }
-                DropdownMenu(expanded = compDD, onDismissRequest = { compDD = false; }) {
+                DropdownMenu(expanded = compDD, onDismissRequest = { compDD = false; },modifier=Modifier.background(color = getCurrentTheme().onSurface)) {
                     DropdownMenuItem(
                         onClick = { comp.value = "Bonney Lake"; compDD = false; compKey = tbaMatches[0]}
-                    ) { Text(text = "Bonney Lake") }
+                    ) { Text(text = "Bonney Lake", color = getCurrentTheme().onPrimary,modifier=Modifier.background(color = getCurrentTheme().onSurface)) }
                     DropdownMenuItem(
                         onClick = { comp.value = "Lake Sammamish"; compDD = false; compKey = tbaMatches[1]}
-                    ) { Text(text = "Lake Sammamish") }
+                    ) { Text(text = "Lake Sammamish", color = getCurrentTheme().onPrimary,modifier=Modifier.background(color = getCurrentTheme().onSurface)) }
                     DropdownMenuItem(
                         onClick = { comp.value = "Salem"; compDD = false; compKey = tbaMatches[2]}
-                    ) { Text(text = "Salem") }
+                    ) { Text(text = "Salem", color = getCurrentTheme().onPrimary,modifier=Modifier.background(color = getCurrentTheme().onSurface)) }
                     DropdownMenuItem(
                         onClick = { comp.value = "Houston"; compDD = false; compKey = tbaMatches[3]}
-                    ) { Text(text = "Houston") }
+                    ) { Text(text = "Houston", color = getCurrentTheme().onPrimary,modifier=Modifier.background(color = getCurrentTheme().onSurface)) }
                 }
 
             }
@@ -107,11 +113,12 @@ class LoginPage(
                     if (comp.value != "" && scoutName.value != "")
                     backStack.push(RootNode.NavTarget.MainMenu)
                 },
-                border = BorderStroke(color = defaultPrimaryVariant, width = 2.dp)
+                border = BorderStroke(color = defaultPrimaryVariant, width = 2.dp),
+                colors = ButtonDefaults.buttonColors(backgroundColor = getCurrentTheme().primary)
             ) {
                 Text(
                     text = "Submit",
-                    color = defaultOnPrimary
+                    color = getCurrentTheme().onPrimary
                 )
             }
         }

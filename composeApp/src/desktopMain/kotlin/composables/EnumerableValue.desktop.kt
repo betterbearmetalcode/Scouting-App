@@ -15,6 +15,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import defaultOnPrimary
 import defaultSecondary
+import getCurrentTheme
 
 @Composable
 actual fun EnumerableValue(label: String, value: MutableState<Int>) {
@@ -31,8 +32,8 @@ actual fun EnumerableValue(label: String, value: MutableState<Int>) {
                 border = BorderStroke(2.dp, color = Color.Yellow),
                 shape = RoundedCornerShape(5.dp),
                 colors = ButtonDefaults.buttonColors(
-                    backgroundColor = defaultSecondary,
-                    contentColor = defaultOnPrimary
+                    backgroundColor = getCurrentTheme().secondary,
+                    contentColor = getCurrentTheme().onPrimary
                 ),
                 onClick = {
                     value.value -= 1
@@ -55,8 +56,8 @@ actual fun EnumerableValue(label: String, value: MutableState<Int>) {
                 border = BorderStroke(2.dp, color = Color.Yellow),
                 shape = RoundedCornerShape(5.dp),
                 colors = ButtonDefaults.buttonColors(
-                    backgroundColor = defaultSecondary,
-                    contentColor = defaultOnPrimary
+                    backgroundColor = getCurrentTheme().secondary,
+                    contentColor = getCurrentTheme().onPrimary
                 ),
                 onClick = {
                     value.value += 1

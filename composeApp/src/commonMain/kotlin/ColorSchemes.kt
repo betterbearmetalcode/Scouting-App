@@ -23,5 +23,5 @@ val defaultError = Color(255, 209, 220)
 val defaultOnPrimary = Color.White
 val defaultOnSecondary = Color.Yellow
 val defaultOnBackground = Color.Yellow
-val defaultOnSurface = Color.Yellow
+val defaultOnSurface = Color(15,15,15)
 val defaultOnError = Color(6,9,13)

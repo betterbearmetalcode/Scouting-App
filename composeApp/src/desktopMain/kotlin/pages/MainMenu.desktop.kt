@@ -8,6 +8,7 @@ import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -27,10 +28,10 @@ import teamData
 
 actual class MainMenu actual constructor(
     buildContext: BuildContext,
-    private backStack: BackStack<RootNode.NavTarget>,
-    private robotStartPosition: MutableIntState,
-    scoutName: MutableState<String>,
-    comp: MutableState<String>
+    private val backStack: BackStack<RootNode.NavTarget>,
+    private val robotStartPosition: MutableIntState,
+    private val scoutName: MutableState<String>,
+    private val comp: MutableState<String>
 ) : Node(buildContext = buildContext) {
 
     @OptIn(ExperimentalResourceApi::class)
@@ -47,11 +48,20 @@ actual class MainMenu actual constructor(
             }
         }
         Column (modifier = Modifier.verticalScroll(ScrollState(0))) {
-            Text(
-                text = "Bear Metal Scout App",
-                fontSize = 30.sp,
-                modifier = Modifier.align(Alignment.CenterHorizontally)
-            )
+            Box(modifier = Modifier.fillMaxWidth()) {
+                OutlinedButton(onClick = {backStack.push(RootNode.NavTarget.LoginPage)},modifier = Modifier.scale(0.75f).align(Alignment.CenterStart)) {
+                    Text(text = "Login", color = getCurrentTheme().onPrimary)
+                }
+
+                Text(
+                    text = "Bear Metal Scout App",
+                    fontSize = 25.sp,
+                    modifier = Modifier.align(Alignment.Center)
+                )
+                OutlinedButton(onClick = {backStack.push(RootNode.NavTarget.LoginPage)},modifier = Modifier.scale(0.75f).align(Alignment.CenterEnd)) {
+                    Text(text = "Settings", color = getCurrentTheme().onPrimary)
+                }
+            }
             Divider(color = getCurrentTheme().onSurface, thickness = 2.dp)
             OutlinedButton(
                 border = BorderStroke(3.dp, Color.Yellow),

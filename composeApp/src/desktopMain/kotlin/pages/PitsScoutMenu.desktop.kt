@@ -1,6 +1,6 @@
 package pages
 
-import RootNode
+import nodes.RootNode
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
@@ -30,8 +30,11 @@ import composables.Profile
 import defaultError
 import defaultOnPrimary
 import defaultPrimaryVariant
-import java.awt.image.BufferedImage
+import getCurrentTheme
+import org.jetbrains.compose.resources.ExperimentalResourceApi
+import java.lang.Integer.parseInt
 
+@OptIn(ExperimentalResourceApi::class)
 actual class PitsScoutMenu actual constructor(
     buildContext: BuildContext,
     private val backStack: BackStack<RootNode.NavTarget>,
@@ -49,8 +52,8 @@ actual class PitsScoutMenu actual constructor(
         val numOfPitsPeople by remember { mutableStateOf(6) }
         var scoutedTeamName by remember { mutableStateOf("") }
         var scoutedTeamNumber by remember { mutableStateOf("") }
-        var robotLength by remember{mutableStateOf("")}
-        var robotWidth by remember{ mutableStateOf("")}
+        var robotLength by remember{mutableStateOf("0")}
+        var robotWidth by remember{ mutableStateOf("0")}
         var robotTypeDropDown by remember { mutableStateOf(false) }
         var robotType by remember { mutableStateOf("NoneSelected") }
         var collectPrefDD by remember{ mutableStateOf(false)}
@@ -62,12 +65,14 @@ actual class PitsScoutMenu actual constructor(
         val isScrollEnabled by remember{ mutableStateOf(true)}
         var robotCard by remember {mutableStateOf(false)}
         var photoAlert by remember { mutableStateOf(false) }
+        val perimeterChecked by remember { mutableStateOf(if (2 * (parseInt(robotLength) + parseInt(robotWidth)) > 120 && robotLength!="" && robotWidth!="") "crossmark.png" else "checkmark.png") }
+
         Column(modifier = Modifier.verticalScroll(state = scrollState, enabled = isScrollEnabled).padding(5.dp)) {
             Box( modifier = Modifier.offset(20.dp, 15.dp).fillMaxWidth()) {
                 Text(
                     text = "Pits",
                     fontSize = 50.sp,
-                    color = defaultOnPrimary,
+                    color = getCurrentTheme().onPrimary,
                 )
                 TextButton(
                     onClick = { pitsPersonDD = true },
@@ -76,14 +81,14 @@ actual class PitsScoutMenu actual constructor(
                     Text(
                         text = pitsPerson.value,
                         fontSize = 40.sp,
-                        color = defaultOnPrimary,
+                        color = getCurrentTheme().onPrimary,
                     )
                 }
                 Box(modifier = Modifier.align(Alignment.CenterEnd).padding(15.dp).offset(0.dp,15.dp)) {
                     DropdownMenu(
                         expanded = pitsPersonDD,
                         onDismissRequest = { pitsPersonDD = false },
-                        modifier = Modifier.background(color = Color(15, 15, 15)).clip(RoundedCornerShape(7.5.dp))
+                        modifier = Modifier.background(color = getCurrentTheme().onSurface).clip(RoundedCornerShape(7.5.dp))
 
                     ) {
                         for(x in 1..numOfPitsPeople){
@@ -93,22 +98,23 @@ actual class PitsScoutMenu actual constructor(
                                     pitsPerson.value = "P$x"
                                 }
                             ) {
-                                Text("P$x")
+                                Text("P$x", color = getCurrentTheme().onPrimary)
                             }
                         }
                     }
                 }
             }
-            Row{
+            Row(modifier = Modifier.scale(0.75f)){
                 Text(
                     text="Team Name: ",
                     fontSize = 20.sp,
+                    color = getCurrentTheme().onPrimary
                 )
                 OutlinedTextField(
                     value = scoutedTeamName,
                     onValueChange ={ scoutedTeamName = it},
                     textStyle = TextStyle.Default.copy(fontSize = 20.sp),
-                    colors = TextFieldDefaults.outlinedTextFieldColors(backgroundColor = Color(6,9,13), focusedBorderColor = Color.Yellow, textColor = defaultOnPrimary),
+                    colors = TextFieldDefaults.outlinedTextFieldColors(backgroundColor = getCurrentTheme().onError, focusedBorderColor = getCurrentTheme().secondary, textColor = getCurrentTheme().onPrimary),
                     shape = RoundedCornerShape(15.dp),
                     modifier = Modifier.size(85.dp,60.dp)
                 )
@@ -120,36 +126,59 @@ actual class PitsScoutMenu actual constructor(
                     value = scoutedTeamNumber,
                     onValueChange ={ scoutedTeamNumber = it},
                     textStyle = TextStyle.Default.copy(fontSize = 20.sp),
-                    colors = TextFieldDefaults.outlinedTextFieldColors(backgroundColor = Color(6,9,13), focusedBorderColor = Color.Yellow, textColor = defaultOnPrimary),
+                    colors = TextFieldDefaults.outlinedTextFieldColors(backgroundColor = getCurrentTheme().onError, focusedBorderColor = getCurrentTheme().secondary, textColor = getCurrentTheme().onPrimary),
                     shape = RoundedCornerShape(15.dp),
                     modifier = Modifier.size(85.dp,60.dp)
                 )
             }
             Spacer(modifier = Modifier.height(7.5.dp))
-            Divider(color = Color.Yellow, thickness = 2.dp, modifier = Modifier.clip(CircleShape))
+            Divider(color = getCurrentTheme().onSecondary, thickness = 2.dp, modifier = Modifier.clip(CircleShape))
             Spacer(modifier = Modifier.height(7.5.dp))
             Row {
                 Text(
-                    text="Dimensions"
+                    text = "Dimensions"
                 )
                 OutlinedTextField(
-                    value = robotLength + "in",
-                    onValueChange ={ text -> robotLength = text.filter { it.isDigit()}},
-                    colors = TextFieldDefaults.outlinedTextFieldColors(backgroundColor = Color(6,9,13), focusedBorderColor = Color.Yellow, textColor = defaultOnPrimary),
+                    value = robotLength,
+                    onValueChange = { text -> robotLength = text.filter { it.isDigit() }; val oldText = robotLength; if (robotLength.length > 8) robotLength = oldText},
+                    colors = TextFieldDefaults.outlinedTextFieldColors(
+                        backgroundColor = Color(6, 9, 13),
+                        focusedBorderColor = Color.Yellow,
+                        textColor = defaultOnPrimary
+                    ),
                     shape = RoundedCornerShape(15.dp),
-                    modifier = Modifier.size(80.dp,60.dp).border(BorderStroke(width = 1.dp, color = Color.Yellow),RoundedCornerShape(15.dp))
+                    modifier = Modifier.size(80.dp, 60.dp)
+                        .border(BorderStroke(width = 1.dp, color = Color.Yellow), RoundedCornerShape(15.dp))
                 )
                 Text(
-                    text=" by "
+                    text = "inches by ",
+                    color = Color.Gray
                 )
                 OutlinedTextField(
-                    value = robotWidth + "in",
-                    onValueChange ={ text -> robotWidth = text.filter { it.isDigit()}},
-                    colors = TextFieldDefaults.outlinedTextFieldColors(backgroundColor = Color(6,9,13), focusedBorderColor = Color.Yellow, textColor = defaultOnPrimary),
+                    value = robotWidth,
+                    onValueChange = { text -> robotWidth = text.filter { it.isDigit() }; val oldText = robotWidth; if (robotWidth.length > 8) robotWidth = oldText},
+                    colors = TextFieldDefaults.outlinedTextFieldColors(
+                        backgroundColor = Color(6, 9, 13),
+                        focusedBorderColor = Color.Yellow,
+                        textColor = defaultOnPrimary
+                    ),
                     shape = RoundedCornerShape(15.dp),
-                    modifier = Modifier.size(80.dp,60.dp).border(BorderStroke(width = 1.dp, color = Color.Yellow),RoundedCornerShape(15.dp))
+                    modifier = Modifier.size(80.dp, 60.dp)
+                        .border(BorderStroke(width = 1.dp, color = Color.Yellow), RoundedCornerShape(15.dp))
                 )
-            }
+                Text(
+                    text = "inches",
+                    color = Color.Gray
+                )
+                }
+                Image(
+                    org.jetbrains.compose.resources.painterResource(res = perimeterChecked),
+                    contentDescription = "dimensions checked",
+                    modifier = Modifier
+                        .size(30.dp)
+                        .offset(x = (98.5).dp),
+                )
+
             Row {
                 Text(
                     text = "type"
@@ -268,7 +297,7 @@ actual class PitsScoutMenu actual constructor(
                 text = "Strengths:",
                 fontSize = 30.sp
             )
-            Divider(color = defaultPrimaryVariant, thickness = 2.dp, modifier = Modifier.clip(CircleShape))
+            Divider(color = getCurrentTheme().primaryVariant, thickness = 2.dp, modifier = Modifier.clip(CircleShape))
 
             CheckBox("Amp:", ampStrength, modifier = Modifier.scale(1.25f))
             CheckBox("Speaker:", speakerStrength, modifier = Modifier.scale(1.25f))
