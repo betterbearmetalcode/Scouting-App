@@ -15,7 +15,8 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun CheckBox(
     label: String,
-    ifChecked: MutableState<Boolean>
+    ifChecked: MutableState<Boolean>,
+    modifier: Modifier
 ){
     Row {
         Text(

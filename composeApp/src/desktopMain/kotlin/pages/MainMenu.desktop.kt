@@ -27,8 +27,10 @@ import teamData
 
 actual class MainMenu actual constructor(
     buildContext: BuildContext,
-    private val backStack: BackStack<RootNode.NavTarget>,
-    private val robotStartPosition: MutableIntState
+    private backStack: BackStack<RootNode.NavTarget>,
+    private robotStartPosition: MutableIntState,
+    scoutName: MutableState<String>,
+    comp: MutableState<String>
 ) : Node(buildContext = buildContext) {
 
     @OptIn(ExperimentalResourceApi::class)

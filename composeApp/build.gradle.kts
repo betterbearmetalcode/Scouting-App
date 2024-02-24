@@ -116,7 +116,7 @@ compose.desktop {
         mainClass = "MainKt"
 
         nativeDistributions {
-            appResourcesRootDir = (rootDir.toPath() / "desktopMain").toFile()
+            //appResourcesRootDir = (rootDir.toPath() / "desktopMain").toFile()
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
             packageName = "org.example.project"
             packageVersion = "1.0.0"
