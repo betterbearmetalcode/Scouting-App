@@ -52,8 +52,8 @@ actual class PitsScoutMenu actual constructor(
         val numOfPitsPeople by remember { mutableStateOf(6) }
         var scoutedTeamName by remember { mutableStateOf("") }
         var scoutedTeamNumber by remember { mutableStateOf("") }
-        var robotLength by remember{mutableStateOf("0")}
-        var robotWidth by remember{ mutableStateOf("0")}
+        var robotLength by remember{mutableStateOf("")}
+        var robotWidth by remember{ mutableStateOf("")}
         var robotTypeDropDown by remember { mutableStateOf(false) }
         var robotType by remember { mutableStateOf("NoneSelected") }
         var collectPrefDD by remember{ mutableStateOf(false)}
@@ -64,8 +64,7 @@ actual class PitsScoutMenu actual constructor(
         val scrollState = rememberScrollState(0)
         val isScrollEnabled by remember{ mutableStateOf(true)}
         var robotCard by remember {mutableStateOf(false)}
-        var photoAlert by remember { mutableStateOf(false) }
-        val perimeterChecked by remember { mutableStateOf(if (2 * (parseInt(robotLength) + parseInt(robotWidth)) > 120 && robotLength!="" && robotWidth!="") "crossmark.png" else "checkmark.png") }
+        var photoAlert by remember { mutableStateOf(false)}
 
         Column(modifier = Modifier.verticalScroll(state = scrollState, enabled = isScrollEnabled).padding(5.dp)) {
             Box( modifier = Modifier.offset(20.dp, 15.dp).fillMaxWidth()) {
@@ -171,17 +170,27 @@ actual class PitsScoutMenu actual constructor(
                     color = Color.Gray
                 )
                 }
+            if (robotLength!="" && robotWidth!="" && parseInt(robotLength) + parseInt(robotWidth) <= 60) {
                 Image(
-                    org.jetbrains.compose.resources.painterResource(res = perimeterChecked),
+                    painter = org.jetbrains.compose.resources.painterResource("checkmark.png"),
                     contentDescription = "dimensions checked",
                     modifier = Modifier
                         .size(30.dp)
                         .offset(x = (98.5).dp),
                 )
+            }else{
+                Image(
+                    painter = org.jetbrains.compose.resources.painterResource("crossmark.png"),
+                    contentDescription = "dimensions checked",
+                    modifier = Modifier
+                        .size(30.dp)
+                        .offset(x = (98.5).dp),
+                )
+            }
 
             Row {
                 Text(
-                    text = "type"
+                    text = "Type"
                 )
                 OutlinedButton(
                     onClick = {

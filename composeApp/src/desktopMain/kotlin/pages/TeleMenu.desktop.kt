@@ -62,9 +62,6 @@ actual class TeleMenu actual constructor(
             EnumerableValue(label = "S Missed", value = teleSMissed)
             EnumerableValue(label = "A Missed", value = teleAMissed)
 
-
-            Divider(color = Color.Black, thickness = 4.dp)
-
             Notes(teleNotes, isScrollEnabled)
 
             OutlinedButton(

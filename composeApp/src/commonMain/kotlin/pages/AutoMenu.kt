@@ -14,12 +14,10 @@ expect class AutoMenu (
     buildContext: BuildContext,
     backStack: BackStack<AutoTeleSelectorNode.NavTarget>,
     mainMenuBackStack: BackStack<RootNode.NavTarget>,
-
     selectAuto: MutableState<Boolean>,
-
     match: MutableState<String>,
     team: MutableIntState,
-    robotStartPosition: MutableIntState,
+    robotStartPosition: MutableIntState
 ) : Node {
     @Composable
     override fun View(modifier: Modifier)
