@@ -3,6 +3,7 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import com.google.gson.Gson
 import nodes.matchScoutArray
+import org.json.JSONArray
 import org.json.JSONObject
 import java.io.File
 import java.io.FileInputStream
@@ -37,8 +38,11 @@ fun exportScoutData(context: Context) {
     val file = File(context.filesDir, "match_scouting_data.json")
     file.delete()
     file.createNewFile()
-    val gson = Gson()
+    val jsonArray = JSONArray()
+    matchScoutArray.values.forEach {
+        jsonArray.put(it)
+    }
     val writer = FileWriter(file)
-    writer.write(gson.toJson(matchScoutArray))
+    writer.write(jsonArray.toString(1))
     writer.close()
 }
