@@ -17,8 +17,10 @@ import com.bumble.appyx.components.backstack.operation.push
 import com.bumble.appyx.navigation.modality.BuildContext
 import com.bumble.appyx.navigation.node.Node
 import composables.InternetErrorAlert
+import defaultOnPrimary
+import defaultOnSurface
 import defaultSecondary
-import getCurrentTheme
+//import getCurrentTheme
 import getLastSynced
 import matchData
 import org.jetbrains.compose.resources.ExperimentalResourceApi
@@ -50,7 +52,7 @@ actual class MainMenu actual constructor(
         Column (modifier = Modifier.verticalScroll(ScrollState(0))) {
             Box(modifier = Modifier.fillMaxWidth()) {
                 OutlinedButton(onClick = {backStack.push(RootNode.NavTarget.LoginPage)},modifier = Modifier.scale(0.75f).align(Alignment.CenterStart)) {
-                    Text(text = "Login", color = getCurrentTheme().onPrimary)
+                    Text(text = "Login", color = defaultOnPrimary)
                 }
 
                 Text(
@@ -58,11 +60,11 @@ actual class MainMenu actual constructor(
                     fontSize = 25.sp,
                     modifier = Modifier.align(Alignment.Center)
                 )
-                OutlinedButton(onClick = {backStack.push(RootNode.NavTarget.LoginPage)},modifier = Modifier.scale(0.75f).align(Alignment.CenterEnd)) {
-                    Text(text = "Settings", color = getCurrentTheme().onPrimary)
+                OutlinedButton(onClick = {backStack.push(RootNode.NavTarget.SettingsPage)},modifier = Modifier.scale(0.75f).align(Alignment.CenterEnd)) {
+                    Text(text = "Settings", color = defaultOnPrimary)
                 }
             }
-            Divider(color = getCurrentTheme().onSurface, thickness = 2.dp)
+            Divider(color = defaultOnSurface, thickness = 2.dp)
             OutlinedButton(
                 border = BorderStroke(3.dp, Color.Yellow),
                 shape = RoundedCornerShape(25.dp),
@@ -79,7 +81,7 @@ actual class MainMenu actual constructor(
             ) {
                 Text(
                     text = "Match",
-                    color = getCurrentTheme().onPrimary,
+                    color = defaultOnPrimary,
                     fontSize = 35.sp
                 )
             }
@@ -153,7 +155,7 @@ actual class MainMenu actual constructor(
                 ) {
                 Text(
                     text = "Pits",
-                    color = getCurrentTheme().onPrimary,
+                    color = defaultOnPrimary,
                     fontSize = 35.sp
                 )
             }
@@ -173,7 +175,7 @@ actual class MainMenu actual constructor(
                 Column {
                     Text(
                         text = "Sync",
-                        color = getCurrentTheme().onPrimary,
+                        color = defaultOnPrimary,
                         fontSize = 35.sp,
                         modifier = Modifier.align(Alignment.CenterHorizontally)
                     )

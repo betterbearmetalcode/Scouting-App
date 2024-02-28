@@ -103,6 +103,9 @@ android {
         debugImplementation(libs.compose.ui.tooling)
     }
 }
+dependencies {
+    implementation(libs.generativeai)
+}
 
 //dependencies {
 //    implementation(libs.androidx.material3.desktop)

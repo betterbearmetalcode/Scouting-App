@@ -28,9 +28,12 @@ import com.github.sarxos.webcam.Webcam
 import composables.CheckBox
 import composables.Profile
 import defaultError
+import defaultOnError
 import defaultOnPrimary
+import defaultOnSecondary
+import defaultOnSurface
 import defaultPrimaryVariant
-import getCurrentTheme
+import defaultSecondary
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import java.lang.Integer.parseInt
 
@@ -72,7 +75,7 @@ actual class PitsScoutMenu actual constructor(
                 Text(
                     text = "Pits",
                     fontSize = 50.sp,
-                    color = getCurrentTheme().onPrimary,
+                    color = defaultOnPrimary,
                 )
                 TextButton(
                     onClick = { pitsPersonDD = true },
@@ -81,14 +84,14 @@ actual class PitsScoutMenu actual constructor(
                     Text(
                         text = pitsPerson.value,
                         fontSize = 40.sp,
-                        color = getCurrentTheme().onPrimary,
+                        color = defaultOnPrimary,
                     )
                 }
                 Box(modifier = Modifier.align(Alignment.CenterEnd).padding(15.dp).offset(0.dp,15.dp)) {
                     DropdownMenu(
                         expanded = pitsPersonDD,
                         onDismissRequest = { pitsPersonDD = false },
-                        modifier = Modifier.background(color = getCurrentTheme().onSurface).clip(RoundedCornerShape(7.5.dp))
+                        modifier = Modifier.background(color = defaultOnSurface).clip(RoundedCornerShape(7.5.dp))
 
                     ) {
                         for(x in 1..numOfPitsPeople){
@@ -98,7 +101,7 @@ actual class PitsScoutMenu actual constructor(
                                     pitsPerson.value = "P$x"
                                 }
                             ) {
-                                Text("P$x", color = getCurrentTheme().onPrimary)
+                                Text("P$x", color = defaultOnPrimary)
                             }
                         }
                     }
@@ -108,13 +111,13 @@ actual class PitsScoutMenu actual constructor(
                 Text(
                     text="Team Name: ",
                     fontSize = 20.sp,
-                    color = getCurrentTheme().onPrimary
+                    color = defaultOnPrimary
                 )
                 OutlinedTextField(
                     value = scoutedTeamName,
                     onValueChange ={ scoutedTeamName = it},
                     textStyle = TextStyle.Default.copy(fontSize = 20.sp),
-                    colors = TextFieldDefaults.outlinedTextFieldColors(backgroundColor = getCurrentTheme().onError, focusedBorderColor = getCurrentTheme().secondary, textColor = getCurrentTheme().onPrimary),
+                    colors = TextFieldDefaults.outlinedTextFieldColors(backgroundColor = defaultOnError, focusedBorderColor = defaultSecondary, textColor = defaultOnPrimary),
                     shape = RoundedCornerShape(15.dp),
                     modifier = Modifier.size(85.dp,60.dp)
                 )
@@ -126,13 +129,13 @@ actual class PitsScoutMenu actual constructor(
                     value = scoutedTeamNumber,
                     onValueChange ={ scoutedTeamNumber = it},
                     textStyle = TextStyle.Default.copy(fontSize = 20.sp),
-                    colors = TextFieldDefaults.outlinedTextFieldColors(backgroundColor = getCurrentTheme().onError, focusedBorderColor = getCurrentTheme().secondary, textColor = getCurrentTheme().onPrimary),
+                    colors = TextFieldDefaults.outlinedTextFieldColors(backgroundColor = defaultOnError, focusedBorderColor = defaultSecondary, textColor = defaultOnPrimary),
                     shape = RoundedCornerShape(15.dp),
                     modifier = Modifier.size(85.dp,60.dp)
                 )
             }
             Spacer(modifier = Modifier.height(7.5.dp))
-            Divider(color = getCurrentTheme().onSecondary, thickness = 2.dp, modifier = Modifier.clip(CircleShape))
+            Divider(color = defaultOnSecondary, thickness = 2.dp, modifier = Modifier.clip(CircleShape))
             Spacer(modifier = Modifier.height(7.5.dp))
             Row {
                 Text(
@@ -297,7 +300,8 @@ actual class PitsScoutMenu actual constructor(
                 text = "Strengths:",
                 fontSize = 30.sp
             )
-            Divider(color = getCurrentTheme().primaryVariant, thickness = 2.dp, modifier = Modifier.clip(CircleShape))
+            
+            Divider(color = defaultPrimaryVariant, thickness = 2.dp, modifier = Modifier.clip(CircleShape))
 
             CheckBox("Amp:", ampStrength, modifier = Modifier.scale(1.25f))
             CheckBox("Speaker:", speakerStrength, modifier = Modifier.scale(1.25f))

@@ -51,6 +51,9 @@ class RootNode(
 
         @Parcelize
         data object LoginPage : NavTarget()
+
+        @Parcelize
+        data object SettingsPage : NavTarget()
     }
 
     override fun resolve(interactionTarget: NavTarget, buildContext: BuildContext): Node =
@@ -59,6 +62,7 @@ class RootNode(
             NavTarget.MainMenu -> MainMenu(buildContext, backStack, robotStartPosition,scoutName,comp)
             NavTarget.MatchScouting -> AutoTeleSelectorNode(buildContext,robotStartPosition, team, backStack)
             NavTarget.PitsScouting -> PitsScoutMenu(buildContext,backStack,pitsPerson,ampStrength,speakerStrength,trapStrength,climbStrength,scoutName)
+            NavTarget.SettingsPage -> SettingsMenu(buildContext,backStack)
         }
 
     @Composable

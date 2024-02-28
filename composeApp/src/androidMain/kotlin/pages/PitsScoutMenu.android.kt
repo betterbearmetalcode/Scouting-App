@@ -21,6 +21,7 @@ import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -35,6 +36,7 @@ import composables.CheckBox
 import composables.Profile
 import defaultOnPrimary
 import defaultPrimaryVariant
+import generateBitmap
 import org.example.project.ComposeFileProvider
 import java.io.File
 
@@ -391,7 +393,6 @@ actual class PitsScoutMenu actual constructor(
             Row{
                 OutlinedButton(onClick = { if (photoArray.size >= 1) { robotCard = true }}) { Text(text = "Submit", color = defaultOnPrimary) }
                 OutlinedButton(onClick = { robotCard = false }) { Text(text = "Close", color = defaultOnPrimary) }
-                OutlinedButton(onClick = {}) { Text(text = "Download", color = defaultOnPrimary) }
                 OutlinedButton(onClick = { backStack.push(RootNode.NavTarget.MainMenu) }) { Text(text = "Back", color = defaultOnPrimary)
                 }
             }

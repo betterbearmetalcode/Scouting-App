@@ -39,7 +39,7 @@ fun main() = application {
         },
     ) {
         MaterialTheme(
-            colors = getCurrentTheme(),
+            colors = currentColors,
             typography = Typography(
                 defaultFontFamily = FontFamily(
                     Font("font/Xolonium-Regular.otf")

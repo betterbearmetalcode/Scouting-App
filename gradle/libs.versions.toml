@@ -37,6 +37,7 @@ volley = "1.2.1"
 databindingCompiler = "8.2.2"
 #material3Android = "1.2.0"
 uiUnitAndroid = "1.6.1"
+generativeai = "0.2.0"
 
 [libraries]
 androidx-compiler = { module = "androidx.compose.compiler:compiler", version.ref = "compiler" }
@@ -77,6 +78,7 @@ core = { group = "com.google.ar", name = "core", version.ref = "core" }
 filament-android = { group = "com.google.ar.sceneform", name = "filament-android", version.ref = "filamentAndroid" }
 androidx-cardview = { group = "androidx.cardview", name = "cardview", version.ref = "cardview" }
 volley = { group = "com.android.volley", name = "volley", version.ref = "volley" }
+generativeai = { group = "com.google.ai.client.generativeai", name = "generativeai", version.ref = "generativeai" }
 
 [plugins]
 jetbrainsCompose = { id = "org.jetbrains.compose", version.ref = "compose-plugin" }
