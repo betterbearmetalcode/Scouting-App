@@ -25,9 +25,13 @@ import defaultOnSecondary
 import defaultOnSurface
 import defaultSecondary
 import getLastSynced
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import matchData
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
+import sendData
 import sync
 import teamData
 
@@ -56,7 +60,9 @@ actual class MainMenu actual constructor(
         }
         Column (modifier = Modifier.verticalScroll(ScrollState(0))) {
             Box(modifier = Modifier.fillMaxWidth()) {
-                OutlinedButton(onClick = {backStack.push(RootNode.NavTarget.LoginPage)},modifier = Modifier.scale(0.75f).align(Alignment.CenterStart)) {
+                OutlinedButton(onClick = {backStack.push(RootNode.NavTarget.LoginPage)},modifier = Modifier
+                    .scale(0.75f)
+                    .align(Alignment.CenterStart)) {
                     Text(text = "Login", color = defaultOnPrimary)
                 }
 
@@ -65,12 +71,14 @@ actual class MainMenu actual constructor(
                     fontSize = 25.sp,
                     modifier = Modifier.align(Alignment.Center)
                 )
-                OutlinedButton(onClick = {backStack.push(RootNode.NavTarget.LoginPage)},modifier = Modifier.scale(0.75f).align(Alignment.CenterEnd)) {
+                OutlinedButton(onClick = {backStack.push(RootNode.NavTarget.LoginPage)},modifier = Modifier
+                    .scale(0.75f)
+                    .align(Alignment.CenterEnd)) {
                     Text(text = "Settings", color = defaultOnPrimary)
                 }
             }
-            HorizontalDivider(color = defaultOnSurface, thickness = 2.dp)
-            Text(text="Hello ${scoutName.value}",color = defaultOnPrimary,modifier = Modifier.align(Alignment.CenterHorizontally))
+            HorizontalDivider(color = getCurrentTheme().onSurface, thickness = 2.dp)
+            Text(text="Hello ${scoutName.value}",color = getCurrentTheme().onPrimary,modifier = Modifier.align(Alignment.CenterHorizontally))
             OutlinedButton(
                 border = BorderStroke(3.dp, Color.Yellow),
                 shape = RoundedCornerShape(25.dp),
@@ -248,9 +256,26 @@ actual class MainMenu actual constructor(
                     }
                 }
             }
+
+            OutlinedButton(
+                border = BorderStroke(3.dp, Color.Yellow),
+                shape = RoundedCornerShape(25.dp),
+                contentPadding = PaddingValues(horizontal = 10.dp, vertical = 15.dp),
+                colors = ButtonDefaults.buttonColors(containerColor = defaultSecondary),
+                onClick = {
+                    CoroutineScope(Dispatchers.Default).launch {
+                        sendData(context)
+                    }
+                }
+            ) {
+                Text("Export")
+            }
+
             Box(modifier = Modifier.fillMaxSize()){
             Text(text="Competition ${comp.value}",color = defaultOnSecondary,modifier = Modifier.align(Alignment.BottomCenter))
             }
+
+
         }
     }
 }
