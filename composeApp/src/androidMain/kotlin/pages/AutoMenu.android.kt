@@ -18,8 +18,6 @@ import androidx.compose.ui.unit.sp
 import com.bumble.appyx.components.backstack.BackStack
 import com.bumble.appyx.components.backstack.operation.pop
 import com.bumble.appyx.components.backstack.operation.push
-import com.bumble.appyx.navigation.modality.BuildContext
-import com.bumble.appyx.navigation.node.Node
 import composables.EnumerableValue
 import defaultSecondary
 import exportScoutData
@@ -27,154 +25,151 @@ import keyboardAsState
 import nodes.matchScoutArray
 import nodes.*
 
-actual class AutoMenu actual constructor(
-    buildContext: BuildContext,
-    private val backStack: BackStack<AutoTeleSelectorNode.NavTarget>,
-    private val mainMenuBackStack: BackStack<RootNode.NavTarget>,
+@Composable
+actual fun AutoMenu (
+    backStack: BackStack<AutoTeleSelectorNode.NavTarget>,
+    mainMenuBackStack: BackStack<RootNode.NavTarget>,
 
-    private val selectAuto: MutableState<Boolean>,
+    selectAuto: MutableState<Boolean>,
 
-    private val match: MutableState<String>,
-    private val team: MutableIntState,
-    private val robotStartPosition: MutableIntState,
-) : Node(buildContext) {
-    @Composable
-    actual override fun View(modifier: Modifier) {
-        val context = LocalContext.current
-        fun bob() {
-            mainMenuBackStack.pop()
-            matchScoutArray[Integer.parseInt(match.value)] = createOutput(team, robotStartPosition)
-            exportScoutData(context)
+    match: MutableState<String>,
+    team: MutableIntState,
+    robotStartPosition: MutableIntState,
+) {
+    val context = LocalContext.current
+    fun bob() {
+        mainMenuBackStack.pop()
+        matchScoutArray[Integer.parseInt(match.value)] = createOutput(team, robotStartPosition)
+        exportScoutData(context)
+    }
+    val scrollState = rememberScrollState(0)
+    val isScrollEnabled = remember{ mutableStateOf(true) }
+    val isKeyboardOpen by keyboardAsState()
+
+    if(!isKeyboardOpen){
+        isScrollEnabled.value = true
+    }
+
+    Column(
+        Modifier
+            .verticalScroll(state = scrollState, enabled = isScrollEnabled.value)
+            .padding(20.dp)
+    ) {
+
+
+        EnumerableValue(label = "Speaker", value = autoSpeakerNum)
+        EnumerableValue(label = "Amp", value = autoAmpNum)
+
+
+        Spacer(modifier = Modifier.height(10.dp))
+        Column (Modifier.align(Alignment.CenterHorizontally)) {
+            val color = CheckboxDefaults.colors(
+                checkedColor = Color.Cyan,
+            )
+            Row {
+                Text(
+                    "Auto Collect",
+                    Modifier.align(Alignment.CenterVertically),
+                    fontSize = 20.sp
+                )
+                Spacer(Modifier.width(10.dp))
+                Text(1.toString(), Modifier.align(Alignment.CenterVertically))
+                Checkbox(
+                    when(f1.intValue) {0 -> false; 1 -> true; else -> false},
+                    colors = color,
+                    onCheckedChange = { when(it) {true -> f1.intValue = 1; false -> f1.intValue = 0}}
+                )
+                Text(2.toString(), Modifier.align(Alignment.CenterVertically))
+                Checkbox(
+                    when(f2.intValue) {0 -> false; 1 -> true; else -> false},
+                    colors = color,
+                    onCheckedChange = { when(it) {true -> f2.intValue = 1; false -> f2.intValue = 0}}
+                )
+                Text(3.toString(), Modifier.align(Alignment.CenterVertically))
+                Checkbox(
+                    when(f3.intValue) {0 -> false; 1 -> true; else -> false},
+                    colors = color,
+                    onCheckedChange = { when(it) {true -> f3.intValue = 1; false -> f3.intValue = 0}}
+                )
+            }
+            Row {
+                Spacer(Modifier.width(10.dp))
+                Text(1.toString(), Modifier.align(Alignment.CenterVertically))
+                Checkbox(
+                    when(m1.intValue) {0 -> false; 1 -> true; else -> false},
+                    colors = color,
+                    onCheckedChange = { when(it) {true -> m1.intValue = 1; false -> m1.intValue = 0}}
+                )
+                Text(2.toString(), Modifier.align(Alignment.CenterVertically))
+                Checkbox(
+                    when(m2.intValue) {0 -> false; 1 -> true; else -> false},
+                    colors = color,
+                    onCheckedChange = { when(it) {true -> m2.intValue = 1; false -> m2.intValue = 0}}
+                )
+                Text(3.toString(), Modifier.align(Alignment.CenterVertically))
+                Checkbox(
+                    when(m3.intValue) {0 -> false; 1 -> true; else -> false},
+                    colors = color,
+                    onCheckedChange = { when(it) {true -> m3.intValue = 1; false -> m3.intValue = 0}}
+                )
+                Text(4.toString(), Modifier.align(Alignment.CenterVertically))
+                Checkbox(
+                    when(m4.intValue) {0 -> false; 1 -> true; else -> false},
+                    colors = color,
+                    onCheckedChange = { when(it) {true -> m4.intValue = 1; false -> m4.intValue = 0}}
+                )
+                Text(5.toString(), Modifier.align(Alignment.CenterVertically))
+                Checkbox(
+                    when(m5.intValue) {0 -> false; 1 -> true; else -> false},
+                    colors = color,
+                    onCheckedChange = { when(it) {true -> m5.intValue = 1; false -> m5.intValue = 0}}
+                )
+
+
+            }
         }
-        var dummyBool by remember{mutableStateOf(false)}
-        val scrollState = rememberScrollState(0)
-        val isScrollEnabled = remember{ mutableStateOf(true) }
-        val isKeyboardOpen by keyboardAsState()
 
-        if(!isKeyboardOpen){
-            isScrollEnabled.value = true
-        }
+        EnumerableValue(label = "S Missed", value = autoSMissed)
+        EnumerableValue(label = "A Missed", value = autoAMissed)
 
-        Column(
-            modifier
-                .verticalScroll(state = scrollState, enabled = isScrollEnabled.value)
-                .padding(20.dp)
+        Notes(autoNotes, isScrollEnabled)
+
+        Spacer(Modifier.height(5.dp))
+
+        OutlinedButton(
+            border = BorderStroke(2.dp, color = Color.Yellow),
+            shape = CircleShape,
+            colors = ButtonDefaults.buttonColors(containerColor = defaultSecondary),
+            onClick = {
+                backStack.push(AutoTeleSelectorNode.NavTarget.TeleScouting)
+                selectAuto.value = true
+            },
+            modifier = Modifier.align(Alignment.CenterHorizontally)
         ) {
+            Text(
+                text = "Tele",
+                color = Color.Yellow,
+                fontSize = 35.sp
+            )
+        }
 
+        Spacer(Modifier.height(25.dp))
 
-            EnumerableValue(label = "Speaker", value = autoSpeakerNum)
-            EnumerableValue(label = "Amp", value = autoAmpNum)
-
-
-            Spacer(modifier = Modifier.height(10.dp))
-            Column (Modifier.align(Alignment.CenterHorizontally)) {
-                val color = CheckboxDefaults.colors(
-                    checkedColor = Color.Cyan,
-                )
-                Row {
-                    Text(
-                        "Auto Collect",
-                        Modifier.align(Alignment.CenterVertically),
-                        fontSize = 20.sp
-                    )
-                    Spacer(Modifier.width(10.dp))
-                    Text(1.toString(), Modifier.align(Alignment.CenterVertically))
-                    Checkbox(
-                        when(f1.intValue) {0 -> false; 1 -> true; else -> false},
-                        colors = color,
-                        onCheckedChange = { when(it) {true -> f1.intValue = 1; false -> f1.intValue = 0}}
-                    )
-                    Text(2.toString(), Modifier.align(Alignment.CenterVertically))
-                    Checkbox(
-                        when(f2.intValue) {0 -> false; 1 -> true; else -> false},
-                        colors = color,
-                        onCheckedChange = { when(it) {true -> f2.intValue = 1; false -> f2.intValue = 0}}
-                    )
-                    Text(3.toString(), Modifier.align(Alignment.CenterVertically))
-                    Checkbox(
-                        when(f3.intValue) {0 -> false; 1 -> true; else -> false},
-                        colors = color,
-                        onCheckedChange = { when(it) {true -> f3.intValue = 1; false -> f3.intValue = 0}}
-                    )
-                }
-                Row {
-                    Spacer(Modifier.width(10.dp))
-                    Text(1.toString(), Modifier.align(Alignment.CenterVertically))
-                    Checkbox(
-                        when(m1.intValue) {0 -> false; 1 -> true; else -> false},
-                        colors = color,
-                        onCheckedChange = { when(it) {true -> m1.intValue = 1; false -> m1.intValue = 0}}
-                    )
-                    Text(2.toString(), Modifier.align(Alignment.CenterVertically))
-                    Checkbox(
-                        when(m2.intValue) {0 -> false; 1 -> true; else -> false},
-                        colors = color,
-                        onCheckedChange = { when(it) {true -> m2.intValue = 1; false -> m2.intValue = 0}}
-                    )
-                    Text(3.toString(), Modifier.align(Alignment.CenterVertically))
-                    Checkbox(
-                        when(m3.intValue) {0 -> false; 1 -> true; else -> false},
-                        colors = color,
-                        onCheckedChange = { when(it) {true -> m3.intValue = 1; false -> m3.intValue = 0}}
-                    )
-                    Text(4.toString(), Modifier.align(Alignment.CenterVertically))
-                    Checkbox(
-                        when(m4.intValue) {0 -> false; 1 -> true; else -> false},
-                        colors = color,
-                        onCheckedChange = { when(it) {true -> m4.intValue = 1; false -> m4.intValue = 0}}
-                    )
-                    Text(5.toString(), Modifier.align(Alignment.CenterVertically))
-                    Checkbox(
-                        when(m5.intValue) {0 -> false; 1 -> true; else -> false},
-                        colors = color,
-                        onCheckedChange = { when(it) {true -> m5.intValue = 1; false -> m5.intValue = 0}}
-                    )
-
-
-                }
-            }
-
-            EnumerableValue(label = "S Missed", value = autoSMissed)
-            EnumerableValue(label = "A Missed", value = autoAMissed)
-
-            Notes(autoNotes, isScrollEnabled)
-
-            Spacer(Modifier.height(5.dp))
-
-            OutlinedButton(
-                border = BorderStroke(2.dp, color = Color.Yellow),
-                shape = CircleShape,
-                colors = ButtonDefaults.buttonColors(containerColor = defaultSecondary),
-                onClick = {
-                    backStack.push(AutoTeleSelectorNode.NavTarget.TeleScouting)
-                    selectAuto.value = true
-                },
-                modifier = Modifier.align(Alignment.CenterHorizontally)
-            ) {
-                Text(
-                    text = "Tele",
-                    color = Color.Yellow,
-                    fontSize = 35.sp
-                )
-            }
-
-            Spacer(Modifier.height(25.dp))
-
-            OutlinedButton(
-                border = BorderStroke(2.dp, color = Color.Yellow),
-                shape = CircleShape,
-                colors = ButtonDefaults.buttonColors(containerColor = defaultSecondary),
-                onClick = {
-                    exportScoutData(context)
-                    bob()
-                },
-                modifier = Modifier.align(Alignment.CenterHorizontally)
-            ) {
-                Text(
-                    text = "Back",
-                    color = Color.Yellow
-                )
-            }
+        OutlinedButton(
+            border = BorderStroke(2.dp, color = Color.Yellow),
+            shape = CircleShape,
+            colors = ButtonDefaults.buttonColors(containerColor = defaultSecondary),
+            onClick = {
+                exportScoutData(context)
+                bob()
+            },
+            modifier = Modifier.align(Alignment.CenterHorizontally)
+        ) {
+            Text(
+                text = "Back",
+                color = Color.Yellow
+            )
         }
     }
 }
+
