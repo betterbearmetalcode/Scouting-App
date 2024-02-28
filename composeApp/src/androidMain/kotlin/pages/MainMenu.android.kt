@@ -24,9 +24,13 @@ import defaultOnPrimary
 import defaultSecondary
 import getCurrentTheme
 import getLastSynced
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import matchData
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
+import sendData
 import sync
 import teamData
 
@@ -55,7 +59,9 @@ actual class MainMenu actual constructor(
         }
         Column (modifier = Modifier.verticalScroll(ScrollState(0))) {
             Box(modifier = Modifier.fillMaxWidth()) {
-                OutlinedButton(onClick = {backStack.push(RootNode.NavTarget.LoginPage)},modifier = Modifier.scale(0.75f).align(Alignment.CenterStart)) {
+                OutlinedButton(onClick = {backStack.push(RootNode.NavTarget.LoginPage)},modifier = Modifier
+                    .scale(0.75f)
+                    .align(Alignment.CenterStart)) {
                     Text(text = "Login", color = getCurrentTheme().onPrimary)
                 }
 
@@ -64,7 +70,9 @@ actual class MainMenu actual constructor(
                     fontSize = 25.sp,
                     modifier = Modifier.align(Alignment.Center)
                 )
-                OutlinedButton(onClick = {backStack.push(RootNode.NavTarget.LoginPage)},modifier = Modifier.scale(0.75f).align(Alignment.CenterEnd)) {
+                OutlinedButton(onClick = {backStack.push(RootNode.NavTarget.LoginPage)},modifier = Modifier
+                    .scale(0.75f)
+                    .align(Alignment.CenterEnd)) {
                     Text(text = "Settings", color = getCurrentTheme().onPrimary)
                 }
             }
@@ -247,9 +255,26 @@ actual class MainMenu actual constructor(
                     }
                 }
             }
+
+//            OutlinedButton(
+//                border = BorderStroke(3.dp, Color.Yellow),
+//                shape = RoundedCornerShape(25.dp),
+//                contentPadding = PaddingValues(horizontal = 10.dp, vertical = 15.dp),
+//                colors = ButtonDefaults.buttonColors(containerColor = defaultSecondary),
+//                onClick = {
+//                    CoroutineScope(Dispatchers.Default).launch {
+//                        sendData(context)
+//                    }
+//                }
+//            ) {
+//                Text("Export")
+//            }
+
             Box(modifier = Modifier.fillMaxSize()){
-            Text(text="Competition ${comp.value}",color = getCurrentTheme().onSecondary,modifier = Modifier.align(Alignment.BottomCenter))
+                Text(text="Competition ${comp.value}",color = getCurrentTheme().onSecondary,modifier = Modifier.align(Alignment.BottomCenter))
             }
+
+
         }
     }
 }

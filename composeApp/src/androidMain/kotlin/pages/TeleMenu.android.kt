@@ -118,6 +118,14 @@ actual class TeleMenu actual constructor(
                     teleTrapNum.intValue = 0
                     teleSMissed.intValue = 0
                     teleAMissed.intValue = 0
+                    m1.intValue = 0
+                    m2.intValue = 0
+                    m3.intValue = 0
+                    m4.intValue = 0
+                    m5.intValue = 0
+                    f1.intValue = 0
+                    f2.intValue = 0
+                    f3.intValue = 0
                     teleNotes.value = ""
                     selectAuto.value = false
                     exportScoutData(context)
