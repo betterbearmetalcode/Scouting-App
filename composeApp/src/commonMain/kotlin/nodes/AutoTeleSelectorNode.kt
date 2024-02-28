@@ -15,9 +15,7 @@ import com.bumble.appyx.navigation.node.Node
 import com.bumble.appyx.navigation.node.ParentNode
 import com.bumble.appyx.utils.multiplatform.Parcelable
 import com.bumble.appyx.utils.multiplatform.Parcelize
-import pages.AutoMenu
 import pages.AutoTeleSelectorMenu
-import pages.TeleMenu
 
 class AutoTeleSelectorNode(
     buildContext: BuildContext,
@@ -48,13 +46,12 @@ class AutoTeleSelectorNode(
 
     override fun resolve(interactionTarget: NavTarget, buildContext: BuildContext): Node =
         when (interactionTarget) {
-            NavTarget.AutoScouting -> AutoMenu(buildContext, backStack, mainMenuBackStack, selectAuto, match, team, robotStartPosition)
-            NavTarget.TeleScouting -> TeleMenu(buildContext, backStack, selectAuto, match, team, robotStartPosition)
+            NavTarget.AutoScouting -> AutoNode(buildContext, backStack, mainMenuBackStack, selectAuto, match, team, robotStartPosition)
+            NavTarget.TeleScouting -> TeleNode(buildContext, backStack, selectAuto, match, team, robotStartPosition)
         }
 
     @Composable
     override fun View(modifier: Modifier) {
-
         Column {
             AutoTeleSelectorMenu(team, robotStartPosition, selectAuto, backStack)
             AppyxComponent(

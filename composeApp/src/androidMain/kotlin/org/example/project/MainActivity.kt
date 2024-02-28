@@ -1,11 +1,10 @@
 package org.example.project
 
 
-import nodes.RootNode
+import Server
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.darkColorScheme
@@ -24,6 +23,7 @@ import defaultOnSurface
 import defaultPrimary
 import defaultSecondary
 import defaultSurface
+import nodes.RootNode
 
 @ExperimentalUnitApi
 @ExperimentalAnimationApi
@@ -31,6 +31,7 @@ import defaultSurface
 class MainActivity : NodeActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        serverSocket.start()
         super.onCreate(savedInstanceState)
 
         setContent {
@@ -73,4 +74,7 @@ val defaultScheme = darkColorScheme(
     onSurface = defaultOnSurface,
     outline = defaultSecondary
 )
+
+
+val serverSocket = Server(8880)
 

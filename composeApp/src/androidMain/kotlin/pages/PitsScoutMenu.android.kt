@@ -90,7 +90,7 @@ actual class PitsScoutMenu actual constructor(
                 Text(
                     text = "Pits",
                     fontSize = 50.sp,
-                    color = defaultOnPrimary,
+                    //color = defaultOnPrimary,
                 )
                 TextButton(
                     onClick = { pitsPersonDD = true },
@@ -101,7 +101,7 @@ actual class PitsScoutMenu actual constructor(
                     Text(
                         text = pitsPerson.value,
                         fontSize = 40.sp,
-                        color = defaultOnPrimary,
+                        //color = defaultOnPrimary,
                     )
                 }
                 Box(modifier = Modifier
