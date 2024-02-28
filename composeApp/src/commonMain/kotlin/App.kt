@@ -2,9 +2,6 @@ import androidx.compose.material.ButtonColors
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Colors
 import androidx.compose.material.darkColors
-import androidx.compose.ui.graphics.Color
-
-val theme = themeDefault()
 
 fun themeDefault(): Colors {
 
@@ -26,6 +23,4 @@ fun themeDefault(): Colors {
     return theme
 }
 
-fun getCurrentTheme() : Colors {
-    return theme
-}
+var currentColors: Colors = themeDefault()
