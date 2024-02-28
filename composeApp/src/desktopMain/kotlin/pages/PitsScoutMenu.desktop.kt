@@ -68,7 +68,7 @@ actual class PitsScoutMenu actual constructor(
         val isScrollEnabled by remember{ mutableStateOf(true)}
         var robotCard by remember {mutableStateOf(false)}
         var photoAlert by remember { mutableStateOf(false) }
-        val perimeterChecked by remember { mutableStateOf(if (2 * (parseInt(robotLength) + parseInt(robotWidth)) > 120 && robotLength!="" && robotWidth!="") "crossmark.png" else "checkmark.png") }
+        val perimeterChecked by remember { mutableStateOf(if( robotLength!="" && robotWidth!=""){if (parseInt(robotLength) + parseInt(robotWidth) > 60) "crossmark.png" else "checkmark.png"}else "crossmark.png") }
 
         Column(modifier = Modifier.verticalScroll(state = scrollState, enabled = isScrollEnabled).padding(5.dp)) {
             Box( modifier = Modifier.offset(20.dp, 15.dp).fillMaxWidth()) {
@@ -107,31 +107,44 @@ actual class PitsScoutMenu actual constructor(
                     }
                 }
             }
-            Row(modifier = Modifier.scale(0.75f)){
+            Row(){
+                Column{
                 Text(
-                    text="Team Name: ",
-                    fontSize = 20.sp,
+                    text="Team",
+                    fontSize = 15.sp,
                     color = defaultOnPrimary
                 )
+                Text(
+                    text=" Name:",
+                    fontSize = 15.sp,
+                    color = defaultOnPrimary
+                )}
                 OutlinedTextField(
                     value = scoutedTeamName,
                     onValueChange ={ scoutedTeamName = it},
-                    textStyle = TextStyle.Default.copy(fontSize = 20.sp),
+                    textStyle = TextStyle.Default.copy(fontSize = 17.sp),
                     colors = TextFieldDefaults.outlinedTextFieldColors(backgroundColor = defaultOnError, focusedBorderColor = defaultSecondary, textColor = defaultOnPrimary),
                     shape = RoundedCornerShape(15.dp),
-                    modifier = Modifier.size(85.dp,60.dp)
+                    modifier = Modifier.fillMaxWidth(1f/3f)
+                )
+                Column{
+                Text(
+                    text="Team",
+                    fontSize = 15.sp,
+                    color = defaultOnPrimary
                 )
                 Text(
-                    text="Team Number: ",
-                    fontSize = 20.sp,
-                )
+                    text=" Number:",
+                    fontSize = 15.sp,
+                    color = defaultOnPrimary
+                )}
                 OutlinedTextField(
                     value = scoutedTeamNumber,
                     onValueChange ={ scoutedTeamNumber = it},
-                    textStyle = TextStyle.Default.copy(fontSize = 20.sp),
+                    textStyle = TextStyle.Default.copy(fontSize = 17.sp),
                     colors = TextFieldDefaults.outlinedTextFieldColors(backgroundColor = defaultOnError, focusedBorderColor = defaultSecondary, textColor = defaultOnPrimary),
                     shape = RoundedCornerShape(15.dp),
-                    modifier = Modifier.size(85.dp,60.dp)
+                    modifier = Modifier.size(75.dp,60.dp)
                 )
             }
             Spacer(modifier = Modifier.height(7.5.dp))
@@ -175,7 +188,7 @@ actual class PitsScoutMenu actual constructor(
                 )
                 }
             Image(
-                org.jetbrains.compose.resources.painterResource(res = perimeterChecked),
+                painter = org.jetbrains.compose.resources.painterResource(res = perimeterChecked),
                 contentDescription = "dimensions checked",
                 modifier = Modifier
                     .size(30.dp)

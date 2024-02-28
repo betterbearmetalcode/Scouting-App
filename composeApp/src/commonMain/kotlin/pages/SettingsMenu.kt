@@ -2,9 +2,12 @@ package pages
 
 import BackButton
 import LinkMaker2
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.runtime.*
@@ -15,9 +18,16 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.bumble.appyx.components.backstack.BackStack
+import com.bumble.appyx.components.backstack.operation.push
 import com.bumble.appyx.navigation.modality.BuildContext
 import com.bumble.appyx.navigation.node.Node
 import currentColors
+import defaultOnPrimary
+import defaultOnSecondary
+import defaultOnSurface
+import defaultPrimaryVariant
+import defaultSecondary
+import nodes.AutoTeleSelectorNode
 import nodes.RootNode
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
@@ -25,7 +35,8 @@ import themeDefault
 
 class SettingsMenu(
     buildContext: BuildContext,
-    private val backStack: BackStack<RootNode.NavTarget>
+    private val backStack: BackStack<RootNode.NavTarget>,
+    private var themeName: MutableState<String>
 ) : Node(buildContext) {
 
     @OptIn(ExperimentalResourceApi::class)
@@ -38,110 +49,75 @@ class SettingsMenu(
 
 
         Column(modifier.verticalScroll(ScrollState(0)).padding(20.dp)) {
-            Row {
-                BackButton(
-                    backStack = backStack,
-                    content = {
-                        Image(
-                            painter = painterResource(res = "back-arrow.png"),
-                            contentDescription = "Back Arrow",
-                            contentScale = ContentScale.Fit,
-                            modifier = Modifier
-                                .fillMaxSize(1f / 6f)
-                                .padding(0.dp)
-                        )
-                    }
-                )
                 Text(
                     text = "Settings",
-                    fontSize = 50.sp
+                    fontSize = 50.sp,
+                    modifier = Modifier.align(Alignment.CenterHorizontally)
                 )
-            }
-            Text(
-                text = "Account:",
-                fontSize = 35.sp,
-
-                modifier = Modifier
-                    .align(Alignment.CenterHorizontally)
-
-            )
+                Divider(color = defaultPrimaryVariant)
             Row {
-                Text(
-                    text = "Name: ",
-                    fontSize = 25.sp
-                )
-                TextField(
-                    value = userName,
-                    onValueChange = {
-                        userName = it
-                    }
-                )
-            }
-            Text(
-                text = "Appearence",
-                fontSize = 35.sp,
-                modifier = Modifier
-                    .align(Alignment.CenterHorizontally)
-            )
+                Column {
+                    Text(
+                        text = "Effects",
+                        fontSize = 25.sp,
+                        modifier = Modifier
+                            .padding(20.dp)
+                    )
+                    Text(
+                        text = "High Contrast",
+                        fontSize = 25.sp,
+                        modifier = Modifier
+                            .padding(20.dp)
+                    )
+                }
+                Column {
+                    Switch(
+                        checked = effectsChecked,
+                        onCheckedChange = { effectsChecked = !effectsChecked },
+                        modifier = Modifier
+                            .scale(2f)
+                            .padding(20.dp,0.dp)
 
-            Row {
-                DropdownMenu(
-                    expanded = themeExpanded,
-                    onDismissRequest = { themeExpanded = false },
-                ) {}
-
-                Button(
-                    onClick = {
-                        themeExpanded = true
-                    }
-                ) {
-                    Text("Theme")
+                    )
+                    Switch(
+                        checked = highContrastChecked,
+                        onCheckedChange = { highContrastChecked = !highContrastChecked },
+                        modifier = Modifier
+                            .scale(2f)
+                            .padding(20.dp)
+                    )
                 }
             }
+                OutlinedButton(
+                    onClick = {
+                        themeExpanded = true
+                    },
+                    shape = CircleShape,
+                    colors = ButtonDefaults.buttonColors(backgroundColor =defaultOnSurface),
+                    border = BorderStroke(2.dp,defaultPrimaryVariant),
+                    modifier = Modifier.fillMaxWidth(9f/10f).align(Alignment.CenterHorizontally)
+                ) {
+                    Box(modifier = Modifier.fillMaxWidth()) {
+                        Text("Theme: ${themeName.value}", color = defaultOnPrimary,)
+                        Text("V", color = defaultOnPrimary, modifier = Modifier.align(Alignment.CenterEnd))
+                    }
+                }
+            DropdownMenu(
+                expanded = themeExpanded,
+                onDismissRequest = { themeExpanded = false },
+            ) {
 
-            Row {
-
-                Switch(
-                    checked = effectsChecked,
-                    onCheckedChange = { effectsChecked = !effectsChecked },
-                    modifier = Modifier
-                        .scale(2f)
-                        .padding(25.dp)
-
-                )
-                Text(
-                    text = "Effects",
-                    fontSize = 25.sp,
-                    modifier = Modifier
-                        .padding(28.dp)
-                )
             }
             Text(
-                text = "Accesability",
-                fontSize = 35.sp,
-                modifier = Modifier
-                    .align(Alignment.CenterHorizontally)
+                text="INFO"
             )
-            /* Row {
-            Switch(
-                checked = highContrastChecked,
-                onCheckedChange = { highContrastChecked = !highContrastChecked },
-                modifier = Modifier
-                    .scale(2f)
-            )
-            Text(
-                text = "High Contrast",
-                fontSize = 25.sp,
-                modifier = Modifier
-            )
-        } */
+            Row(modifier = Modifier.align(Alignment.CenterHorizontally)) {
+                LinkMaker2("https://www.facebook.com/FRC2046/", "f.png", Modifier.size(60.dp))
+                LinkMaker2("https://www.instagram.com/bearmetal2046/", "Insta.png", Modifier.size(60.dp))
+                LinkMaker2("https://www.youtube.com/@TahomaRoboticsFRC", "youtube.png", Modifier.size(60.dp))
+                LinkMaker2("https://tahomarobotics.org/", "bear-clearBackground.png", Modifier.size(60.dp))
+            }
             Button(
-                content = {
-                    Text(
-                        text = "Reset to Default",
-                        fontSize = 35.sp,
-                    )
-                },
                 onClick = {
                     highContrastChecked = false
                     effectsChecked = false
@@ -150,19 +126,13 @@ class SettingsMenu(
                 },
                 modifier = Modifier
                     .align(Alignment.CenterHorizontally)
-            )
-            Text(
-                text="INFO"
-            )
-            Text("Find us here:")
-            Row {
-                LinkMaker2("https://www.facebook.com/FRC2046/", "f.png", Modifier.size(60.dp))
-                LinkMaker2("https://www.instagram.com/bearmetal2046/", "Insta.png", Modifier.size(60.dp))
+            ){
+                Text(
+                    text = "Reset to Default",
+                    fontSize = 25.sp,
+                )
             }
-            Row {
-                LinkMaker2("https://www.youtube.com/@TahomaRoboticsFRC", "youtube.png", Modifier.size(60.dp))
-                LinkMaker2("https://tahomarobotics.org/", "bear-clearBackground.png", Modifier.size(60.dp))
-            }
+        OutlinedButton(colors = ButtonDefaults.buttonColors(backgroundColor = defaultOnSurface), onClick = {backStack.push(RootNode.NavTarget.MainMenu)}){ Text("Back", color = defaultOnPrimary)}
         }
     }
 }

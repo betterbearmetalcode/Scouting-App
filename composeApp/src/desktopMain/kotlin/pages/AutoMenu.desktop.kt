@@ -23,9 +23,9 @@ import com.bumble.appyx.components.backstack.BackStack
 import com.bumble.appyx.components.backstack.operation.pop
 import com.bumble.appyx.components.backstack.operation.push
 import composables.EnumerableValue
+import defaultPrimaryVariant
 import defaultSecondary
 import exportScoutData
-import getCurrentTheme
 import keyboardAsState
 import nodes.matchScoutArray
 import nodes.*
@@ -75,21 +75,21 @@ actual fun AutoMenu (
                     checkedColor = Color.Cyan,
                 )
                 Row {
-                    Text(1.toString(), Modifier.align(Alignment.CenterVertically))
+                    Text(1.toString(),Modifier.align(Alignment.CenterVertically),color = Color.Yellow)
                     Checkbox(
                         when(f1.intValue) {0 -> false; 1 -> true; else -> false},
                         colors = color,
                         onCheckedChange = { when(it) {true -> f1.intValue = 1; false -> f1.intValue = 0}}
                     )
                     Spacer(Modifier.width(15.dp))
-                    Text(2.toString(), Modifier.align(Alignment.CenterVertically))
+                    Text(2.toString(), Modifier.align(Alignment.CenterVertically),color = Color.Yellow)
                     Checkbox(
                         when(f2.intValue) {0 -> false; 1 -> true; else -> false},
                         colors = color,
                         onCheckedChange = { when(it) {true -> f2.intValue = 1; false -> f2.intValue = 0}}
                     )
                     Spacer(Modifier.width(15.dp))
-                    Text(3.toString(), Modifier.align(Alignment.CenterVertically))
+                    Text(3.toString(), Modifier.align(Alignment.CenterVertically),color = Color.Yellow)
                     Checkbox(
                         when(f3.intValue) {0 -> false; 1 -> true; else -> false},
                         colors = color,
@@ -97,35 +97,35 @@ actual fun AutoMenu (
                     )
                 }
                 Row {
-                    Text(1.toString(), Modifier.align(Alignment.CenterVertically))
+                    Text(1.toString(), Modifier.align(Alignment.CenterVertically),color = Color.Cyan)
                     Checkbox(
                         when(m1.intValue) {0 -> false; 1 -> true; else -> false},
                         colors = color,
                         onCheckedChange = { when(it) {true -> m1.intValue = 1; false -> m1.intValue = 0}}
                     )
                     Spacer(Modifier.width(15.dp))
-                    Text(2.toString(), Modifier.align(Alignment.CenterVertically))
+                    Text(2.toString(), Modifier.align(Alignment.CenterVertically),color = Color.Cyan)
                     Checkbox(
                         when(m2.intValue) {0 -> false; 1 -> true; else -> false},
                         colors = color,
                         onCheckedChange = { when(it) {true -> m2.intValue = 1; false -> m2.intValue = 0}}
                     )
                     Spacer(Modifier.width(15.dp))
-                    Text(3.toString(), Modifier.align(Alignment.CenterVertically))
+                    Text(3.toString(), Modifier.align(Alignment.CenterVertically),color = Color.Cyan)
                     Checkbox(
                         when(m3.intValue) {0 -> false; 1 -> true; else -> false},
                         colors = color,
                         onCheckedChange = { when(it) {true -> m3.intValue = 1; false -> m3.intValue = 0}}
                     )
                     Spacer(Modifier.width(15.dp))
-                    Text(4.toString(), Modifier.align(Alignment.CenterVertically))
+                    Text(4.toString(), Modifier.align(Alignment.CenterVertically),color = Color.Cyan)
                     Checkbox(
                         when(m4.intValue) {0 -> false; 1 -> true; else -> false},
                         colors = color,
                         onCheckedChange = { when(it) {true -> m4.intValue = 1; false -> m4.intValue = 0}}
                     )
                     Spacer(Modifier.width(15.dp))
-                    Text(5.toString(), Modifier.align(Alignment.CenterVertically))
+                    Text(5.toString(), Modifier.align(Alignment.CenterVertically),color = Color.Cyan)
                     Checkbox(
                         when(m5.intValue) {0 -> false; 1 -> true; else -> false},
                         colors = color,
@@ -144,7 +144,7 @@ actual fun AutoMenu (
             modifier = Modifier.fillMaxWidth().padding(5.dp)
         )
         Spacer(modifier = Modifier.height(10.dp))
-        Divider(color = getCurrentTheme().primaryVariant, thickness = 2.dp, modifier = Modifier.fillMaxWidth())
+        Divider(color = defaultPrimaryVariant, thickness = 2.dp, modifier = Modifier.fillMaxWidth())
         EnumerableValue(label = "S Missed", value = autoSMissed)
         EnumerableValue(label = "A Missed", value = autoAMissed)
 

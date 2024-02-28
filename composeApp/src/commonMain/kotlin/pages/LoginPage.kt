@@ -1,3 +1,5 @@
+@file:OptIn(ExperimentalResourceApi::class, ExperimentalResourceApi::class)
+
 package pages
 
 import nodes.RootNode
@@ -26,6 +28,7 @@ import defaultOnSecondary
 import defaultOnSurface
 import defaultPrimary
 import defaultPrimaryVariant
+import org.jetbrains.compose.resources.ExperimentalResourceApi
 import java.io.File
 
 class LoginPage(
@@ -47,10 +50,11 @@ class LoginPage(
 
         )
         Column {
-//            Image(
-//                painter = BitmapPainter(logo),//turn into bitmap
-//                contentDescription = "Logo"
-//            )
+            Image(
+                painter = org.jetbrains.compose.resources.painterResource(logo.path),//turn into bitmap
+                contentDescription = "Logo",
+                modifier = Modifier.fillMaxWidth(4f/5f).align(Alignment.CenterHorizontally)
+            )
             Text(
                 text = "Login",
                 fontSize = 45.sp,
