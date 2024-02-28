@@ -171,13 +171,13 @@ actual class PitsScoutMenu actual constructor(
                     color = Color.Gray
                 )
                 }
-                Image(
-                    org.jetbrains.compose.resources.painterResource(res = perimeterChecked),
-                    contentDescription = "dimensions checked",
-                    modifier = Modifier
-                        .size(30.dp)
-                        .offset(x = (98.5).dp),
-                )
+            Image(
+                org.jetbrains.compose.resources.painterResource(res = perimeterChecked),
+                contentDescription = "dimensions checked",
+                modifier = Modifier
+                    .size(30.dp)
+                    .offset(x = (98.5).dp),
+            )
 
             Row {
                 Text(
@@ -248,7 +248,7 @@ actual class PitsScoutMenu actual constructor(
                     painter = painterResource("KillCam.png"),
                     contentDescription = "Camera"
                 )
-                Box{
+                Column {
                     Text(
                         text ="Take Picture",
                         color= defaultOnPrimary
@@ -256,14 +256,13 @@ actual class PitsScoutMenu actual constructor(
                     Text(
                         text ="*Ask Permission First",
                         color= Color.Gray,
-                        fontSize = 10.sp,
-                        modifier = Modifier.offset(0.dp,17.dp)
+                        fontSize = 10.sp
                     )
                 }
             }
-            if(photoAlert){
-            AlertDialog(title = {Text(text ="TOO MANY PHOTOS!!!")}, onDismissRequest = {photoAlert = false}, buttons = { Box(modifier = Modifier.fillMaxWidth()){Button(onClick = {photoAlert = false},modifier = Modifier.align(Alignment.Center)){Text(text="Dismiss",color = defaultError)}}}, modifier = Modifier.clip(
-                RoundedCornerShape(5.dp)).border(BorderStroke(3.dp,defaultPrimaryVariant),RoundedCornerShape(5.dp)))
+            if(photoAlert) {
+                AlertDialog(title = {Text(text ="TOO MANY PHOTOS!!!")}, onDismissRequest = {photoAlert = false}, buttons = { Box(modifier = Modifier.fillMaxWidth()){Button(onClick = {photoAlert = false},modifier = Modifier.align(Alignment.Center)){Text(text="Dismiss",color = defaultError)}}}, modifier = Modifier.clip(
+                    RoundedCornerShape(5.dp)).border(BorderStroke(3.dp,defaultPrimaryVariant),RoundedCornerShape(5.dp)))
             }
             Row(modifier = Modifier.horizontalScroll(ScrollState(0))) {
                     photoArray.value.forEach {
@@ -311,7 +310,7 @@ actual class PitsScoutMenu actual constructor(
                 },
                 border = BorderStroke(2.dp, color = Color.Yellow),
                 shape = CircleShape
-            ){
+            ) {
                 Text(
                     text ="Collection Preference: $collectPreference",
                     fontSize = 15.sp,

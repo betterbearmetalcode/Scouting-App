@@ -7,17 +7,13 @@ import nodes.matchScoutArray
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
-import java.io.File
-import java.io.FileInputStream
-import java.io.FileWriter
-import java.io.PrintWriter
+import java.io.*
 import java.net.InetAddress
 import java.net.InetSocketAddress
 import java.net.ServerSocket
 import java.net.Socket
+import java.net.SocketException
 
-
-val serverSocket = Server(8880)
 
 fun createFile(context: Context) {
     val file = File(context.filesDir, "match_data.json")
@@ -70,8 +66,6 @@ fun exportScoutData(context: Context) {
 }
 
 fun sendData(context: Context) {
-    serverSocket.start()
-
     val file = File(context.filesDir, "match_scouting_data.json")
     file.delete()
     file.createNewFile()
@@ -80,7 +74,21 @@ fun sendData(context: Context) {
         jsonArray.put(it)
     }
     val socket = Socket()
-    socket.connect(InetSocketAddress(InetAddress.getLocalHost(), 8880), 500)
-    val writer = PrintWriter(socket.getOutputStream())
-    writer.write(jsonArray.toString())
+    try {
+        socket.connect(InetSocketAddress(InetAddress.getLocalHost(), 8880), 500)
+        socket.getOutputStream().writer().use { writer ->
+            writer.write(jsonArray.toString() + "\n")
+            writer.flush() // Ensure data is sent immediately
+        }
+
+        Log.i("Client", "Message Sent: $jsonArray")
+    } catch (e: IOException) {
+        e.printStackTrace()
+    } catch (_: SocketException) {
+
+    } finally {
+        socket.close()
+    }
+
+
 }

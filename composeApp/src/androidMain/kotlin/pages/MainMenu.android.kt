@@ -256,19 +256,19 @@ actual class MainMenu actual constructor(
                 }
             }
 
-//            OutlinedButton(
-//                border = BorderStroke(3.dp, Color.Yellow),
-//                shape = RoundedCornerShape(25.dp),
-//                contentPadding = PaddingValues(horizontal = 10.dp, vertical = 15.dp),
-//                colors = ButtonDefaults.buttonColors(containerColor = defaultSecondary),
-//                onClick = {
-//                    CoroutineScope(Dispatchers.Default).launch {
-//                        sendData(context)
-//                    }
-//                }
-//            ) {
-//                Text("Export")
-//            }
+            OutlinedButton(
+                border = BorderStroke(3.dp, Color.Yellow),
+                shape = RoundedCornerShape(25.dp),
+                contentPadding = PaddingValues(horizontal = 10.dp, vertical = 15.dp),
+                colors = ButtonDefaults.buttonColors(containerColor = defaultSecondary),
+                onClick = {
+                    CoroutineScope(Dispatchers.Default).launch {
+                        sendData(context)
+                    }
+                }
+            ) {
+                Text("Export")
+            }
 
             Box(modifier = Modifier.fillMaxSize()){
                 Text(text="Competition ${comp.value}",color = getCurrentTheme().onSecondary,modifier = Modifier.align(Alignment.BottomCenter))
