@@ -17,6 +17,7 @@ import androidx.compose.ui.draw.scale
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import catppuccinMocha
 import com.bumble.appyx.components.backstack.BackStack
 import com.bumble.appyx.components.backstack.operation.push
 import com.bumble.appyx.navigation.modality.BuildContext
@@ -31,6 +32,7 @@ import nodes.AutoTeleSelectorNode
 import nodes.RootNode
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
+import spareMetal
 import themeDefault
 
 class SettingsMenu(
@@ -54,7 +56,7 @@ class SettingsMenu(
                     fontSize = 50.sp,
                     modifier = Modifier.align(Alignment.CenterHorizontally)
                 )
-                Divider(color = defaultPrimaryVariant)
+                Divider(color = currentColors.primaryVariant)
             Row {
                 Column {
                     Text(
@@ -93,20 +95,22 @@ class SettingsMenu(
                         themeExpanded = true
                     },
                     shape = CircleShape,
-                    colors = ButtonDefaults.buttonColors(backgroundColor =defaultOnSurface),
-                    border = BorderStroke(2.dp,defaultPrimaryVariant),
+                    colors = ButtonDefaults.buttonColors(backgroundColor =currentColors.onSurface),
+                    border = BorderStroke(2.dp,currentColors.primaryVariant),
                     modifier = Modifier.fillMaxWidth(9f/10f).align(Alignment.CenterHorizontally)
                 ) {
                     Box(modifier = Modifier.fillMaxWidth()) {
-                        Text("Theme: ${themeName.value}", color = defaultOnPrimary,)
-                        Text("V", color = defaultOnPrimary, modifier = Modifier.align(Alignment.CenterEnd))
+                        Text("Theme: ${themeName.value}", color = currentColors.onSecondary,)
+                        Text("V", color = currentColors.onSecondary, modifier = Modifier.align(Alignment.CenterEnd))
                     }
                 }
             DropdownMenu(
                 expanded = themeExpanded,
                 onDismissRequest = { themeExpanded = false },
             ) {
-
+                DropdownMenuItem(onClick = {currentColors = themeDefault();!themeExpanded}){ Text("Default")}
+                DropdownMenuItem(onClick = {currentColors = spareMetal();!themeExpanded}){ Text("Spare Metal")}
+                DropdownMenuItem(onClick = {currentColors = catppuccinMocha();!themeExpanded}){ Text("Catppuccin Mocha")}
             }
             Text(
                 text="INFO"
@@ -121,7 +125,6 @@ class SettingsMenu(
                 onClick = {
                     highContrastChecked = false
                     effectsChecked = false
-                    userName = ""
                     currentColors = themeDefault()
                 },
                 modifier = Modifier
@@ -132,7 +135,7 @@ class SettingsMenu(
                     fontSize = 25.sp,
                 )
             }
-        OutlinedButton(colors = ButtonDefaults.buttonColors(backgroundColor = defaultOnSurface), onClick = {backStack.push(RootNode.NavTarget.MainMenu)}){ Text("Back", color = defaultOnPrimary)}
+        OutlinedButton(colors = ButtonDefaults.buttonColors(backgroundColor = currentColors.onSurface), onClick = {backStack.push(RootNode.NavTarget.MainMenu)}){ Text("Back", color = currentColors.onSecondary)}
         }
     }
 }

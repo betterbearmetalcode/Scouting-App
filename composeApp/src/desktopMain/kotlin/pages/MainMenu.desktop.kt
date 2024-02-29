@@ -27,7 +27,6 @@ import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 import sync
 import teamData
-
 actual class MainMenu actual constructor(
     buildContext: BuildContext,
     private val backStack: BackStack<RootNode.NavTarget>,
@@ -43,7 +42,6 @@ actual class MainMenu actual constructor(
         val openError = remember { mutableStateOf(false) }
         var matchSyncedResource by remember { mutableStateOf(if (matchData == null) "crossmark.png" else "checkmark.png") }
         var teamSyncedResource by remember { mutableStateOf(if (teamData == null) "crossmark.png" else "checkmark.png") }
-
         when {
             openError.value -> {
                 InternetErrorAlert { openError.value = false }

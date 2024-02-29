@@ -22,6 +22,7 @@ import com.bumble.appyx.components.backstack.BackStack
 import com.bumble.appyx.components.backstack.operation.push
 import com.bumble.appyx.navigation.modality.BuildContext
 import com.bumble.appyx.navigation.node.Node
+import currentColors
 import defaultBackground
 import defaultOnPrimary
 import defaultOnSecondary
@@ -29,6 +30,7 @@ import defaultOnSurface
 import defaultPrimary
 import defaultPrimaryVariant
 import org.jetbrains.compose.resources.ExperimentalResourceApi
+import spareMetal
 import java.io.File
 
 class LoginPage(
@@ -39,7 +41,7 @@ class LoginPage(
 ) : Node(buildContext) {
     @Composable
     override fun View(modifier: Modifier) {
-        val logo = File("Logo.png")
+        val logo = File(if(spareMetal){"SpareMetal.png"}else{"Logo.png"})
         var compDD by remember { mutableStateOf(false)}
         var compKey by remember { mutableStateOf("") }
         val tbaMatches = listOf(
@@ -58,73 +60,73 @@ class LoginPage(
             Text(
                 text = "Login",
                 fontSize = 45.sp,
-                color = defaultOnPrimary,
+                color = currentColors.onPrimary,
                 modifier = Modifier.align(Alignment.CenterHorizontally).offset(0.dp, (-28).dp)
             )
             Divider(
-                color = defaultPrimaryVariant,
+                color = currentColors.primaryVariant,
                 modifier = Modifier.offset(0.dp, (-25).dp),
                 thickness = 3.dp
             )
             Row(modifier = Modifier.align(Alignment.CenterHorizontally)) {
-                Text(text = "Name", color = defaultOnPrimary)
+                Text(text = "Name", color = currentColors.onPrimary)
                 OutlinedTextField(
                     value = scoutName.value,
                     onValueChange = {scoutName.value = it},
                     shape = RoundedCornerShape(15.dp),
-                    colors = TextFieldDefaults.outlinedTextFieldColors(backgroundColor = defaultBackground, focusedBorderColor = defaultOnSecondary, unfocusedBorderColor = defaultOnSecondary, textColor = defaultOnPrimary, cursorColor = defaultOnSecondary),
+                    colors = TextFieldDefaults.outlinedTextFieldColors(backgroundColor = currentColors.primary, focusedBorderColor = currentColors.primaryVariant, unfocusedBorderColor = currentColors.primaryVariant, textColor = currentColors.onPrimary, cursorColor = currentColors.onSecondary),
                 )
             }
             Box(modifier = Modifier.padding(15.dp).fillMaxWidth()) {
                 OutlinedButton(
                     onClick = { compDD = true },
                     shape = RoundedCornerShape(15.dp),
-                    border = BorderStroke(3.dp, color = defaultPrimaryVariant),
-                    colors = ButtonDefaults.buttonColors(backgroundColor = defaultPrimary)
+                    border = BorderStroke(3.dp, color = currentColors.primaryVariant),
+                    colors = ButtonDefaults.buttonColors(backgroundColor = currentColors.primary)
                 ) {
                     Box(modifier = Modifier.fillMaxWidth()) {
                         Text(
                             text = "Competition: ${comp.value}",
-                            color = defaultOnPrimary,
+                            color = currentColors.onSecondary,
                             modifier = Modifier.align(Alignment.CenterStart)
                         )
                         Text(
                             text = "V",
-                            color = defaultOnPrimary,
+                            color = currentColors.onSecondary,
                             modifier = Modifier.align(Alignment.CenterEnd)
                         )
                     }
                 }
-                DropdownMenu(expanded = compDD, onDismissRequest = { compDD = false; },modifier=Modifier.background(color = defaultOnSurface)) {
+                DropdownMenu(expanded = compDD, onDismissRequest = { compDD = false; },modifier=Modifier.background(color = currentColors.onSurface)) {
                     DropdownMenuItem(
                         onClick = { comp.value = "Bonney Lake"; compDD = false; compKey = tbaMatches[0]}
-                    ) { Text(text = "Bonney Lake", color = defaultOnPrimary,modifier=Modifier.background(color = defaultOnSurface)) }
+                    ) { Text(text = "Bonney Lake", color = defaultOnPrimary,modifier=Modifier.background(color = currentColors.onSurface)) }
                     DropdownMenuItem(
                         onClick = { comp.value = "Lake Sammamish"; compDD = false; compKey = tbaMatches[1]}
-                    ) { Text(text = "Lake Sammamish", color = defaultOnPrimary,modifier=Modifier.background(color = defaultOnSurface)) }
+                    ) { Text(text = "Lake Sammamish", color = defaultOnPrimary,modifier=Modifier.background(color = currentColors.onSurface)) }
                     DropdownMenuItem(
                         onClick = { comp.value = "Salem"; compDD = false; compKey = tbaMatches[2]}
-                    ) { Text(text = "Salem", color = defaultOnPrimary,modifier=Modifier.background(color = defaultOnSurface)) }
+                    ) { Text(text = "Salem", color = defaultOnPrimary,modifier=Modifier.background(color = currentColors.onSurface)) }
                     DropdownMenuItem(
                         onClick = { comp.value = "Houston"; compDD = false; compKey = tbaMatches[3]}
-                    ) { Text(text = "Houston", color = defaultOnPrimary,modifier=Modifier.background(color = defaultOnSurface)) }
+                    ) { Text(text = "Houston", color = defaultOnPrimary,modifier=Modifier.background(color = currentColors.onSurface)) }
                 }
 
             }
             Divider(
-                color = defaultPrimaryVariant,
+                color = currentColors.primaryVariant,
             )
             OutlinedButton(
                 onClick = {
                     if (comp.value != "" && scoutName.value != "")
                     backStack.push(RootNode.NavTarget.MainMenu)
                 },
-                border = BorderStroke(color = defaultPrimaryVariant, width = 2.dp),
-                colors = ButtonDefaults.buttonColors(backgroundColor = defaultPrimary)
+                border = BorderStroke(color = currentColors.primaryVariant, width = 2.dp),
+                colors = ButtonDefaults.buttonColors(backgroundColor = currentColors.primary)
             ) {
                 Text(
                     text = "Submit",
-                    color = defaultOnPrimary
+                    color = currentColors.onSecondary
                 )
             }
         }
