@@ -1,8 +1,6 @@
 import androidx.compose.material.Colors
 import androidx.compose.material.darkColors
 import androidx.compose.ui.graphics.Color
-
-public var spareMetal: Boolean = false
 fun themeDefault(): Colors {
 
     val theme = darkColors(
@@ -58,7 +56,6 @@ fun spareMetal(): Colors {
     onSurface = Color(150,150,150),
     onError = Color(6,9,13),
     )
-    spareMetal = true
     return theme
 }
 
