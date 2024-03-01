@@ -2,6 +2,7 @@ package pages
 
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -31,6 +32,7 @@ import java.lang.Integer.parseInt
 @Composable
 actual fun TeleMenu (
     backStack: BackStack<AutoTeleSelectorNode.NavTarget>,
+    mainMenuBackStack: BackStack<RootNode.NavTarget>,
 
     selectAuto: MutableState<Boolean>,
 
@@ -43,6 +45,12 @@ actual fun TeleMenu (
     val isKeyboardOpen by keyboardAsState()
     val context = LocalContext.current
     var qrCodeFile by remember { mutableStateOf(ImageRequest.Builder(context).data(File("")).build()) }
+
+    fun bob() {
+        mainMenuBackStack.pop()
+        matchScoutArray[Integer.parseInt(match.value)] = createOutput(team, robotStartPosition)
+        exportScoutData(context)
+    }
 
     if(!isKeyboardOpen){
         isScrollEnabled.value = true
@@ -130,6 +138,21 @@ actual fun TeleMenu (
             modifier = Modifier.align(Alignment.CenterHorizontally)
         ) {
             Text("Next Match", fontSize = 20.sp)
+        }
+
+        OutlinedButton(
+            border = BorderStroke(2.dp, color = Color.Yellow),
+            shape = CircleShape,
+            colors = ButtonDefaults.buttonColors(containerColor = defaultSecondary),
+            onClick = {
+                exportScoutData(context)
+                bob()
+            }
+        ) {
+            Text(
+                text = "Back",
+                color = Color.Yellow
+            )
         }
     }
 }
