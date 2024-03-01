@@ -65,7 +65,7 @@ fun exportScoutData(context: Context) {
     writer.close()
 }
 
-fun sendData(context: Context) {
+fun sendData(context: Context, ipAddress: String) {
     val file = File(context.filesDir, "match_scouting_data.json")
     file.delete()
     file.createNewFile()
@@ -75,7 +75,7 @@ fun sendData(context: Context) {
     }
     val socket = Socket()
     try {
-        socket.connect(InetSocketAddress(InetAddress.getLocalHost(), 8880), 500)
+        socket.connect(InetSocketAddress(ipAddress, 8880), 500)
         socket.getOutputStream().writer().use { writer ->
             writer.write(jsonArray.toString() + "\n")
             writer.flush() // Ensure data is sent immediately
