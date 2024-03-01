@@ -1,4 +1,4 @@
-@file:OptIn(ExperimentalResourceApi::class, ExperimentalResourceApi::class)
+@file:OptIn(ExperimentalResourceApi::class, ExperimentalResourceApi::class, ExperimentalResourceApi::class)
 
 package pages
 
@@ -41,7 +41,7 @@ class LoginPage(
 ) : Node(buildContext) {
     @Composable
     override fun View(modifier: Modifier) {
-        val logo = File(if(spareMetal){"SpareMetal.png"}else{"Logo.png"})
+        val logo = File("Logo.png")
         var compDD by remember { mutableStateOf(false)}
         var compKey by remember { mutableStateOf("") }
         val tbaMatches = listOf(
@@ -74,7 +74,7 @@ class LoginPage(
                     value = scoutName.value,
                     onValueChange = {scoutName.value = it},
                     shape = RoundedCornerShape(15.dp),
-                    colors = TextFieldDefaults.outlinedTextFieldColors(backgroundColor = currentColors.primary, focusedBorderColor = currentColors.primaryVariant, unfocusedBorderColor = currentColors.primaryVariant, textColor = currentColors.onPrimary, cursorColor = currentColors.onSecondary),
+                    colors = TextFieldDefaults.outlinedTextFieldColors(backgroundColor = currentColors.primary, focusedBorderColor = currentColors.primaryVariant, unfocusedBorderColor = currentColors.primaryVariant, textColor = currentColors.onSecondary, cursorColor = currentColors.onSecondary),
                 )
             }
             Box(modifier = Modifier.padding(15.dp).fillMaxWidth()) {
@@ -100,16 +100,16 @@ class LoginPage(
                 DropdownMenu(expanded = compDD, onDismissRequest = { compDD = false; },modifier=Modifier.background(color = currentColors.onSurface)) {
                     DropdownMenuItem(
                         onClick = { comp.value = "Bonney Lake"; compDD = false; compKey = tbaMatches[0]}
-                    ) { Text(text = "Bonney Lake", color = defaultOnPrimary,modifier=Modifier.background(color = currentColors.onSurface)) }
+                    ) { Text(text = "Bonney Lake", color = currentColors.onPrimary,modifier=Modifier.background(color = currentColors.onSurface)) }
                     DropdownMenuItem(
                         onClick = { comp.value = "Lake Sammamish"; compDD = false; compKey = tbaMatches[1]}
-                    ) { Text(text = "Lake Sammamish", color = defaultOnPrimary,modifier=Modifier.background(color = currentColors.onSurface)) }
+                    ) { Text(text = "Lake Sammamish", color = currentColors.onPrimary,modifier=Modifier.background(color = currentColors.onSurface)) }
                     DropdownMenuItem(
                         onClick = { comp.value = "Salem"; compDD = false; compKey = tbaMatches[2]}
-                    ) { Text(text = "Salem", color = defaultOnPrimary,modifier=Modifier.background(color = currentColors.onSurface)) }
+                    ) { Text(text = "Salem", color = currentColors.onPrimary,modifier=Modifier.background(color = currentColors.onSurface)) }
                     DropdownMenuItem(
                         onClick = { comp.value = "Houston"; compDD = false; compKey = tbaMatches[3]}
-                    ) { Text(text = "Houston", color = defaultOnPrimary,modifier=Modifier.background(color = currentColors.onSurface)) }
+                    ) { Text(text = "Houston", color = currentColors.onPrimary,modifier=Modifier.background(color = currentColors.onSurface)) }
                 }
 
             }
