@@ -75,7 +75,7 @@ fun sendData(context: Context, ipAddress: String) {
     }
     val socket = Socket()
     try {
-        socket.connect(InetSocketAddress(ipAddress, 8880), 500)
+        socket.connect(InetSocketAddress(ipAddress, 45482), 500)
         socket.getOutputStream().writer().use { writer ->
             writer.write(jsonArray.toString() + "\n")
             writer.flush() // Ensure data is sent immediately

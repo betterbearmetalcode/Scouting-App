@@ -76,5 +76,5 @@ val defaultScheme = darkColorScheme(
 )
 
 
-val serverSocket = Server(8880)
+val serverSocket = Server(45482)
 
