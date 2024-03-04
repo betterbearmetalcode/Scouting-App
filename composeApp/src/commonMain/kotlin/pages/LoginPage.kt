@@ -20,6 +20,7 @@ import com.bumble.appyx.components.backstack.BackStack
 import com.bumble.appyx.components.backstack.operation.push
 import com.bumble.appyx.navigation.modality.BuildContext
 import com.bumble.appyx.navigation.node.Node
+import compKey
 import defaultBackground
 import defaultOnPrimary
 import defaultPrimaryVariant
@@ -36,7 +37,6 @@ class LoginPage(
     override fun View(modifier: Modifier) {
         val logo = File("Logo.png")
         var compDD by remember { mutableStateOf(false)}
-        var compKey by remember { mutableStateOf("") }
         val tbaMatches = listOf(
             "2024wabon",
             "2024wasam",

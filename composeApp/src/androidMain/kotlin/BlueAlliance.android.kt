@@ -13,6 +13,8 @@ import java.io.FileNotFoundException
 import java.time.Instant
 import java.util.*
 
+
+
 /**
  * Updates match data
  *
@@ -114,9 +116,9 @@ actual fun setTeam(
         it as JSONObject
         if ((it["key"] as String).contains("qm")) {
             if ((it["key"] as String).split("qm")[1] != match.value)
-                return
+                continue
         } else {
-            return
+            continue
         }
         val redAlliance = ((it["alliances"] as JSONObject)["red"] as JSONObject)["team_keys"] as JSONArray
         val blueAlliance = ((it["alliances"] as JSONObject)["blue"] as JSONObject)["team_keys"] as JSONArray
