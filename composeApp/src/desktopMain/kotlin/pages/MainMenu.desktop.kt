@@ -58,9 +58,6 @@ actual class MainMenu actual constructor(
                     fontSize = 25.sp,
                     modifier = Modifier.align(Alignment.Center)
                 )
-                OutlinedButton(onClick = {backStack.push(RootNode.NavTarget.LoginPage)},modifier = Modifier.scale(0.75f).align(Alignment.CenterEnd)) {
-                    Text(text = "Settings", color = getCurrentTheme().onPrimary)
-                }
             }
             Divider(color = getCurrentTheme().onSurface, thickness = 2.dp)
             OutlinedButton(

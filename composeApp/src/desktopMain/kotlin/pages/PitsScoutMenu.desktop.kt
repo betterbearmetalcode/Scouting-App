@@ -28,9 +28,12 @@ import com.github.sarxos.webcam.Webcam
 import composables.CheckBox
 import composables.Profile
 import defaultError
+import defaultOnError
 import defaultOnPrimary
+import defaultOnSecondary
+import defaultOnSurface
 import defaultPrimaryVariant
-import getCurrentTheme
+import defaultSecondary
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import java.lang.Integer.parseInt
 
@@ -47,15 +50,16 @@ actual class PitsScoutMenu actual constructor(
 ) : Node(buildContext = buildContext) {
     @Composable
     actual override fun View(modifier: Modifier) {
-        val photoArray = mutableStateOf(ArrayList<ImageBitmap>())
+        val photoArray = ArrayList<ImageBitmap>()
         var pitsPersonDD by remember { mutableStateOf(false) }
         val numOfPitsPeople by remember { mutableStateOf(6) }
         var scoutedTeamName by remember { mutableStateOf("") }
         var scoutedTeamNumber by remember { mutableStateOf("") }
-        var robotLength by remember{mutableStateOf("0")}
-        var robotWidth by remember{ mutableStateOf("0")}
+        var robotLength by remember{mutableStateOf("")}
+        var robotWidth by remember{ mutableStateOf("")}
         var robotTypeDropDown by remember { mutableStateOf(false) }
         var robotType by remember { mutableStateOf("NoneSelected") }
+        var hasImage by remember { mutableStateOf(false) }
         var collectPrefDD by remember{ mutableStateOf(false)}
         var collectPreference by remember { mutableStateOf("None Selected") }
         var concerns by remember { mutableStateOf("") }
@@ -65,14 +69,13 @@ actual class PitsScoutMenu actual constructor(
         val isScrollEnabled by remember{ mutableStateOf(true)}
         var robotCard by remember {mutableStateOf(false)}
         var photoAlert by remember { mutableStateOf(false) }
-        val perimeterChecked by remember { mutableStateOf(if (2 * (parseInt(robotLength) + parseInt(robotWidth)) > 120 && robotLength!="" && robotWidth!="") "crossmark.png" else "checkmark.png") }
-
+       // val perimeterChecked by remember { mutableStateOf(if (robotLength!="" && robotWidth!=""&& parseInt(robotLength) + parseInt(robotWidth) > 60) "crossmark.png" else "checkmark.png"
         Column(modifier = Modifier.verticalScroll(state = scrollState, enabled = isScrollEnabled).padding(5.dp)) {
             Box( modifier = Modifier.offset(20.dp, 15.dp).fillMaxWidth()) {
                 Text(
                     text = "Pits",
                     fontSize = 50.sp,
-                    color = getCurrentTheme().onPrimary,
+                    color = defaultOnPrimary,
                 )
                 TextButton(
                     onClick = { pitsPersonDD = true },
@@ -81,14 +84,14 @@ actual class PitsScoutMenu actual constructor(
                     Text(
                         text = pitsPerson.value,
                         fontSize = 40.sp,
-                        color = getCurrentTheme().onPrimary,
+                        color = defaultOnPrimary,
                     )
                 }
                 Box(modifier = Modifier.align(Alignment.CenterEnd).padding(15.dp).offset(0.dp,15.dp)) {
                     DropdownMenu(
                         expanded = pitsPersonDD,
                         onDismissRequest = { pitsPersonDD = false },
-                        modifier = Modifier.background(color = getCurrentTheme().onSurface).clip(RoundedCornerShape(7.5.dp))
+                        modifier = Modifier.background(color = defaultOnSurface).clip(RoundedCornerShape(7.5.dp))
 
                     ) {
                         for(x in 1..numOfPitsPeople){
@@ -98,41 +101,56 @@ actual class PitsScoutMenu actual constructor(
                                     pitsPerson.value = "P$x"
                                 }
                             ) {
-                                Text("P$x", color = getCurrentTheme().onPrimary)
+                                Text("P$x", color = defaultOnPrimary)
                             }
                         }
                     }
                 }
             }
-            Row(modifier = Modifier.scale(0.75f)){
-                Text(
-                    text="Team Name: ",
-                    fontSize = 20.sp,
-                    color = getCurrentTheme().onPrimary
-                )
+            Row(){
+                Column{
+                    Text(
+                        text="Team",
+                        fontSize = 15.sp,
+                        color = defaultOnPrimary
+                    )
+                    Text(
+                        text=" Name:",
+                        fontSize = 15.sp,
+                        color = defaultOnPrimary
+                    )}
                 OutlinedTextField(
                     value = scoutedTeamName,
                     onValueChange ={ scoutedTeamName = it},
-                    textStyle = TextStyle.Default.copy(fontSize = 20.sp),
-                    colors = TextFieldDefaults.outlinedTextFieldColors(backgroundColor = getCurrentTheme().onError, focusedBorderColor = getCurrentTheme().secondary, textColor = getCurrentTheme().onPrimary),
+                    singleLine = true,
+                    textStyle = TextStyle.Default.copy(fontSize = 19.sp),
+                    colors = TextFieldDefaults.outlinedTextFieldColors(backgroundColor = defaultOnError, focusedBorderColor = defaultSecondary, textColor = defaultOnPrimary),
                     shape = RoundedCornerShape(15.dp),
-                    modifier = Modifier.size(85.dp,60.dp)
+                    modifier = Modifier.fillMaxWidth(1f/2f)
                 )
-                Text(
-                    text="Team Number: ",
-                    fontSize = 20.sp,
-                )
+                Column{
+                    Text(
+                        text="Team",
+                        fontSize = 15.sp,
+                        color = defaultOnPrimary
+                    )
+                    Text(
+                        text=" Number:",
+                        fontSize = 15.sp,
+                        color = defaultOnPrimary
+                    )}
                 OutlinedTextField(
                     value = scoutedTeamNumber,
-                    onValueChange ={ scoutedTeamNumber = it},
-                    textStyle = TextStyle.Default.copy(fontSize = 20.sp),
-                    colors = TextFieldDefaults.outlinedTextFieldColors(backgroundColor = getCurrentTheme().onError, focusedBorderColor = getCurrentTheme().secondary, textColor = getCurrentTheme().onPrimary),
+                    onValueChange ={ scoutedTeamNumber = it.filter {it.isDigit()}},
+                    singleLine = true,
+                    textStyle = TextStyle.Default.copy(fontSize = 19.sp),
+                    colors = TextFieldDefaults.outlinedTextFieldColors(backgroundColor = defaultOnError, focusedBorderColor = defaultSecondary, textColor = defaultOnPrimary),
                     shape = RoundedCornerShape(15.dp),
-                    modifier = Modifier.size(85.dp,60.dp)
+                    modifier = Modifier.fillMaxWidth(7f/8f).padding(5.dp)
                 )
             }
             Spacer(modifier = Modifier.height(7.5.dp))
-            Divider(color = getCurrentTheme().onSecondary, thickness = 2.dp, modifier = Modifier.clip(CircleShape))
+            Divider(color = defaultOnSecondary, thickness = 2.dp, modifier = Modifier.clip(CircleShape))
             Spacer(modifier = Modifier.height(7.5.dp))
             Row {
                 Text(
@@ -170,18 +188,32 @@ actual class PitsScoutMenu actual constructor(
                     text = "inches",
                     color = Color.Gray
                 )
-                }
-            Image(
-                org.jetbrains.compose.resources.painterResource(res = perimeterChecked),
-                contentDescription = "dimensions checked",
-                modifier = Modifier
-                    .size(30.dp)
-                    .offset(x = (98.5).dp),
-            )
-
+            }
             Row {
                 Text(
-                    text = "type"
+                     text = "Perimeter Check?"
+                )
+                 if (robotLength!="" && robotWidth!=""&& parseInt(robotLength) + parseInt(robotWidth) < 60){
+                    Image(
+                        painter = org.jetbrains.compose.resources.painterResource("checkmark.png"),
+                        contentDescription = "dimensions checked",
+                        modifier = Modifier
+                            .size(30.dp)
+                            //.offset(x = (98.5).dp),
+                    )
+                 }else{
+                    Image(
+                        painter = org.jetbrains.compose.resources.painterResource("crossmark.png"),
+                        contentDescription = "dimensions checked",
+                        modifier = Modifier
+                            .size(30.dp)
+                           // .offset(x = (98.5).dp),
+                    )
+                }
+            }
+            Row {
+                Text(
+                    text = "Type"
                 )
                 OutlinedButton(
                     onClick = {
@@ -234,8 +266,9 @@ actual class PitsScoutMenu actual constructor(
                     if(photoAmount<3) {
                         if (webcam != null) {
                             webcam.open()
-                            photoArray.value.add(webcam.image.toComposeImageBitmap())
+                            photoArray.add(webcam.image.toComposeImageBitmap())
                             webcam.close()
+                            hasImage = true
                             photoAmount++
 
                         }
@@ -265,27 +298,27 @@ actual class PitsScoutMenu actual constructor(
                     RoundedCornerShape(5.dp)).border(BorderStroke(3.dp,defaultPrimaryVariant),RoundedCornerShape(5.dp)))
             }
             Row(modifier = Modifier.horizontalScroll(ScrollState(0))) {
-                    photoArray.value.forEach {
-                        Image(
-                            painter = BitmapPainter(it),
-                            contentDescription = "Robot image",
-                            contentScale = ContentScale.Fit,
-                            modifier = Modifier
-                                .clip(RoundedCornerShape(7.5.dp))
-                                .fillMaxSize()
-                        )
-                        TextButton(
-                            onClick = {
-                                photoArray.value.remove(it)
-                                photoAmount--
-                            },
+                photoArray.forEach {
+                    Image(
+                        painter = BitmapPainter(it),
+                        contentDescription = "Robot image",
+                        contentScale = ContentScale.Fit,
+                        modifier = Modifier
+                            .clip(RoundedCornerShape(7.5.dp))
+                            .fillMaxSize()
+                    )
+                    TextButton(
+                        onClick = {
+                            photoArray.remove(it)
+                            photoAmount--
+                        },
                         ) {
-                            Image(
-                                painter = painterResource("trash.png"),
-                                contentDescription = "Delete",
-                            )
-                        }
+                        Icon(
+                            painter = painterResource("trash.png"),
+                            contentDescription = "Delete",
+                            modifier=Modifier.background(Color.White, RoundedCornerShape(7.5.dp)))
                     }
+                }
             }
             if (photoAmount >= 1){
                 Box(modifier = Modifier.fillMaxWidth()){
@@ -296,7 +329,8 @@ actual class PitsScoutMenu actual constructor(
                 text = "Strengths:",
                 fontSize = 30.sp
             )
-            Divider(color = getCurrentTheme().primaryVariant, thickness = 2.dp, modifier = Modifier.clip(CircleShape))
+
+            Divider(color = defaultPrimaryVariant, thickness = 2.dp, modifier = Modifier.clip(CircleShape))
 
             CheckBox("Amp:", ampStrength, modifier = Modifier.scale(1.25f))
             CheckBox("Speaker:", speakerStrength, modifier = Modifier.scale(1.25f))
@@ -363,7 +397,7 @@ actual class PitsScoutMenu actual constructor(
                 modifier = Modifier.fillMaxWidth(9f/10f).align(Alignment.CenterHorizontally).height(90.dp)
             )
             Row{
-                OutlinedButton(onClick = { if (photoArray.value.size >= 1) { robotCard = true }}) { Text(text = "Submit", color = defaultOnPrimary) }
+                OutlinedButton(onClick = { if (photoArray.size >= 1) { robotCard = true }}) { Text(text = "Submit", color = defaultOnPrimary) }
                 OutlinedButton(onClick = { robotCard = false }) { Text(text = "Close", color = defaultOnPrimary) }
                 OutlinedButton(onClick = {}) { Text(text = "Download", color = defaultOnPrimary) }
                 OutlinedButton(onClick = { backStack.push(RootNode.NavTarget.MainMenu) }) { Text(text = "Back", color = defaultOnPrimary)

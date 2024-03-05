@@ -7,25 +7,22 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.painter.BitmapPainter
-import androidx.compose.ui.graphics.toComposeImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import defaultOnPrimary
 import defaultPrimaryVariant
-import java.awt.image.BufferedImage
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun Profile(
-    photoArray: MutableState<ArrayList<ImageBitmap>>,
+    photoArray: ArrayList<ImageBitmap>,
     teamName: String,
     teamNumber: String,
     driveType: String,
@@ -42,7 +39,7 @@ fun Profile(
     SwipeToDismiss(background = {}, state = DismissState(DismissValue.Default)) {
         Card(elevation = 2.dp, backgroundColor = Color(15, 15, 15)) {
             Column {
-                Image(painter = BitmapPainter(photoArray.value[0]), contentDescription = "Robot Image", modifier = Modifier.clip(RoundedCornerShape(7.5.dp)))
+                Image(painter = BitmapPainter(photoArray[0]), contentDescription = "Robot Image", modifier = Modifier.clip(RoundedCornerShape(7.5.dp)))
                 Divider(color = Color.Gray)
                 Row {
                     Box(modifier = Modifier.fillMaxWidth()) {
@@ -68,7 +65,7 @@ fun Profile(
                     text = "I am $robotWidth by $robotLength, I like to intake using $intakePref. I enjoy long, luxurious walks on the beach with my intense $driveType drive. As you'll find out I am very efficient in multiple ways;\n Amp: $ampStrength \n Speaker: $speakerStrength \n Climb: $climbStrength \n Trap: $trapStrength \n You should generally be concerned about my $concerns."
                 )
                 Row(modifier = Modifier.horizontalScroll(ScrollState(0))) {
-                    photoArray.value.forEach {
+                    photoArray.forEach {
                         Image(
                             painter = BitmapPainter(it),
                             contentDescription = "Robot image",

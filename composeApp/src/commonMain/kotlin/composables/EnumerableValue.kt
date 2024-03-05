@@ -1,10 +1,10 @@
 package composables
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.MutableIntState
 
 @Composable
 expect fun EnumerableValue(
     label: String,
-    value: MutableState<Int>
+    value: MutableIntState
 )

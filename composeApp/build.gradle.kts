@@ -101,14 +101,14 @@ android {
     }
     dependencies {
         debugImplementation(libs.compose.ui.tooling)
+        implementation(libs.androidx.material3.desktop)
+        implementation(libs.androidx.databinding.compiler)
+        //implementation(libs.androidx.material3.android)
+        implementation(libs.androidx.ui.unit.android)
     }
 }
 
 //dependencies {
-//    implementation(libs.androidx.material3.desktop)
-//    implementation(libs.androidx.databinding.compiler)
-//    implementation(libs.androidx.material3.android)
-//    implementation(libs.androidx.ui.unit.android)
 //}
 
 compose.desktop {

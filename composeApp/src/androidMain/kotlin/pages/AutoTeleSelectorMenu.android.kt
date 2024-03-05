@@ -23,6 +23,7 @@ import setTeam
 
 @Composable
 actual fun AutoTeleSelectorMenu(
+    match: MutableState<String>,
     team: MutableIntState,
     robotStartPosition: MutableIntState,
     selectAuto: MutableState<Boolean>,

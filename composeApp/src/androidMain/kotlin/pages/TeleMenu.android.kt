@@ -17,7 +17,7 @@ import coil.request.ImageRequest
 import com.bumble.appyx.components.backstack.BackStack
 import com.bumble.appyx.components.backstack.operation.pop
 import composables.EnumerableValue
-import composables.Notes
+import composables.Comments
 import defaultSecondary
 import exportScoutData
 import keyboardAsState
@@ -63,7 +63,7 @@ actual fun TeleMenu (
 
         HorizontalDivider(color = Color.Black, thickness = 4.dp)
 
-        Notes(teleNotes, isScrollEnabled)
+        Comments(teleNotes, isScrollEnabled)
 
         OutlinedButton(
             border = BorderStroke(3.dp, Color.Yellow),
