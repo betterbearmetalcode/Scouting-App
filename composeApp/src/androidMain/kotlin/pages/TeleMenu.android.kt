@@ -48,7 +48,8 @@ actual fun TeleMenu (
 
     fun bob() {
         mainMenuBackStack.pop()
-        matchScoutArray[Integer.parseInt(match.value)] = createOutput(team, robotStartPosition)
+        matchScoutArray.putIfAbsent(robotStartPosition.intValue, HashMap())
+        matchScoutArray[robotStartPosition.intValue]?.set(parseInt(match.value), createOutput(team, robotStartPosition))
         exportScoutData(context)
     }
 
@@ -109,7 +110,10 @@ actual fun TeleMenu (
             contentPadding = PaddingValues(horizontal = 10.dp, vertical = 15.dp),
             colors = ButtonDefaults.buttonColors(containerColor = defaultSecondary),
             onClick = {
-                matchScoutArray[parseInt(match.value)] = createOutput(team, robotStartPosition)
+                matchScoutArray.putIfAbsent(robotStartPosition.intValue, HashMap())
+                matchScoutArray[robotStartPosition.intValue]?.set(parseInt(match.value),
+                    createOutput(team, robotStartPosition)
+                )
                 match.value = (parseInt(match.value) + 1).toString()
                 autoSpeakerNum.intValue = 0
                 autoAmpNum.intValue = 0

@@ -39,7 +39,10 @@ actual fun AutoMenu (
     val context = LocalContext.current
     fun bob() {
         mainMenuBackStack.pop()
-        matchScoutArray[Integer.parseInt(match.value)] = createOutput(team, robotStartPosition)
+        matchScoutArray.putIfAbsent(robotStartPosition.intValue, HashMap())
+        matchScoutArray[robotStartPosition.intValue]?.set(Integer.parseInt(match.value),
+            createOutput(team, robotStartPosition)
+        )
         exportScoutData(context)
     }
     val scrollState = rememberScrollState(0)

@@ -41,10 +41,13 @@ fun openFile(context: Context) {
 
     try {
         val tempScoutData =
-            JSONArray(String(FileInputStream(File(context.filesDir, "match_scouting_data.json")).readBytes()))
+            JSONObject(String(FileInputStream(File(context.filesDir, "match_scouting_data.json")).readBytes()))
 
-        for (i in 0..<tempScoutData.length()) {
-            matchScoutArray[i] = tempScoutData[i] as String
+        repeat (6) {
+            val array = tempScoutData[it.toString()] as JSONArray
+            for (i in 0..<array.length()) {
+                matchScoutArray[it]?.set(i, array[i] as String)
+            }
         }
     } catch (_: JSONException) {
 
@@ -56,32 +59,31 @@ fun exportScoutData(context: Context) {
     val file = File(context.filesDir, "match_scouting_data.json")
     file.delete()
     file.createNewFile()
+    val jsonObject = getJsonFromMatchHash()
+
     val jsonArray = JSONArray()
-    matchScoutArray.values.forEach {
-        jsonArray.put(it)
-    }
+    matchScoutArray.values
     val writer = FileWriter(file)
     writer.write(jsonArray.toString(1))
     writer.close()
 }
 
+
+
 fun sendData(context: Context, ipAddress: String) {
     val file = File(context.filesDir, "match_scouting_data.json")
     file.delete()
     file.createNewFile()
-    val jsonArray = JSONArray()
-    matchScoutArray.values.forEach {
-        jsonArray.put(it)
-    }
+    val jsonObject = getJsonFromMatchHash()
     val socket = Socket()
     try {
         socket.connect(InetSocketAddress(ipAddress, 45482), 500)
         socket.getOutputStream().writer().use { writer ->
-            writer.write(jsonArray.toString() + "\n")
+            writer.write(jsonObject.toString(1) + "\n")
             writer.flush() // Ensure data is sent immediately
         }
 
-        Log.i("Client", "Message Sent: $jsonArray")
+        Log.i("Client", "Message Sent: ${jsonObject.toString(1)}")
     } catch (e: IOException) {
         e.printStackTrace()
     } catch (_: SocketException) {
