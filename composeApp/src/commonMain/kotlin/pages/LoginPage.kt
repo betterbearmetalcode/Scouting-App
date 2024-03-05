@@ -53,11 +53,11 @@ class LoginPage(
                 text = "Login",
                 fontSize = 45.sp,
                 color = getCurrentTheme().onPrimary,
-                modifier = Modifier.align(Alignment.CenterHorizontally).offset(0.dp, (-28).dp)
+                modifier = Modifier.align(Alignment.CenterHorizontally)
             )
             Divider(
                 color = defaultPrimaryVariant,
-                modifier = Modifier.offset(0.dp, (-25).dp),
+                modifier = Modifier,
                 thickness = 3.dp
             )
             Row(modifier = Modifier.align(Alignment.CenterHorizontally)) {
