@@ -15,6 +15,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Dialog
 import com.bumble.appyx.components.backstack.BackStack
 import com.bumble.appyx.components.backstack.operation.push
 import com.bumble.appyx.navigation.modality.BuildContext
@@ -43,7 +44,7 @@ actual class MainMenu actual constructor(
 ) : Node(buildContext = buildContext) {
 
     @RequiresApi(Build.VERSION_CODES.O)
-    @OptIn(ExperimentalResourceApi::class)
+    @OptIn(ExperimentalResourceApi::class, ExperimentalMaterial3Api::class)
     @Composable
     actual override fun View(modifier: Modifier) {
         val context = LocalContext.current
@@ -51,6 +52,9 @@ actual class MainMenu actual constructor(
         val openError = remember { mutableStateOf(false) }
         var matchSyncedResource by remember { mutableStateOf(if (matchData == null) "crossmark.png" else "checkmark.png") }
         var teamSyncedResource by remember { mutableStateOf(if (teamData == null) "crossmark.png" else "checkmark.png") }
+        var serverDialogOpen by remember { mutableStateOf(false) }
+        var ipAddress by remember { mutableStateOf("127.0.0.1") }
+        var ipAddressErrorDialog by remember { mutableStateOf(false) }
 
         when {
             openError.value -> {
@@ -262,9 +266,7 @@ actual class MainMenu actual constructor(
                 contentPadding = PaddingValues(horizontal = 10.dp, vertical = 15.dp),
                 colors = ButtonDefaults.buttonColors(containerColor = defaultSecondary),
                 onClick = {
-                    CoroutineScope(Dispatchers.Default).launch {
-                        sendData(context)
-                    }
+                    serverDialogOpen = true
                 }
             ) {
                 Text("Export")
@@ -274,7 +276,34 @@ actual class MainMenu actual constructor(
                 Text(text="Competition ${comp.value}",color = getCurrentTheme().onSecondary,modifier = Modifier.align(Alignment.BottomCenter))
             }
 
+            if (serverDialogOpen) {
+                Dialog(
+                    onDismissRequest = {
+                        serverDialogOpen = false
+                        if (ipAddress.matches(Regex("^((25[0-5]|(2[0-4]|1\\d|[1-9]|)\\d)\\.?\\b){4}\$"))) {
+                            CoroutineScope(Dispatchers.Default).launch {
+                                sendData(context, ipAddress)
+                            }
+                        } else
+                            ipAddressErrorDialog = true
 
+                    }
+                ) {
+                    Text("Set Server I.P.", fontSize = 24.sp)
+                    TextField(
+                        ipAddress,
+                        onValueChange = { ipAddress = it }
+                    )
+                }
+            }
+
+            if (ipAddressErrorDialog) {
+                BasicAlertDialog(
+                    onDismissRequest = { ipAddressErrorDialog = false }
+                ) {
+                    Text("Ip Address was entered incorrectly, check address and enter again")
+                }
+            }
         }
     }
 }

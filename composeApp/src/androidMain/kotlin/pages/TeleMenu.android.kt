@@ -17,7 +17,7 @@ import coil.request.ImageRequest
 import com.bumble.appyx.components.backstack.BackStack
 import com.bumble.appyx.components.backstack.operation.pop
 import composables.EnumerableValue
-import composables.Notes
+import composables.Comments
 import defaultSecondary
 import exportScoutData
 import keyboardAsState
@@ -63,7 +63,7 @@ actual fun TeleMenu (
 
         HorizontalDivider(color = Color.Black, thickness = 4.dp)
 
-        Notes(teleNotes, isScrollEnabled)
+        Comments(teleNotes, isScrollEnabled)
 
         OutlinedButton(
             border = BorderStroke(3.dp, Color.Yellow),
@@ -103,28 +103,12 @@ actual fun TeleMenu (
             onClick = {
                 matchScoutArray[parseInt(match.value)] = createOutput(team, robotStartPosition)
                 match.value = (parseInt(match.value) + 1).toString()
-                autoSpeakerNum.intValue = 0
-                autoAmpNum.intValue = 0
-                collected.intValue = 0
-                autoSMissed.intValue = 0
-                autoAMissed.intValue = 0
-                autoNotes.value = ""
-                teleSpeakerNum.intValue = 0
-                teleAmpNum.intValue = 0
-                teleTrapNum.intValue = 0
-                teleSMissed.intValue = 0
-                teleAMissed.intValue = 0
-                m1.intValue = 0
-                m2.intValue = 0
-                m3.intValue = 0
-                m4.intValue = 0
-                m5.intValue = 0
-                f1.intValue = 0
-                f2.intValue = 0
-                f3.intValue = 0
+                reset()
                 teleNotes.value = ""
                 selectAuto.value = false
                 exportScoutData(context)
+                loadData(parseInt(match.value),team)
+                println(matchScoutArray[parseInt(match.value)])
                 backStack.pop()
             },
             modifier = Modifier.align(Alignment.CenterHorizontally)

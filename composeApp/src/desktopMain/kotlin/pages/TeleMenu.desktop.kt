@@ -16,7 +16,7 @@ import androidx.compose.ui.unit.sp
 import com.bumble.appyx.components.backstack.BackStack
 import com.bumble.appyx.components.backstack.operation.pop
 import composables.EnumerableValue
-import composables.Notes
+import composables.Comments
 import defaultSecondary
 import exportScoutData
 import keyboardAsState
@@ -61,7 +61,7 @@ actual fun TeleMenu (
 
         Divider(color = Color.Black, thickness = 4.dp)
 
-        Notes(teleNotes, isScrollEnabled)
+        Comments(teleNotes, isScrollEnabled)
 
         OutlinedButton(
             border = BorderStroke(3.dp, Color.Yellow),
@@ -102,28 +102,12 @@ actual fun TeleMenu (
             onClick = {
                 matchScoutArray[parseInt(match.value)] = createOutput(team, robotStartPosition)
                 match.value = (parseInt(match.value) + 1).toString()
-                autoSpeakerNum.value = 0
-                autoAmpNum.value = 0
-                collected.value = 0
-                autoSMissed.value = 0
-                autoAMissed.value = 0
-                autoNotes.value = ""
-                teleSpeakerNum.value = 0
-                teleAmpNum.value = 0
-                teleTrapNum.value = 0
-                teleSMissed.value = 0
-                teleAMissed.value = 0
-                m1.intValue = 0
-                m2.intValue = 0
-                m3.intValue = 0
-                m4.intValue = 0
-                m5.intValue = 0
-                f1.intValue = 0
-                f2.intValue = 0
-                f3.intValue = 0
+                reset()
                 teleNotes.value = ""
                 selectAuto.value = false
                 exportScoutData()
+                loadData(parseInt(match.value),team)
+                println(matchScoutArray[parseInt(match.value)])
                 backStack.pop()
             },
             modifier = Modifier.align(Alignment.CenterHorizontally)
