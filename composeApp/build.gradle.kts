@@ -41,6 +41,8 @@ kotlin {
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)
             implementation(libs.kotlinx.coroutines.test)
+            // https://mvnrepository.com/artifact/com.github.librepdf/openpdf
+            implementation("com.github.librepdf:openpdf:2.0.1")
         }
 
         commonMain.dependencies {

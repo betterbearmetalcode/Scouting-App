@@ -7,6 +7,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -18,6 +19,7 @@ import defaultBackground
 import defaultOnBackground
 import defaultOnPrimary
 import defaultPrimaryVariant
+import exportScoutData
 import nodes.*
 import setTeam
 
@@ -32,6 +34,7 @@ actual fun AutoTeleSelectorMenu(
     //setTeam(team, match, robotStartPosition.intValue)
     var pageName by remember { mutableStateOf("Auto") }
     var positionName by remember { mutableStateOf("") }
+    val context = LocalContext.current
 
     when (robotStartPosition.intValue){
         0 -> {positionName = "R1"}
@@ -85,8 +88,16 @@ actual fun AutoTeleSelectorMenu(
             TextField(
                 value = match.value,
                 onValueChange = { value ->
-                    match.value = value.filter { it.isDigit() }
-                    setTeam(team, match, robotStartPosition.intValue)
+                    if(match.value != "") {
+                        matchScoutArray[Integer.parseInt(match.value)] = createOutput(team, robotStartPosition)
+                        exportScoutData(context)
+                    }
+                    match.value = value.filter { it.isDigit() };
+                    if(match.value != ""){
+                        println(matchScoutArray[Integer.parseInt(match.value)])
+                        loadData(Integer.parseInt(value),team)
+                    }
+
                 },
                 modifier = Modifier.fillMaxWidth(),
                 colors = TextFieldDefaults.colors(

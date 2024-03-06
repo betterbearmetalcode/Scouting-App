@@ -50,7 +50,7 @@ actual class PitsScoutMenu actual constructor(
 ) : Node(buildContext = buildContext) {
     @Composable
     actual override fun View(modifier: Modifier) {
-        val photoArray = ArrayList<ImageBitmap>()
+        val photoArray by remember { mutableStateOf(ArrayList<ImageBitmap>())}
         var pitsPersonDD by remember { mutableStateOf(false) }
         val numOfPitsPeople by remember { mutableStateOf(6) }
         var scoutedTeamName by remember { mutableStateOf("") }
@@ -270,7 +270,6 @@ actual class PitsScoutMenu actual constructor(
                             webcam.close()
                             hasImage = true
                             photoAmount++
-
                         }
                     }else{
                         photoAlert = true
@@ -315,8 +314,7 @@ actual class PitsScoutMenu actual constructor(
                         ) {
                         Icon(
                             painter = painterResource("trash.png"),
-                            contentDescription = "Delete",
-                            modifier=Modifier.background(Color.White, RoundedCornerShape(7.5.dp)))
+                            contentDescription = "Delete")
                     }
                 }
             }
@@ -406,7 +404,7 @@ actual class PitsScoutMenu actual constructor(
             if(robotCard){
                 Box(modifier = Modifier.padding(5.dp)) {
                     Profile(
-                        photoArray,  scoutedTeamName, scoutedTeamNumber, robotType, collectPreference,
+                        photoArray, scoutedTeamName, scoutedTeamNumber, robotType, collectPreference,
                         robotLength, robotWidth, ampStrength.value, speakerStrength.value,
                         climbStrength.value, trapStrength.value, concerns,scoutName.value)
                 }
