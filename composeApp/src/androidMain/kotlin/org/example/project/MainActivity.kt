@@ -1,7 +1,6 @@
 package org.example.project
 
 
-import Server
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.compose.animation.ExperimentalAnimationApi
@@ -31,7 +30,6 @@ import nodes.RootNode
 class MainActivity : NodeActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        serverSocket.start()
         super.onCreate(savedInstanceState)
 
         setContent {
@@ -74,7 +72,4 @@ val defaultScheme = darkColorScheme(
     onSurface = defaultOnSurface,
     outline = defaultSecondary
 )
-
-
-val serverSocket = Server(45482)
 

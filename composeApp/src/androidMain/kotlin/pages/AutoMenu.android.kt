@@ -163,7 +163,6 @@ actual fun AutoMenu (
             shape = CircleShape,
             colors = ButtonDefaults.buttonColors(containerColor = defaultSecondary),
             onClick = {
-                exportScoutData(context)
                 bob()
             },
             modifier = Modifier.align(Alignment.CenterHorizontally)

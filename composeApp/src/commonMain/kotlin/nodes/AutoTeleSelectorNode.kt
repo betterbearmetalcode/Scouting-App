@@ -99,6 +99,7 @@ fun createOutput(team: MutableIntState, robotStartPosition: MutableIntState): St
             m5.value + "/" + teleSpeakerNum.value + "/" +
             teleAmpNum.value + "/" + teleTrapNum.value + "/" +
             teleSMissed.value + "/" + teleAMissed.value + "/" +
-            autoNotesFinal + "/" + teleNotesFinal
+            autoNotesFinal + "/" + teleNotesFinal + "/" +
+            scoutName.value
 
 }

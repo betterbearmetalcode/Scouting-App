@@ -17,9 +17,9 @@ import java.net.SocketException
 
 fun createFile(context: Context) {
     val file = File(context.filesDir, "match_data.json")
-
     file.delete()
     file.createNewFile()
+
     val writer = FileWriter(file)
 
     matchData?.toString(1)?.let { writer.write(it) }
@@ -39,41 +39,48 @@ fun openFile(context: Context) {
 
     teamData = JSONObject(String(FileInputStream(File(context.filesDir, "match_data.json")).readBytes()))
 
-    try {
-        val tempScoutData =
-            JSONObject(String(FileInputStream(File(context.filesDir, "match_scouting_data.json")).readBytes()))
+    openScoutFile(context)
+}
 
-        repeat (6) {
+fun openScoutFile(context: Context) {
+
+    val tempScoutData =
+        JSONObject(String(FileInputStream(File(context.filesDir, "match_scouting_data.json")).readBytes()))
+
+    repeat (6) {
+        try {
             val array = tempScoutData[it.toString()] as JSONArray
             for (i in 0..<array.length()) {
+                matchScoutArray.putIfAbsent(it, HashMap())
                 matchScoutArray[it]?.set(i, array[i] as String)
             }
-        }
-    } catch (_: JSONException) {
-
+        } catch (_: JSONException) {}
     }
+
 }
 
 
 fun exportScoutData(context: Context) {
+    try {
+        openScoutFile(context)
+    } catch (_: FileNotFoundException) {
+
+    }
     val file = File(context.filesDir, "match_scouting_data.json")
     file.delete()
     file.createNewFile()
     val jsonObject = getJsonFromMatchHash()
 
-    val jsonArray = JSONArray()
     matchScoutArray.values
     val writer = FileWriter(file)
-    writer.write(jsonArray.toString(1))
+    writer.write(jsonObject.toString(1))
     writer.close()
 }
 
 
 
 fun sendData(context: Context, ipAddress: String) {
-    val file = File(context.filesDir, "match_scouting_data.json")
-    file.delete()
-    file.createNewFile()
+    exportScoutData(context)
     val jsonObject = getJsonFromMatchHash()
     val socket = Socket()
     try {

@@ -29,9 +29,11 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import matchData
+import nodes.match
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 import sendData
+import setTeam
 import sync
 import teamData
 
@@ -91,8 +93,7 @@ actual class MainMenu actual constructor(
                     sync(false, context)
                     if (!openError.value)
                         selectedPlacement = true
-                    else
-                        matchSyncedResource = "checkmark.png"
+
                 },
                 modifier = Modifier
                     .align(Alignment.CenterHorizontally)
@@ -232,7 +233,7 @@ actual class MainMenu actual constructor(
 
                     Spacer(modifier = Modifier.height(10.dp))
 
-                    Row {
+                    Box(Modifier.fillMaxWidth(1f/2f)) {
                         Text ("Robot List")
 
                         Image(
@@ -240,13 +241,13 @@ actual class MainMenu actual constructor(
                             contentDescription = "status",
                             modifier = Modifier
                                 .size(30.dp)
-                                .offset(x = 100.dp, y = (-5).dp)
+                                .align(Alignment.CenterEnd)
                         )
                     }
 
                     Spacer(modifier = Modifier.height(10.dp))
 
-                    Row {
+                    Box(Modifier.fillMaxWidth(1f/2f)) {
                         Text ("Match List")
 
                         Image(
@@ -254,7 +255,7 @@ actual class MainMenu actual constructor(
                             contentDescription = "status",
                             modifier = Modifier
                                 .size(30.dp)
-                                .offset(x = (98.5).dp),
+                                .align(Alignment.CenterEnd)
                         )
                     }
                 }

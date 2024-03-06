@@ -28,7 +28,7 @@ actual fun AutoTeleSelectorMenu(
     selectAuto: MutableState<Boolean>,
     backStack: BackStack<AutoTeleSelectorNode.NavTarget>
 ) {
-    //setTeam(team, match, robotStartPosition.intValue)
+    setTeam(team, match, robotStartPosition.intValue)
     var pageName by remember { mutableStateOf("Auto") }
     var positionName by remember { mutableStateOf("") }
 
