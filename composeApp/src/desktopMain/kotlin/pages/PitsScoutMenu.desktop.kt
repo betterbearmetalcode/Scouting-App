@@ -27,6 +27,7 @@ import com.bumble.appyx.navigation.node.Node
 import com.github.sarxos.webcam.Webcam
 import composables.CheckBox
 import composables.Profile
+import composables.pitsDownload
 import defaultError
 import defaultOnError
 import defaultOnPrimary
@@ -397,7 +398,7 @@ actual class PitsScoutMenu actual constructor(
             Row{
                 OutlinedButton(onClick = { if (photoArray.size >= 1) { robotCard = true }}) { Text(text = "Submit", color = defaultOnPrimary) }
                 OutlinedButton(onClick = { robotCard = false }) { Text(text = "Close", color = defaultOnPrimary) }
-                OutlinedButton(onClick = {}) { Text(text = "Download", color = defaultOnPrimary) }
+                OutlinedButton(onClick = { pitsDownload(photoArray,scoutedTeamNumber)}) { Text(text = "Download", color = defaultOnPrimary) }
                 OutlinedButton(onClick = { backStack.push(RootNode.NavTarget.MainMenu) }) { Text(text = "Back", color = defaultOnPrimary)
                 }
             }

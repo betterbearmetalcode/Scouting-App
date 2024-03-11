@@ -42,10 +42,12 @@ kotlin {
             implementation(compose.desktop.currentOs)
             implementation(libs.kotlinx.coroutines.test)
             // https://mvnrepository.com/artifact/com.github.librepdf/openpdf
-            implementation("com.github.librepdf:openpdf:2.0.1")
+            implementation(libs.openpdf)
         }
 
         commonMain.dependencies {
+            // https://mvnrepository.com/artifact/org.slf4j/slf4j-nop
+            implementation(libs.slf4j.nop)
             implementation(libs.webcam.capture)
             implementation(compose.runtime)
             implementation(compose.foundation)

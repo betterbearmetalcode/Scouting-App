@@ -49,6 +49,7 @@ actual class PitsScoutMenu actual constructor(
     private val trapStrength: MutableState<Boolean>,
     private val scoutName: MutableState<String>
 ) : Node(buildContext = buildContext) {
+    
     @Composable
     actual override fun View(modifier: Modifier) {
         val launcher = rememberLauncherForActivityResult(
