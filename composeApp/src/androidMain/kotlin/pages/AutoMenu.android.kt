@@ -26,13 +26,15 @@ import nodes.matchScoutArray
 import nodes.*
 
 @Composable
-actual fun AutoMenu (
+actual fun AutoMenu(
     backStack: BackStack<AutoTeleSelectorNode.NavTarget>,
     mainMenuBackStack: BackStack<RootNode.NavTarget>,
+
     selectAuto: MutableState<Boolean>,
+
     match: MutableState<String>,
     team: MutableIntState,
-    robotStartPosition: MutableIntState,
+    robotStartPosition: MutableIntState
 ) {
     val context = LocalContext.current
     fun bob() {
@@ -130,7 +132,6 @@ actual fun AutoMenu (
         EnumerableValue(label = "S Missed", value = autoSMissed)
         EnumerableValue(label = "A Missed", value = autoAMissed)
 
-        Comments(autoNotes, isScrollEnabled)
 
         Spacer(Modifier.height(5.dp))
 
@@ -170,4 +171,3 @@ actual fun AutoMenu (
         }
     }
 }
-

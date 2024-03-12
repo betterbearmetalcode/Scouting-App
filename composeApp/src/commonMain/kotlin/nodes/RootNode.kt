@@ -40,6 +40,7 @@ class RootNode(
     private val speakerStrength = mutableStateOf(false)
     private val climbStrength = mutableStateOf(false)
     private val trapStrength = mutableStateOf(false)
+    private val lostComms = mutableStateOf(false)
     sealed class NavTarget : Parcelable {
         @Parcelize
         data object MainMenu : NavTarget()
@@ -58,7 +59,7 @@ class RootNode(
         when (interactionTarget) {
             NavTarget.LoginPage -> LoginPage(buildContext,backStack, scoutName,comp)
             NavTarget.MainMenu -> MainMenu(buildContext, backStack, robotStartPosition,scoutName,comp)
-            NavTarget.MatchScouting -> AutoTeleSelectorNode(buildContext,robotStartPosition, team, backStack)
+            NavTarget.MatchScouting -> AutoTeleSelectorNode(buildContext,robotStartPosition, team, lostComms, backStack)
             NavTarget.PitsScouting -> PitsScoutMenu(buildContext,backStack,pitsPerson,ampStrength,speakerStrength,trapStrength,climbStrength,scoutName)
         }
 

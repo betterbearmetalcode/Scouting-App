@@ -4,12 +4,14 @@ import nodes.RootNode
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.painter.BitmapPainter
@@ -21,10 +23,12 @@ import com.bumble.appyx.components.backstack.operation.push
 import com.bumble.appyx.navigation.modality.BuildContext
 import com.bumble.appyx.navigation.node.Node
 import defaultBackground
+import defaultError
 import defaultOnPrimary
 import defaultPrimaryVariant
 import getCurrentTheme
 import nodes.loadData
+import nodes.matchScoutArray
 import java.io.File
 
 class LoginPage(
@@ -38,6 +42,7 @@ class LoginPage(
         val logo = File("Logo.png")
         var compDD by remember { mutableStateOf(false)}
         var compKey by remember { mutableStateOf("") }
+        var deleteData by remember { mutableStateOf(false) }
         val tbaMatches = listOf(
             "2024wabon",
             "2024wasam",
@@ -65,10 +70,16 @@ class LoginPage(
                 Text(text = "Name", color = defaultOnPrimary)
                 OutlinedTextField(
                     value = scoutName.value,
-                    onValueChange = {scoutName.value = it},
-                    placeholder ={Text("First Name Last Name", color = Color.Gray)},
+                    onValueChange = { scoutName.value = it },
+                    placeholder = { Text("First Name Last Name", color = Color.Gray) },
                     shape = RoundedCornerShape(15.dp),
-                    colors = TextFieldDefaults.outlinedTextFieldColors(backgroundColor = getCurrentTheme().background, focusedBorderColor = getCurrentTheme().onSecondary, unfocusedBorderColor = getCurrentTheme().onSecondary, textColor = getCurrentTheme().onPrimary, cursorColor = getCurrentTheme().onSecondary),
+                    colors = TextFieldDefaults.outlinedTextFieldColors(
+                        backgroundColor = getCurrentTheme().background,
+                        focusedBorderColor = getCurrentTheme().onSecondary,
+                        unfocusedBorderColor = getCurrentTheme().onSecondary,
+                        textColor = getCurrentTheme().onPrimary,
+                        cursorColor = getCurrentTheme().onSecondary
+                    ),
                 )
             }
             Box(modifier = Modifier.padding(15.dp).fillMaxWidth()) {
@@ -91,37 +102,108 @@ class LoginPage(
                         )
                     }
                 }
-                DropdownMenu(expanded = compDD, onDismissRequest = { compDD = false; },modifier=Modifier.background(color = getCurrentTheme().onSurface)) {
+                DropdownMenu(
+                    expanded = compDD,
+                    onDismissRequest = { compDD = false; },
+                    modifier = Modifier.background(color = getCurrentTheme().onSurface)
+                ) {
                     DropdownMenuItem(
-                        onClick = { comp.value = "Bonney Lake"; compDD = false; compKey = tbaMatches[0]}
-                    ) { Text(text = "Bonney Lake", color = getCurrentTheme().onPrimary,modifier=Modifier.background(color = getCurrentTheme().onSurface)) }
+                        onClick = { comp.value = "Bonney Lake"; compDD = false; compKey = tbaMatches[0] }
+                    ) {
+                        Text(
+                            text = "Bonney Lake",
+                            color = getCurrentTheme().onPrimary,
+                            modifier = Modifier.background(color = getCurrentTheme().onSurface)
+                        )
+                    }
                     DropdownMenuItem(
-                        onClick = { comp.value = "Lake Sammamish"; compDD = false; compKey = tbaMatches[1]}
-                    ) { Text(text = "Lake Sammamish", color = getCurrentTheme().onPrimary,modifier=Modifier.background(color = getCurrentTheme().onSurface)) }
+                        onClick = { comp.value = "Lake Sammamish"; compDD = false; compKey = tbaMatches[1] }
+                    ) {
+                        Text(
+                            text = "Lake Sammamish",
+                            color = getCurrentTheme().onPrimary,
+                            modifier = Modifier.background(color = getCurrentTheme().onSurface)
+                        )
+                    }
                     DropdownMenuItem(
-                        onClick = { comp.value = "Salem"; compDD = false; compKey = tbaMatches[2]}
-                    ) { Text(text = "Salem", color = getCurrentTheme().onPrimary,modifier=Modifier.background(color = getCurrentTheme().onSurface)) }
+                        onClick = { comp.value = "Salem"; compDD = false; compKey = tbaMatches[2] }
+                    ) {
+                        Text(
+                            text = "Salem",
+                            color = getCurrentTheme().onPrimary,
+                            modifier = Modifier.background(color = getCurrentTheme().onSurface)
+                        )
+                    }
                     DropdownMenuItem(
-                        onClick = { comp.value = "Houston"; compDD = false; compKey = tbaMatches[3]}
-                    ) { Text(text = "Houston", color = getCurrentTheme().onPrimary,modifier=Modifier.background(color = getCurrentTheme().onSurface)) }
+                        onClick = { comp.value = "Houston"; compDD = false; compKey = tbaMatches[3] }
+                    ) {
+                        Text(
+                            text = "Houston",
+                            color = getCurrentTheme().onPrimary,
+                            modifier = Modifier.background(color = getCurrentTheme().onSurface)
+                        )
+                    }
                 }
 
             }
             Divider(
                 color = defaultPrimaryVariant,
             )
-            OutlinedButton(
-                onClick = {
-                    if (comp.value != "" && scoutName.value != "")
-                    backStack.push(RootNode.NavTarget.MainMenu)
-                },
-                border = BorderStroke(color = defaultPrimaryVariant, width = 2.dp),
-                colors = ButtonDefaults.buttonColors(backgroundColor = getCurrentTheme().primary)
-            ) {
-                Text(
-                    text = "Submit",
-                    color = getCurrentTheme().onPrimary
-                )
+            Box(modifier = Modifier.fillMaxWidth(9f/10f).align(Alignment.CenterHorizontally)) {
+                OutlinedButton(
+                    onClick = {
+                        if (comp.value != "" && scoutName.value != "")
+                            backStack.push(RootNode.NavTarget.MainMenu)
+                    },
+                    border = BorderStroke(color = defaultPrimaryVariant, width = 2.dp),
+                    colors = ButtonDefaults.buttonColors(backgroundColor = getCurrentTheme().primary),
+                    modifier = Modifier.align(Alignment.CenterStart)
+                ) {
+                    Text(
+                        text = "Submit",
+                        color = getCurrentTheme().onPrimary
+                    )
+                }
+                OutlinedButton(
+                    onClick = { deleteData = true },
+                    border = BorderStroke(color = defaultPrimaryVariant, width = 2.dp),
+                    colors = ButtonDefaults.buttonColors(backgroundColor = getCurrentTheme().primary),
+                    modifier = Modifier.align(Alignment.CenterEnd)
+                ) {
+                    Text(
+                        text = "Delete Data",
+                        color = getCurrentTheme().onPrimary
+                    )
+                }
+                if (deleteData) {
+                    AlertDialog(
+                        title = { Text(text = "Are you sure?") },
+                        onDismissRequest = { deleteData = false },
+                        buttons = {
+                            Box(modifier = Modifier.fillMaxWidth(8f / 10f)) {
+                                Button(
+                                    onClick = {
+                                        deleteData = false; matchScoutArray.clear();/*teamScoutArray.clear() for after*/
+                                    },
+                                    modifier = Modifier.align(Alignment.CenterStart)
+                                ) {
+                                    Text(text = "Yes", color = defaultError)
+                                }
+                            }
+                            Button(
+                                onClick = { deleteData = false },
+                                modifier = Modifier.align(Alignment.CenterEnd)
+                            ) {
+                                Text(text = "No", color = defaultError)
+                            }
+                        },
+                        modifier = Modifier.clip(
+                            RoundedCornerShape(5.dp)
+                        ).border(BorderStroke(3.dp, defaultPrimaryVariant), RoundedCornerShape(5.dp))
+
+                    )
+
+                }
             }
         }
     }

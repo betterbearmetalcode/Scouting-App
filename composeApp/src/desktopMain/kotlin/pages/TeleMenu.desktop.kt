@@ -32,6 +32,7 @@ actual fun TeleMenu (
     backStack: BackStack<AutoTeleSelectorNode.NavTarget>,
 
     selectAuto: MutableState<Boolean>,
+    lostComms: MutableState<Boolean>,
 
     match: MutableState<String>,
     team: MutableIntState,
@@ -58,6 +59,10 @@ actual fun TeleMenu (
         EnumerableValue(label = "S Missed", value = teleSMissed)
         EnumerableValue(label = "A Missed", value = teleAMissed)
 
+        Row {
+            Text("Lost Comms?")
+            Checkbox(checked = lostComms.value, onCheckedChange = {lostComms.value=!lostComms.value})
+        }
 
         Divider(color = Color.Black, thickness = 4.dp)
 
@@ -115,4 +120,4 @@ actual fun TeleMenu (
             Text("Next Match", fontSize = 20.sp)
         }
     }
-    }
+}

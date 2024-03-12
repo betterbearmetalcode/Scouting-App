@@ -1,10 +1,7 @@
 package nodes
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableIntState
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import com.bumble.appyx.components.backstack.BackStack
 import com.bumble.appyx.components.backstack.BackStackModel
@@ -21,6 +18,7 @@ class AutoTeleSelectorNode(
     buildContext: BuildContext,
     private var robotStartPosition: MutableIntState,
     private val team: MutableIntState,
+    private val lostComms: MutableState<Boolean>,
     private val mainMenuBackStack: BackStack<RootNode.NavTarget>,
     private val backStack: BackStack<NavTarget> = BackStack(
         model = BackStackModel(
@@ -47,7 +45,7 @@ class AutoTeleSelectorNode(
     override fun resolve(interactionTarget: NavTarget, buildContext: BuildContext): Node =
         when (interactionTarget) {
             NavTarget.AutoScouting -> AutoNode(buildContext, backStack, mainMenuBackStack, selectAuto, match, team, robotStartPosition)
-            NavTarget.TeleScouting -> TeleNode(buildContext, backStack, selectAuto, match, team, robotStartPosition)
+            NavTarget.TeleScouting -> TeleNode(buildContext, backStack, lostComms, selectAuto, match, team, robotStartPosition)
         }
 
     @Composable

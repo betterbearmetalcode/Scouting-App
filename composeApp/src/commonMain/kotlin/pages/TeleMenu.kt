@@ -12,6 +12,7 @@ expect fun TeleMenu(
     backStack: BackStack<AutoTeleSelectorNode.NavTarget>,
 
     selectAuto: MutableState<Boolean>,
+    lostComms: MutableState<Boolean>,
 
     match: MutableState<String>,
     team: MutableIntState,
