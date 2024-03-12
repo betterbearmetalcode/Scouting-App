@@ -28,12 +28,9 @@ import java.io.File
 import java.lang.Integer.parseInt
 
 @Composable
-actual fun TeleMenu (
+actual fun TeleMenu(
     backStack: BackStack<AutoTeleSelectorNode.NavTarget>,
-
     selectAuto: MutableState<Boolean>,
-    lostComms: MutableState<Boolean>,
-
     match: MutableState<String>,
     team: MutableIntState,
     robotStartPosition: MutableIntState
@@ -61,7 +58,9 @@ actual fun TeleMenu (
 
         Row {
             Text("Lost Comms?")
-            Checkbox(checked = lostComms.value, onCheckedChange = {lostComms.value=!lostComms.value})
+            Checkbox(
+                when(nodes.lostComms.intValue) {0 -> false; 1 -> true; else -> false},
+                onCheckedChange = { when(it) {true -> nodes.lostComms.intValue = 1; false -> nodes.lostComms.intValue = 0} })
         }
 
         Divider(color = Color.Black, thickness = 4.dp)

@@ -18,7 +18,6 @@ class AutoTeleSelectorNode(
     buildContext: BuildContext,
     private var robotStartPosition: MutableIntState,
     private val team: MutableIntState,
-    private val lostComms: MutableState<Boolean>,
     private val mainMenuBackStack: BackStack<RootNode.NavTarget>,
     private val backStack: BackStack<NavTarget> = BackStack(
         model = BackStackModel(
@@ -45,7 +44,7 @@ class AutoTeleSelectorNode(
     override fun resolve(interactionTarget: NavTarget, buildContext: BuildContext): Node =
         when (interactionTarget) {
             NavTarget.AutoScouting -> AutoNode(buildContext, backStack, mainMenuBackStack, selectAuto, match, team, robotStartPosition)
-            NavTarget.TeleScouting -> TeleNode(buildContext, backStack, lostComms, selectAuto, match, team, robotStartPosition)
+            NavTarget.TeleScouting -> TeleNode(buildContext, backStack, selectAuto, match, team, robotStartPosition)
         }
 
     @Composable
@@ -81,12 +80,11 @@ val teleAmpNum  = mutableIntStateOf(0)
 val teleTrapNum = mutableIntStateOf(0)
 val teleSMissed = mutableIntStateOf(0)
 val teleAMissed = mutableIntStateOf(0)
-var autoNotes = mutableStateOf("")
+var lostComms = mutableIntStateOf(0)
 var teleNotes = mutableStateOf("")
 
 fun createOutput(team: MutableIntState, robotStartPosition: MutableIntState): String {
     val teleNotesFinal = if (teleNotes.value == "") "No Comments" else teleNotes.value
-    val autoNotesFinal = if (autoNotes.value == "") "No Comments" else autoNotes.value
     return match.value + "/" + team.value + "/" +
             robotStartPosition.value + "/" + autoSpeakerNum.value + "/" +
             autoAmpNum.value + "/" + autoSMissed.value + "/" +
@@ -97,6 +95,6 @@ fun createOutput(team: MutableIntState, robotStartPosition: MutableIntState): St
             m5.value + "/" + teleSpeakerNum.value + "/" +
             teleAmpNum.value + "/" + teleTrapNum.value + "/" +
             teleSMissed.value + "/" + teleAMissed.value + "/" +
-            autoNotesFinal + "/" + teleNotesFinal
+            lostComms + "/" + teleNotesFinal
 
 }

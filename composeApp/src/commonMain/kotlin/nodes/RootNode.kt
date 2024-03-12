@@ -59,7 +59,7 @@ class RootNode(
         when (interactionTarget) {
             NavTarget.LoginPage -> LoginPage(buildContext,backStack, scoutName,comp)
             NavTarget.MainMenu -> MainMenu(buildContext, backStack, robotStartPosition,scoutName,comp)
-            NavTarget.MatchScouting -> AutoTeleSelectorNode(buildContext,robotStartPosition, team, lostComms, backStack)
+            NavTarget.MatchScouting -> AutoTeleSelectorNode(buildContext,robotStartPosition, team, backStack)
             NavTarget.PitsScouting -> PitsScoutMenu(buildContext,backStack,pitsPerson,ampStrength,speakerStrength,trapStrength,climbStrength,scoutName)
         }
 
@@ -100,10 +100,8 @@ fun loadData(match: Int, team: MutableIntState/* robotStartPosition: MutableIntS
         teleTrapNum.value = Integer.parseInt(help[17])
         teleSMissed.value = Integer.parseInt(help[18])
         teleAMissed.value = Integer.parseInt(help[19])
-        autoNotes = mutableStateOf(help[20])
+        lostComms.value = Integer.parseInt(help[20])
         teleNotes = mutableStateOf(help[21])
-        println("$autoNotes \n $autoSpeakerNum \n $autoSMissed  \n  $autoAMissed \n $f1 \n $f2 \n $f3 \n $m1 \n $m2 \n $m3 \n $m4 \n $m5 \n $teleSpeakerNum \n $autoNotes ")
-        println(matchScoutArray[match].toString())
         //reset()
     }
 }
@@ -113,12 +111,13 @@ fun reset(){
     collected.value = 0
     autoSMissed.value = 0
     autoAMissed.value = 0
-    autoNotes.value = ""
     teleSpeakerNum.value = 0
     teleAmpNum.value = 0
     teleTrapNum.value = 0
     teleSMissed.value = 0
     teleAMissed.value = 0
+    teleNotes.value = ""
+    lostComms.intValue = 0
     m1.intValue = 0
     m2.intValue = 0
     m3.intValue = 0

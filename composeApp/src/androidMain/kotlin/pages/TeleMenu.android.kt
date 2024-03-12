@@ -3,6 +3,7 @@ package pages
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -29,12 +30,9 @@ import java.io.File
 import java.lang.Integer.parseInt
 
 @Composable
-actual fun TeleMenu (
+actual fun TeleMenu(
     backStack: BackStack<AutoTeleSelectorNode.NavTarget>,
-
     selectAuto: MutableState<Boolean>,
-    lostComms: MutableState<Boolean>,
-
     match: MutableState<String>,
     team: MutableIntState,
     robotStartPosition: MutableIntState
@@ -63,8 +61,8 @@ actual fun TeleMenu (
         Row {
             Text("Lost Comms?")
             Checkbox(
-                checked = lostComms.value,
-                onCheckedChange = { lostComms.value = !lostComms.value })
+                when(lostComms.intValue) {0 -> false; 1 -> true; else -> false},
+                onCheckedChange = { when(it) {true -> lostComms.intValue = 1; false -> lostComms.intValue = 0} })
         }
 
         HorizontalDivider(color = Color.Black, thickness = 4.dp)
