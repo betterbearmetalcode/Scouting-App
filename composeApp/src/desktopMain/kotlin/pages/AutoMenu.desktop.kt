@@ -69,21 +69,21 @@ actual fun AutoMenu (
                     checkedColor = Color.Cyan, uncheckedColor = Color.Yellow
                 )
                 Row {
-                    Text(1.toString(), Modifier.align(Alignment.CenterVertically))
+                    Text("A", Modifier.align(Alignment.CenterVertically))
                     Checkbox(
                         checked = when(f1.intValue) {0 -> false; 1 -> true; else -> false},
                         colors = color,
                         onCheckedChange = { when(it) {true -> f1.intValue = 1; false -> f1.intValue = 0}}
                     )
                     Spacer(Modifier.scale(1f/5f))
-                    Text(2.toString(), Modifier.align(Alignment.CenterVertically))
+                    Text("B", Modifier.align(Alignment.CenterVertically))
                     Checkbox(
                         when(f2.intValue) {0 -> false; 1 -> true; else -> false},
                         colors = color,
                         onCheckedChange = { when(it) {true -> f2.intValue = 1; false -> f2.intValue = 0}}
                     )
                     Spacer(Modifier.scale(1f/5f))
-                    Text(3.toString(), Modifier.align(Alignment.CenterVertically))
+                    Text("C", Modifier.align(Alignment.CenterVertically))
                     Checkbox(
                         when(f3.intValue) {0 -> false; 1 -> true; else -> false},
                         colors = color,
@@ -132,6 +132,7 @@ actual fun AutoMenu (
         EnumerableValue(label = "S Missed", value = autoSMissed)
         EnumerableValue(label = "A Missed", value = autoAMissed)
 
+        Spacer(modifier = Modifier.fillMaxHeight(1f/8f))
         OutlinedButton(
             border = BorderStroke(2.dp, color = Color.Yellow),
             shape = CircleShape,
