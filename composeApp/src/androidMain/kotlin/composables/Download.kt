@@ -11,6 +11,7 @@ fun pitsDownload(
     context: Context,
     photoArray: ArrayList<ImageBitmap>,
     teamNumber: String,
+    photoAmount: Int
 ) {
     val file = File(context.filesDir, "Primary$teamNumber.png")
     val stream = ByteArrayOutputStream()
