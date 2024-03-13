@@ -35,7 +35,7 @@ import composables.CheckBox
 import composables.Profile
 import defaultOnPrimary
 import defaultPrimaryVariant
-import org.example.project.ComposeFileProvider
+import org.tahomarobotics.scouting.ComposeFileProvider
 import java.io.File
 
 @Suppress("VARIABLE_WITH_REDUNDANT_INITIALIZER")

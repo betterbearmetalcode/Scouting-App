@@ -119,7 +119,8 @@ actual fun TeleMenu (
             colors = ButtonDefaults.buttonColors(containerColor = defaultSecondary),
             onClick = {
                 bob()
-            }
+            },
+            modifier = Modifier.align(Alignment.End)
         ) {
             Text(
                 text = "Back",

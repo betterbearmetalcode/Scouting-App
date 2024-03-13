@@ -1,7 +1,9 @@
 package pages
 
-import nodes.RootNode
+import android.content.Context
+import android.hardware.usb.UsbManager
 import android.os.Build
+import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
@@ -21,7 +23,6 @@ import com.bumble.appyx.components.backstack.operation.push
 import com.bumble.appyx.navigation.modality.BuildContext
 import com.bumble.appyx.navigation.node.Node
 import composables.InternetErrorAlert
-import defaultOnPrimary
 import defaultSecondary
 import getCurrentTheme
 import getLastSynced
@@ -29,11 +30,11 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import matchData
-import nodes.match
+import nodes.RootNode
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 import sendData
-import setTeam
+import sendDataUSB
 import sync
 import teamData
 
@@ -57,6 +58,11 @@ actual class MainMenu actual constructor(
         var serverDialogOpen by remember { mutableStateOf(false) }
         var ipAddress by remember { mutableStateOf("127.0.0.1") }
         var ipAddressErrorDialog by remember { mutableStateOf(false) }
+        var deviceListOpen by remember { mutableStateOf(false) }
+        val manager = context.getSystemService(Context.USB_SERVICE) as UsbManager
+
+        val deviceList = manager.deviceList
+
 
         when {
             openError.value -> {
@@ -64,6 +70,12 @@ actual class MainMenu actual constructor(
             }
         }
         Column (modifier = Modifier.verticalScroll(ScrollState(0))) {
+            DropdownMenu(expanded = deviceListOpen, onDismissRequest = { deviceListOpen = false }) {
+                deviceList.forEach { (name, _) ->
+                    Log.i("USB", name)
+                    DropdownMenuItem(text = { Text(name) }, onClick = { sendDataUSB(context, name) })
+                }
+            }
             Box(modifier = Modifier.fillMaxWidth()) {
                 OutlinedButton(onClick = {backStack.push(RootNode.NavTarget.LoginPage)},modifier = Modifier
                     .scale(0.75f)
@@ -268,6 +280,7 @@ actual class MainMenu actual constructor(
                 colors = ButtonDefaults.buttonColors(containerColor = defaultSecondary),
                 onClick = {
                     serverDialogOpen = true
+                    //deviceListOpen = true
                 }
             ) {
                 Text("Export")
@@ -290,11 +303,13 @@ actual class MainMenu actual constructor(
 
                     }
                 ) {
-                    Text("Set Server I.P.", fontSize = 24.sp)
-                    TextField(
-                        ipAddress,
-                        onValueChange = { ipAddress = it }
-                    )
+                    Column {
+                        Text("Set Device Address", fontSize = 24.sp)
+                        TextField(
+                            ipAddress,
+                            onValueChange = { ipAddress = it }
+                        )
+                    }
                 }
             }
 

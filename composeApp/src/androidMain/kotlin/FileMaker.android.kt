@@ -1,18 +1,21 @@
 import android.content.Context
+import android.content.Context.USB_SERVICE
+import android.hardware.usb.UsbConstants.USB_DIR_OUT
+import android.hardware.usb.UsbManager
+import android.hardware.usb.UsbRequest
+import android.os.Build
+import android.os.Parcel
 import android.util.Log
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import androidx.annotation.RequiresApi
 import nodes.matchScoutArray
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
 import java.io.*
-import java.net.InetAddress
 import java.net.InetSocketAddress
-import java.net.ServerSocket
 import java.net.Socket
 import java.net.SocketException
+import java.nio.ByteBuffer
 
 
 fun createFile(context: Context) {
@@ -44,8 +47,13 @@ fun openFile(context: Context) {
 
 fun openScoutFile(context: Context) {
 
-    val tempScoutData =
-        JSONObject(String(FileInputStream(File(context.filesDir, "match_scouting_data.json")).readBytes()))
+    var tempScoutData = JSONObject()
+    try {
+        tempScoutData =
+            JSONObject(String(FileInputStream(File(context.filesDir, "match_scouting_data.json")).readBytes()))
+    } catch (_: JSONException) {
+
+    }
 
     repeat (6) {
         try {
@@ -80,11 +88,13 @@ fun exportScoutData(context: Context) {
 
 
 fun sendData(context: Context, ipAddress: String) {
+
     exportScoutData(context)
+
     val jsonObject = getJsonFromMatchHash()
     val socket = Socket()
     try {
-        socket.connect(InetSocketAddress(ipAddress, 45482), 500)
+        socket.connect(InetSocketAddress(ipAddress, 45482), 5000)
         socket.getOutputStream().writer().use { writer ->
             writer.write(jsonObject.toString(1) + "\n")
             writer.flush() // Ensure data is sent immediately
@@ -100,4 +110,33 @@ fun sendData(context: Context, ipAddress: String) {
     }
 
 
+}
+
+@RequiresApi(Build.VERSION_CODES.O)
+fun sendDataUSB(context: Context, deviceName: String) {
+    exportScoutData(context)
+
+    val jsonObject = getJsonFromMatchHash()
+    val manager = context.getSystemService(USB_SERVICE) as UsbManager
+
+    val deviceList = manager.deviceList
+
+    val device = deviceList[deviceName]
+    val connection = manager.openDevice(device)
+
+    val endpoint = device?.getInterface(0)?.getEndpoint(5)
+    if (endpoint?.direction == USB_DIR_OUT) {
+        Log.i("USB", "Dir is out")
+    } else {
+        Log.i("USB", "Dir is in")
+        return
+    }
+
+
+    val request = UsbRequest()
+    request.initialize(connection, endpoint)
+
+    val buffer = ByteBuffer.wrap(jsonObject.toString().encodeToByteArray())
+
+    request.queue(buffer)
 }

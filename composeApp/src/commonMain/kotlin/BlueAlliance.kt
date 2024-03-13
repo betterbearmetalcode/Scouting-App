@@ -11,7 +11,6 @@ import java.time.format.DateTimeFormatter
 
 
 var compKey = "2024week0"
-var comp = "2024isde1"
 
 
 var matchData: JSONObject? = null

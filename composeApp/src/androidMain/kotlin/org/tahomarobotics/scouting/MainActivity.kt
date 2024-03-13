@@ -1,4 +1,4 @@
-package org.example.project
+package org.tahomarobotics.scouting
 
 
 import android.os.Bundle
