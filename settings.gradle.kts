@@ -1,4 +1,4 @@
-rootProject.name = "ComposeDemo"
+rootProject.name = "Scouting_App"
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 pluginManagement {

@@ -47,7 +47,7 @@ class AutoTeleSelectorNode(
     override fun resolve(interactionTarget: NavTarget, buildContext: BuildContext): Node =
         when (interactionTarget) {
             NavTarget.AutoScouting -> AutoNode(buildContext, backStack, mainMenuBackStack, selectAuto, match, team, robotStartPosition)
-            NavTarget.TeleScouting -> TeleNode(buildContext, backStack, selectAuto, match, team, robotStartPosition)
+            NavTarget.TeleScouting -> TeleNode(buildContext, backStack, mainMenuBackStack, selectAuto, match, team, robotStartPosition)
         }
 
     @Composable
@@ -99,6 +99,7 @@ fun createOutput(team: MutableIntState, robotStartPosition: MutableIntState): St
             m5.value + "/" + teleSpeakerNum.value + "/" +
             teleAmpNum.value + "/" + teleTrapNum.value + "/" +
             teleSMissed.value + "/" + teleAMissed.value + "/" +
-            autoNotesFinal + "/" + teleNotesFinal
+            autoNotesFinal + "/" + teleNotesFinal + "/" +
+            scoutName.value
 
 }

@@ -24,6 +24,7 @@ import exportScoutData
 import keyboardAsState
 import nodes.matchScoutArray
 import nodes.*
+import java.lang.Integer.parseInt
 
 @Composable
 actual fun AutoMenu (
@@ -39,7 +40,8 @@ actual fun AutoMenu (
 
     fun bob() {
         mainMenuBackStack.pop()
-        matchScoutArray[Integer.parseInt(match.value)] = createOutput(team, robotStartPosition)
+        matchScoutArray.putIfAbsent(robotStartPosition.intValue, HashMap())
+        matchScoutArray[robotStartPosition.intValue]?.set(parseInt(match.value), createOutput(team, robotStartPosition))
         exportScoutData()
     }
 

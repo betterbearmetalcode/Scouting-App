@@ -42,7 +42,7 @@ fun syncTeams(refresh: Boolean): Boolean {
     }
     val apiKey = String(Base64.getDecoder().decode(apiKeyEncoded))
     try {
-        val teams = run("$url/event/$comp/teams/simple",
+        val teams = run("$url/event/$compKey/teams/simple",
             Headers.headersOf("X-TBA-Auth-Key",
                 apiKey
             )
@@ -72,7 +72,7 @@ fun syncMatches(refresh: Boolean): Boolean {
     }
     val apiKey = String(Base64.getDecoder().decode(apiKeyEncoded))
     try {
-        val matches = run("$url/event/$comp/matches",
+        val matches = run("$url/event/$compKey/matches",
             Headers.headersOf("X-TBA-Auth-Key",
                 apiKey
             )

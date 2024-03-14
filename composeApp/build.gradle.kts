@@ -66,7 +66,7 @@ kotlin {
 }
 
 android {
-    namespace = "org.example.project"
+    namespace = "org.tahomarobotics.scouting"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
@@ -74,7 +74,7 @@ android {
     sourceSets["main"].resources.srcDirs("src/commonMain/resources")
 
     defaultConfig {
-        applicationId = "org.example.project"
+        applicationId = "org.tahomarobotics.scouting"
         minSdk = libs.versions.android.minSdk.get().toInt()
         targetSdk = libs.versions.android.targetSdk.get().toInt()
         versionCode = 1
@@ -91,6 +91,7 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
             excludes += "/META-INF/LICENSE.md"
         }
+
     }
     buildTypes {
         getByName("release") {
@@ -109,9 +110,6 @@ android {
         implementation(libs.androidx.ui.unit.android)
     }
 }
-
-//dependencies {
-//}
 
 compose.desktop {
     application {

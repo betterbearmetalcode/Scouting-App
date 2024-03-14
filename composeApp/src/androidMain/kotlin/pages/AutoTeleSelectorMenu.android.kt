@@ -14,7 +14,6 @@ import androidx.compose.ui.unit.sp
 import com.bumble.appyx.components.backstack.BackStack
 import com.bumble.appyx.components.backstack.operation.pop
 import com.bumble.appyx.components.backstack.operation.push
-import com.bumble.appyx.interactions.core.AppyxComponent
 import defaultBackground
 import defaultOnBackground
 import defaultOnPrimary
@@ -31,7 +30,7 @@ actual fun AutoTeleSelectorMenu(
     selectAuto: MutableState<Boolean>,
     backStack: BackStack<AutoTeleSelectorNode.NavTarget>
 ) {
-    //setTeam(team, match, robotStartPosition.intValue)
+    setTeam(team, match, robotStartPosition.intValue)
     var pageName by remember { mutableStateOf("Auto") }
     var positionName by remember { mutableStateOf("") }
     val context = LocalContext.current
@@ -58,8 +57,8 @@ actual fun AutoTeleSelectorMenu(
         Row(Modifier.align(Alignment.CenterHorizontally).height(IntrinsicSize.Min)) {
             Text(
                 text = positionName,
-                modifier = Modifier.scale(1.2f).align(Alignment.CenterVertically).padding(horizontal = 35.dp),
-                fontSize = 30.sp
+                modifier = Modifier.scale(1.2f).align(Alignment.CenterVertically).padding(horizontal = 25.dp),
+                fontSize = 28.sp
             )
 
             VerticalDivider(
@@ -69,9 +68,14 @@ actual fun AutoTeleSelectorMenu(
 
             Text(
                 text = "${team.intValue}",
-                modifier = Modifier.align(Alignment.CenterVertically).padding(horizontal = 35.dp),
-                fontSize = 33.sp,
-                color = Color(red = 0.1f, green = Color.Cyan.green - 0.4f, blue = Color.Cyan.blue - 0.2f)
+                modifier = Modifier.align(Alignment.CenterVertically).padding(horizontal = 25.dp),
+                fontSize = 31.sp,
+                color = if (
+                    positionName.lowercase().contains("b")) {
+                        Color(red = 0.1f, green = Color.Cyan.green - 0.4f, blue = Color.Cyan.blue - 0.2f)
+                } else {
+                    Color.Red
+                }
             )
 
             VerticalDivider(
@@ -81,8 +85,8 @@ actual fun AutoTeleSelectorMenu(
 
             Text(
                 text = "Match",
-                modifier = Modifier.align(Alignment.CenterVertically).padding(start = 35.dp),
-                fontSize = 30.sp
+                modifier = Modifier.align(Alignment.CenterVertically).padding(start = 25.dp),
+                fontSize = 28.sp
             )
 
             TextField(
@@ -107,7 +111,7 @@ actual fun AutoTeleSelectorMenu(
                     unfocusedTextColor = defaultOnPrimary
                 ),
                 singleLine = true,
-                textStyle = TextStyle.Default.copy(fontSize = 30.sp)
+                textStyle = TextStyle.Default.copy(fontSize = 28.sp)
             )
 
         }

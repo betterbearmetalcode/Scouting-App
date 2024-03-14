@@ -34,7 +34,6 @@ class RootNode(
     private var team = mutableIntStateOf(1)
     private var robotStartPosition = mutableIntStateOf(-1)
     private var pitsPerson = mutableStateOf("P1")
-    private var scoutName =  mutableStateOf("")
     private var comp =  mutableStateOf("")
     private val ampStrength = mutableStateOf(false)
     private val speakerStrength = mutableStateOf(false)
@@ -76,7 +75,10 @@ class RootNode(
 
     }
 }
-val matchScoutArray = HashMap<Int, String>()
+
+var scoutName =  mutableStateOf("")
+val matchScoutArray = HashMap<Int, HashMap<Int, String>>()
+
 
 fun loadData(match: Int, team: MutableIntState/* robotStartPosition: MutableIntState*/){
     reset()
