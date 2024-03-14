@@ -19,11 +19,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import com.bumble.appyx.components.backstack.BackStack
-import com.bumble.appyx.components.backstack.operation.pop
 import com.bumble.appyx.components.backstack.operation.push
 import com.bumble.appyx.navigation.modality.BuildContext
 import com.bumble.appyx.navigation.node.Node
-import composables.InternetErrorAlert
 import defaultSecondary
 import getCurrentTheme
 import getLastSynced
@@ -34,7 +32,6 @@ import matchData
 import nodes.RootNode
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
-import org.json.JSONException
 import sendData
 import sendDataUSB
 import sync
@@ -65,7 +62,6 @@ actual class MainMenu actual constructor(
         val deviceList = manager.deviceList
 
 
-
         Column (modifier = Modifier.verticalScroll(ScrollState(0))) {
             DropdownMenu(expanded = deviceListOpen, onDismissRequest = { deviceListOpen = false }) {
                 deviceList.forEach { (name, _) ->
@@ -94,7 +90,10 @@ actual class MainMenu actual constructor(
                 colors = ButtonDefaults.buttonColors(containerColor = defaultSecondary),
                 contentPadding = PaddingValues(horizontal = 60.dp, vertical = 5.dp),
                 onClick = {
-                    sync(false, context)
+                    val scope = CoroutineScope(Dispatchers.Default)
+                    scope.launch {
+                        sync(false, context)
+                    }
 
                     selectedPlacement = true
                 },
@@ -213,9 +212,12 @@ actual class MainMenu actual constructor(
                 contentPadding = PaddingValues(horizontal = 10.dp, vertical = 15.dp),
                 colors = ButtonDefaults.buttonColors(containerColor = defaultSecondary),
                 onClick = {
-                    sync(true, context)
-                    if (teamData != null) teamSyncedResource = "checkmark.png"
-                    if (matchData != null) matchSyncedResource = "checkmark.png"
+                    val scope = CoroutineScope(Dispatchers.Default)
+                    scope.launch {
+                        sync(true, context)
+                        if (teamData != null) teamSyncedResource = "checkmark.png"
+                        if (matchData != null) matchSyncedResource = "checkmark.png"
+                    }
                 },
                 modifier = Modifier
                     .align(Alignment.CenterHorizontally)

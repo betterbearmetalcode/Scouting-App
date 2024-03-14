@@ -26,17 +26,20 @@ import java.util.*
  *         or if match data isn't null
  */
 @RequiresApi(Build.VERSION_CODES.O)
-fun sync(refresh: Boolean, context: Context)  {
+suspend fun sync(refresh: Boolean, context: Context): Boolean  {
     val scope = CoroutineScope(Dispatchers.Default)
-
-    scope.launch {
-        val teamError = syncTeams(refresh, context)
-        val matchError = syncMatches(refresh, context)
+    var teamError = false
+    var matchError = false
+    val job = scope.launch {
+        teamError = syncTeams(refresh, context)
+        matchError = syncMatches(refresh, context)
         if (teamError && matchError) {
             createFile(context)
             lastSynced.value = Instant.now()
         }
     }
+    job.join()
+    return teamError || matchError
 }
 
 @RequiresApi(Build.VERSION_CODES.O)
