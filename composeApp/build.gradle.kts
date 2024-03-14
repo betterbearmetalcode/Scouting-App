@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.compose.ExperimentalComposeLibrary
 
@@ -42,12 +44,10 @@ kotlin {
             implementation(compose.desktop.currentOs)
             implementation(libs.kotlinx.coroutines.test)
             // https://mvnrepository.com/artifact/com.github.librepdf/openpdf
-            implementation(libs.openpdf)
+            implementation("com.github.librepdf:openpdf:2.0.1")
         }
 
         commonMain.dependencies {
-            // https://mvnrepository.com/artifact/org.slf4j/slf4j-nop
-            implementation(libs.slf4j.nop)
             implementation(libs.webcam.capture)
             implementation(compose.runtime)
             implementation(compose.foundation)
@@ -92,6 +92,8 @@ android {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
             excludes += "/META-INF/LICENSE.md"
+            excludes += "/META-INF/NOTICE.md"
+            pickFirst("META-INF/NOTICE.md")
         }
     }
     buildTypes {
@@ -105,15 +107,12 @@ android {
     }
     dependencies {
         debugImplementation(libs.compose.ui.tooling)
-        implementation(libs.androidx.material3.desktop)
+        //implementation(libs.androidx.material3.desktop)
         implementation(libs.androidx.databinding.compiler)
         //implementation(libs.androidx.material3.android)
         implementation(libs.androidx.ui.unit.android)
     }
 }
-
-//dependencies {
-//}
 
 compose.desktop {
     application {
