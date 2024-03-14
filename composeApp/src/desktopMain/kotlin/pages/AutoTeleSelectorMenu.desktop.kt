@@ -20,6 +20,7 @@ import defaultPrimaryVariant
 import exportScoutData
 import nodes.*
 import setTeam
+import java.lang.Integer.parseInt
 
 
 @Composable
@@ -28,7 +29,8 @@ actual fun AutoTeleSelectorMenu(
     team: MutableIntState,
     robotStartPosition: MutableIntState,
     selectAuto: MutableState<Boolean>,
-    backStack: BackStack<AutoTeleSelectorNode.NavTarget>
+    backStack: BackStack<AutoTeleSelectorNode.NavTarget>,
+    mainMenuBackStack: BackStack<RootNode.NavTarget>
 ) {
     setTeam(team, match, robotStartPosition.value)
     var pageName by remember { mutableStateOf("Auto") }
@@ -93,13 +95,15 @@ actual fun AutoTeleSelectorMenu(
                 onValueChange = {
                     value ->
                     if(match.value != "") {
-                        matchScoutArray[Integer.parseInt(match.value)] = createOutput(team, robotStartPosition)
+                        matchScoutArray[robotStartPosition.intValue]?.set(Integer.parseInt(match.value),
+                            createOutput(team, robotStartPosition)
+                        )
                         exportScoutData()
                     }
                     match.value = value.filter { it.isDigit() };
                     if(match.value != ""){
-                        println(matchScoutArray[Integer.parseInt(match.value)])
-                        loadData(Integer.parseInt(value),team)
+                        println(matchScoutArray[parseInt(match.value)])
+                        loadData(parseInt(value), team, robotStartPosition)
                     }
 
                 },

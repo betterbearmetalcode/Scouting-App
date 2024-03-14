@@ -12,15 +12,24 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.bumble.appyx.components.backstack.BackStack
+import com.bumble.appyx.components.backstack.operation.newRoot
 import com.bumble.appyx.components.backstack.operation.pop
 import com.bumble.appyx.components.backstack.operation.push
+import com.bumble.appyx.components.backstack.operation.replace
+import com.bumble.appyx.interactions.core.Elements
+import com.bumble.appyx.interactions.core.asElement
+import composables.InternetErrorAlert
 import defaultBackground
 import defaultOnBackground
 import defaultOnPrimary
 import defaultPrimaryVariant
 import exportScoutData
+import kotlinx.coroutines.flow.last
 import nodes.*
+import org.json.JSONException
 import setTeam
+import java.lang.Integer.parseInt
+
 
 @Composable
 actual fun AutoTeleSelectorMenu(
@@ -28,12 +37,27 @@ actual fun AutoTeleSelectorMenu(
     team: MutableIntState,
     robotStartPosition: MutableIntState,
     selectAuto: MutableState<Boolean>,
-    backStack: BackStack<AutoTeleSelectorNode.NavTarget>
+    backStack: BackStack<AutoTeleSelectorNode.NavTarget>,
+    mainMenuBackStack: BackStack<RootNode.NavTarget>
 ) {
-    setTeam(team, match, robotStartPosition.intValue)
+    try {
+        setTeam(team, match, robotStartPosition.intValue)
+    } catch (e: JSONException) {
+        openError.value = true
+    }
     var pageName by remember { mutableStateOf("Auto") }
     var positionName by remember { mutableStateOf("") }
     val context = LocalContext.current
+
+    when {
+        openError.value -> {
+            InternetErrorAlert {
+                openError.value = false
+                mainMenuBackStack.pop()
+            }
+        }
+    }
+
 
     when (robotStartPosition.intValue){
         0 -> {positionName = "R1"}
@@ -54,10 +78,16 @@ actual fun AutoTeleSelectorMenu(
         HorizontalDivider(color = defaultPrimaryVariant, thickness = 4.dp)
 
 
-        Row(Modifier.align(Alignment.CenterHorizontally).height(IntrinsicSize.Min)) {
+        Row(
+            Modifier
+                .align(Alignment.CenterHorizontally)
+                .height(IntrinsicSize.Min)) {
             Text(
                 text = positionName,
-                modifier = Modifier.scale(1.2f).align(Alignment.CenterVertically).padding(horizontal = 25.dp),
+                modifier = Modifier
+                    .scale(1.2f)
+                    .align(Alignment.CenterVertically)
+                    .padding(horizontal = 25.dp),
                 fontSize = 28.sp
             )
 
@@ -68,7 +98,9 @@ actual fun AutoTeleSelectorMenu(
 
             Text(
                 text = "${team.intValue}",
-                modifier = Modifier.align(Alignment.CenterVertically).padding(horizontal = 25.dp),
+                modifier = Modifier
+                    .align(Alignment.CenterVertically)
+                    .padding(horizontal = 25.dp),
                 fontSize = 31.sp,
                 color = if (
                     positionName.lowercase().contains("b")) {
@@ -85,7 +117,9 @@ actual fun AutoTeleSelectorMenu(
 
             Text(
                 text = "Match",
-                modifier = Modifier.align(Alignment.CenterVertically).padding(start = 25.dp),
+                modifier = Modifier
+                    .align(Alignment.CenterVertically)
+                    .padding(start = 25.dp),
                 fontSize = 28.sp
             )
 
@@ -93,13 +127,15 @@ actual fun AutoTeleSelectorMenu(
                 value = match.value,
                 onValueChange = { value ->
                     if(match.value != "") {
-                        matchScoutArray[Integer.parseInt(match.value)] = createOutput(team, robotStartPosition)
+                        matchScoutArray[robotStartPosition.intValue]?.set(parseInt(match.value),
+                            createOutput(team, robotStartPosition)
+                        )
                         exportScoutData(context)
                     }
                     match.value = value.filter { it.isDigit() };
                     if(match.value != ""){
-                        println(matchScoutArray[Integer.parseInt(match.value)])
-                        loadData(Integer.parseInt(value),team)
+                        println(matchScoutArray[parseInt(match.value)])
+                        loadData(parseInt(value), team, robotStartPosition)
                     }
 
                 },
@@ -123,10 +159,15 @@ actual fun AutoTeleSelectorMenu(
             Text(
                 text = pageName,
                 fontSize = 30.sp,
-                modifier = Modifier.align(Alignment.CenterStart).offset(x = 15.dp)
+                modifier = Modifier
+                    .align(Alignment.CenterStart)
+                    .offset(x = 15.dp)
             )
 
-            Row(Modifier.align(Alignment.CenterEnd).offset(x = (-15).dp)) {
+            Row(
+                Modifier
+                    .align(Alignment.CenterEnd)
+                    .offset(x = (-15).dp)) {
 
                 Text("A", fontSize = 25.sp, modifier = Modifier.align(Alignment.CenterVertically))
 

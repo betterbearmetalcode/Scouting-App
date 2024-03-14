@@ -53,7 +53,7 @@ class AutoTeleSelectorNode(
     @Composable
     override fun View(modifier: Modifier) {
         Column {
-            AutoTeleSelectorMenu(match, team, robotStartPosition, selectAuto, backStack)
+            AutoTeleSelectorMenu(match, team, robotStartPosition, selectAuto, backStack, mainMenuBackStack)
             AppyxComponent(
                 appyxComponent = backStack,
                 modifier = Modifier.weight(0.9f)
@@ -83,12 +83,11 @@ val teleAmpNum  = mutableIntStateOf(0)
 val teleTrapNum = mutableIntStateOf(0)
 val teleSMissed = mutableIntStateOf(0)
 val teleAMissed = mutableIntStateOf(0)
-var autoNotes = mutableStateOf("")
+var lostComms = mutableIntStateOf(0)
 var teleNotes = mutableStateOf("")
 
 fun createOutput(team: MutableIntState, robotStartPosition: MutableIntState): String {
     val teleNotesFinal = if (teleNotes.value == "") "No Comments" else teleNotes.value
-    val autoNotesFinal = if (autoNotes.value == "") "No Comments" else autoNotes.value
     return match.value + "/" + team.value + "/" +
             robotStartPosition.value + "/" + autoSpeakerNum.value + "/" +
             autoAmpNum.value + "/" + autoSMissed.value + "/" +
@@ -99,7 +98,6 @@ fun createOutput(team: MutableIntState, robotStartPosition: MutableIntState): St
             m5.value + "/" + teleSpeakerNum.value + "/" +
             teleAmpNum.value + "/" + teleTrapNum.value + "/" +
             teleSMissed.value + "/" + teleAMissed.value + "/" +
-            autoNotesFinal + "/" + teleNotesFinal + "/" +
-            scoutName.value
+            lostComms.value + "/" + teleNotesFinal
 
 }

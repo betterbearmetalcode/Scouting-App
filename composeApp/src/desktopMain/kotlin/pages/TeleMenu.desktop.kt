@@ -67,6 +67,12 @@ actual fun TeleMenu (
         EnumerableValue(label = "S Missed", value = teleSMissed)
         EnumerableValue(label = "A Missed", value = teleAMissed)
 
+        Row {
+            Text("Lost Comms?")
+            Checkbox(
+                when(lostComms.intValue) {0 -> false; 1 -> true; else -> false},
+                onCheckedChange = { when(it) {true -> lostComms.intValue = 1; false -> lostComms.intValue = 0} })
+        }
 
         Divider(color = Color.Black, thickness = 4.dp)
 
@@ -118,7 +124,7 @@ actual fun TeleMenu (
                 teleNotes.value = ""
                 selectAuto.value = false
                 exportScoutData()
-                loadData(parseInt(match.value),team)
+                loadData(parseInt(match.value), team, robotStartPosition)
                 println(matchScoutArray[parseInt(match.value)])
                 backStack.pop()
             },

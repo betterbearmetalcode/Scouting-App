@@ -6,10 +6,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.OutlinedButton
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -65,6 +62,12 @@ actual fun TeleMenu (
         Spacer(modifier = Modifier.height(30.dp))
         EnumerableValue(label = "S Missed", value = teleSMissed)
         EnumerableValue(label = "A Missed", value = teleAMissed)
+        Row {
+            Text("Lost Comms?")
+            Checkbox(
+                when(lostComms.intValue) {0 -> false; 1 -> true; else -> false},
+                onCheckedChange = { when(it) {true -> lostComms.intValue = 1; false -> lostComms.intValue = 0} })
+        }
 
 
         HorizontalDivider(color = Color.Black, thickness = 4.dp)
@@ -88,7 +91,7 @@ actual fun TeleMenu (
                 teleNotes.value = ""
                 selectAuto.value = false
                 exportScoutData(context)
-                loadData(parseInt(match.value),team)
+                loadData(parseInt(match.value), team, robotStartPosition)
                 println(matchScoutArray[parseInt(match.value)])
                 backStack.pop()
             },
