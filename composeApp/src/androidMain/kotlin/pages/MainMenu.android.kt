@@ -1,6 +1,7 @@
 package pages
 
 import android.content.Context
+import android.hardware.usb.UsbDevice
 import android.hardware.usb.UsbManager
 import android.os.Build
 import android.util.Log
@@ -62,15 +63,15 @@ actual class MainMenu actual constructor(
         var deviceListOpen by remember { mutableStateOf(false) }
         val manager = context.getSystemService(Context.USB_SERVICE) as UsbManager
 
-        val deviceList = manager.deviceList
-
+        var deviceList: HashMap<String, UsbDevice> = manager.deviceList
 
 
         Column (modifier = Modifier.verticalScroll(ScrollState(0))) {
             DropdownMenu(expanded = deviceListOpen, onDismissRequest = { deviceListOpen = false }) {
-                deviceList.forEach { (name, _) ->
-                    Log.i("USB", name)
-                    DropdownMenuItem(text = { Text(name) }, onClick = { sendDataUSB(context, name) })
+                Text("Select Device")
+                deviceList.keys.forEach {
+                    Log.i("USB", it)
+                    DropdownMenuItem(text = { Text(it) }, onClick = { sendDataUSB(context, it) })
                 }
             }
             Box(modifier = Modifier.fillMaxWidth()) {
@@ -270,8 +271,9 @@ actual class MainMenu actual constructor(
                 contentPadding = PaddingValues(horizontal = 10.dp, vertical = 15.dp),
                 colors = ButtonDefaults.buttonColors(containerColor = defaultSecondary),
                 onClick = {
-                    serverDialogOpen = true
-                    //deviceListOpen = true
+                    deviceList = manager.deviceList
+                    //serverDialogOpen = true
+                    deviceListOpen = true
                 }
             ) {
                 Text("Export")

@@ -241,15 +241,15 @@ actual class PitsScoutMenu actual constructor(
                 onClick = {
 
                     when (PackageManager.PERMISSION_GRANTED) {
-                        ContextCompat.checkSelfPermission(
-                            context,
-                            Manifest.permission.CAMERA
-                        ) -> {
-                            if (photoAmount < 3) {//moved up
-                            var uri = Uri.EMPTY
+                                    ContextCompat.checkSelfPermission(
+                                        context,
+                                        Manifest.permission.CAMERA
+                                    ) -> {
+                                    if (photoAmount < 3) {//moved up
+                                        var uri = Uri.EMPTY
 
-                            uri = ComposeFileProvider.getImageUri(context)
-                            imageUri = uri
+                                        uri = ComposeFileProvider.getImageUri(context)
+                                        imageUri = uri
                             cameraLauncher.launch(uri)
 
                                     photoArray.add(photoAmount, uri)
