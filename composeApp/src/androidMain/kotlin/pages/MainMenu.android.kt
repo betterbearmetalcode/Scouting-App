@@ -19,6 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import com.bumble.appyx.components.backstack.BackStack
+import com.bumble.appyx.components.backstack.operation.pop
 import com.bumble.appyx.components.backstack.operation.push
 import com.bumble.appyx.navigation.modality.BuildContext
 import com.bumble.appyx.navigation.node.Node
@@ -33,6 +34,7 @@ import matchData
 import nodes.RootNode
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
+import org.json.JSONException
 import sendData
 import sendDataUSB
 import sync
@@ -52,11 +54,10 @@ actual class MainMenu actual constructor(
     actual override fun View(modifier: Modifier) {
         val context = LocalContext.current
         var selectedPlacement by remember { mutableStateOf(false) }
-        val openError = remember { mutableStateOf(false) }
         var matchSyncedResource by remember { mutableStateOf(if (matchData == null) "crossmark.png" else "checkmark.png") }
         var teamSyncedResource by remember { mutableStateOf(if (teamData == null) "crossmark.png" else "checkmark.png") }
         var serverDialogOpen by remember { mutableStateOf(false) }
-        var ipAddress by remember { mutableStateOf("127.0.0.1") }
+
         var ipAddressErrorDialog by remember { mutableStateOf(false) }
         var deviceListOpen by remember { mutableStateOf(false) }
         val manager = context.getSystemService(Context.USB_SERVICE) as UsbManager
@@ -64,11 +65,7 @@ actual class MainMenu actual constructor(
         val deviceList = manager.deviceList
 
 
-        when {
-            openError.value -> {
-                InternetErrorAlert { openError.value = false }
-            }
-        }
+
         Column (modifier = Modifier.verticalScroll(ScrollState(0))) {
             DropdownMenu(expanded = deviceListOpen, onDismissRequest = { deviceListOpen = false }) {
                 deviceList.forEach { (name, _) ->
@@ -88,11 +85,6 @@ actual class MainMenu actual constructor(
                     fontSize = 25.sp,
                     modifier = Modifier.align(Alignment.Center)
                 )
-                OutlinedButton(onClick = {backStack.push(RootNode.NavTarget.LoginPage)},modifier = Modifier
-                    .scale(0.75f)
-                    .align(Alignment.CenterEnd)) {
-                    Text(text = "Settings", color = getCurrentTheme().onPrimary)
-                }
             }
             HorizontalDivider(color = getCurrentTheme().onSurface, thickness = 2.dp)
             Text(text="Hello ${scoutName.value}",color = getCurrentTheme().onPrimary,modifier = Modifier.align(Alignment.CenterHorizontally))
@@ -103,9 +95,8 @@ actual class MainMenu actual constructor(
                 contentPadding = PaddingValues(horizontal = 60.dp, vertical = 5.dp),
                 onClick = {
                     sync(false, context)
-                    if (!openError.value)
-                        selectedPlacement = true
 
+                    selectedPlacement = true
                 },
                 modifier = Modifier
                     .align(Alignment.CenterHorizontally)
@@ -294,9 +285,9 @@ actual class MainMenu actual constructor(
                 Dialog(
                     onDismissRequest = {
                         serverDialogOpen = false
-                        if (ipAddress.matches(Regex("^((25[0-5]|(2[0-4]|1\\d|[1-9]|)\\d)\\.?\\b){4}\$"))) {
+                        if (ipAddress.value.matches(Regex("^((25[0-5]|(2[0-4]|1\\d|[1-9]|)\\d)\\.?\\b){4}\$"))) {
                             CoroutineScope(Dispatchers.Default).launch {
-                                sendData(context, ipAddress)
+                                sendData(context, ipAddress.value)
                             }
                         } else
                             ipAddressErrorDialog = true
@@ -306,8 +297,8 @@ actual class MainMenu actual constructor(
                     Column {
                         Text("Set Device Address", fontSize = 24.sp)
                         TextField(
-                            ipAddress,
-                            onValueChange = { ipAddress = it }
+                            ipAddress.value,
+                            onValueChange = { ipAddress.value = it }
                         )
                     }
                 }
@@ -323,3 +314,6 @@ actual class MainMenu actual constructor(
         }
     }
 }
+
+var ipAddress = mutableStateOf("127.0.0.1")
+val openError = mutableStateOf(false)

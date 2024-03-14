@@ -7,7 +7,6 @@ import androidx.compose.ui.Modifier
 import com.bumble.appyx.components.backstack.BackStack
 import com.bumble.appyx.components.backstack.BackStackModel
 import androidx.compose.runtime.*
-import com.bumble.appyx.components.backstack.operation.pop
 import com.bumble.appyx.components.backstack.ui.fader.BackStackFader
 import com.bumble.appyx.navigation.composable.AppyxComponent
 import com.bumble.appyx.navigation.modality.BuildContext
@@ -16,6 +15,7 @@ import com.bumble.appyx.navigation.node.ParentNode
 import com.bumble.appyx.utils.multiplatform.Parcelable
 import com.bumble.appyx.utils.multiplatform.Parcelize
 import pages.*
+import java.lang.Integer.parseInt
 
 
 class RootNode(
@@ -55,7 +55,7 @@ class RootNode(
 
     override fun resolve(interactionTarget: NavTarget, buildContext: BuildContext): Node =
         when (interactionTarget) {
-            NavTarget.LoginPage -> LoginPage(buildContext,backStack, scoutName,comp)
+            NavTarget.LoginPage -> LoginNode(buildContext, backStack, scoutName,comp)
             NavTarget.MainMenu -> MainMenu(buildContext, backStack, robotStartPosition,scoutName,comp)
             NavTarget.MatchScouting -> AutoTeleSelectorNode(buildContext,robotStartPosition, team, backStack)
             NavTarget.PitsScouting -> PitsScoutMenu(buildContext,backStack,pitsPerson,ampStrength,speakerStrength,trapStrength,climbStrength,scoutName)
@@ -80,30 +80,30 @@ var scoutName =  mutableStateOf("")
 val matchScoutArray = HashMap<Int, HashMap<Int, String>>()
 
 
-fun loadData(match: Int, team: MutableIntState/* robotStartPosition: MutableIntState*/){
+fun loadData(match: Int, team: MutableIntState, robotStartPosition: MutableIntState){
     reset()
-    if(matchScoutArray[match]?.isEmpty() == false) {
-        val help = matchScoutArray[match].toString().split('/')
-        autoSpeakerNum.value = Integer.parseInt(help[3])
-        autoAmpNum.value = Integer.parseInt(help[4])
-        autoSMissed.value = Integer.parseInt(help[5])
-        autoAMissed.value = Integer.parseInt(help[6])
-        f1.value = Integer.parseInt(help[7])
-        f2.value = Integer.parseInt(help[8])
-        f3.value = Integer.parseInt(help[9])
-        m1.value = Integer.parseInt(help[10])
-        m2.value = Integer.parseInt(help[11])
-        m3.value = Integer.parseInt(help[12])
-        m4.value = Integer.parseInt(help[13])
-        m5.value = Integer.parseInt(help[14])
-        teleSpeakerNum.value = Integer.parseInt(help[15])
-        teleAmpNum.value = Integer.parseInt(help[16])
-        teleTrapNum.value = Integer.parseInt(help[17])
-        teleSMissed.value = Integer.parseInt(help[18])
-        teleAMissed.value = Integer.parseInt(help[19])
-        autoNotes = mutableStateOf(help[20])
+    if(matchScoutArray[robotStartPosition.intValue]?.get(match)?.isEmpty() == false) {
+        val help = matchScoutArray[robotStartPosition.intValue]?.get(match)?.split('/') ?: createOutput(team, robotStartPosition).split('/')
+        autoSpeakerNum.intValue = parseInt(help[3])
+        autoAmpNum.intValue = parseInt(help[4])
+        autoSMissed.intValue = parseInt(help[5])
+        autoAMissed.intValue = parseInt(help[6])
+        f1.intValue = parseInt(help[7])
+        f2.intValue = parseInt(help[8])
+        f3.intValue = parseInt(help[9])
+        m1.intValue = parseInt(help[10])
+        m2.intValue = parseInt(help[11])
+        m3.intValue = parseInt(help[12])
+        m4.intValue = parseInt(help[13])
+        m5.intValue = parseInt(help[14])
+        teleSpeakerNum.intValue = parseInt(help[15])
+        teleAmpNum.intValue = parseInt(help[16])
+        teleTrapNum.intValue = parseInt(help[17])
+        teleSMissed.intValue = parseInt(help[18])
+        teleAMissed.intValue = parseInt(help[19])
+        lostComms.intValue = parseInt(help[20])
         teleNotes = mutableStateOf(help[21])
-        println("$autoNotes \n $autoSpeakerNum \n $autoSMissed  \n  $autoAMissed \n $f1 \n $f2 \n $f3 \n $m1 \n $m2 \n $m3 \n $m4 \n $m5 \n $teleSpeakerNum \n $autoNotes ")
+        println("$autoSpeakerNum \n $autoSMissed  \n  $autoAMissed \n $f1 \n $f2 \n $f3 \n $m1 \n $m2 \n $m3 \n $m4 \n $m5 \n $teleSpeakerNum \n $lostComms ")
         println(matchScoutArray[match].toString())
         //reset()
     }
@@ -114,7 +114,7 @@ fun reset(){
     collected.value = 0
     autoSMissed.value = 0
     autoAMissed.value = 0
-    autoNotes.value = ""
+    lostComms.value = 0
     teleSpeakerNum.value = 0
     teleAmpNum.value = 0
     teleTrapNum.value = 0

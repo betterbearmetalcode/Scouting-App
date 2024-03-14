@@ -69,11 +69,7 @@ fun openScoutFile(context: Context) {
 
 
 fun exportScoutData(context: Context) {
-    try {
-        openScoutFile(context)
-    } catch (_: FileNotFoundException) {
 
-    }
     val file = File(context.filesDir, "match_scouting_data.json")
     file.delete()
     file.createNewFile()

@@ -42,7 +42,7 @@ kotlin {
             implementation(compose.desktop.currentOs)
             implementation(libs.kotlinx.coroutines.test)
             // https://mvnrepository.com/artifact/com.github.librepdf/openpdf
-            implementation("com.github.librepdf:openpdf:2.0.1")
+            implementation(libs.openpdf)
         }
 
         commonMain.dependencies {
@@ -102,13 +102,6 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
-    dependencies {
-        debugImplementation(libs.compose.ui.tooling)
-        implementation(libs.androidx.material3.desktop)
-        implementation(libs.androidx.databinding.compiler)
-        //implementation(libs.androidx.material3.android)
-        implementation(libs.androidx.ui.unit.android)
-    }
 }
 
 compose.desktop {
@@ -118,7 +111,7 @@ compose.desktop {
         nativeDistributions {
             //appResourcesRootDir = (rootDir.toPath() / "desktopMain").toFile()
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
-            packageName = "org.example.project"
+            packageName = "org.tahomarobotics.scouting"
             packageVersion = "1.0.0"
         }
     }
