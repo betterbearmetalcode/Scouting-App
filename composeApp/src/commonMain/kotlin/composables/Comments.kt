@@ -17,9 +17,9 @@ import defaultOnPrimary
 import defaultPrimaryVariant
 
 @Composable
-fun Notes(text: MutableState<String>, isScrollEnabled: MutableState<Boolean>) {
+fun Comments(text: MutableState<String>, isScrollEnabled: MutableState<Boolean>) {
     Column {
-        Text("Notes", fontSize = 25.sp)
+        Text("Comments", fontSize = 25.sp)
         Spacer(Modifier.height(5.dp))
         Box {
             OutlinedTextField(

@@ -25,6 +25,7 @@ import defaultBackground
 import defaultOnPrimary
 import defaultPrimaryVariant
 import getCurrentTheme
+import nodes.loadData
 import java.io.File
 
 class LoginPage(
@@ -45,10 +46,10 @@ class LoginPage(
 
         )
         Column {
-//            Image(
-//                painter = BitmapPainter(logo),//turn into bitmap
-//                contentDescription = "Logo"
-//            )
+            Image(
+                painter = painterResource(logo.path),//turn into bitmap
+                contentDescription = "Logo"
+            )
             Text(
                 text = "Login",
                 fontSize = 45.sp,
@@ -65,6 +66,7 @@ class LoginPage(
                 OutlinedTextField(
                     value = scoutName.value,
                     onValueChange = {scoutName.value = it},
+                    placeholder ={Text("First Name Last Name", color = Color.Gray)},
                     shape = RoundedCornerShape(15.dp),
                     colors = TextFieldDefaults.outlinedTextFieldColors(backgroundColor = getCurrentTheme().background, focusedBorderColor = getCurrentTheme().onSecondary, unfocusedBorderColor = getCurrentTheme().onSecondary, textColor = getCurrentTheme().onPrimary, cursorColor = getCurrentTheme().onSecondary),
                 )

@@ -7,6 +7,7 @@ import androidx.compose.ui.Modifier
 import com.bumble.appyx.components.backstack.BackStack
 import com.bumble.appyx.components.backstack.BackStackModel
 import androidx.compose.runtime.*
+import com.bumble.appyx.components.backstack.operation.pop
 import com.bumble.appyx.components.backstack.ui.fader.BackStackFader
 import com.bumble.appyx.navigation.composable.AppyxComponent
 import com.bumble.appyx.navigation.modality.BuildContext
@@ -77,3 +78,54 @@ class RootNode(
 
 var scoutName =  mutableStateOf("")
 val matchScoutArray = HashMap<Int, HashMap<Int, String>>()
+
+
+fun loadData(match: Int, team: MutableIntState/* robotStartPosition: MutableIntState*/){
+    reset()
+    if(matchScoutArray[match]?.isEmpty() == false) {
+        val help = matchScoutArray[match].toString().split('/')
+        autoSpeakerNum.value = Integer.parseInt(help[3])
+        autoAmpNum.value = Integer.parseInt(help[4])
+        autoSMissed.value = Integer.parseInt(help[5])
+        autoAMissed.value = Integer.parseInt(help[6])
+        f1.value = Integer.parseInt(help[7])
+        f2.value = Integer.parseInt(help[8])
+        f3.value = Integer.parseInt(help[9])
+        m1.value = Integer.parseInt(help[10])
+        m2.value = Integer.parseInt(help[11])
+        m3.value = Integer.parseInt(help[12])
+        m4.value = Integer.parseInt(help[13])
+        m5.value = Integer.parseInt(help[14])
+        teleSpeakerNum.value = Integer.parseInt(help[15])
+        teleAmpNum.value = Integer.parseInt(help[16])
+        teleTrapNum.value = Integer.parseInt(help[17])
+        teleSMissed.value = Integer.parseInt(help[18])
+        teleAMissed.value = Integer.parseInt(help[19])
+        autoNotes = mutableStateOf(help[20])
+        teleNotes = mutableStateOf(help[21])
+        println("$autoNotes \n $autoSpeakerNum \n $autoSMissed  \n  $autoAMissed \n $f1 \n $f2 \n $f3 \n $m1 \n $m2 \n $m3 \n $m4 \n $m5 \n $teleSpeakerNum \n $autoNotes ")
+        println(matchScoutArray[match].toString())
+        //reset()
+    }
+}
+fun reset(){
+    autoSpeakerNum.value = 0
+    autoAmpNum.value = 0
+    collected.value = 0
+    autoSMissed.value = 0
+    autoAMissed.value = 0
+    autoNotes.value = ""
+    teleSpeakerNum.value = 0
+    teleAmpNum.value = 0
+    teleTrapNum.value = 0
+    teleSMissed.value = 0
+    teleAMissed.value = 0
+    m1.intValue = 0
+    m2.intValue = 0
+    m3.intValue = 0
+    m4.intValue = 0
+    m5.intValue = 0
+    f1.intValue = 0
+    f2.intValue = 0
+    f3.intValue = 0
+}

@@ -1,6 +1,6 @@
 package pages
 
-import composables.Notes
+import composables.Comments
 import nodes.RootNode
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.*
@@ -29,9 +29,7 @@ import nodes.*
 actual fun AutoMenu (
     backStack: BackStack<AutoTeleSelectorNode.NavTarget>,
     mainMenuBackStack: BackStack<RootNode.NavTarget>,
-
     selectAuto: MutableState<Boolean>,
-
     match: MutableState<String>,
     team: MutableIntState,
     robotStartPosition: MutableIntState,
@@ -132,7 +130,6 @@ actual fun AutoMenu (
 
         EnumerableValue(label = "S Missed", value = autoSMissed)
         EnumerableValue(label = "A Missed", value = autoAMissed)
-
 
 
         Spacer(Modifier.height(5.dp))

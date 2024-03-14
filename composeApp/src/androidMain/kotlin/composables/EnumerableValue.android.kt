@@ -5,7 +5,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.MutableIntState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -15,7 +15,7 @@ import defaultOnPrimary
 import defaultSecondary
 
 @Composable
-actual fun EnumerableValue(label: String, value: MutableState<Int>) {
+actual fun EnumerableValue(label: String, value: MutableIntState) {
     Box(modifier = Modifier.fillMaxWidth()) {
 
         Text(

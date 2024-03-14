@@ -17,13 +17,14 @@ import defaultBackground
 import defaultOnBackground
 import defaultOnPrimary
 import defaultPrimaryVariant
-import nodes.AutoTeleSelectorNode
-import nodes.match
+import exportScoutData
+import nodes.*
 import setTeam
 
 
 @Composable
 actual fun AutoTeleSelectorMenu(
+    match: MutableState<String>,
     team: MutableIntState,
     robotStartPosition: MutableIntState,
     selectAuto: MutableState<Boolean>,
@@ -50,13 +51,13 @@ actual fun AutoTeleSelectorMenu(
 
 
     Column {
-        Divider(color = defaultPrimaryVariant, thickness = 4.dp)
+//        Divider(color = defaultPrimaryVariant, thickness = 4.dp)
 
 
         Row(Modifier.align(Alignment.CenterHorizontally).height(IntrinsicSize.Min)) {
             Text(
                 text = positionName,
-                modifier = Modifier.scale(1.2f).align(Alignment.CenterVertically).padding(horizontal = 35.dp),
+                modifier = Modifier.scale(1.2f).align(Alignment.CenterVertically).padding(horizontal = 25.dp),
                 fontSize = 30.sp
             )
 
@@ -69,7 +70,7 @@ actual fun AutoTeleSelectorMenu(
 
             Text(
                 text = "${team.value}",
-                modifier = Modifier.align(Alignment.CenterVertically).padding(horizontal = 35.dp),
+                modifier = Modifier.align(Alignment.CenterVertically).padding(horizontal = 25.dp),
                 fontSize = 33.sp,
                 color = Color(red = 0.1f, green = Color.Cyan.green-0.4f, blue = Color.Cyan.blue-0.2f)
             )
@@ -83,22 +84,30 @@ actual fun AutoTeleSelectorMenu(
 
             Text(
                 text = "Match",
-                modifier = Modifier.align(Alignment.CenterVertically).padding(start = 35.dp),
+                modifier = Modifier.align(Alignment.CenterVertically).padding(start = 25.dp),
                 fontSize = 30.sp
             )
 
             TextField(
                 value = match.value,
-                onValueChange = { value ->
-                    match.value = value.filter { it.isDigit() }
-                    setTeam(team, match, robotStartPosition.value)
+                onValueChange = {
+                    value ->
+                    if(match.value != "") {
+                        matchScoutArray[Integer.parseInt(match.value)] = createOutput(team, robotStartPosition)
+                        exportScoutData()
+                    }
+                    match.value = value.filter { it.isDigit() };
+                    if(match.value != ""){
+                        println(matchScoutArray[Integer.parseInt(match.value)])
+                        loadData(Integer.parseInt(value),team)
+                    }
+
                 },
                 modifier = Modifier.fillMaxWidth(1f/4f),
-                colors = TextFieldDefaults.textFieldColors(backgroundColor = defaultBackground, textColor = defaultOnPrimary),
+                colors = TextFieldDefaults.textFieldColors(backgroundColor = defaultBackground, textColor = defaultOnPrimary, cursorColor = defaultOnPrimary),
                 singleLine = true,
                 textStyle = TextStyle.Default.copy(fontSize = 30.sp)
             )
-
         }
 
         Divider(color = defaultPrimaryVariant, thickness = 3.dp)
