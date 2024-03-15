@@ -4,7 +4,7 @@
     "type": "APK",
     "kind": "Directory"
   },
-  "applicationId": "org.example.project",
+  "applicationId": "org.tahomarobotics.scouting",
   "variantName": "release",
   "elements": [
     {

@@ -53,6 +53,8 @@ fun openScoutFile(context: Context) {
             JSONObject(String(FileInputStream(File(context.filesDir, "match_scouting_data.json")).readBytes()))
     } catch (_: JSONException) {
 
+    } catch (_: FileNotFoundException) {
+        return
     }
 
     repeat (6) {

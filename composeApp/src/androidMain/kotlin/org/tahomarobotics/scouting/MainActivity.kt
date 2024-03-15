@@ -25,7 +25,6 @@ import defaultSecondary
 import defaultSurface
 import nodes.RootNode
 import openScoutFile
-import pages.openError
 
 @ExperimentalUnitApi
 @ExperimentalAnimationApi
@@ -36,7 +35,9 @@ class MainActivity : NodeActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
+
             openScoutFile(LocalContext.current)
+
             MaterialTheme(
                 colorScheme = defaultScheme
             ) {

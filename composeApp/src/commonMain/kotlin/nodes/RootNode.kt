@@ -103,9 +103,6 @@ fun loadData(match: Int, team: MutableIntState, robotStartPosition: MutableIntSt
         teleAMissed.intValue = parseInt(help[19])
         lostComms.intValue = parseInt(help[20])
         teleNotes = mutableStateOf(help[21])
-        println("$autoSpeakerNum \n $autoSMissed  \n  $autoAMissed \n $f1 \n $f2 \n $f3 \n $m1 \n $m2 \n $m3 \n $m4 \n $m5 \n $teleSpeakerNum \n $lostComms ")
-        println(matchScoutArray[match].toString())
-        //reset()
     }
 }
 fun reset(){

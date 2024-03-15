@@ -125,7 +125,6 @@ actual fun TeleMenu (
                 selectAuto.value = false
                 exportScoutData()
                 loadData(parseInt(match.value), team, robotStartPosition)
-                println(matchScoutArray[parseInt(match.value)])
                 backStack.pop()
             },
             modifier = Modifier.align(Alignment.CenterHorizontally)

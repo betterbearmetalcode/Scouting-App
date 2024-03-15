@@ -95,14 +95,13 @@ actual fun AutoTeleSelectorMenu(
                 onValueChange = {
                     value ->
                     if(match.value != "") {
-                        matchScoutArray[robotStartPosition.intValue]?.set(Integer.parseInt(match.value),
+                        matchScoutArray[robotStartPosition.intValue]?.set(parseInt(match.value),
                             createOutput(team, robotStartPosition)
                         )
                         exportScoutData()
                     }
                     match.value = value.filter { it.isDigit() };
                     if(match.value != ""){
-                        println(matchScoutArray[parseInt(match.value)])
                         loadData(parseInt(value), team, robotStartPosition)
                     }
 

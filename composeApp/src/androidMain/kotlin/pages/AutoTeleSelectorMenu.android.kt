@@ -134,7 +134,6 @@ actual fun AutoTeleSelectorMenu(
                     }
                     match.value = value.filter { it.isDigit() };
                     if(match.value != ""){
-                        println(matchScoutArray[parseInt(match.value)])
                         loadData(parseInt(value), team, robotStartPosition)
                     }
 
