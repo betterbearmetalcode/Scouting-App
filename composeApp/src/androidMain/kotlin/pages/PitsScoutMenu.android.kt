@@ -25,6 +25,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat
+import androidx.core.net.toFile
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.bumble.appyx.components.backstack.BackStack
@@ -37,6 +38,7 @@ import composables.download
 import defaultOnPrimary
 import defaultPrimaryVariant
 import org.example.project.ComposeFileProvider
+import java.io.BufferedWriter
 import java.io.File
 
 @Suppress("VARIABLE_WITH_REDUNDANT_INITIALIZER")
@@ -250,11 +252,11 @@ actual class PitsScoutMenu actual constructor(
                             if (photoAmount < 3) {//moved up
                             var uri = Uri.EMPTY
 
-                            uri = ComposeFileProvider.getImageUri(context)
+                            uri = ComposeFileProvider.getImageUri(context, "photo_$photoAmount")
                             imageUri = uri
                             cameraLauncher.launch(uri)
 
-                                    photoArray.add(photoAmount, uri)
+                                photoArray.add(photoAmount, uri)
                                 photoAmount++
                                 hasImage = false
                             }

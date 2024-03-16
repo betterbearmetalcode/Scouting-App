@@ -313,9 +313,10 @@ actual class PitsScoutMenu actual constructor(
                             photoAmount--
                         },
                         ) {
-                        Icon(
+                        Image(
                             painter = painterResource("trash.png"),
-                            contentDescription = "Delete")
+                            contentDescription = "Delete"
+                        )
                     }
                 }
             }
