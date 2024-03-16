@@ -88,7 +88,7 @@ actual fun AutoTeleSelectorMenu(
             TextField(
                 value = match.value,
                 onValueChange = { value ->
-                    if(match.value != "") {
+                    if(match.value != "" && !match.value.contains('/')) {
                         matchScoutArray[Integer.parseInt(match.value)] = createOutput(team, robotStartPosition)
                         exportScoutData(context)
                     }
