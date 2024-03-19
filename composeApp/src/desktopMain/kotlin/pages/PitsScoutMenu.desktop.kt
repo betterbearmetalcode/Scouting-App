@@ -412,11 +412,11 @@ actual class PitsScoutMenu actual constructor(
                         robotLength, robotWidth, ampStrength.value, speakerStrength.value,
                         climbStrength.value, trapStrength.value, concerns,scoutName.value)
                 }
+//                Image(
+//                    painter = painterResource(photoArray[0].toAwtImage()),
+//                    contentDescription = ""
+//                )
             }
-//            Image(
-//                painter = BufferedWriter(photoArray[0].toAwtImage()),
-//                contentDescription = ""
-//            )
         }
     }
 }
