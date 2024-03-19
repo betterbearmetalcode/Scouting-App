@@ -10,9 +10,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil.compose.AsyncImage
 import com.bumble.appyx.components.backstack.BackStack
 import com.bumble.appyx.components.backstack.operation.push
+import compKey
 import defaultOnPrimary
 import defaultPrimaryVariant
 import getCurrentTheme
@@ -27,7 +27,6 @@ actual fun LoginMenu(
 ) {
     val logo = File("Logo.png")
     var compDD by remember { mutableStateOf(false) }
-    var compKey by remember { mutableStateOf("") }
     val tbaMatches = listOf(
         "2024wabon",
         "2024wasam",

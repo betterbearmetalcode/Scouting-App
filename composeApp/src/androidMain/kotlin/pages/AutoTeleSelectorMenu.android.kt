@@ -12,19 +12,14 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.bumble.appyx.components.backstack.BackStack
-import com.bumble.appyx.components.backstack.operation.newRoot
 import com.bumble.appyx.components.backstack.operation.pop
 import com.bumble.appyx.components.backstack.operation.push
-import com.bumble.appyx.components.backstack.operation.replace
-import com.bumble.appyx.interactions.core.Elements
-import com.bumble.appyx.interactions.core.asElement
 import composables.InternetErrorAlert
 import defaultBackground
 import defaultOnBackground
 import defaultOnPrimary
 import defaultPrimaryVariant
 import exportScoutData
-import kotlinx.coroutines.flow.last
 import nodes.*
 import org.json.JSONException
 import setTeam
@@ -40,14 +35,11 @@ actual fun AutoTeleSelectorMenu(
     backStack: BackStack<AutoTeleSelectorNode.NavTarget>,
     mainMenuBackStack: BackStack<RootNode.NavTarget>
 ) {
-    try {
-        setTeam(team, match, robotStartPosition.intValue)
-    } catch (e: JSONException) {
-        openError.value = true
-    }
+
     var pageName by remember { mutableStateOf("Auto") }
     var positionName by remember { mutableStateOf("") }
     val context = LocalContext.current
+    var teamNumAsText by remember { mutableStateOf(team.intValue.toString()) }
 
     when {
         openError.value -> {
@@ -95,20 +87,45 @@ actual fun AutoTeleSelectorMenu(
                 color = defaultPrimaryVariant,
                 thickness = 3.dp
             )
+            val textColor = if (positionName.lowercase().contains("b")) {
+                Color(red = 0.1f, green = Color.Cyan.green - 0.4f, blue = Color.Cyan.blue - 0.2f)
+            } else {
+                Color.Red
+            }
 
-            Text(
-                text = "${team.intValue}",
+            TextField(
+                value = teamNumAsText,
+                onValueChange = { value ->
+                    teamNumAsText = value.filter { it.isDigit() }.slice(0..<value.length.coerceAtMost(5))
+                    if (teamNumAsText.isNotEmpty())
+                        team.intValue = parseInt(teamNumAsText)
+                },
+                colors = TextFieldDefaults.colors(
+                    focusedContainerColor = defaultBackground,
+                    unfocusedContainerColor = defaultBackground,
+                    focusedTextColor = textColor,
+                    unfocusedTextColor = textColor
+                ),
                 modifier = Modifier
                     .align(Alignment.CenterVertically)
-                    .padding(horizontal = 25.dp),
-                fontSize = 31.sp,
-                color = if (
-                    positionName.lowercase().contains("b")) {
-                        Color(red = 0.1f, green = Color.Cyan.green - 0.4f, blue = Color.Cyan.blue - 0.2f)
-                } else {
-                    Color.Red
-                }
+//                    .padding(horizontal = 25.dp)
+                    .width(125.dp),
+                textStyle = TextStyle.Default.copy(fontSize = 31.sp),
+                singleLine = true,
             )
+//            Text(
+//                text = "${team.intValue}",
+//                modifier = Modifier
+//                    .align(Alignment.CenterVertically)
+//                    .padding(horizontal = 25.dp),
+//                fontSize = 31.sp,
+//                color = if (
+//                    positionName.lowercase().contains("b")) {
+//                        Color(red = 0.1f, green = Color.Cyan.green - 0.4f, blue = Color.Cyan.blue - 0.2f)
+//                } else {
+//                    Color.Red
+//                }
+//            )
 
             VerticalDivider(
                 color = defaultPrimaryVariant,
@@ -126,17 +143,22 @@ actual fun AutoTeleSelectorMenu(
             TextField(
                 value = match.value,
                 onValueChange = { value ->
+                    match.value = value.filter { it.isDigit() }.slice(0..<value.length.coerceAtMost(5))
+                    if(match.value != ""){
+                        loadData(parseInt(value), team, robotStartPosition)
+                    }
                     if(match.value != "") {
                         matchScoutArray[robotStartPosition.intValue]?.set(parseInt(match.value),
                             createOutput(team, robotStartPosition)
                         )
                         exportScoutData(context)
                     }
-                    match.value = value.filter { it.isDigit() };
-                    if(match.value != ""){
-                        loadData(parseInt(value), team, robotStartPosition)
+                    try {
+                        setTeam(team, nodes.match, robotStartPosition.intValue)
+                    } catch (e: JSONException) {
+                        openError.value = true
                     }
-
+                    teamNumAsText = team.intValue.toString()
                 },
                 modifier = Modifier.fillMaxWidth(),
                 colors = TextFieldDefaults.colors(

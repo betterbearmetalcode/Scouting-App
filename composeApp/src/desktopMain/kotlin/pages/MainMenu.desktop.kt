@@ -31,7 +31,8 @@ actual class MainMenu actual constructor(
     private val backStack: BackStack<RootNode.NavTarget>,
     private val robotStartPosition: MutableIntState,
     private val scoutName: MutableState<String>,
-    private val comp: MutableState<String>
+    private val comp: MutableState<String>,
+    private val team: MutableIntState
 ) : Node(buildContext = buildContext) {
 
     @OptIn(ExperimentalResourceApi::class)

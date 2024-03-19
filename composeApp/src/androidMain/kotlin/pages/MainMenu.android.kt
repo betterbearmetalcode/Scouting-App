@@ -22,6 +22,7 @@ import com.bumble.appyx.components.backstack.BackStack
 import com.bumble.appyx.components.backstack.operation.push
 import com.bumble.appyx.navigation.modality.BuildContext
 import com.bumble.appyx.navigation.node.Node
+import compKey
 import defaultSecondary
 import getCurrentTheme
 import getLastSynced
@@ -30,10 +31,13 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import matchData
 import nodes.RootNode
+import nodes.match
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
+import org.json.JSONException
 import sendData
 import sendDataUSB
+import setTeam
 import sync
 import teamData
 
@@ -42,7 +46,8 @@ actual class MainMenu actual constructor(
     private val backStack: BackStack<RootNode.NavTarget>,
     private val robotStartPosition: MutableIntState,
     private val scoutName: MutableState<String>,
-    private val comp: MutableState<String>
+    private val comp: MutableState<String>,
+    private val team: MutableIntState
 ) : Node(buildContext = buildContext) {
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -59,6 +64,9 @@ actual class MainMenu actual constructor(
         var deviceListOpen by remember { mutableStateOf(false) }
         val manager = context.getSystemService(Context.USB_SERVICE) as UsbManager
 
+        var setEventCode by remember { mutableStateOf(false) }
+        var tempCompKey by remember { mutableStateOf(compKey) }
+
         val deviceList = manager.deviceList
 
 
@@ -67,6 +75,17 @@ actual class MainMenu actual constructor(
                 deviceList.forEach { (name, _) ->
                     Log.i("USB", name)
                     DropdownMenuItem(text = { Text(name) }, onClick = { sendDataUSB(context, name) })
+                }
+            }
+            if (setEventCode) {
+                Dialog(onDismissRequest = {
+                    setEventCode = false
+                    compKey = tempCompKey
+                }) {
+                    Column {
+                        Text("Enter new event code")
+                        TextField(tempCompKey, {tempCompKey = it})
+                    }
                 }
             }
             Box(modifier = Modifier.fillMaxWidth()) {
@@ -122,6 +141,11 @@ actual class MainMenu actual constructor(
                         DropdownMenuItem(
                             onClick = {
                                 robotStartPosition.intValue = 0; backStack.push(RootNode.NavTarget.MatchScouting)
+                                try {
+                                    setTeam(team, match, robotStartPosition.intValue)
+                                } catch (e: JSONException) {
+                                    openError.value = true
+                                }
                             },
                             modifier = Modifier
                                 .border(BorderStroke(color = Color.Yellow, width = 3.dp))
@@ -132,6 +156,11 @@ actual class MainMenu actual constructor(
                         DropdownMenuItem(
                             onClick = {
                                 robotStartPosition.intValue = 3; backStack.push(RootNode.NavTarget.MatchScouting)
+                                try {
+                                    setTeam(team, match, robotStartPosition.intValue)
+                                } catch (e: JSONException) {
+                                    openError.value = true
+                                }
                             },
                             modifier = Modifier
                                 .border(BorderStroke(color = Color.Yellow, width = 3.dp))
@@ -144,6 +173,11 @@ actual class MainMenu actual constructor(
                         DropdownMenuItem(
                             onClick = {
                                 robotStartPosition.intValue = 1; backStack.push(RootNode.NavTarget.MatchScouting)
+                                try {
+                                    setTeam(team, match, robotStartPosition.intValue)
+                                } catch (e: JSONException) {
+                                    openError.value = true
+                                }
                             },
                             modifier = Modifier
                                 .border(BorderStroke(color = Color.Yellow, width = 3.dp))
@@ -154,6 +188,11 @@ actual class MainMenu actual constructor(
                         DropdownMenuItem(
                             onClick = {
                                 robotStartPosition.intValue = 4; backStack.push(RootNode.NavTarget.MatchScouting)
+                                try {
+                                    setTeam(team, match, robotStartPosition.intValue)
+                                } catch (e: JSONException) {
+                                    openError.value = true
+                                }
                             },
                             modifier = Modifier
                                 .border(BorderStroke(color = Color.Yellow, width = 3.dp))
@@ -166,6 +205,11 @@ actual class MainMenu actual constructor(
                         DropdownMenuItem(
                             onClick = {
                                 robotStartPosition.intValue = 2; backStack.push(RootNode.NavTarget.MatchScouting)
+                                try {
+                                    setTeam(team, match, robotStartPosition.intValue)
+                                } catch (e: JSONException) {
+                                    openError.value = true
+                                }
                             },
                             modifier = Modifier
                                 .border(BorderStroke(color = Color.Yellow, width = 3.dp))
@@ -176,6 +220,11 @@ actual class MainMenu actual constructor(
                         DropdownMenuItem(
                             onClick = {
                                 robotStartPosition.intValue = 5; backStack.push(RootNode.NavTarget.MatchScouting)
+                                try {
+                                    setTeam(team, match, robotStartPosition.intValue)
+                                } catch (e: JSONException) {
+                                    openError.value = true
+                                }
                             },
                             modifier = Modifier
                                 .border(BorderStroke(color = Color.Yellow, width = 3.dp))
@@ -281,7 +330,20 @@ actual class MainMenu actual constructor(
 
             Box(modifier = Modifier.fillMaxSize()){
                 Text(text="Competition ${comp.value}",color = getCurrentTheme().onSecondary,modifier = Modifier.align(Alignment.BottomCenter))
+                OutlinedButton(
+                    border = BorderStroke(3.dp, Color.Yellow),
+                    shape = RoundedCornerShape(25.dp),
+                    contentPadding = PaddingValues(horizontal = 10.dp, vertical = 15.dp),
+                    colors = ButtonDefaults.buttonColors(containerColor = defaultSecondary),
+                    onClick = {
+                        setEventCode = true
+                    },
+                    modifier = Modifier.align(Alignment.CenterEnd)
+                ) {
+                    Text("Set custom event key", fontSize = 9.sp)
+                }
             }
+            Text(tempCompKey)
 
             if (serverDialogOpen) {
                 Dialog(
