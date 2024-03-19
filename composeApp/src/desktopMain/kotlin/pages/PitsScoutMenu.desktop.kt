@@ -14,6 +14,7 @@ import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.painter.BitmapPainter
+import androidx.compose.ui.graphics.toAwtImage
 import androidx.compose.ui.graphics.toComposeImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -36,6 +37,7 @@ import defaultOnSurface
 import defaultPrimaryVariant
 import defaultSecondary
 import org.jetbrains.compose.resources.ExperimentalResourceApi
+import java.io.BufferedWriter
 import java.lang.Integer.parseInt
 
 @OptIn(ExperimentalResourceApi::class)
@@ -411,6 +413,10 @@ actual class PitsScoutMenu actual constructor(
                         climbStrength.value, trapStrength.value, concerns,scoutName.value)
                 }
             }
+//            Image(
+//                painter = BufferedWriter(photoArray[0].toAwtImage()),
+//                contentDescription = ""
+//            )
         }
     }
 }

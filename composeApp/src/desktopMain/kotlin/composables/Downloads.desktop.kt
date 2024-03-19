@@ -17,16 +17,17 @@ fun download(
     photoAmount: Int
 ) {
     val homeDir = System.getProperty("user.home")
-    var filePath = "$homeDir/Pictures/Primary$teamNumber.png"
+    var filePath = "C:\\MechScoutingData\\Primary$teamNumber"
     try {
         val inputFile = File(filePath)
         inputFile.createNewFile()
-        ImageIO.write(photoArray[0].toAwtImage(),"PNG", inputFile)
+        var write = ImageIO.write(photoArray[0].toAwtImage(),"PNG", inputFile)
         val outputStream = FileOutputStream(inputFile)
-        ImageIO.createImageOutputStream(outputStream)
+        //ImageIO.createImageOutputStream(outputStream)
         outputStream.flush()
         outputStream.close()
         println("Image saved successfully to $filePath")
+        println("Written to Image $write")
     } catch (e: IOException) {
         e.printStackTrace()
         println("Error saving image: ${e.message}")
