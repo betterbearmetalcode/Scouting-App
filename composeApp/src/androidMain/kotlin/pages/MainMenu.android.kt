@@ -329,7 +329,6 @@ actual class MainMenu actual constructor(
             }
 
             Box(modifier = Modifier.fillMaxSize()){
-                Text(text="Competition ${comp.value}",color = getCurrentTheme().onSecondary,modifier = Modifier.align(Alignment.BottomCenter))
                 OutlinedButton(
                     border = BorderStroke(3.dp, Color.Yellow),
                     shape = RoundedCornerShape(25.dp),
@@ -337,6 +336,8 @@ actual class MainMenu actual constructor(
                     colors = ButtonDefaults.buttonColors(containerColor = defaultSecondary),
                     onClick = {
                         setEventCode = true
+                        teamSyncedResource = "crossmark.png"
+                        matchSyncedResource = "crossmark.png"
                     },
                     modifier = Modifier.align(Alignment.CenterEnd)
                 ) {

@@ -143,9 +143,10 @@ actual fun AutoTeleSelectorMenu(
             TextField(
                 value = match.value,
                 onValueChange = { value ->
-                    match.value = value.filter { it.isDigit() }.slice(0..<value.length.coerceAtMost(5))
+                    val temp = value.filter { it.isDigit() }
+                    match.value = temp.slice(0..<temp.length.coerceAtMost(5))
                     if(match.value != ""){
-                        loadData(parseInt(value), team, robotStartPosition)
+                        loadData(parseInt(temp), team, robotStartPosition)
                     }
                     if(match.value != "") {
                         matchScoutArray[robotStartPosition.intValue]?.set(parseInt(match.value),
