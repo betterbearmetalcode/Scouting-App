@@ -109,19 +109,6 @@ actual fun LoginMenu(
         Divider(
             color = defaultPrimaryVariant,
         )
-        OutlinedButton(
-            onClick = {
-                if (comp.value != "" && scoutName.value != "")
-                    backStack.push(RootNode.NavTarget.MainMenu)
-            },
-            border = BorderStroke(color = defaultPrimaryVariant, width = 2.dp),
-            colors = ButtonDefaults.buttonColors(backgroundColor = getCurrentTheme().primary)
-        ) {
-            Text(
-                text = "Submit",
-                color = getCurrentTheme().onPrimary
-            )
-        }
         Box(modifier = Modifier.fillMaxWidth(9f/10f).align(Alignment.CenterHorizontally)) {
             OutlinedButton(
                 onClick = {
