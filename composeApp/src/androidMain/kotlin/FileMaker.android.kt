@@ -38,10 +38,16 @@ fun createFile(context: Context) {
 }
 
 fun openFile(context: Context) {
-    matchData = JSONObject(String(FileInputStream(File(context.filesDir, "match_data.json")).readBytes()))
-
-    teamData = JSONObject(String(FileInputStream(File(context.filesDir, "match_data.json")).readBytes()))
-
+    matchData = try {
+        JSONObject(String(FileInputStream(File(context.filesDir, "match_data.json")).readBytes()))
+    } catch (e: JSONException) {
+        null
+    }
+    teamData = try {
+        JSONObject(String(FileInputStream(File(context.filesDir, "match_data.json")).readBytes()))
+    } catch (e: JSONException) {
+        null
+    }
     openScoutFile(context)
 }
 

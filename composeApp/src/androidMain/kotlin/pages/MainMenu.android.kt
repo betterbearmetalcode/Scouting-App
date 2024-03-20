@@ -264,8 +264,8 @@ actual class MainMenu actual constructor(
                     val scope = CoroutineScope(Dispatchers.Default)
                     scope.launch {
                         sync(true, context)
-                        if (teamData != null) teamSyncedResource = "checkmark.png"
-                        if (matchData != null) matchSyncedResource = "checkmark.png"
+                        teamSyncedResource = if (teamData != null)  "checkmark.png" else "crossmark.png"
+                        matchSyncedResource = if (matchData != null)  "checkmark.png" else "crossmark.png"
                     }
                 },
                 modifier = Modifier
