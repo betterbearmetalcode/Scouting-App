@@ -3,6 +3,7 @@ package nodes
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.state.ToggleableState
 import com.bumble.appyx.components.backstack.BackStack
 import com.bumble.appyx.components.backstack.BackStackModel
 import com.bumble.appyx.components.backstack.ui.fader.BackStackFader
@@ -44,13 +45,13 @@ class AutoTeleSelectorNode(
     override fun resolve(interactionTarget: NavTarget, buildContext: BuildContext): Node =
         when (interactionTarget) {
             NavTarget.AutoScouting -> AutoNode(buildContext, backStack, mainMenuBackStack, selectAuto, match, team, robotStartPosition)
-            NavTarget.TeleScouting -> TeleNode(buildContext, backStack, selectAuto, match, team, robotStartPosition)
+            NavTarget.TeleScouting -> TeleNode(buildContext, backStack, mainMenuBackStack, selectAuto, match, team, robotStartPosition)
         }
 
     @Composable
     override fun View(modifier: Modifier) {
         Column {
-            AutoTeleSelectorMenu(match, team, robotStartPosition, selectAuto, backStack)
+            AutoTeleSelectorMenu(match, team, robotStartPosition, selectAuto, backStack, mainMenuBackStack)
             AppyxComponent(
                 appyxComponent = backStack,
                 modifier = Modifier.weight(0.9f)
@@ -60,14 +61,14 @@ class AutoTeleSelectorNode(
 }
 
 
-val f1 = mutableIntStateOf(0)
-val f2 = mutableIntStateOf(0)
-val f3 = mutableIntStateOf(0)
-val m1 = mutableIntStateOf(0)
-val m2 = mutableIntStateOf(0)
-val m3 = mutableIntStateOf(0)
-val m4 = mutableIntStateOf(0)
-val m5 = mutableIntStateOf(0)
+val f1 = mutableStateOf(ToggleableState(false))
+val f2 = mutableStateOf(ToggleableState(false))
+val f3 = mutableStateOf(ToggleableState(false))
+val m1 = mutableStateOf(ToggleableState(false))
+val m2 = mutableStateOf(ToggleableState(false))
+val m3 = mutableStateOf(ToggleableState(false))
+val m4 = mutableStateOf(ToggleableState(false))
+val m5 = mutableStateOf(ToggleableState(false))
 
 val match = mutableStateOf("1")
 val autoSpeakerNum = mutableIntStateOf(0)
@@ -84,17 +85,22 @@ var lostComms = mutableIntStateOf(0)
 var teleNotes = mutableStateOf("")
 
 fun createOutput(team: MutableIntState, robotStartPosition: MutableIntState): String {
+    fun stateToInt(state: ToggleableState) = when (state) {
+        ToggleableState.Off -> 0
+        ToggleableState.Indeterminate -> 1
+        ToggleableState.On -> 2
+    }
     val teleNotesFinal = if (teleNotes.value == "") "No Comments" else teleNotes.value
     return match.value + "/" + team.value + "/" +
             robotStartPosition.value + "/" + autoSpeakerNum.value + "/" +
             autoAmpNum.value + "/" + autoSMissed.value + "/" +
-            autoAMissed.value + "/" + f1.value + "/" +
-            f2.value + "/" + f3.value + "/" +
-            m1.value + "/" + m2.value + "/" +
-            m3.value + "/" + m4.value + "/" +
-            m5.value + "/" + teleSpeakerNum.value + "/" +
+            autoAMissed.value + "/" + stateToInt(f1.value) + "/" +
+            stateToInt(f2.value) + "/" + stateToInt(f3.value) + "/" +
+            stateToInt(m1.value) + "/" + stateToInt(m2.value) + "/" +
+            stateToInt(m3.value) + "/" + stateToInt(m4.value) + "/" +
+            stateToInt(m5.value) + "/" + teleSpeakerNum.value + "/" +
             teleAmpNum.value + "/" + teleTrapNum.value + "/" +
             teleSMissed.value + "/" + teleAMissed.value + "/" +
-            lostComms + "/" + teleNotesFinal
+            lostComms.value + "/" + teleNotesFinal
 
 }

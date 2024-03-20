@@ -12,7 +12,8 @@ expect class MainMenu(
     backStack: BackStack<RootNode.NavTarget>,
     robotStartPosition: MutableIntState,
     scoutName: MutableState<String>,
-    comp: MutableState<String>
+    comp: MutableState<String>,
+    team: MutableIntState
 ) : Node {
 
     @Composable

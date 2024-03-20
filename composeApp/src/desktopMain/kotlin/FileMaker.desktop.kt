@@ -1,5 +1,6 @@
 import com.google.gson.Gson
 import nodes.matchScoutArray
+import org.json.JSONArray
 import org.json.JSONObject
 import java.io.File
 import java.io.FileInputStream
@@ -30,6 +31,7 @@ fun openFile() {
 
     teamData = JSONObject(String(FileInputStream(File("$homeDir/Documents/team_data.json")).readAllBytes()))
 
+
 }
 
 fun exportScoutData() {
@@ -37,9 +39,9 @@ fun exportScoutData() {
     val file = File("$homeDir/Documents/match_scouting_data.json")
     file.delete()
     file.createNewFile()
-    val gson = Gson()
+    val jsonObject = getJsonFromMatchHash()
     val writer = FileWriter(file)
-    writer.write(gson.toJson(matchScoutArray))
+    writer.write(jsonObject.toString(1))
     writer.close()
 }
 fun deleteFile(){

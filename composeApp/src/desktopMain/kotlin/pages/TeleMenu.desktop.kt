@@ -2,6 +2,7 @@ package pages
 
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
@@ -28,9 +29,12 @@ import java.io.File
 import java.lang.Integer.parseInt
 
 @Composable
-actual fun TeleMenu(
+actual fun TeleMenu (
     backStack: BackStack<AutoTeleSelectorNode.NavTarget>,
+    mainMenuBackStack: BackStack<RootNode.NavTarget>,
+
     selectAuto: MutableState<Boolean>,
+
     match: MutableState<String>,
     team: MutableIntState,
     robotStartPosition: MutableIntState
@@ -39,6 +43,13 @@ actual fun TeleMenu(
     val isScrollEnabled = remember{ mutableStateOf(true) }
     val isKeyboardOpen by keyboardAsState()
     var qrCodeBytes by remember{ mutableStateOf(File("src/commonMain/resources/Empty Qr Code.png").readBytes())}
+
+    fun bob() {
+        mainMenuBackStack.pop()
+        matchScoutArray.putIfAbsent(robotStartPosition.intValue, HashMap())
+        matchScoutArray[robotStartPosition.intValue]?.set(parseInt(match.value), createOutput(team, robotStartPosition))
+        exportScoutData()
+    }
 
     if(!isKeyboardOpen){
         isScrollEnabled.value = true
@@ -59,8 +70,8 @@ actual fun TeleMenu(
         Row {
             Text("Lost Comms?")
             Checkbox(
-                when(nodes.lostComms.intValue) {0 -> false; 1 -> true; else -> false},
-                onCheckedChange = { when(it) {true -> nodes.lostComms.intValue = 1; false -> nodes.lostComms.intValue = 0} })
+                when(lostComms.intValue) {0 -> false; 1 -> true; else -> false},
+                onCheckedChange = { when(it) {true -> lostComms.intValue = 1; false -> lostComms.intValue = 0} })
         }
 
         Divider(color = Color.Black, thickness = 4.dp)
@@ -104,19 +115,36 @@ actual fun TeleMenu(
             contentPadding = PaddingValues(horizontal = 10.dp, vertical = 15.dp),
             colors = ButtonDefaults.buttonColors(backgroundColor = defaultSecondary),
             onClick = {
-                matchScoutArray[parseInt(match.value)] = createOutput(team, robotStartPosition)
+                matchScoutArray.putIfAbsent(robotStartPosition.intValue, HashMap())
+                matchScoutArray[robotStartPosition.intValue]?.set(parseInt(match.value),
+                    createOutput(team, robotStartPosition)
+                )
                 match.value = (parseInt(match.value) + 1).toString()
                 reset()
                 teleNotes.value = ""
                 selectAuto.value = false
                 exportScoutData()
-                loadData(parseInt(match.value),team)
-                println(matchScoutArray[parseInt(match.value)])
+                loadData(parseInt(match.value), team, robotStartPosition)
                 backStack.pop()
             },
             modifier = Modifier.align(Alignment.CenterHorizontally)
         ) {
             Text("Next Match", fontSize = 20.sp)
+        }
+
+        OutlinedButton(
+            border = BorderStroke(2.dp, color = Color.Yellow),
+            shape = CircleShape,
+            colors = ButtonDefaults.buttonColors(backgroundColor = defaultSecondary),
+            onClick = {
+                exportScoutData()
+                bob()
+            }
+        ) {
+            Text(
+                text = "Back",
+                color = Color.Yellow
+            )
         }
     }
 }
