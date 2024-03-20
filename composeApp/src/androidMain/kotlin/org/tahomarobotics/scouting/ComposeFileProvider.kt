@@ -5,7 +5,7 @@ import android.net.Uri
 import androidx.core.content.FileProvider
 import java.io.File
 
-class ComposeFileProvider : FileProvider(
+class  ComposeFileProvider : FileProvider(
     R.xml.filepaths
 ) {
     companion object {

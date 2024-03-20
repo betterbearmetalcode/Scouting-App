@@ -44,3 +44,8 @@ fun exportScoutData() {
     writer.write(jsonObject.toString(1))
     writer.close()
 }
+fun deleteFile(){
+    val homeDir = System.getProperty("user.home")
+    val file = File("$homeDir/Documents/match_scouting_data.json")
+    file.delete()
+}

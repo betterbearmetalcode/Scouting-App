@@ -8,7 +8,7 @@ import nodes.AutoTeleSelectorNode
 import nodes.RootNode
 
 @Composable
-expect fun AutoMenu (
+expect fun AutoMenu(
     backStack: BackStack<AutoTeleSelectorNode.NavTarget>,
     mainMenuBackStack: BackStack<RootNode.NavTarget>,
 
@@ -16,5 +16,5 @@ expect fun AutoMenu (
 
     match: MutableState<String>,
     team: MutableIntState,
-    robotStartPosition: MutableIntState,
+    robotStartPosition: MutableIntState
 )

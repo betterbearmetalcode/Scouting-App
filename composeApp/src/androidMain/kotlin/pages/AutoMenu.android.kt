@@ -1,7 +1,5 @@
 package pages
 
-import composables.Comments
-import nodes.RootNode
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -23,17 +21,18 @@ import composables.EnumerableValue
 import defaultSecondary
 import exportScoutData
 import keyboardAsState
-import nodes.matchScoutArray
 import nodes.*
 
 @Composable
-actual fun AutoMenu (
+actual fun AutoMenu(
     backStack: BackStack<AutoTeleSelectorNode.NavTarget>,
     mainMenuBackStack: BackStack<RootNode.NavTarget>,
+
     selectAuto: MutableState<Boolean>,
+
     match: MutableState<String>,
     team: MutableIntState,
-    robotStartPosition: MutableIntState,
+    robotStartPosition: MutableIntState
 ) {
     val context = LocalContext.current
     fun bob() {
@@ -75,7 +74,7 @@ actual fun AutoMenu (
                     ToggleableState.Off -> ToggleableState.Indeterminate;
                     ToggleableState.Indeterminate -> ToggleableState.On;
                     ToggleableState.On -> ToggleableState.Off
-                }
+            }
 
             Row {
                 Text(
@@ -195,4 +194,3 @@ actual fun AutoMenu (
         }
     }
 }
-

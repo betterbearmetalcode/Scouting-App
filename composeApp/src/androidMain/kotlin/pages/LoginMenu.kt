@@ -2,23 +2,31 @@ package pages
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.bumble.appyx.components.backstack.BackStack
 import com.bumble.appyx.components.backstack.operation.push
 import compKey
+import defaultError
 import defaultOnPrimary
 import defaultPrimaryVariant
+import deleteFile
 import getCurrentTheme
 import nodes.RootNode
+import nodes.matchScoutArray
+import nodes.reset
 import java.io.File
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 actual fun LoginMenu(
     backStack: BackStack<RootNode.NavTarget>,
@@ -27,6 +35,8 @@ actual fun LoginMenu(
 ) {
     val logo = File("Logo.png")
     var compDD by remember { mutableStateOf(false) }
+    var deleteData by remember { mutableStateOf(false) }
+    val context = LocalContext.current
     val tbaMatches = listOf(
         "2024wabon",
         "2024wasam",
@@ -119,6 +129,62 @@ actual fun LoginMenu(
                 text = "Submit",
                 color = getCurrentTheme().onPrimary
             )
+        }
+
+        Box(modifier = Modifier.fillMaxWidth(9f/10f).align(Alignment.CenterHorizontally)) {
+            OutlinedButton(
+                onClick = {
+                    if (comp.value != "" && scoutName.value != "")
+                        backStack.push(RootNode.NavTarget.MainMenu)
+                },
+                border = BorderStroke(color = defaultPrimaryVariant, width = 2.dp),
+                colors = ButtonDefaults.buttonColors(containerColor = getCurrentTheme().primary),
+                modifier = Modifier.align(Alignment.CenterStart)
+            ) {
+                Text(
+                    text = "Submit",
+                    color = getCurrentTheme().onPrimary
+                )
+            }
+            OutlinedButton(
+                onClick = { deleteData = true },
+                border = BorderStroke(color = defaultPrimaryVariant, width = 2.dp),
+                colors = ButtonDefaults.buttonColors(containerColor = getCurrentTheme().primary),
+                modifier = Modifier.align(Alignment.CenterEnd)
+            ) {
+                Text(
+                    text = "Delete Data",
+                    color = getCurrentTheme().onPrimary
+                )
+            }
+            if (deleteData) {
+                BasicAlertDialog(
+                    onDismissRequest = { deleteData = false },
+                    modifier = Modifier.clip(
+                        RoundedCornerShape(5.dp)
+                    ).border(BorderStroke(3.dp, defaultPrimaryVariant), RoundedCornerShape(5.dp))
+
+                ) {
+                    Text(text = "Are you sure?")
+                    Box(modifier = Modifier.fillMaxWidth(8f / 10f)) {
+                        Button(
+                            onClick = {
+                                deleteData = false; matchScoutArray.clear(); reset(); deleteFile(context)
+                            },
+                            modifier = Modifier.align(Alignment.CenterStart)
+                        ) {
+                            Text(text = "Yes", color = defaultError)
+                        }
+                    }
+                    Button(
+                        onClick = { deleteData = false },
+                        modifier = Modifier.align(Alignment.CenterEnd)
+                    ) {
+                        Text(text = "No", color = defaultError)
+                    }
+                }
+
+            }
         }
     }
 }

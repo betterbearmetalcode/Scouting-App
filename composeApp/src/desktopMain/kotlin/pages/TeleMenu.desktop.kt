@@ -78,34 +78,34 @@ actual fun TeleMenu (
 
         Comments(teleNotes, isScrollEnabled)
 
-        OutlinedButton(
-            border = BorderStroke(3.dp, Color.Yellow),
-            shape = RoundedCornerShape(25.dp),
-            colors = ButtonDefaults.buttonColors(backgroundColor = defaultSecondary),
-            onClick = {
-                val outputString = createOutput(team, robotStartPosition)
-
-                val qrCode = QRCode.ofSquares()
-                    .withSize(12)
-                    .withBackgroundColor(Colors.GOLD)
-                    .withColor(Colors.BLACK)
-                    .build(outputString)
-
-                val pngBytes = qrCode.render()
-
-                qrCodeBytes = pngBytes.getBytes()
-            }
-        ) {
-            Text("Export to QR code")
-        }
-
-        Image(
-            painter = BitmapPainter(org.jetbrains.skia.Image.makeFromEncoded(qrCodeBytes).toComposeImageBitmap()),
-            contentDescription = "QR Code",
-            contentScale = ContentScale.Fit,
-            modifier = Modifier
-                .fillMaxSize(1.25f)
-        )
+//        OutlinedButton(
+//            border = BorderStroke(3.dp, Color.Yellow),
+//            shape = RoundedCornerShape(25.dp),
+//            colors = ButtonDefaults.buttonColors(backgroundColor = defaultSecondary),
+//            onClick = {
+//                val outputString = createOutput(team, robotStartPosition)
+//
+//                val qrCode = QRCode.ofSquares()
+//                    .withSize(12)
+//                    .withBackgroundColor(Colors.GOLD)
+//                    .withColor(Colors.BLACK)
+//                    .build(outputString)
+//
+//                val pngBytes = qrCode.render()
+//
+//                qrCodeBytes = pngBytes.getBytes()
+//            }
+//        ) {
+//            Text("Export to QR code")
+//        }
+//
+//        Image(
+//            painter = BitmapPainter(org.jetbrains.skia.Image.makeFromEncoded(qrCodeBytes).toComposeImageBitmap()),
+//            contentDescription = "QR Code",
+//            contentScale = ContentScale.Fit,
+//            modifier = Modifier
+//                .fillMaxSize(1.25f)
+//        )
 
         Spacer(Modifier.height(15.dp))
 

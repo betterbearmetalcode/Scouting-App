@@ -110,6 +110,7 @@ fun loadData(match: Int, team: MutableIntState, robotStartPosition: MutableIntSt
         teleAMissed.intValue = parseInt(help[19])
         lostComms.intValue = parseInt(help[20])
         teleNotes = mutableStateOf(help[21])
+        //reset()
     }
 }
 fun reset(){

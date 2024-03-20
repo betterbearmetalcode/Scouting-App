@@ -85,6 +85,11 @@ fun exportScoutData(context: Context) {
 
 
 
+fun deleteFile(context: Context){
+    val file = File(context.filesDir, "match_scouting_data.json")
+    file.delete()
+}
+
 fun sendData(context: Context, ipAddress: String) {
 
     exportScoutData(context)
@@ -106,8 +111,6 @@ fun sendData(context: Context, ipAddress: String) {
     } finally {
         socket.close()
     }
-
-
 }
 
 @RequiresApi(Build.VERSION_CODES.O)
