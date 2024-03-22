@@ -29,14 +29,14 @@ fun Comments(text: MutableState<String>, isScrollEnabled: MutableState<Boolean>)
                 },
                 shape = RoundedCornerShape(25.dp),
                 onValueChange = {
-                    val oldText = text.value
+                    //val oldText = text.value
                     text.value = it
                     isScrollEnabled.value = false
-                    if (text.value.length > 150)
-                        text.value = oldText
+//                    if (text.value.length > 150)
+//                        text.value = oldText
                 },
                 modifier = Modifier
-                    .size(400.dp, 200.dp),
+                    .size(400.dp, 75.dp),
                 colors = TextFieldDefaults.outlinedTextFieldColors(
                     backgroundColor = defaultBackground,
                     focusedBorderColor = defaultOnBackground,
@@ -46,13 +46,13 @@ fun Comments(text: MutableState<String>, isScrollEnabled: MutableState<Boolean>)
                 )
             )
 
-            Text(
-                "${text.value.length}/150",
-                Modifier
-                    .align(Alignment.BottomEnd)
-                    .offset(x = (-7).dp, y = (-10).dp),
-                fontSize = 10.sp, color = defaultPrimaryVariant
-            )
+//            Text(
+//                "${text.value.length}/150",
+//                Modifier
+//                    .align(Alignment.BottomEnd)
+//                    .offset(x = (-7).dp, y = (-10).dp),
+//                fontSize = 10.sp, color = defaultPrimaryVariant
+//            )
         }
     }
 }
