@@ -71,8 +71,8 @@ actual fun AutoMenu(
                 checkmarkColor = Color.Black
             )
             fun getNewState(state: ToggleableState) = when (state) {
-                    ToggleableState.Off -> ToggleableState.Indeterminate;
-                    ToggleableState.Indeterminate -> ToggleableState.On;
+                    ToggleableState.Off -> ToggleableState.Indeterminate
+                    ToggleableState.Indeterminate -> ToggleableState.On
                     ToggleableState.On -> ToggleableState.Off
             }
 

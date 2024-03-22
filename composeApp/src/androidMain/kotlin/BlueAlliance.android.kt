@@ -1,6 +1,5 @@
 import android.content.Context
 import android.os.Build
-import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.compose.runtime.MutableIntState
 import androidx.compose.runtime.MutableState
@@ -14,7 +13,7 @@ import java.io.FileNotFoundException
 import java.lang.Integer.parseInt
 import java.time.Instant
 import java.util.*
-import kotlin.math.log
+import javax.net.ssl.SSLHandshakeException
 
 /**
  * Updates match data
@@ -27,7 +26,8 @@ import kotlin.math.log
  *         or if match data isn't null
  */
 @RequiresApi(Build.VERSION_CODES.O)
-suspend fun sync(refresh: Boolean, context: Context): Boolean  {
+suspend fun sync(refresh: Boolean, context: Context): Boolean {
+
     val scope = CoroutineScope(Dispatchers.Default)
     var teamError = false
     var matchError = false

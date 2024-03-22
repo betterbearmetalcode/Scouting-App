@@ -149,7 +149,6 @@ class LoginPage(
                         )
                     }
                 }
-
             }
             Divider(
                 color = defaultPrimaryVariant,

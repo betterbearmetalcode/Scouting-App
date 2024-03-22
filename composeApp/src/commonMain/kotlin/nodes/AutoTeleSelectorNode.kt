@@ -90,6 +90,7 @@ fun createOutput(team: MutableIntState, robotStartPosition: MutableIntState): St
         ToggleableState.Indeterminate -> 1
         ToggleableState.On -> 2
     }
+
     val teleNotesFinal = if (teleNotes.value == "") "No Comments" else teleNotes.value
     return match.value + "/" + team.value + "/" +
             robotStartPosition.value + "/" + autoSpeakerNum.value + "/" +
@@ -102,5 +103,4 @@ fun createOutput(team: MutableIntState, robotStartPosition: MutableIntState): St
             teleAmpNum.value + "/" + teleTrapNum.value + "/" +
             teleSMissed.value + "/" + teleAMissed.value + "/" +
             lostComms.value + "/" + teleNotesFinal
-
 }

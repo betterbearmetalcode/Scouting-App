@@ -33,7 +33,7 @@ class RootNode(
     buildContext = buildContext
 ){
     private var team = mutableIntStateOf(1)
-    private var robotStartPosition = mutableIntStateOf(-1)
+    private var robotStartPosition = mutableIntStateOf(0)
     private var pitsPerson = mutableStateOf("P1")
     private var comp =  mutableStateOf("")
     private val ampStrength = mutableStateOf(false)
@@ -91,6 +91,7 @@ fun loadData(match: Int, team: MutableIntState, robotStartPosition: MutableIntSt
             else -> ToggleableState.Off
         }
         val help = matchScoutArray[robotStartPosition.intValue]?.get(match)?.split('/') ?: createOutput(team, robotStartPosition).split('/')
+        team.intValue = parseInt(help[1])
         autoSpeakerNum.intValue = parseInt(help[3])
         autoAmpNum.intValue = parseInt(help[4])
         autoSMissed.intValue = parseInt(help[5])
