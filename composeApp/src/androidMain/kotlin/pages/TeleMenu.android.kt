@@ -22,6 +22,7 @@ import defaultSecondary
 import exportScoutData
 import keyboardAsState
 import nodes.*
+import setTeam
 import java.lang.Integer.parseInt
 
 @Composable
@@ -93,6 +94,7 @@ actual fun TeleMenu (
                 exportScoutData(context)
                 loadData(parseInt(match.value), team, robotStartPosition)
                 backStack.pop()
+                setTeam(team,match,robotStartPosition.intValue)
             },
             modifier = Modifier.align(Alignment.CenterHorizontally)
         ) {

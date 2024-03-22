@@ -94,11 +94,12 @@ actual fun AutoTeleSelectorMenu(
             }
 
             TextField(
-                value = teamNumAsText,
+                value = team.intValue.toString(),
                 onValueChange = { value ->
                     teamNumAsText = value.filter { it.isDigit() }.slice(0..<value.length.coerceAtMost(5))
-                    if (teamNumAsText.isNotEmpty())
+                    if (teamNumAsText.isNotEmpty() || teamNumAsText.contains(','))
                         team.intValue = parseInt(teamNumAsText)
+                        teamNumAsText = team.toString()
                 },
                 colors = TextFieldDefaults.colors(
                     focusedContainerColor = defaultBackground,

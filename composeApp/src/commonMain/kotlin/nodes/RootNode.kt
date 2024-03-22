@@ -113,6 +113,7 @@ fun loadData(match: Int, team: MutableIntState, robotStartPosition: MutableIntSt
         //reset()
     }
 }
+
 fun reset(){
     autoSpeakerNum.value = 0
     autoAmpNum.value = 0
