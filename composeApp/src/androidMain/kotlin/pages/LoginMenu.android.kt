@@ -51,7 +51,7 @@ actual fun LoginMenu(
             color = getCurrentTheme().onPrimary,
             modifier = Modifier.align(Alignment.CenterHorizontally).offset(0.dp, (-28).dp)
         )
-        Divider(
+        HorizontalDivider(
             color = defaultPrimaryVariant,
             modifier = Modifier.offset(0.dp, (-25).dp),
             thickness = 3.dp
@@ -61,7 +61,7 @@ actual fun LoginMenu(
             OutlinedTextField(
                 value = scoutName.value,
                 onValueChange = {scoutName.value = it},
-                placeholder ={ "First Name Last Name" },
+                placeholder = { Text("First Name, Last Name") },
                 shape = RoundedCornerShape(15.dp),
                 colors = TextFieldDefaults.colors(
                     unfocusedContainerColor = getCurrentTheme().background,

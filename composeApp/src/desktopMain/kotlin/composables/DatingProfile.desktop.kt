@@ -43,7 +43,12 @@ fun Profile(
     myPDFDoc.apply {
         open()
 
-        add(Paragraph("I am $robotWidth by $robotLength, I like to intake using $intakePref. I enjoy long, luxurious walks on the beach with my intense $driveType drive. As you'll find out I am very efficient in multiple ways;\n Amp: $ampStrength \n Speaker: $speakerStrength \n Climb: $climbStrength \n Trap: $trapStrength \n You should generally be concerned about my $concerns."))
+        add(Paragraph("I am $robotWidth by $robotLength, I like to intake using $intakePref. I enjoy long, luxurious walks on the beach with my intense $driveType drive. As you'll find out I am very efficient in multiple ways;\n" +
+                " Amp: $ampStrength \n" +
+                " Speaker: $speakerStrength \n" +
+                " Climb: $climbStrength \n" +
+                " Trap: $trapStrength \n" +
+                " You should generally be concerned about my $concerns."))
 
 
     }

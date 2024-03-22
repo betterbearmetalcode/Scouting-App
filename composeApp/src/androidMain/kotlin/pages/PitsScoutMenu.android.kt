@@ -25,7 +25,6 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat
-import androidx.core.net.toFile
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.bumble.appyx.components.backstack.BackStack
@@ -38,7 +37,6 @@ import composables.download
 import defaultOnPrimary
 import defaultPrimaryVariant
 import org.example.project.ComposeFileProvider
-import java.io.BufferedWriter
 import java.io.File
 
 @Suppress("VARIABLE_WITH_REDUNDANT_INITIALIZER")
@@ -67,6 +65,7 @@ actual class PitsScoutMenu actual constructor(
             onResult = {hasImage = it }
         )
         val photoArray = remember { mutableStateListOf(Uri.EMPTY) }
+        var downloadActive by remember{mutableStateOf(false)}
         var pitsPersonDD by remember { mutableStateOf(false) }
         val numOfPitsPeople by remember { mutableIntStateOf(6) }
         var scoutedTeamName by remember { mutableStateOf("") }
@@ -252,7 +251,7 @@ actual class PitsScoutMenu actual constructor(
                             if (photoAmount < 3) {//moved up
                             var uri = Uri.EMPTY
 
-                            uri = ComposeFileProvider.getImageUri(context, "photo_$photoAmount")
+                                uri = ComposeFileProvider.getImageUri(context, "photo_$photoAmount")
                             imageUri = uri
                             cameraLauncher.launch(uri)
 
@@ -392,11 +391,25 @@ actual class PitsScoutMenu actual constructor(
                     .align(Alignment.CenterHorizontally)
                     .height(90.dp)
             )
-            Row{
-                OutlinedButton(onClick = { if (photoArray.size >= 1) { robotCard = true }}) { Text(text = "Submit", color = defaultOnPrimary) }
+            Row {
+                OutlinedButton(onClick = {
+                    if (photoArray.size >= 1) {
+                        robotCard = true
+                    }
+                }) { Text(text = "Submit", color = defaultOnPrimary) }
                 OutlinedButton(onClick = { robotCard = false }) { Text(text = "Close", color = defaultOnPrimary) }
-                OutlinedButton(onClick = {download(context,photoArray,scoutedTeamNumber,photoAmount)}) { Text(text = "Download", color = defaultOnPrimary) }
-                OutlinedButton(onClick = { backStack.push(RootNode.NavTarget.MainMenu) }) { Text(text = "Back", color = defaultOnPrimary)
+                OutlinedButton(onClick = { downloadActive = true }) {
+                    Text(
+                        text = "Download",
+                        color = defaultOnPrimary
+                    )
+                }
+                OutlinedButton(onClick = { backStack.push(RootNode.NavTarget.MainMenu) }) {
+                    Text(text = "Back", color = defaultOnPrimary)
+                }
+                if (downloadActive) {
+                    download(context, photoArray, scoutedTeamNumber, photoAmount)
+                    downloadActive = false
                 }
             }
             if(robotCard){
