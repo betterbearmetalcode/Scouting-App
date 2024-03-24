@@ -102,5 +102,5 @@ fun createOutput(team: MutableIntState, robotStartPosition: MutableIntState): St
             stateToInt(m5.value) + "/" + teleSpeakerNum.value + "/" +
             teleAmpNum.value + "/" + teleTrapNum.value + "/" +
             teleSMissed.value + "/" + teleAMissed.value + "/" +
-            lostComms.value + "/" + teleNotesFinal
+            lostComms.value + "/" + scoutName + teleNotesFinal
 }

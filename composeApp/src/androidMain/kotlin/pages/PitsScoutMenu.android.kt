@@ -380,7 +380,7 @@ actual class PitsScoutMenu actual constructor(
             )
             OutlinedTextField(
                 value = concerns,
-                onValueChange ={ concerns = it},
+                onValueChange = {concerns = it},
                 colors = TextFieldDefaults.colors(focusedContainerColor = Color(6,9,13), unfocusedContainerColor = Color(6,9,13) ,focusedTextColor = defaultOnPrimary, unfocusedTextColor = defaultOnPrimary),
                 shape = RoundedCornerShape(15.dp),
                 modifier = Modifier
