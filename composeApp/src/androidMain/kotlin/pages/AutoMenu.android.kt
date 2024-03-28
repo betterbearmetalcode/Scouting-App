@@ -130,6 +130,7 @@ actual fun AutoMenu (
         EnumerableValue(label = "S Missed", value = autoSMissed)
         EnumerableValue(label = "A Missed", value = autoAMissed)
 
+
         Comments(autoNotes, isScrollEnabled)
 
         Spacer(Modifier.height(5.dp))

@@ -89,16 +89,35 @@ var teleNotes = mutableStateOf("")
 fun createOutput(team: MutableIntState, robotStartPosition: MutableIntState): String {
     val teleNotesFinal = if (teleNotes.value == "") "No Comments" else teleNotes.value
     val autoNotesFinal = if (autoNotes.value == "") "No Comments" else autoNotes.value
-    return match.value + "/" + team.value + "/" +
-            robotStartPosition.value + "/" + autoSpeakerNum.value + "/" +
-            autoAmpNum.value + "/" + autoSMissed.value + "/" +
-            autoAMissed.value + "/" + f1.value + "/" +
-            f2.value + "/" + f3.value + "/" +
-            m1.value + "/" + m2.value + "/" +
-            m3.value + "/" + m4.value + "/" +
-            m5.value + "/" + teleSpeakerNum.value + "/" +
-            teleAmpNum.value + "/" + teleTrapNum.value + "/" +
-            teleSMissed.value + "/" + teleAMissed.value + "/" +
-            autoNotesFinal + "/" + teleNotesFinal
+    return delimString("/",
+        match.value,
+        team.value.toString(),
+        robotStartPosition.value.toString(),
+        autoSpeakerNum.value.toString(),
+        autoAmpNum.value.toString(),
+        autoSMissed.value.toString(),
+        autoAMissed.value.toString(),
+        f1.value.toString(),
+        f2.value.toString(),
+        f3.value.toString(),
+        m1.value.toString(),
+        m2.value.toString(),
+        m3.value.toString(),
+        m4.value.toString(),
+        m5.value.toString(),
+        teleSpeakerNum.value.toString(),
+        teleAmpNum.value.toString(),
+        teleTrapNum.value.toString(),
+        teleSMissed.value.toString(),
+        teleAMissed.value.toString(),
+        autoNotesFinal,
+        teleNotesFinal
+    )
+}
 
+private fun delimString(delimiter: String, vararg inputs: String) : String {
+    val endString = StringBuilder()
+    inputs.forEach { endString.append (it + delimiter) }
+    endString.deleteAt(endString.lastIndex)
+    return endString.toString()
 }
