@@ -42,7 +42,7 @@ actual fun AutoMenu (
     fun bob() {
         mainMenuBackStack.pop()
         matchScoutArray.putIfAbsent(robotStartPosition.intValue, HashMap())
-        matchScoutArray[robotStartPosition.intValue]?.set(parseInt(match.value), createOutput(team, robotStartPosition))
+        matchScoutArray[robotStartPosition.intValue]?.set(parseIntText(match.value), createOutput(team, robotStartPosition))
         exportScoutData()
     }
 

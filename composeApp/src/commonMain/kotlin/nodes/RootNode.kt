@@ -1,13 +1,11 @@
 package nodes
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.state.ToggleableState
 import com.bumble.appyx.components.backstack.BackStack
 import com.bumble.appyx.components.backstack.BackStackModel
-import androidx.compose.runtime.*
-import androidx.compose.ui.state.ToggleableState
 import com.bumble.appyx.components.backstack.ui.fader.BackStackFader
 import com.bumble.appyx.navigation.composable.AppyxComponent
 import com.bumble.appyx.navigation.modality.BuildContext
@@ -135,4 +133,14 @@ fun reset(){
     f1.value = ToggleableState.Off
     f2.value = ToggleableState.Off
     f3.value = ToggleableState.Off
+}
+
+
+@Throws(NumberFormatException::class)
+fun parseIntText(s: String): Int {
+    if(s.isNotEmpty()) {
+        return s.toInt(10)
+    }else{
+        return 0
+    }
 }

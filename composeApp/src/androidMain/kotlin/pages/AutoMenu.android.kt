@@ -43,11 +43,11 @@ actual fun AutoMenu(
         )
         exportScoutData(context)
     }
+    var matchIsEmpty by remember { mutableStateOf(false) }
+
     val scrollState = rememberScrollState(0)
     val isScrollEnabled = remember{ mutableStateOf(true) }
     val isKeyboardOpen by keyboardAsState()
-
-
 
     if(!isKeyboardOpen){
         isScrollEnabled.value = true
@@ -183,7 +183,11 @@ actual fun AutoMenu(
             shape = CircleShape,
             colors = ButtonDefaults.buttonColors(containerColor = defaultSecondary),
             onClick = {
-                bob()
+                if(match.value.isNotEmpty()) {
+                    bob()
+                }else{
+                   matchIsEmpty = true
+                }
             },
             modifier = Modifier.align(Alignment.End)
         ) {
@@ -192,5 +196,8 @@ actual fun AutoMenu(
                 color = Color.Yellow
             )
         }
+//        if(matchIsZero){
+//            AlertDialog(onDismissRequest ={matchIsZero = false}, title = {Text("Match is Empty")})
+//        }
     }
 }

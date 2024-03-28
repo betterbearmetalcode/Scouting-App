@@ -106,7 +106,9 @@ actual fun TeleMenu (
             shape = CircleShape,
             colors = ButtonDefaults.buttonColors(containerColor = defaultSecondary),
             onClick = {
-                bob()
+                if(match.value.isNotEmpty()) {
+                    bob()
+                }
             },
             modifier = Modifier.align(Alignment.End)
         ) {
