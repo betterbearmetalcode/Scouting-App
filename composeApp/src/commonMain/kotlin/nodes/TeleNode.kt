@@ -12,6 +12,7 @@ import pages.TeleMenu
 class TeleNode (
     buildContext: BuildContext,
     private val backStack: BackStack<AutoTeleSelectorNode.NavTarget>,
+    private val mainMenuBackStack: BackStack<RootNode.NavTarget>,
 
     private val selectAuto: MutableState<Boolean>,
 
@@ -21,6 +22,6 @@ class TeleNode (
 ) : Node(buildContext) {
     @Composable
     override fun View(modifier: Modifier) {
-        TeleMenu(backStack, selectAuto, match, team, robotStartPosition)
+        TeleMenu(backStack, mainMenuBackStack, selectAuto, match, team, robotStartPosition)
     }
 }

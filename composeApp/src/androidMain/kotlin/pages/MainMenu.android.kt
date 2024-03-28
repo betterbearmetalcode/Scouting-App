@@ -1,7 +1,9 @@
 package pages
 
-import nodes.RootNode
+import android.content.Context
+import android.hardware.usb.UsbManager
 import android.os.Build
+import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
@@ -20,8 +22,7 @@ import com.bumble.appyx.components.backstack.BackStack
 import com.bumble.appyx.components.backstack.operation.push
 import com.bumble.appyx.navigation.modality.BuildContext
 import com.bumble.appyx.navigation.node.Node
-import composables.InternetErrorAlert
-import defaultOnPrimary
+import compKey
 import defaultSecondary
 import getCurrentTheme
 import getLastSynced
@@ -29,9 +30,14 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import matchData
+import nodes.RootNode
+import nodes.match
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
+import org.json.JSONException
 import sendData
+import sendDataUSB
+import setTeam
 import sync
 import teamData
 
@@ -40,7 +46,8 @@ actual class MainMenu actual constructor(
     private val backStack: BackStack<RootNode.NavTarget>,
     private val robotStartPosition: MutableIntState,
     private val scoutName: MutableState<String>,
-    private val comp: MutableState<String>
+    private val comp: MutableState<String>,
+    private val team: MutableIntState
 ) : Node(buildContext = buildContext) {
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -49,19 +56,38 @@ actual class MainMenu actual constructor(
     actual override fun View(modifier: Modifier) {
         val context = LocalContext.current
         var selectedPlacement by remember { mutableStateOf(false) }
-        val openError = remember { mutableStateOf(false) }
         var matchSyncedResource by remember { mutableStateOf(if (matchData == null) "crossmark.png" else "checkmark.png") }
         var teamSyncedResource by remember { mutableStateOf(if (teamData == null) "crossmark.png" else "checkmark.png") }
         var serverDialogOpen by remember { mutableStateOf(false) }
-        var ipAddress by remember { mutableStateOf("127.0.0.1") }
-        var ipAddressErrorDialog by remember { mutableStateOf(false) }
 
-        when {
-            openError.value -> {
-                InternetErrorAlert { openError.value = false }
-            }
-        }
+        var ipAddressErrorDialog by remember { mutableStateOf(false) }
+        var deviceListOpen by remember { mutableStateOf(false) }
+        val manager = context.getSystemService(Context.USB_SERVICE) as UsbManager
+
+        var setEventCode by remember { mutableStateOf(false) }
+        var tempCompKey by remember { mutableStateOf(compKey) }
+
+        val deviceList = manager.deviceList
+
+
         Column (modifier = Modifier.verticalScroll(ScrollState(0))) {
+            DropdownMenu(expanded = deviceListOpen, onDismissRequest = { deviceListOpen = false }) {
+                deviceList.forEach { (name, _) ->
+                    Log.i("USB", name)
+                    DropdownMenuItem(text = { Text(name) }, onClick = { sendDataUSB(context, name) })
+                }
+            }
+            if (setEventCode) {
+                Dialog(onDismissRequest = {
+                    setEventCode = false
+                    compKey = tempCompKey
+                }) {
+                    Column {
+                        Text("Enter new event code")
+                        TextField(tempCompKey, {tempCompKey = it})
+                    }
+                }
+            }
             Box(modifier = Modifier.fillMaxWidth()) {
                 OutlinedButton(onClick = {backStack.push(RootNode.NavTarget.LoginPage)},modifier = Modifier
                     .scale(0.75f)
@@ -74,11 +100,6 @@ actual class MainMenu actual constructor(
                     fontSize = 25.sp,
                     modifier = Modifier.align(Alignment.Center)
                 )
-                OutlinedButton(onClick = {backStack.push(RootNode.NavTarget.LoginPage)},modifier = Modifier
-                    .scale(0.75f)
-                    .align(Alignment.CenterEnd)) {
-                    Text(text = "Settings", color = getCurrentTheme().onPrimary)
-                }
             }
             HorizontalDivider(color = getCurrentTheme().onSurface, thickness = 2.dp)
             Text(text="Hello ${scoutName.value}",color = getCurrentTheme().onPrimary,modifier = Modifier.align(Alignment.CenterHorizontally))
@@ -88,11 +109,12 @@ actual class MainMenu actual constructor(
                 colors = ButtonDefaults.buttonColors(containerColor = defaultSecondary),
                 contentPadding = PaddingValues(horizontal = 60.dp, vertical = 5.dp),
                 onClick = {
-                    sync(false, context)
-                    if (!openError.value)
-                        selectedPlacement = true
-                    else
-                        matchSyncedResource = "checkmark.png"
+                    val scope = CoroutineScope(Dispatchers.Default)
+                    scope.launch {
+                        sync(false, context)
+                    }
+
+                    selectedPlacement = true
                 },
                 modifier = Modifier
                     .align(Alignment.CenterHorizontally)
@@ -119,6 +141,11 @@ actual class MainMenu actual constructor(
                         DropdownMenuItem(
                             onClick = {
                                 robotStartPosition.intValue = 0; backStack.push(RootNode.NavTarget.MatchScouting)
+                                try {
+                                    setTeam(team, match, robotStartPosition.intValue)
+                                } catch (e: JSONException) {
+                                    openError.value = true
+                                }
                             },
                             modifier = Modifier
                                 .border(BorderStroke(color = Color.Yellow, width = 3.dp))
@@ -129,6 +156,11 @@ actual class MainMenu actual constructor(
                         DropdownMenuItem(
                             onClick = {
                                 robotStartPosition.intValue = 3; backStack.push(RootNode.NavTarget.MatchScouting)
+                                try {
+                                    setTeam(team, match, robotStartPosition.intValue)
+                                } catch (e: JSONException) {
+                                    openError.value = true
+                                }
                             },
                             modifier = Modifier
                                 .border(BorderStroke(color = Color.Yellow, width = 3.dp))
@@ -141,6 +173,11 @@ actual class MainMenu actual constructor(
                         DropdownMenuItem(
                             onClick = {
                                 robotStartPosition.intValue = 1; backStack.push(RootNode.NavTarget.MatchScouting)
+                                try {
+                                    setTeam(team, match, robotStartPosition.intValue)
+                                } catch (e: JSONException) {
+                                    openError.value = true
+                                }
                             },
                             modifier = Modifier
                                 .border(BorderStroke(color = Color.Yellow, width = 3.dp))
@@ -151,6 +188,11 @@ actual class MainMenu actual constructor(
                         DropdownMenuItem(
                             onClick = {
                                 robotStartPosition.intValue = 4; backStack.push(RootNode.NavTarget.MatchScouting)
+                                try {
+                                    setTeam(team, match, robotStartPosition.intValue)
+                                } catch (e: JSONException) {
+                                    openError.value = true
+                                }
                             },
                             modifier = Modifier
                                 .border(BorderStroke(color = Color.Yellow, width = 3.dp))
@@ -163,6 +205,11 @@ actual class MainMenu actual constructor(
                         DropdownMenuItem(
                             onClick = {
                                 robotStartPosition.intValue = 2; backStack.push(RootNode.NavTarget.MatchScouting)
+                                try {
+                                    setTeam(team, match, robotStartPosition.intValue)
+                                } catch (e: JSONException) {
+                                    openError.value = true
+                                }
                             },
                             modifier = Modifier
                                 .border(BorderStroke(color = Color.Yellow, width = 3.dp))
@@ -173,6 +220,11 @@ actual class MainMenu actual constructor(
                         DropdownMenuItem(
                             onClick = {
                                 robotStartPosition.intValue = 5; backStack.push(RootNode.NavTarget.MatchScouting)
+                                try {
+                                    setTeam(team, match, robotStartPosition.intValue)
+                                } catch (e: JSONException) {
+                                    openError.value = true
+                                }
                             },
                             modifier = Modifier
                                 .border(BorderStroke(color = Color.Yellow, width = 3.dp))
@@ -209,9 +261,12 @@ actual class MainMenu actual constructor(
                 contentPadding = PaddingValues(horizontal = 10.dp, vertical = 15.dp),
                 colors = ButtonDefaults.buttonColors(containerColor = defaultSecondary),
                 onClick = {
-                    sync(true, context)
-                    if (teamData != null) teamSyncedResource = "checkmark.png"
-                    if (matchData != null) matchSyncedResource = "checkmark.png"
+                    val scope = CoroutineScope(Dispatchers.Default)
+                    scope.launch {
+                        sync(true, context)
+                        teamSyncedResource = if (teamData != null)  "checkmark.png" else "crossmark.png"
+                        matchSyncedResource = if (matchData != null)  "checkmark.png" else "crossmark.png"
+                    }
                 },
                 modifier = Modifier
                     .align(Alignment.CenterHorizontally)
@@ -232,7 +287,7 @@ actual class MainMenu actual constructor(
 
                     Spacer(modifier = Modifier.height(10.dp))
 
-                    Row {
+                    Box(Modifier.fillMaxWidth(1f/2f)) {
                         Text ("Robot List")
 
                         Image(
@@ -240,13 +295,13 @@ actual class MainMenu actual constructor(
                             contentDescription = "status",
                             modifier = Modifier
                                 .size(30.dp)
-                                .offset(x = 100.dp, y = (-5).dp)
+                                .align(Alignment.CenterEnd)
                         )
                     }
 
                     Spacer(modifier = Modifier.height(10.dp))
 
-                    Row {
+                    Box(Modifier.fillMaxWidth(1f/2f)) {
                         Text ("Match List")
 
                         Image(
@@ -254,7 +309,7 @@ actual class MainMenu actual constructor(
                             contentDescription = "status",
                             modifier = Modifier
                                 .size(30.dp)
-                                .offset(x = (98.5).dp),
+                                .align(Alignment.CenterEnd)
                         )
                     }
                 }
@@ -267,33 +322,50 @@ actual class MainMenu actual constructor(
                 colors = ButtonDefaults.buttonColors(containerColor = defaultSecondary),
                 onClick = {
                     serverDialogOpen = true
+                    //deviceListOpen = true
                 }
             ) {
                 Text("Export")
             }
 
             Box(modifier = Modifier.fillMaxSize()){
-                Text(text="Competition ${comp.value}",color = getCurrentTheme().onSecondary,modifier = Modifier.align(Alignment.BottomCenter))
+                OutlinedButton(
+                    border = BorderStroke(3.dp, Color.Yellow),
+                    shape = RoundedCornerShape(25.dp),
+                    contentPadding = PaddingValues(horizontal = 10.dp, vertical = 15.dp),
+                    colors = ButtonDefaults.buttonColors(containerColor = defaultSecondary),
+                    onClick = {
+                        setEventCode = true
+                        teamSyncedResource = "crossmark.png"
+                        matchSyncedResource = "crossmark.png"
+                    },
+                    modifier = Modifier.align(Alignment.CenterEnd)
+                ) {
+                    Text("Set custom event key", fontSize = 9.sp)
+                }
             }
+            Text(tempCompKey)
 
             if (serverDialogOpen) {
                 Dialog(
                     onDismissRequest = {
                         serverDialogOpen = false
-                        if (ipAddress.matches(Regex("^((25[0-5]|(2[0-4]|1\\d|[1-9]|)\\d)\\.?\\b){4}\$"))) {
+                        if (ipAddress.value.matches(Regex("^((25[0-5]|(2[0-4]|1\\d|[1-9]|)\\d)\\.?\\b){4}\$"))) {
                             CoroutineScope(Dispatchers.Default).launch {
-                                sendData(context, ipAddress)
+                                sendData(context, ipAddress.value)
                             }
                         } else
                             ipAddressErrorDialog = true
 
                     }
                 ) {
-                    Text("Set Server I.P.", fontSize = 24.sp)
-                    TextField(
-                        ipAddress,
-                        onValueChange = { ipAddress = it }
-                    )
+                    Column {
+                        Text("Set Device Address", fontSize = 24.sp)
+                        TextField(
+                            ipAddress.value,
+                            onValueChange = { ipAddress.value = it }
+                        )
+                    }
                 }
             }
 
@@ -307,3 +379,6 @@ actual class MainMenu actual constructor(
         }
     }
 }
+
+var ipAddress = mutableStateOf("127.0.0.1")
+val openError = mutableStateOf(false)

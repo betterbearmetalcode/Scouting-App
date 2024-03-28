@@ -1,7 +1,5 @@
 package pages
 
-import composables.Comments
-import nodes.RootNode
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -13,6 +11,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.state.ToggleableState
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.bumble.appyx.components.backstack.BackStack
@@ -22,22 +21,26 @@ import composables.EnumerableValue
 import defaultSecondary
 import exportScoutData
 import keyboardAsState
-import nodes.matchScoutArray
 import nodes.*
 
 @Composable
-actual fun AutoMenu (
+actual fun AutoMenu(
     backStack: BackStack<AutoTeleSelectorNode.NavTarget>,
     mainMenuBackStack: BackStack<RootNode.NavTarget>,
+
     selectAuto: MutableState<Boolean>,
+
     match: MutableState<String>,
     team: MutableIntState,
-    robotStartPosition: MutableIntState,
+    robotStartPosition: MutableIntState
 ) {
     val context = LocalContext.current
     fun bob() {
         mainMenuBackStack.pop()
-        matchScoutArray[Integer.parseInt(match.value)] = createOutput(team, robotStartPosition)
+        matchScoutArray.putIfAbsent(robotStartPosition.intValue, HashMap())
+        matchScoutArray[robotStartPosition.intValue]?.set(Integer.parseInt(match.value),
+            createOutput(team, robotStartPosition)
+        )
         exportScoutData(context)
     }
     val scrollState = rememberScrollState(0)
@@ -63,7 +66,14 @@ actual fun AutoMenu (
         Column (Modifier.align(Alignment.CenterHorizontally)) {
             val color = CheckboxDefaults.colors(
                 checkedColor = Color.Cyan,
+                checkmarkColor = Color.Black
             )
+            fun getNewState(state: ToggleableState) = when (state) {
+                    ToggleableState.Off -> ToggleableState.Indeterminate
+                    ToggleableState.Indeterminate -> ToggleableState.On
+                    ToggleableState.On -> ToggleableState.Off
+            }
+
             Row {
                 Text(
                     "Auto Collect",
@@ -71,67 +81,79 @@ actual fun AutoMenu (
                     fontSize = 20.sp
                 )
                 Spacer(Modifier.width(10.dp))
-                Text(1.toString(), Modifier.align(Alignment.CenterVertically))
-                Checkbox(
-                    when(f1.intValue) {0 -> false; 1 -> true; else -> false},
-                    colors = color,
-                    onCheckedChange = { when(it) {true -> f1.intValue = 1; false -> f1.intValue = 0}}
+                Text("c", Modifier.align(Alignment.CenterVertically))
+                TriStateCheckbox(
+                    state = f1.value,
+                    onClick = {
+                        f1.value = getNewState(f1.value)
+                    },
+                    colors = color
                 )
-                Text(2.toString(), Modifier.align(Alignment.CenterVertically))
-                Checkbox(
-                    when(f2.intValue) {0 -> false; 1 -> true; else -> false},
-                    colors = color,
-                    onCheckedChange = { when(it) {true -> f2.intValue = 1; false -> f2.intValue = 0}}
+                Text("b", Modifier.align(Alignment.CenterVertically))
+                TriStateCheckbox(
+                    state = f2.value,
+                    onClick = {
+                        f2.value = getNewState(f2.value)
+                    },
+                    colors = color
                 )
-                Text(3.toString(), Modifier.align(Alignment.CenterVertically))
-                Checkbox(
-                    when(f3.intValue) {0 -> false; 1 -> true; else -> false},
-                    colors = color,
-                    onCheckedChange = { when(it) {true -> f3.intValue = 1; false -> f3.intValue = 0}}
+                Text("a", Modifier.align(Alignment.CenterVertically))
+                TriStateCheckbox(
+                    state = f3.value,
+                    onClick = {
+                        f3.value = getNewState(f3.value)
+                    },
+                    colors = color
                 )
             }
             Row {
                 Spacer(Modifier.width(10.dp))
-                Text(1.toString(), Modifier.align(Alignment.CenterVertically))
-                Checkbox(
-                    when(m1.intValue) {0 -> false; 1 -> true; else -> false},
-                    colors = color,
-                    onCheckedChange = { when(it) {true -> m1.intValue = 1; false -> m1.intValue = 0}}
-                )
-                Text(2.toString(), Modifier.align(Alignment.CenterVertically))
-                Checkbox(
-                    when(m2.intValue) {0 -> false; 1 -> true; else -> false},
-                    colors = color,
-                    onCheckedChange = { when(it) {true -> m2.intValue = 1; false -> m2.intValue = 0}}
-                )
-                Text(3.toString(), Modifier.align(Alignment.CenterVertically))
-                Checkbox(
-                    when(m3.intValue) {0 -> false; 1 -> true; else -> false},
-                    colors = color,
-                    onCheckedChange = { when(it) {true -> m3.intValue = 1; false -> m3.intValue = 0}}
+                Text(5.toString(), Modifier.align(Alignment.CenterVertically))
+                TriStateCheckbox(
+                    state = m1.value,
+                    onClick = {
+                        m1.value = getNewState(m1.value)
+                    },
+                    colors = color
                 )
                 Text(4.toString(), Modifier.align(Alignment.CenterVertically))
-                Checkbox(
-                    when(m4.intValue) {0 -> false; 1 -> true; else -> false},
-                    colors = color,
-                    onCheckedChange = { when(it) {true -> m4.intValue = 1; false -> m4.intValue = 0}}
+                TriStateCheckbox(
+                    state = m2.value,
+                    onClick = {
+                        m2.value = getNewState(m2.value)
+                    },
+                    colors = color
                 )
-                Text(5.toString(), Modifier.align(Alignment.CenterVertically))
-                Checkbox(
-                    when(m5.intValue) {0 -> false; 1 -> true; else -> false},
-                    colors = color,
-                    onCheckedChange = { when(it) {true -> m5.intValue = 1; false -> m5.intValue = 0}}
+                Text(3.toString(), Modifier.align(Alignment.CenterVertically))
+                TriStateCheckbox(
+                    state = m3.value,
+                    onClick = {
+                        m3.value = getNewState(m3.value)
+                    },
+                    colors = color
                 )
-
-
+                Text(2.toString(), Modifier.align(Alignment.CenterVertically))
+                TriStateCheckbox(
+                    state = m4.value,
+                    onClick = {
+                        m4.value = getNewState(m4.value)
+                    },
+                    colors = color
+                )
+                Text(1.toString(), Modifier.align(Alignment.CenterVertically))
+                TriStateCheckbox(
+                    state = m5.value,
+                    onClick = {
+                        m5.value = getNewState(m5.value)
+                    },
+                    colors = color
+                )
             }
         }
 
         EnumerableValue(label = "S Missed", value = autoSMissed)
         EnumerableValue(label = "A Missed", value = autoAMissed)
 
-
-        Comments(autoNotes, isScrollEnabled)
 
         Spacer(Modifier.height(5.dp))
 
@@ -159,10 +181,9 @@ actual fun AutoMenu (
             shape = CircleShape,
             colors = ButtonDefaults.buttonColors(containerColor = defaultSecondary),
             onClick = {
-                exportScoutData(context)
                 bob()
             },
-            modifier = Modifier.align(Alignment.CenterHorizontally)
+            modifier = Modifier.align(Alignment.End)
         ) {
             Text(
                 text = "Back",
@@ -171,4 +192,3 @@ actual fun AutoMenu (
         }
     }
 }
-

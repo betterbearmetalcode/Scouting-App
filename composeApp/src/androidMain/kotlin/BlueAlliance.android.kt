@@ -10,8 +10,10 @@ import okhttp3.Headers
 import org.json.JSONArray
 import org.json.JSONObject
 import java.io.FileNotFoundException
+import java.lang.Integer.parseInt
 import java.time.Instant
 import java.util.*
+import javax.net.ssl.SSLHandshakeException
 
 /**
  * Updates match data
@@ -24,17 +26,21 @@ import java.util.*
  *         or if match data isn't null
  */
 @RequiresApi(Build.VERSION_CODES.O)
-fun sync(refresh: Boolean, context: Context)  {
-    val scope = CoroutineScope(Dispatchers.Default)
+suspend fun sync(refresh: Boolean, context: Context): Boolean {
 
-    scope.launch {
-        val teamError = syncTeams(refresh, context)
-        val matchError = syncMatches(refresh, context)
+    val scope = CoroutineScope(Dispatchers.Default)
+    var teamError = false
+    var matchError = false
+    val job = scope.launch {
+        teamError = syncTeams(refresh, context)
+        matchError = syncMatches(refresh, context)
         if (teamError && matchError) {
             createFile(context)
             lastSynced.value = Instant.now()
         }
     }
+    job.join()
+    return teamError || matchError
 }
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -52,7 +58,7 @@ fun syncTeams(refresh: Boolean, context: Context): Boolean {
     }
     val apiKey = String(Base64.getDecoder().decode(apiKeyEncoded))
     try {
-        val teams = run("$url/event/$comp/teams/simple",
+        val teams = run("$url/event/$compKey/teams/simple",
             Headers.headersOf("X-TBA-Auth-Key",
                 apiKey
             )
@@ -83,7 +89,7 @@ fun syncMatches(refresh: Boolean, context: Context): Boolean {
     }
     val apiKey = String(Base64.getDecoder().decode(apiKeyEncoded))
     try {
-        val matches = run("$url/event/$comp/matches",
+        val matches = run("$url/event/$compKey/matches",
             Headers.headersOf("X-TBA-Auth-Key",
                 apiKey
             )
@@ -105,19 +111,28 @@ actual fun setTeam(
     robotStartPosition: Int
 ) {
     var jsonObject = JSONObject()
-    matchData ?.let {
+    matchData?.let {
         jsonObject = it
     }
 
-    for (i in 0..(jsonObject["matches"] as JSONArray).length()) {
+    for (i in 0..<(jsonObject["matches"] as JSONArray).length()) {
         val it = (jsonObject["matches"] as JSONArray)[i]
         it as JSONObject
-        if ((it["key"] as String).contains("qm")) {
-            if ((it["key"] as String).split("qm")[1] != match.value)
-                return
+        if ((it["comp_level"] as String) == "qm") {
+            if (
+                (it["match_number"] as Int) !=
+                    parseInt(
+                        when (match.value) {
+                            "" -> "1"
+                            else -> match.value
+                        }
+                    )
+                )
+                continue
         } else {
-            return
+            continue
         }
+
         val redAlliance = ((it["alliances"] as JSONObject)["red"] as JSONObject)["team_keys"] as JSONArray
         val blueAlliance = ((it["alliances"] as JSONObject)["blue"] as JSONObject)["team_keys"] as JSONArray
         val teamKey = when(robotStartPosition) {
@@ -129,6 +144,6 @@ actual fun setTeam(
             5->blueAlliance[2]
             else -> {""}
         }
-        teamNum.intValue = Integer.parseInt((teamKey as String).slice(3..<teamKey.length))
+        teamNum.intValue = parseInt((teamKey as String).slice(3..<teamKey.length))
     }
 }
