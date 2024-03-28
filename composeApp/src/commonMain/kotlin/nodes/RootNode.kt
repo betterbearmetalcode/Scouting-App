@@ -58,7 +58,7 @@ class RootNode(
             NavTarget.LoginPage -> LoginNode(buildContext,backStack, scoutName,comp)
             NavTarget.MainMenu -> MainMenu(buildContext, backStack, robotStartPosition,scoutName,comp)
             NavTarget.MatchScouting -> AutoTeleSelectorNode(buildContext,robotStartPosition, team, backStack)
-            NavTarget.PitsScouting -> PitsScoutMenu(buildContext,backStack,pitsPerson,ampStrength,speakerStrength,trapStrength,climbStrength,scoutName)
+            NavTarget.PitsScouting -> PitsScoutMenu(buildContext,backStack,pitsPerson,scoutName)
         }
 
     @Composable
