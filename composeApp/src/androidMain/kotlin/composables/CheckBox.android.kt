@@ -19,8 +19,8 @@ actual fun CheckBox(
 ){
     Row {
         Text(
-            text = label,
-            modifier = Modifier.offset(0.dp, 15.dp)
+            text = label,modifier = Modifier.offset(0.dp,
+                15.dp)
         )
         Checkbox(
             checked = ifChecked.value,

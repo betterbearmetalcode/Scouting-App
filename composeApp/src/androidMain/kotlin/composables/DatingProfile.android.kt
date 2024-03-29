@@ -58,7 +58,7 @@ fun Profile(
                     color = defaultOnPrimary
                 )
                 Text(
-                    text = "I like to intake using $intakePref."  +
+                    text= "I like to intake using $intakePref."  +
                             "I enjoy long, luxurious walks on the beach with my intense $driveType drive. "+
                             "I especially love the feeling of sand inbetween my ${motorType}s." +
                             "When I auto I go through $auto in that order." +

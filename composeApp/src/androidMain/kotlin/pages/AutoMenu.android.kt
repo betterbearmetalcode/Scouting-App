@@ -17,6 +17,7 @@ import androidx.compose.ui.unit.sp
 import com.bumble.appyx.components.backstack.BackStack
 import com.bumble.appyx.components.backstack.operation.pop
 import com.bumble.appyx.components.backstack.operation.push
+import composables.CheckBox
 import composables.EnumerableValue
 import defaultSecondary
 import exportScoutData
@@ -46,7 +47,6 @@ actual fun AutoMenu(
     val scrollState = rememberScrollState(0)
     val isScrollEnabled = remember{ mutableStateOf(true) }
     val isKeyboardOpen by keyboardAsState()
-
     if(!isKeyboardOpen){
         isScrollEnabled.value = true
     }
@@ -154,6 +154,17 @@ actual fun AutoMenu(
         EnumerableValue(label = "S Missed", value = autoSMissed)
         EnumerableValue(label = "A Missed", value = autoAMissed)
 
+        Row(){
+            Text(text = "Auto Stop ⚠\uFE0F",
+                fontSize = 18.sp,
+                modifier = Modifier.align(Alignment.CenterVertically)
+            )
+            Checkbox(
+                when(autoStop.value) {0 -> false; 1 -> true; else -> false},
+                colors = CheckboxDefaults.colors(checkedColor = Color.Cyan),
+                onCheckedChange = { when(it) {true -> autoStop.value = 1; false -> autoStop.value = 0}}
+            )
+        }
 
         Spacer(Modifier.height(5.dp))
 

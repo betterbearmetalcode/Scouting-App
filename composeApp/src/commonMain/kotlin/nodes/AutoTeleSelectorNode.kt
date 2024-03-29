@@ -82,6 +82,7 @@ val teleTrapNum = mutableIntStateOf(0)
 val teleSMissed = mutableIntStateOf(0)
 val teleAMissed = mutableIntStateOf(0)
 var lostComms = mutableIntStateOf(0)
+val autoStop = mutableStateOf(0)
 var teleNotes = mutableStateOf("")
 
 fun createOutput(team: MutableIntState, robotStartPosition: MutableIntState): String {
@@ -92,15 +93,14 @@ fun createOutput(team: MutableIntState, robotStartPosition: MutableIntState): St
     }
 
     val teleNotesFinal = if (teleNotes.value == "") "No Comments" else teleNotes.value
-    val autoNotesFinal = if (autoNotes.value == "") "No Comments" else autoNotes.value
     return delimString("/",
         match.value,
-        team.value.toString(),
-        robotStartPosition.value.toString(),
-        autoSpeakerNum.value.toString(),
-        autoAmpNum.value.toString(),
-        autoSMissed.value.toString(),
-        autoAMissed.value.toString(),
+        team.intValue.toString(),
+        robotStartPosition.intValue.toString(),
+        autoSpeakerNum.intValue.toString(),
+        autoAmpNum.intValue.toString(),
+        autoSMissed.intValue.toString(),
+        autoAMissed.intValue.toString(),
         stateToInt(f1.value).toString(),
         stateToInt(f2.value).toString(),
         stateToInt(f3.value).toString(),
@@ -109,12 +109,13 @@ fun createOutput(team: MutableIntState, robotStartPosition: MutableIntState): St
         stateToInt(m3.value).toString(),
         stateToInt(m4.value).toString(),
         stateToInt(m5.value).toString(),
-        teleSpeakerNum.value.toString(),
-        teleAmpNum.value.toString(),
-        teleTrapNum.value.toString(),
-        teleSMissed.value.toString(),
-        teleAMissed.value.toString(),
-        autoNotesFinal,
+        autoStop.value.toString(),
+        teleSpeakerNum.intValue.toString(),
+        teleAmpNum.intValue.toString(),
+        teleTrapNum.intValue.toString(),
+        teleSMissed.intValue.toString(),
+        teleAMissed.intValue.toString(),
+        lostComms.intValue.toString(),
         teleNotesFinal
     )
 }

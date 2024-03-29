@@ -7,6 +7,7 @@ import androidx.compose.ui.Modifier
 import com.bumble.appyx.components.backstack.BackStack
 import com.bumble.appyx.components.backstack.BackStackModel
 import androidx.compose.runtime.*
+import androidx.compose.ui.state.ToggleableState
 import com.bumble.appyx.components.backstack.ui.fader.BackStackFader
 import com.bumble.appyx.navigation.composable.AppyxComponent
 import com.bumble.appyx.navigation.modality.BuildContext
@@ -103,13 +104,14 @@ fun loadData(match: Int, team: MutableIntState, robotStartPosition: MutableIntSt
         m3.value = intToState(parseInt(help[12]))
         m4.value = intToState(parseInt(help[13]))
         m5.value = intToState(parseInt(help[14]))
-        teleSpeakerNum.intValue = parseInt(help[15])
-        teleAmpNum.intValue = parseInt(help[16])
-        teleTrapNum.intValue = parseInt(help[17])
-        teleSMissed.intValue = parseInt(help[18])
-        teleAMissed.intValue = parseInt(help[19])
-        lostComms.intValue = parseInt(help[20])
-        teleNotes = mutableStateOf(help[21])
+        autoStop.value = parseInt(help[15])
+        teleSpeakerNum.intValue = parseInt(help[16])
+        teleAmpNum.intValue = parseInt(help[17])
+        teleTrapNum.intValue = parseInt(help[18])
+        teleSMissed.intValue = parseInt(help[19])
+        teleAMissed.intValue = parseInt(help[20])
+        lostComms.intValue = parseInt(help[21])
+        teleNotes = mutableStateOf(help[22])
         //reset()
     }
 }
