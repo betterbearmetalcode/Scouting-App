@@ -160,9 +160,9 @@ actual fun AutoMenu(
                 modifier = Modifier.align(Alignment.CenterVertically)
             )
             Checkbox(
-                when(autoStop.value) {0 -> false; 1 -> true; else -> false},
+                when(autoStop.intValue) {0 -> false; 1 -> true; else -> false},
                 colors = CheckboxDefaults.colors(checkedColor = Color.Cyan),
-                onCheckedChange = { when(it) {true -> autoStop.value = 1; false -> autoStop.value = 0}}
+                onCheckedChange = { when(it) {true -> autoStop.intValue = 1; false -> autoStop.value = 0}}
             )
         }
 

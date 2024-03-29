@@ -155,6 +155,18 @@ actual fun AutoMenu (
         EnumerableValue(label = "S Missed", value = autoSMissed)
         EnumerableValue(label = "A Missed", value = autoAMissed)
 
+        Row(){
+            Text(text = "Auto Stop ⚠\uFE0F",
+                fontSize = 18.sp,
+                modifier = Modifier.align(Alignment.CenterVertically)
+            )
+            Checkbox(
+                when(autoStop.intValue) {0 -> false; 1 -> true; else -> false},
+                colors = CheckboxDefaults.colors(checkedColor = Color.Cyan),
+                onCheckedChange = { when(it) {true -> autoStop.intValue = 1; false -> autoStop.value = 0}}
+            )
+        }
+
         Spacer(modifier = Modifier.fillMaxHeight(1f/8f))
         OutlinedButton(
             border = BorderStroke(2.dp, color = Color.Yellow),

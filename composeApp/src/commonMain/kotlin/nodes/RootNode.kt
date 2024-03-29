@@ -104,15 +104,15 @@ fun loadData(match: Int, team: MutableIntState, robotStartPosition: MutableIntSt
         m3.value = intToState(parseInt(help[12]))
         m4.value = intToState(parseInt(help[13]))
         m5.value = intToState(parseInt(help[14]))
-        autoStop.value = parseInt(help[15])
+        autoStop.intValue = parseInt(help[15])
         teleSpeakerNum.intValue = parseInt(help[16])
         teleAmpNum.intValue = parseInt(help[17])
-        teleTrapNum.intValue = parseInt(help[18])
-        teleSMissed.intValue = parseInt(help[19])
-        teleAMissed.intValue = parseInt(help[20])
-        lostComms.intValue = parseInt(help[21])
-        teleNotes = mutableStateOf(help[22])
-        //reset()
+        telePassed.intValue = parseInt(help[18])
+        teleTrapNum.intValue = parseInt(help[19])
+        teleSMissed.intValue = parseInt(help[20])
+        teleAMissed.intValue = parseInt(help[21])
+        lostComms.intValue = parseInt(help[22])
+        teleNotes = mutableStateOf(help[23])
     }
 }
 
