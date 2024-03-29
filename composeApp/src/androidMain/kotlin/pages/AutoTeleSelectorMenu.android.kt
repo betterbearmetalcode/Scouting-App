@@ -96,9 +96,11 @@ actual fun AutoTeleSelectorMenu(
             TextField(
                 value = team.intValue.toString(),
                 onValueChange = { value ->
-                    teamNumAsText = value.filter { it.isDigit() }.slice(0..<value.length.coerceAtMost(5))
+                    val filteredText = value.filter { it.isDigit() }
+                    teamNumAsText = filteredText.slice(0..<filteredText.length.coerceAtMost(5))//WHY IS FILTER NOT FILTERING
                     if (teamNumAsText.isNotEmpty() || teamNumAsText.contains(','))
                         team.intValue = parseInt(teamNumAsText)
+                    println(createOutput(team,robotStartPosition))
                 },
                 colors = TextFieldDefaults.colors(
                     focusedContainerColor = defaultBackground,

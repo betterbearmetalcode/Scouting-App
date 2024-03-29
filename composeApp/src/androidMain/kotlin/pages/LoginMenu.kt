@@ -152,25 +152,27 @@ actual fun LoginMenu(
                     ).border(BorderStroke(3.dp, defaultPrimaryVariant), RoundedCornerShape(5.dp))
 
                 ) {
-                    Text(text = "Are you sure?")
-                    Box(modifier = Modifier.fillMaxWidth(8f / 10f)) {
-                        Button(
-                            onClick = {
-                                deleteData = false; matchScoutArray.clear(); reset(); deleteFile(context)
-                            },
-                            modifier = Modifier.align(Alignment.CenterStart)
-                        ) {
-                            Text(text = "Yes", color = defaultError)
+                    Column {
+                        Text(text = "Are you sure?")
+                        Box(modifier = Modifier.fillMaxWidth(8f / 10f)) {
+                            Button(
+                                onClick = {
+                                    deleteData = false; matchScoutArray.clear(); reset(); deleteFile(context)
+                                },
+                                modifier = Modifier.align(Alignment.CenterStart)
+                            ) {
+                                Text(text = "Yes", color = defaultError)
+                            }
+
+                            Button(
+                                onClick = { deleteData = false },
+                                modifier = Modifier.align(Alignment.CenterEnd)
+                            ) {
+                                Text(text = "No", color = defaultError)
+                            }
                         }
                     }
-                    Button(
-                        onClick = { deleteData = false },
-                        modifier = Modifier.align(Alignment.CenterEnd)
-                    ) {
-                        Text(text = "No", color = defaultError)
-                    }
                 }
-
             }
         }
     }
