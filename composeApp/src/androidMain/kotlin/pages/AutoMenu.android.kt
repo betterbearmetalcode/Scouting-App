@@ -1,9 +1,12 @@
+@file:OptIn(ExperimentalMaterial3Api::class)
+
 package pages
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -196,8 +199,15 @@ actual fun AutoMenu(
                 color = Color.Yellow
             )
         }
-//        if(matchIsZero){
-//            AlertDialog(onDismissRequest ={matchIsZero = false}, title = {Text("Match is Empty")})
-//        }
+        if(matchIsEmpty){
+            BasicAlertDialog(onDismissRequest ={matchIsEmpty = false}){
+                Column {
+                    Text("Match is Empty")
+                    OutlinedButton(onClick = {matchIsEmpty = false}, shape = RoundedCornerShape(15.dp)) {
+                        Text(text = "Dismiss")
+                    }
+                }
+            }
+        }
     }
 }
