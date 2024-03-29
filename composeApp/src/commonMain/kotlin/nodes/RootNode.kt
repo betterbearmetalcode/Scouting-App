@@ -40,6 +40,7 @@ class RootNode(
     private val speakerStrength = mutableStateOf(false)
     private val climbStrength = mutableStateOf(false)
     private val trapStrength = mutableStateOf(false)
+
     sealed class NavTarget : Parcelable {
         @Parcelize
         data object MainMenu : NavTarget()
