@@ -35,7 +35,7 @@ actual fun AutoTeleSelectorMenu(
     setTeam(team, match, robotStartPosition.value)
     var pageName by remember { mutableStateOf("Auto") }
     var positionName by remember { mutableStateOf("") }
-
+    var teamNumAsText by remember { mutableStateOf(team.intValue.toString()) }
 
     when (robotStartPosition.value){
         0 -> {positionName = "R1"}
@@ -69,12 +69,31 @@ actual fun AutoTeleSelectorMenu(
                     .fillMaxHeight()  //fill the max height
                     .width(3.dp),
             )
+            val textColor = if (positionName.lowercase().contains("b")) {
+                Color(red = 0.1f, green = Color.Cyan.green - 0.4f, blue = Color.Cyan.blue - 0.2f)
+            } else {
+                Color.Red
+            }
 
-            Text(
-                text = "${team.value}",
-                modifier = Modifier.align(Alignment.CenterVertically).padding(horizontal = 25.dp),
-                fontSize = 33.sp,
-                color = Color(red = 0.1f, green = Color.Cyan.green-0.4f, blue = Color.Cyan.blue-0.2f)
+            TextField(
+                value = teamNumAsText,
+                onValueChange = { value ->
+                    val filteredText = value.filter { it.isDigit() }
+                    teamNumAsText = filteredText.slice(0..<filteredText.length.coerceAtMost(5))//WHY IS FILTER NOT FILTERING
+                    if (teamNumAsText.isNotEmpty() || teamNumAsText.contains(','))
+                        team.intValue = parseInt(teamNumAsText)
+                    println(createOutput(team,robotStartPosition))
+                },
+                colors = TextFieldDefaults.textFieldColors(
+                    backgroundColor = defaultBackground,
+                    textColor = textColor,
+                ),
+                modifier = Modifier
+                    .align(Alignment.CenterVertically)
+//                    .padding(horizontal = 25.dp)
+                    .width(125.dp),
+                textStyle = TextStyle.Default.copy(fontSize = 31.sp),
+                singleLine = true,
             )
 
             Divider(

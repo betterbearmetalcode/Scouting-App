@@ -94,7 +94,7 @@ actual fun AutoTeleSelectorMenu(
             }
 
             TextField(
-                value = team.intValue.toString(),
+                value = teamNumAsText,
                 onValueChange = { value ->
                     val filteredText = value.filter { it.isDigit() }
                     teamNumAsText = filteredText.slice(0..<filteredText.length.coerceAtMost(5))//WHY IS FILTER NOT FILTERING
