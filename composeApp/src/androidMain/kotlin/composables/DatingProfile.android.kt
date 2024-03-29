@@ -29,11 +29,12 @@ fun Profile(
     auto: String,
     intakePref: String,
     concerns: String,
-    scout: String
+    scout: String,
+    modifier: Modifier
 ){
-    //SwipeToDismissBox(state = SwipeToDismissBoxState()) {
+//    SwipeToDismissBox(state = SwipeToDismissBoxState()) {
         Card(colors = CardDefaults.cardColors(containerColor = Color(15, 15, 15))) {
-            Column {
+            Column(modifier = modifier) {
                 AsyncImage(model = photoArray[0], contentDescription = "Robot Image", modifier = Modifier.clip(RoundedCornerShape(7.5.dp)))
                 HorizontalDivider(color = Color.Gray)
                 Row {
@@ -80,5 +81,5 @@ fun Profile(
                 Text(text = "Scout: $scout")
             }
         }
-    //}
+//    }
 }

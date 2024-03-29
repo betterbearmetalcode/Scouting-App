@@ -38,6 +38,8 @@ import composables.Profile
 import composables.download
 import defaultOnPrimary
 import defaultPrimaryVariant
+import org.jetbrains.compose.resources.ExperimentalResourceApi
+import org.jetbrains.compose.resources.painterResource
 import org.tahomarobotics.scouting.ComposeFileProvider
 import java.io.File
 
@@ -49,6 +51,7 @@ actual class PitsScoutMenu actual constructor(
     private var scoutName: MutableState<String>
 ) : Node(buildContext = buildContext) {
 
+    @OptIn(ExperimentalResourceApi::class)
     @SuppressLint("NewApi")
     @RequiresApi(Build.VERSION_CODES.P)
     @Composable
@@ -163,45 +166,67 @@ actual class PitsScoutMenu actual constructor(
             Spacer(modifier = Modifier.height(7.5.dp))
             HorizontalDivider(color = Color.Yellow, thickness = 2.dp)
             Spacer(modifier = Modifier.height(7.5.dp))
-            Box(modifier = Modifier.fillMaxWidth().padding(10.dp,2.5.dp).border(BorderStroke(2.dp, Color.Yellow),shape = RoundedCornerShape(20.dp))) {
+            Box(modifier = Modifier
+                .fillMaxWidth()
+                .padding(10.dp, 2.5.dp)
+                .border(BorderStroke(2.dp, Color.Yellow), shape = RoundedCornerShape(20.dp))) {
                 Text(
                     text = "Drive Type:  ",
-                    modifier = Modifier.padding(15.dp).align(Alignment.CenterStart)
+                    modifier = Modifier
+                        .padding(15.dp)
+                        .align(Alignment.CenterStart)
                 )
                 TextField(
                     value = driveType,
                     onValueChange = {driveType = it},
                     colors = TextFieldDefaults.colors(focusedContainerColor = Color.Transparent, focusedTextColor = Color.White),
-                    modifier = Modifier.padding(15.dp).align(Alignment.CenterEnd)
+                    modifier = Modifier
+                        .padding(15.dp)
+                        .align(Alignment.CenterEnd)
                 )
             }
-            Box(modifier = Modifier.fillMaxWidth().padding(10.dp,2.5.dp).border(BorderStroke(2.dp, Color.Yellow),shape = RoundedCornerShape(20.dp))) {
+            Box(modifier = Modifier
+                .fillMaxWidth()
+                .padding(10.dp, 2.5.dp)
+                .border(BorderStroke(2.dp, Color.Yellow), shape = RoundedCornerShape(20.dp))) {
                 Text(
                     text = "Motor Type:  ",
-                    modifier = Modifier.padding(15.dp).align(Alignment.CenterStart)
+                    modifier = Modifier
+                        .padding(15.dp)
+                        .align(Alignment.CenterStart)
                 )
                 TextField(
                     value = motorType,
                     onValueChange = {motorType = it},
                     colors = TextFieldDefaults.colors(focusedContainerColor = Color.Transparent, focusedTextColor = Color.White),
-                    modifier = Modifier.padding(15.dp).align(Alignment.CenterEnd)
+                    modifier = Modifier
+                        .padding(15.dp)
+                        .align(Alignment.CenterEnd)
                 )
             }
-            Box(modifier = Modifier.fillMaxWidth().padding(10.dp,2.5.dp).border(BorderStroke(2.dp, Color.Yellow),shape = RoundedCornerShape(20.dp))) {
+            Box(modifier = Modifier
+                .fillMaxWidth()
+                .padding(10.dp, 2.5.dp)
+                .border(BorderStroke(2.dp, Color.Yellow), shape = RoundedCornerShape(20.dp))) {
                 Text(
                     text = "Auto:  ",
-                    modifier = Modifier.padding(15.dp).align(Alignment.CenterStart)
+                    modifier = Modifier
+                        .padding(15.dp)
+                        .align(Alignment.CenterStart)
                 )
                 TextField(
                     value = auto,
                     onValueChange = {auto = it},
                     colors = TextFieldDefaults.colors(focusedContainerColor = Color.Transparent, focusedTextColor = Color.White),
-                    modifier = Modifier.padding(15.dp).align(Alignment.CenterEnd)
+                    modifier = Modifier
+                        .padding(15.dp)
+                        .align(Alignment.CenterEnd)
                 )
             }
             OutlinedButton(
                 border = BorderStroke(2.dp, color = Color.Yellow),
                 shape = RoundedCornerShape(10.dp),
+                modifier = Modifier.padding(5.dp),
                 onClick = {
 
                     when (PackageManager.PERMISSION_GRANTED) {
@@ -227,21 +252,23 @@ actual class PitsScoutMenu actual constructor(
                     }
                 }
             ) {
-                AsyncImage(
-                    model = cam,
-                    contentDescription = "Camera"
-                )
-                Box{
-                    Text(
-                        text ="Take Picture",
-                        color= defaultOnPrimary
+                Row {
+                    Image(
+                        painter = painterResource("KillCam.png"),
+                        contentDescription = "Camera",
+                        modifier = Modifier.fillMaxHeight()
                     )
-                    Text(
-                        text ="*Ask Permission First",
-                        color= Color.Gray,
-                        fontSize = 10.sp,
-                        modifier = Modifier.offset(0.dp,17.dp)
-                    )
+                    Column {
+                        Text(
+                            text = "Take Picture",
+                            color = defaultOnPrimary
+                        )
+                        Text(
+                            text = "*Ask Permission First",
+                            color = Color.Gray,
+                            fontSize = 10.sp,
+                        )
+                    }
                 }
             }
             Row(modifier = Modifier.horizontalScroll(ScrollState(0))) {
@@ -363,9 +390,9 @@ actual class PitsScoutMenu actual constructor(
                 }
             }
             if(robotCard){
-                Box(modifier = Modifier.padding(5.dp)) {
+                Box(modifier = Modifier.padding(5.dp).border(BorderStroke(2.dp,Color.Yellow),RoundedCornerShape(15.dp))) {
                     Profile(
-                        photoArray,  scoutedTeamName, scoutedTeamNumber, driveType, motorType, auto, collectPreference, concerns, scoutName.value)
+                        photoArray,  scoutedTeamName, scoutedTeamNumber, driveType, motorType, auto, collectPreference, concerns, scoutName.value, Modifier.padding(10.dp))
                 }
             }
         }

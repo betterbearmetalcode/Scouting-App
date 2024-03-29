@@ -45,8 +45,7 @@ fun download(
     var bitmapdata = photoArray[0]
     //var byte = ByteArray(photoArray[0].size)
     // Assuming you're inside a Composable function
-    val context = LocalContext.current
-    val contentResolver = context.contentResolver
+    val contentResolver = LocalContext.current.contentResolver
     val bitmap = decodeBitmap(ImageDecoder.createSource(contentResolver, photoArray[0]))
     bitmap.compress(Bitmap.CompressFormat.PNG,0,bos)
 
