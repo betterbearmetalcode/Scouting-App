@@ -3,6 +3,7 @@
 package pages
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
@@ -23,9 +24,11 @@ import com.bumble.appyx.components.backstack.operation.push
 import composables.EnumerableValue
 import defaultSecondary
 import exportScoutData
+import getCurrentTheme
 import keyboardAsState
 import nodes.*
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 actual fun AutoMenu(
     backStack: BackStack<AutoTeleSelectorNode.NavTarget>,
@@ -200,11 +203,11 @@ actual fun AutoMenu(
             )
         }
         if(matchIsEmpty){
-            BasicAlertDialog(onDismissRequest ={matchIsEmpty = false}){
+            BasicAlertDialog(onDismissRequest ={matchIsEmpty = false}, modifier = Modifier.background(Color.Black)){
                 Column {
                     Text("Match is Empty")
-                    OutlinedButton(onClick = {matchIsEmpty = false}, shape = RoundedCornerShape(15.dp)) {
-                        Text(text = "Dismiss")
+                    OutlinedButton(onClick = {matchIsEmpty = false}, shape = RoundedCornerShape(15.dp), modifier = Modifier.align(Alignment.CenterHorizontally)) {
+                        Text(text = "Dismiss", color = getCurrentTheme().error)
                     }
                 }
             }
