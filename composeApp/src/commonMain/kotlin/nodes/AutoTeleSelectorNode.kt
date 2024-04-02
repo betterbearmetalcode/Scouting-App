@@ -81,8 +81,10 @@ val teleAmpNum  = mutableIntStateOf(0)
 val teleTrapNum = mutableIntStateOf(0)
 val teleSMissed = mutableIntStateOf(0)
 val teleAMissed = mutableIntStateOf(0)
-var lostComms = mutableIntStateOf(0)
-var teleNotes = mutableStateOf("")
+val lostComms = mutableIntStateOf(0)
+val teleNotes = mutableStateOf("")
+
+val rotateCheckboxes = mutableStateOf(true)
 
 fun createOutput(team: MutableIntState, robotStartPosition: MutableIntState): String {
     fun stateToInt(state: ToggleableState) = when (state) {

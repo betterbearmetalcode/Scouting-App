@@ -180,18 +180,24 @@ actual fun AutoTeleSelectorMenu(
 
         Box(modifier = Modifier.fillMaxWidth()) {
 
-            Text(
-                text = pageName,
-                fontSize = 30.sp,
-                modifier = Modifier
-                    .align(Alignment.CenterStart)
-                    .offset(x = 15.dp)
+            Checkbox(
+                checked = rotateCheckboxes.value,
+                onCheckedChange = {
+                    rotateCheckboxes.value = it
+                }
             )
 
             Row(
                 Modifier
                     .align(Alignment.CenterEnd)
-                    .offset(x = (-15).dp)) {
+                    .offset(x = (-15).dp)
+            ) {
+                Text(
+                    text = pageName,
+                    fontSize = 30.sp,
+                    modifier = Modifier
+                        .align(Alignment.CenterVertically)
+                )
 
                 Text("A", fontSize = 25.sp, modifier = Modifier.align(Alignment.CenterVertically))
 
