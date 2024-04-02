@@ -91,28 +91,28 @@ fun loadData(match: Int, team: MutableIntState, robotStartPosition: MutableIntSt
             else -> ToggleableState.Off
         }
         val help = matchScoutArray[robotStartPosition.intValue]?.get(match)?.split('/') ?: createOutput(team, robotStartPosition).split('/')
-        team.intValue = parseInt(help[1])
-        autoSpeakerNum.intValue = parseInt(help[3])
-        autoAmpNum.intValue = parseInt(help[4])
-        autoSMissed.intValue = parseInt(help[5])
-        autoAMissed.intValue = parseInt(help[6])
-        f1.value = intToState(parseInt(help[7]))
-        f2.value = intToState(parseInt(help[8]))
-        f3.value = intToState(parseInt(help[9]))
-        m1.value = intToState(parseInt(help[10]))
-        m2.value = intToState(parseInt(help[11]))
-        m3.value = intToState(parseInt(help[12]))
-        m4.value = intToState(parseInt(help[13]))
-        m5.value = intToState(parseInt(help[14]))
-        autoStop.intValue = parseInt(help[15])
-        teleSpeakerNum.intValue = parseInt(help[16])
-        teleAmpNum.intValue = parseInt(help[17])
-        telePassed.intValue = parseInt(help[18])
-        teleTrapNum.intValue = parseInt(help[19])
-        teleSMissed.intValue = parseInt(help[20])
-        teleAMissed.intValue = parseInt(help[21])
-        lostComms.intValue = parseInt(help[22])
-        teleNotes = mutableStateOf(help[23])
+        team.intValue = parseInt(help[2])
+        autoSpeakerNum.intValue = parseInt(help[4])
+        autoAmpNum.intValue = parseInt(help[5])
+        autoSMissed.intValue = parseInt(help[6])
+        autoAMissed.intValue = parseInt(help[7])
+        f1.value = intToState(parseInt(help[8]))
+        f2.value = intToState(parseInt(help[9]))
+        f3.value = intToState(parseInt(help[10]))
+        m1.value = intToState(parseInt(help[11]))
+        m2.value = intToState(parseInt(help[12]))
+        m3.value = intToState(parseInt(help[13]))
+        m4.value = intToState(parseInt(help[14]))
+        m5.value = intToState(parseInt(help[15]))
+        autoStop.intValue = parseInt(help[16])
+        teleSpeakerNum.intValue = parseInt(help[17])
+        teleAmpNum.intValue = parseInt(help[18])
+        telePassed.intValue = parseInt(help[19])
+        teleTrapNum.intValue = parseInt(help[20])
+        teleSMissed.intValue = parseInt(help[21])
+        teleAMissed.intValue = parseInt(help[22])
+        lostComms.intValue = parseInt(help[23])
+        teleNotes = mutableStateOf(help[24])
     }
 }
 
@@ -136,4 +136,5 @@ fun reset(){
     f1.value = ToggleableState.Off
     f2.value = ToggleableState.Off
     f3.value = ToggleableState.Off
+    autoStop.intValue = 0
 }
