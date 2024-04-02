@@ -27,13 +27,11 @@ fun download(
     photoAmount: Int
 ) {
     //var file = File(context.cacheDir, "photo_0.jpg")
-    val directory = File(context.cacheDir,"MechScouting")
-
+    val directory = File(context.getExternalFilesDir(null),"MechScouting")
+//    context.cacheDir
     if(!directory.exists()){
-        directory.delete()
+        directory.mkdirs()
     }
-
-    directory.mkdirs()
     directory.isDirectory
     directory.createNewFile()
 
