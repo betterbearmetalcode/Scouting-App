@@ -67,8 +67,6 @@ actual fun AutoMenu(
 
         Spacer(modifier = Modifier.height(10.dp))
 
-
-
         EnumerableValue(label = "S Missed", value = autoSMissed)
         EnumerableValue(label = "A Missed", value = autoAMissed)
 

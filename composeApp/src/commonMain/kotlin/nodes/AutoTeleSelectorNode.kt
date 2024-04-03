@@ -86,6 +86,7 @@ var lostComms = mutableIntStateOf(0)
 val autoStop = mutableIntStateOf(0)
 var teleNotes = mutableStateOf("")
 
+
 fun createOutput(team: MutableIntState, robotStartPosition: MutableIntState): String {
     fun stateToInt(state: ToggleableState) = when (state) {
         ToggleableState.Off -> 0
