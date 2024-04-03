@@ -172,12 +172,6 @@ actual fun AutoTeleSelectorMenu(
                         .align(Alignment.CenterVertically)
                 )
                 Spacer(Modifier.width(5.dp))
-                Checkbox(
-                    checked = rotateCheckboxes.value,
-                    onCheckedChange = {
-                        rotateCheckboxes.value = it
-                    }
-                )
             }
 
             Row(
