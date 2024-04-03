@@ -113,7 +113,7 @@ fun createOutput(team: MutableIntState, robotStartPosition: MutableIntState): St
         autoStop.intValue.toString(),
         teleSpeakerNum.intValue.toString(),
         teleAmpNum.intValue.toString(),
-        telePassed.intValue.toString(),
+//        telePassed.intValue.toString(),
         teleTrapNum.intValue.toString(),
         teleSMissed.intValue.toString(),
         teleAMissed.intValue.toString(),

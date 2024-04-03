@@ -135,8 +135,6 @@ actual fun AutoTeleSelectorMenu(
                     match.value = temp.slice(0..<temp.length.coerceAtMost(5))
                     if(match.value != ""){
                         loadData(parseInt(temp), team, robotStartPosition)
-                    }
-                    if(match.value != "") {
                         matchScoutArray[robotStartPosition.intValue]?.set(parseInt(match.value),
                             createOutput(team, robotStartPosition)
                         )

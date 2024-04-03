@@ -16,7 +16,8 @@ import androidx.compose.ui.unit.sp
 import com.bumble.appyx.components.backstack.BackStack
 import com.bumble.appyx.components.backstack.operation.pop
 import com.bumble.appyx.components.backstack.operation.push
-import composables.AutoCheckboxes
+import composables.AutoCheckboxesHorizontal
+import composables.AutoCheckboxesVertical
 import composables.EnumerableValue
 import defaultSecondary
 import exportScoutData
@@ -50,13 +51,14 @@ actual fun AutoMenu(
     if(!isKeyboardOpen){
         isScrollEnabled.value = true
     }
-    var flippingAuto = remember { mutableStateOf(false) }
+    var flippingAuto = remember { mutableStateOf(false)}
+        var rotateAuto = remember { mutableStateOf(false)}
 
 
-    Column(
-        Modifier
-            .verticalScroll(state = scrollState, enabled = isScrollEnabled.value)
-            .padding(20.dp)
+            Column(
+                Modifier
+                    .verticalScroll(state = scrollState, enabled = isScrollEnabled.value)
+                    .padding(20.dp)
     ) {
 
         EnumerableValue(label = "Speaker", value = autoSpeakerNum)
@@ -69,15 +71,21 @@ actual fun AutoMenu(
 
         EnumerableValue(label = "S Missed", value = autoSMissed)
         EnumerableValue(label = "A Missed", value = autoAMissed)
-        Row {
-        AutoCheckboxes(flippingAuto)
-            Column {
-                OutlinedButton(onClick = { flippingAuto.value = !flippingAuto.value }) {
-                    Text(text = "Flip Auto Boxes", color = Color.White)
-                }
-                //put Rotate Button Here
+
+        if(rotateAuto.value){
+            AutoCheckboxesVertical(flippingAuto)
+        }else{
+            AutoCheckboxesHorizontal(flippingAuto)
+        }
+        Column {
+            OutlinedButton(onClick = { flippingAuto.value = !flippingAuto.value }) {
+                Text(text = "Flip Auto Boxes", color = Color.White)
+            }
+            OutlinedButton(onClick = { rotateAuto.value = !rotateAuto.value }) {
+                Text(text = "Rotate Auto Boxes", color = Color.White)
             }
         }
+
         Row(){
             Text(text = "Auto Stop ⚠\uFE0F",
                 fontSize = 18.sp,
@@ -86,7 +94,7 @@ actual fun AutoMenu(
             Checkbox(
                 when(autoStop.intValue) {0 -> false; 1 -> true; else -> false},
                 colors = CheckboxDefaults.colors(checkedColor = Color.Cyan),
-                onCheckedChange = { when(it) {true -> autoStop.intValue = 1; false -> autoStop.value = 0}}
+                onCheckedChange = { when(it) {true -> autoStop.intValue = 1; false -> autoStop.intValue = 0}}
             )
         }
 

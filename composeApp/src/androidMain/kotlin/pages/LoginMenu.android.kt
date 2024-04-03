@@ -102,6 +102,9 @@ actual fun LoginMenu(
                     onClick = { comp.value = "Salem"; compDD = false; compKey = tbaMatches[2]},
                 ){ Text(text = "Salem", color = getCurrentTheme().onPrimary,modifier= Modifier.background(color = getCurrentTheme().onSurface)) }
                 DropdownMenuItem(
+                    onClick = { comp.value = "Portland"; compDD = false; compKey = tbaMatches[3] }
+                ) { Text(text = "DCMP RAHHHHHHHH\uD83C\uDF89", color = getCurrentTheme().onPrimary, modifier = Modifier.background(color = getCurrentTheme().onSurface)) }
+                DropdownMenuItem(
                     onClick = { comp.value = "Houston"; compDD = false; compKey = tbaMatches[3]},
                 ){ Text(text = "Houston", color = getCurrentTheme().onPrimary,modifier= Modifier.background(color = getCurrentTheme().onSurface)) }
             }
