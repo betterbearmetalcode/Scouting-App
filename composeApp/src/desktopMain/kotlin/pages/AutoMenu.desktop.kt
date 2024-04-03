@@ -73,9 +73,9 @@ actual fun AutoMenu (
                     checkedColor = Color.Cyan, uncheckedColor = Color.Yellow
                 )
                 fun getNewState(state: ToggleableState) = when (state) {
-                    ToggleableState.Off -> ToggleableState.Indeterminate;
-                    ToggleableState.Indeterminate -> ToggleableState.On;
-                    ToggleableState.On -> ToggleableState.Off
+                    ToggleableState.Off -> ToggleableState.On
+                    ToggleableState.Indeterminate -> ToggleableState.Off
+                    ToggleableState.On -> ToggleableState.Indeterminate
                 }
                 Row {
                     Spacer(Modifier.width(10.dp))

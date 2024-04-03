@@ -72,6 +72,7 @@ actual fun AutoMenu(
             AutoCheckboxesVertical()
         } else {
             AutoCheckboxesHorizontal()
+
         }
 
         EnumerableValue(label = "S Missed", value = autoSMissed)

@@ -162,7 +162,7 @@ actual fun AutoTeleSelectorMenu(
                         openError.value = true
                     }
                     teamNumAsText = team.intValue.toString()
-                },
+                }, 
                 modifier = Modifier.fillMaxWidth(),
                 colors = TextFieldDefaults.colors(
                     focusedContainerColor = defaultBackground,
