@@ -180,12 +180,21 @@ actual fun AutoTeleSelectorMenu(
 
         Box(modifier = Modifier.fillMaxWidth()) {
 
-            Checkbox(
-                checked = rotateCheckboxes.value,
-                onCheckedChange = {
-                    rotateCheckboxes.value = it
-                }
-            )
+            Row(Modifier.align(Alignment.CenterStart)) {
+                Text(
+                    "Vertical Orientation",
+                    fontSize = 20.sp,
+                    modifier = Modifier
+                        .align(Alignment.CenterVertically)
+                )
+                Spacer(Modifier.width(5.dp))
+                Checkbox(
+                    checked = rotateCheckboxes.value,
+                    onCheckedChange = {
+                        rotateCheckboxes.value = it
+                    }
+                )
+            }
 
             Row(
                 Modifier
@@ -198,6 +207,8 @@ actual fun AutoTeleSelectorMenu(
                     modifier = Modifier
                         .align(Alignment.CenterVertically)
                 )
+
+                Spacer(Modifier.width(15.dp))
 
                 Text("A", fontSize = 25.sp, modifier = Modifier.align(Alignment.CenterVertically))
 

@@ -161,7 +161,7 @@ fun AutoCheckboxesVertical() {
                     )
                 }
             }
-            Spacer (Modifier.width(25.dp))
+            Spacer (Modifier.width(15.dp))
             Column {
                 Spacer(Modifier.width(10.dp))
                 Row(modifier = Modifier.align(Alignment.CenterHorizontally)) {
