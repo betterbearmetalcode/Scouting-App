@@ -51,14 +51,14 @@ actual fun AutoMenu(
     if(!isKeyboardOpen){
         isScrollEnabled.value = true
     }
-    var flippingAuto = remember { mutableStateOf(false)}
-        var rotateAuto = remember { mutableStateOf(false)}
+    val flippingAuto = remember { mutableStateOf(false)}
+    val rotateAuto = remember { mutableStateOf(false)}
 
 
-            Column(
-                Modifier
-                    .verticalScroll(state = scrollState, enabled = isScrollEnabled.value)
-                    .padding(20.dp)
+    Column(
+        Modifier
+            .verticalScroll(state = scrollState, enabled = isScrollEnabled.value)
+            .padding(20.dp)
     ) {
 
         EnumerableValue(label = "Speaker", value = autoSpeakerNum)
@@ -77,6 +77,7 @@ actual fun AutoMenu(
         }else{
             AutoCheckboxesHorizontal(flippingAuto)
         }
+
         Column {
             OutlinedButton(onClick = { flippingAuto.value = !flippingAuto.value }) {
                 Text(text = "Flip Auto Boxes", color = Color.White)
