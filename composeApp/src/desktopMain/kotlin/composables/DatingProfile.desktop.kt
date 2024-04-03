@@ -1,23 +1,15 @@
 package composables
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.ScrollState
-import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
-import androidx.compose.ui.graphics.painter.BitmapPainter
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import defaultOnPrimary
-import defaultPrimaryVariant
+import com.lowagie.text.Document
+import com.lowagie.text.Paragraph
+import com.lowagie.text.pdf.PdfWriter
+import org.jetbrains.skia.Image
+import java.io.File
+import java.io.FileOutputStream
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -36,48 +28,30 @@ fun Profile(
     concerns: String,
     scout: String
 ){
-    SwipeToDismiss(background = {}, state = DismissState(DismissValue.Default)) {
-        Card(elevation = 2.dp, backgroundColor = Color(15, 15, 15)) {
-            Column {
-                Image(painter = BitmapPainter(photoArray[0]), contentDescription = "Robot Image", modifier = Modifier.clip(RoundedCornerShape(7.5.dp)))
-                Divider(color = Color.Gray)
-                Row {
-                    Box(modifier = Modifier.fillMaxWidth()) {
-                        Text(
-                            text = "$teamName ",
-                            fontSize = 20.sp,
-                            color = defaultOnPrimary
-                        )
-                        Text(
-                            text = teamNumber,
-                            fontSize = 20.sp,
-                            color = defaultPrimaryVariant,
-                            modifier = Modifier.align(Alignment.CenterEnd)
-                        )
-                    }
-                }
-                Divider(color = Color(150, 150, 150))
-                Text(
-                    text = "About Me:",
-                    fontSize = 20.sp
-                )
-                Text(
-                    text = "I am $robotWidth by $robotLength, I like to intake using $intakePref. I enjoy long, luxurious walks on the beach with my intense $driveType drive. As you'll find out I am very efficient in multiple ways;\n Amp: $ampStrength \n Speaker: $speakerStrength \n Climb: $climbStrength \n Trap: $trapStrength \n You should generally be concerned about my $concerns."
-                )
-                Row(modifier = Modifier.horizontalScroll(ScrollState(0))) {
-                    photoArray.forEach {
-                        Image(
-                            painter = BitmapPainter(it),
-                            contentDescription = "Robot image",
-                            contentScale = ContentScale.Fit,
-                            modifier = Modifier
-                                .fillMaxSize(1.25f)
-                                .clip(RoundedCornerShape(7.5.dp))
-                        )
-                    }
-                }
-                Text(text = "Scout: $scout")
-            }
-        }
+    val primaryPhoto = photoArray[0]
+// 1) Create a FileOutputStream object with the path and name of the file
+    val pdfOutputFile = FileOutputStream("./sample1.pdf")
+
+//2) Instance an object from the class com.lowagie.text.Document
+    val myPDFDoc = Document()
+
+//3) Now we get a file writer instance from the class com.lowagie.text.pdf.PdfWriter
+    val pdfWriter = PdfWriter.getInstance(myPDFDoc, pdfOutputFile)
+
+//4) Once the File writer is set up we can open
+//   the document and start adding content
+    myPDFDoc.apply {
+        open()
+
+        add(Paragraph("I am $robotWidth by $robotLength, I like to intake using $intakePref. I enjoy long, luxurious walks on the beach with my intense $driveType drive. As you'll find out I am very efficient in multiple ways;\n" +
+                " Amp: $ampStrength \n" +
+                " Speaker: $speakerStrength \n" +
+                " Climb: $climbStrength \n" +
+                " Trap: $trapStrength \n" +
+                " You should generally be concerned about my $concerns."))
+
+
     }
+    pdfWriter.close() // close the File writer
 }
+

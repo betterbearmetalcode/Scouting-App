@@ -3,6 +3,7 @@ package pages
 import composables.Comments
 import nodes.RootNode
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
@@ -25,6 +26,7 @@ import exportScoutData
 import keyboardAsState
 import nodes.matchScoutArray
 import nodes.*
+import org.jetbrains.compose.resources.painterResource
 import java.lang.Integer.parseInt
 
 @Composable
@@ -152,6 +154,18 @@ actual fun AutoMenu (
         Spacer(modifier = Modifier.height(10.dp))
         EnumerableValue(label = "S Missed", value = autoSMissed)
         EnumerableValue(label = "A Missed", value = autoAMissed)
+
+        Row(){
+            Text(text = "Auto Stop ⚠\uFE0F",
+                fontSize = 18.sp,
+                modifier = Modifier.align(Alignment.CenterVertically)
+            )
+            Checkbox(
+                when(autoStop.intValue) {0 -> false; 1 -> true; else -> false},
+                colors = CheckboxDefaults.colors(checkedColor = Color.Cyan),
+                onCheckedChange = { when(it) {true -> autoStop.intValue = 1; false -> autoStop.value = 0}}
+            )
+        }
 
         Spacer(modifier = Modifier.fillMaxHeight(1f/8f))
         OutlinedButton(

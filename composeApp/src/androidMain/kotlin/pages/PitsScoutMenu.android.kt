@@ -4,10 +4,13 @@ package pages
 
 import nodes.RootNode
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.net.Uri
+import android.os.Build
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
@@ -31,10 +34,12 @@ import com.bumble.appyx.components.backstack.BackStack
 import com.bumble.appyx.components.backstack.operation.push
 import com.bumble.appyx.navigation.modality.BuildContext
 import com.bumble.appyx.navigation.node.Node
-import composables.CheckBox
 import composables.Profile
+import composables.download
 import defaultOnPrimary
 import defaultPrimaryVariant
+import org.jetbrains.compose.resources.ExperimentalResourceApi
+import org.jetbrains.compose.resources.painterResource
 import org.tahomarobotics.scouting.ComposeFileProvider
 import java.io.File
 
@@ -43,12 +48,12 @@ actual class PitsScoutMenu actual constructor(
     buildContext: BuildContext,
     private val backStack: BackStack<RootNode.NavTarget>,
     private var pitsPerson: MutableState<String>,
-    private val ampStrength: MutableState<Boolean>,
-    private val speakerStrength: MutableState<Boolean>,
-    private val climbStrength: MutableState<Boolean>,
-    private val trapStrength: MutableState<Boolean>,
-    private val scoutName: MutableState<String>
+    private var scoutName: MutableState<String>
 ) : Node(buildContext = buildContext) {
+
+    @OptIn(ExperimentalResourceApi::class)
+    @SuppressLint("NewApi")
+    @RequiresApi(Build.VERSION_CODES.P)
     @Composable
     actual override fun View(modifier: Modifier) {
         val launcher = rememberLauncherForActivityResult(
@@ -63,14 +68,14 @@ actual class PitsScoutMenu actual constructor(
             onResult = {hasImage = it }
         )
         val photoArray = remember { mutableStateListOf(Uri.EMPTY) }
+        var downloadActive by remember{mutableStateOf(false)}
         var pitsPersonDD by remember { mutableStateOf(false) }
         val numOfPitsPeople by remember { mutableIntStateOf(6) }
         var scoutedTeamName by remember { mutableStateOf("") }
         var scoutedTeamNumber by remember { mutableStateOf("") }
-        var robotLength by remember{mutableStateOf("")}
-        var robotWidth by remember{ mutableStateOf("")}
-        var robotTypeDropDown by remember { mutableStateOf(false) }
-        var robotType by remember { mutableStateOf("NoneSelected") }
+        var driveType by remember { mutableStateOf("") }
+        var motorType by remember { mutableStateOf("") }
+        var auto by remember { mutableStateOf("") }
         var collectPrefDD by remember{ mutableStateOf(false)}
         var collectPreference by remember { mutableStateOf("None Selected") }
         var concerns by remember { mutableStateOf("") }
@@ -159,85 +164,69 @@ actual class PitsScoutMenu actual constructor(
                 )
             }
             Spacer(modifier = Modifier.height(7.5.dp))
-            HorizontalDivider(color = Color.Yellow, thickness = 2.dp, modifier = Modifier.clip(CircleShape))
+            HorizontalDivider(color = Color.Yellow, thickness = 2.dp)
             Spacer(modifier = Modifier.height(7.5.dp))
-            Row {
+            Box(modifier = Modifier
+                .fillMaxWidth()
+                .padding(10.dp, 2.5.dp)
+                .border(BorderStroke(2.dp, Color.Yellow), shape = RoundedCornerShape(20.dp))) {
                 Text(
-                    text="Dimensions",
-                    color = defaultOnPrimary,
-                )
-                OutlinedTextField(
-                    value = robotLength + "in",
-                    onValueChange ={ text -> robotLength = text.filter { it.isDigit()}},
-                    colors = TextFieldDefaults.colors(focusedContainerColor = Color(6,9,13), unfocusedContainerColor = Color(6,9,13) ,focusedTextColor = defaultOnPrimary, unfocusedTextColor = defaultOnPrimary),
-                    shape = RoundedCornerShape(15.dp),
+                    text = "Drive Type:  ",
                     modifier = Modifier
-                        .size(80.dp, 60.dp)
-                        .border(BorderStroke(width = 1.dp, color = Color.Yellow), RoundedCornerShape(15.dp))
+                        .padding(15.dp)
+                        .align(Alignment.CenterStart)
                 )
-                Text(
-                    text=" by "
-                )
-                OutlinedTextField(
-                    value = robotWidth + "in",
-                    onValueChange ={ text -> robotWidth = text.filter { it.isDigit()}},
-                    colors = TextFieldDefaults.colors(focusedContainerColor = Color(6,9,13), unfocusedContainerColor = Color(6,9,13) ,focusedTextColor = defaultOnPrimary, unfocusedTextColor = defaultOnPrimary),
-                    shape = RoundedCornerShape(15.dp),
+                TextField(
+                    value = driveType,
+                    onValueChange = {driveType = it},
+                    colors = TextFieldDefaults.colors(focusedContainerColor = Color.Transparent, focusedTextColor = Color.White),
                     modifier = Modifier
-                        .size(80.dp, 60.dp)
-                        .border(BorderStroke(width = 1.dp, color = Color.Yellow), RoundedCornerShape(15.dp))
+                        .padding(15.dp)
+                        .align(Alignment.CenterEnd)
                 )
             }
-            Row {
+            Box(modifier = Modifier
+                .fillMaxWidth()
+                .padding(10.dp, 2.5.dp)
+                .border(BorderStroke(2.dp, Color.Yellow), shape = RoundedCornerShape(20.dp))) {
                 Text(
-                    text = "type"
-                )
-                OutlinedButton(
-                    onClick = {
-                        robotTypeDropDown = true
-                    },
-                    shape = CircleShape
-                ) {
-                    Text(
-                        text = "Selected Robot Type: $robotType ",
-                        color = defaultOnPrimary
-                    )
-                }
-            }
-            Box(modifier=Modifier.padding(15.dp,0.dp)/*.offset(0.dp,-25.dp)*/) {
-                DropdownMenu(
-                    expanded = robotTypeDropDown,
-                    onDismissRequest = { robotTypeDropDown = false },
+                    text = "Motor Type:  ",
                     modifier = Modifier
-                        .background(color = Color(15, 15, 15))
-                        .clip(RoundedCornerShape(7.5.dp))
-                ) {
-                    DropdownMenuItem(
-                        onClick = {
-                            robotTypeDropDown = false
-                            robotType = "Swerve"
-                        },
-                        text = { Text("Swerve",color = defaultOnPrimary) }
-                    )
-                    DropdownMenuItem(
-                        onClick = {
-                            robotTypeDropDown = false
-                            robotType = "Tank"
-                        },
-                        text = { Text("Tank",color = defaultOnPrimary) }
-                    )
-                    DropdownMenuItem(
-                        onClick = {
-                            robotTypeDropDown = false
-                            robotType = "Mecanum"
-                        },
-                        text = { Text("Mecanum",color = defaultOnPrimary) }
-                    )
-                }
+                        .padding(15.dp)
+                        .align(Alignment.CenterStart)
+                )
+                TextField(
+                    value = motorType,
+                    onValueChange = {motorType = it},
+                    colors = TextFieldDefaults.colors(focusedContainerColor = Color.Transparent, focusedTextColor = Color.White),
+                    modifier = Modifier
+                        .padding(15.dp)
+                        .align(Alignment.CenterEnd)
+                )
+            }
+            Box(modifier = Modifier
+                .fillMaxWidth()
+                .padding(10.dp, 2.5.dp)
+                .border(BorderStroke(2.dp, Color.Yellow), shape = RoundedCornerShape(20.dp))) {
+                Text(
+                    text = "Auto:  ",
+                    modifier = Modifier
+                        .padding(15.dp)
+                        .align(Alignment.CenterStart)
+                )
+                TextField(
+                    value = auto,
+                    onValueChange = {auto = it},
+                    colors = TextFieldDefaults.colors(focusedContainerColor = Color.Transparent, focusedTextColor = Color.White),
+                    modifier = Modifier
+                        .padding(15.dp)
+                        .align(Alignment.CenterEnd)
+                )
             }
             OutlinedButton(
                 border = BorderStroke(2.dp, color = Color.Yellow),
                 shape = RoundedCornerShape(10.dp),
+                modifier = Modifier.padding(5.dp),
                 onClick = {
 
                     when (PackageManager.PERMISSION_GRANTED) {
@@ -246,13 +235,13 @@ actual class PitsScoutMenu actual constructor(
                             Manifest.permission.CAMERA
                         ) -> {
                             if (photoAmount < 3) {//moved up
-                            var uri = Uri.EMPTY
+                                var uri = Uri.EMPTY
 
-                            uri = ComposeFileProvider.getImageUri(context)
-                            imageUri = uri
-                            cameraLauncher.launch(uri)
+                                uri = ComposeFileProvider.getImageUri(context, "photo_$photoAmount")
+                                imageUri = uri
+                                cameraLauncher.launch(uri)
 
-                                    photoArray.add(photoAmount, uri)
+                                photoArray.add(photoAmount, uri)
                                 photoAmount++
                                 hasImage = false
                             }
@@ -262,52 +251,54 @@ actual class PitsScoutMenu actual constructor(
                         }
                     }
                 }
-                ) {
-                AsyncImage(
-                    model = cam,
-                    contentDescription = "Camera"
-                )
-                Box{
-                    Text(
-                        text ="Take Picture",
-                        color= defaultOnPrimary
+            ) {
+                Row {
+                    Image(
+                        painter = painterResource("KillCam.png"),
+                        contentDescription = "Camera",
+                        modifier = Modifier.fillMaxHeight()
                     )
-                    Text(
-                        text ="*Ask Permission First",
-                        color= Color.Gray,
-                        fontSize = 10.sp,
-                        modifier = Modifier.offset(0.dp,17.dp)
-                    )
+                    Column {
+                        Text(
+                            text = "Take Picture",
+                            color = defaultOnPrimary
+                        )
+                        Text(
+                            text = "*Ask Permission First",
+                            color = Color.Gray,
+                            fontSize = 10.sp,
+                        )
+                    }
                 }
             }
             Row(modifier = Modifier.horizontalScroll(ScrollState(0))) {
                 if(hasImage){//helps update Box
-                photoArray.forEach {
-                    Box {
-                        AsyncImage(
-                            model = it,
-                            contentDescription = "Robot image",
-                            contentScale = ContentScale.Fit,
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .clip(RoundedCornerShape(7.5.dp))
-                                .size(height = 200.dp, width = 300.dp)
-                        )
-                        TextButton(
-                            onClick = {
-                                photoArray.remove(it)
-                                photoAmount--
-                            },
-                            modifier = Modifier
-                                .scale(0.25f)
-                                .align(Alignment.BottomStart)
-                        ) {
+                    photoArray.forEach {
+                        Box {
                             AsyncImage(
-                                model = trashCan,
-                                contentDescription = "Delete",
+                                model = it,
+                                contentDescription = "Robot image",
+                                contentScale = ContentScale.Fit,
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .clip(RoundedCornerShape(7.5.dp))
+                                    .size(height = 200.dp, width = 300.dp)
                             )
+                            TextButton(
+                                onClick = {
+                                    photoArray.remove(it)
+                                    photoAmount--
+                                },
+                                modifier = Modifier
+                                    .scale(0.25f)
+                                    .align(Alignment.BottomStart)
+                            ) {
+                                AsyncImage(
+                                    model = trashCan,
+                                    contentDescription = "Delete",
+                                )
+                            }
                         }
-                    }
                     }
                 }
             }
@@ -316,18 +307,7 @@ actual class PitsScoutMenu actual constructor(
                     Text(text = "Amount of Photos: $photoAmount",color = Color.Gray ,modifier = Modifier.align(Alignment.CenterEnd))
                 }
             }
-            Text(
-                text = "Strengths:",
-                fontSize = 30.sp
-            )
             HorizontalDivider(color = defaultPrimaryVariant, thickness = 2.dp, modifier = Modifier.clip(CircleShape))
-
-            CheckBox("Amp:", ampStrength, modifier = Modifier.scale(1.25f))
-            CheckBox("Speaker:", speakerStrength, modifier = Modifier.scale(1.25f))
-            CheckBox("Climb", climbStrength, modifier = Modifier.scale(1.25f))
-            CheckBox("Trap:", trapStrength, modifier = Modifier.scale(1.25f))
-
-
             OutlinedButton(
                 onClick = {
                     collectPrefDD = true
@@ -374,7 +354,7 @@ actual class PitsScoutMenu actual constructor(
             }
 
             Text(
-                text ="Concerns:",
+                text ="Comments:",
                 fontSize = 30.sp,
                 modifier = Modifier.align(Alignment.CenterHorizontally)
             )
@@ -388,19 +368,31 @@ actual class PitsScoutMenu actual constructor(
                     .align(Alignment.CenterHorizontally)
                     .height(90.dp)
             )
-            Row{
-                OutlinedButton(onClick = { if (photoArray.size >= 1) { robotCard = true }}) { Text(text = "Submit", color = defaultOnPrimary) }
+            Row {
+                OutlinedButton(onClick = {
+                    if (photoArray.size >= 1) {
+                        robotCard = true
+                    }
+                }) { Text(text = "Submit", color = defaultOnPrimary) }
                 OutlinedButton(onClick = { robotCard = false }) { Text(text = "Close", color = defaultOnPrimary) }
-                OutlinedButton(onClick = {}) { Text(text = "Download", color = defaultOnPrimary) }
-                OutlinedButton(onClick = { backStack.push(RootNode.NavTarget.MainMenu) }) { Text(text = "Back", color = defaultOnPrimary)
+                OutlinedButton(onClick = { downloadActive = true }) {
+                    Text(
+                        text = "Download",
+                        color = defaultOnPrimary
+                    )
+                }
+                OutlinedButton(onClick = { backStack.push(RootNode.NavTarget.MainMenu) }) {
+                    Text(text = "Back", color = defaultOnPrimary)
+                }
+                if (downloadActive) {
+                    download(context, photoArray, scoutedTeamNumber, photoAmount)
+                    downloadActive = false
                 }
             }
             if(robotCard){
-                Box(modifier = Modifier.padding(5.dp)) {
+                Box(modifier = Modifier.padding(5.dp).border(BorderStroke(2.dp,Color.Yellow),RoundedCornerShape(15.dp))) {
                     Profile(
-                        photoArray,  scoutedTeamName, scoutedTeamNumber, robotType, collectPreference,
-                        robotLength, robotWidth, ampStrength.value, speakerStrength.value,
-                        climbStrength.value, trapStrength.value, concerns,scoutName.value)
+                        photoArray,  scoutedTeamName, scoutedTeamNumber, driveType, motorType, auto, collectPreference, concerns, scoutName.value, Modifier.padding(10.dp))
                 }
             }
         }

@@ -60,8 +60,9 @@ actual fun TeleMenu (
             .verticalScroll(state = scrollState, enabled = isScrollEnabled.value)
             .padding(20.dp)) {
 
-        EnumerableValue(label = "Speaker" , value = teleSpeakerNum)//It no worky?
+        EnumerableValue(label = "Speaker" , value = teleSpeakerNum)
         EnumerableValue(label = "Amp" , value = teleAmpNum)
+        EnumerableValue(label = "Shuttled", value = telePassed)
         EnumerableValue(label = "Trap" , value = teleTrapNum)
         Spacer(modifier = Modifier.height(30.dp))
         EnumerableValue(label = "S Missed", value = teleSMissed)

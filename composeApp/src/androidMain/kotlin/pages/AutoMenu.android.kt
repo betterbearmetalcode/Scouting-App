@@ -11,7 +11,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.state.ToggleableState
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.bumble.appyx.components.backstack.BackStack
@@ -45,15 +44,16 @@ actual fun AutoMenu(
         )
         exportScoutData(context)
     }
+
     val scrollState = rememberScrollState(0)
     val isScrollEnabled = remember{ mutableStateOf(true) }
     val isKeyboardOpen by keyboardAsState()
-
-
-
     if(!isKeyboardOpen){
         isScrollEnabled.value = true
     }
+    val flippingAuto = remember { mutableStateOf(false)}
+    val rotateAuto = remember { mutableStateOf(false)}
+
 
     Column(
         Modifier
@@ -61,23 +61,41 @@ actual fun AutoMenu(
             .padding(20.dp)
     ) {
 
-
         EnumerableValue(label = "Speaker", value = autoSpeakerNum)
         EnumerableValue(label = "Amp", value = autoAmpNum)
 
 
         Spacer(modifier = Modifier.height(10.dp))
 
-        if (rotateCheckboxes.value) {
-            AutoCheckboxesVertical()
-        } else {
-            AutoCheckboxesHorizontal()
-
-        }
-
         EnumerableValue(label = "S Missed", value = autoSMissed)
         EnumerableValue(label = "A Missed", value = autoAMissed)
 
+        if(rotateAuto.value){
+            AutoCheckboxesVertical(flippingAuto)
+        }else{
+            AutoCheckboxesHorizontal(flippingAuto)
+        }
+
+        Column {
+            OutlinedButton(onClick = { flippingAuto.value = !flippingAuto.value }) {
+                Text(text = "Flip Auto Boxes", color = Color.White)
+            }
+            OutlinedButton(onClick = { rotateAuto.value = !rotateAuto.value }) {
+                Text(text = "Rotate Auto Boxes", color = Color.White)
+            }
+        }
+
+        Row(){
+            Text(text = "Auto Stop ⚠\uFE0F",
+                fontSize = 18.sp,
+                modifier = Modifier.align(Alignment.CenterVertically)
+            )
+            Checkbox(
+                when(autoStop.intValue) {0 -> false; 1 -> true; else -> false},
+                colors = CheckboxDefaults.colors(checkedColor = Color.Cyan),
+                onCheckedChange = { when(it) {true -> autoStop.intValue = 1; false -> autoStop.intValue = 0}}
+            )
+        }
 
         Spacer(Modifier.height(5.dp))
 

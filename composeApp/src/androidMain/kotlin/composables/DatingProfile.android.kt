@@ -25,19 +25,16 @@ fun Profile(
     teamName: String,
     teamNumber: String,
     driveType: String,
+    motorType: String,
+    auto: String,
     intakePref: String,
-    robotWidth: String,
-    robotLength: String,
-    ampStrength: Boolean,
-    speakerStrength: Boolean,
-    climbStrength: Boolean,
-    trapStrength: Boolean,
     concerns: String,
-    scout: String
+    scout: String,
+    modifier: Modifier
 ){
-    //SwipeToDismissBox(state = SwipeToDismissBoxState()) {
+//    SwipeToDismissBox(state = SwipeToDismissBoxState()) {
         Card(colors = CardDefaults.cardColors(containerColor = Color(15, 15, 15))) {
-            Column {
+            Column(modifier = modifier) {
                 AsyncImage(model = photoArray[0], contentDescription = "Robot Image", modifier = Modifier.clip(RoundedCornerShape(7.5.dp)))
                 HorizontalDivider(color = Color.Gray)
                 Row {
@@ -62,7 +59,11 @@ fun Profile(
                     color = defaultOnPrimary
                 )
                 Text(
-                    text = "I am $robotWidth by $robotLength, I like to intake using $intakePref. I enjoy long, luxurious walks on the beach with my intense $driveType drive. As you'll find out I am very efficient in multiple ways;\n Amp: $ampStrength \n Speaker: $speakerStrength \n Climb: $climbStrength \n Trap: $trapStrength \n You should generally be concerned about my $concerns.",
+                    text= "I like to intake using $intakePref."  +
+                            "I enjoy long, luxurious walks on the beach with my intense $driveType drive. "+
+                            "I especially love the feeling of sand inbetween my ${motorType}s." +
+                            "When I auto I go through $auto in that order." +
+                            " You should generally be concerned about my $concerns.",
                     color = defaultOnPrimary
                 )
                 Row(modifier = Modifier.horizontalScroll(ScrollState(0))) {
@@ -80,5 +81,5 @@ fun Profile(
                 Text(text = "Scout: $scout")
             }
         }
-    //}
+//    }
 }

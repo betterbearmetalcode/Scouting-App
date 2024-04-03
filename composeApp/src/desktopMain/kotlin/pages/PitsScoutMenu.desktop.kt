@@ -14,6 +14,7 @@ import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.painter.BitmapPainter
+import androidx.compose.ui.graphics.toAwtImage
 import androidx.compose.ui.graphics.toComposeImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -27,6 +28,7 @@ import com.bumble.appyx.navigation.node.Node
 import com.github.sarxos.webcam.Webcam
 import composables.CheckBox
 import composables.Profile
+import composables.download
 import defaultError
 import defaultOnError
 import defaultOnPrimary
@@ -35,6 +37,7 @@ import defaultOnSurface
 import defaultPrimaryVariant
 import defaultSecondary
 import org.jetbrains.compose.resources.ExperimentalResourceApi
+import java.io.BufferedWriter
 import java.lang.Integer.parseInt
 
 @OptIn(ExperimentalResourceApi::class)
@@ -312,9 +315,10 @@ actual class PitsScoutMenu actual constructor(
                             photoAmount--
                         },
                         ) {
-                        Icon(
+                        Image(
                             painter = painterResource("trash.png"),
-                            contentDescription = "Delete")
+                            contentDescription = "Delete"
+                        )
                     }
                 }
             }
@@ -394,10 +398,16 @@ actual class PitsScoutMenu actual constructor(
                 shape = RoundedCornerShape(15.dp),
                 modifier = Modifier.fillMaxWidth(9f/10f).align(Alignment.CenterHorizontally).height(90.dp)
             )
+            var string = "I am $robotWidth by $robotLength, I like to intake using $collectPreference. I enjoy long, luxurious walks on the beach with my intense $robotType drive.\n As you'll find out I am very efficient in multiple ways;\n" +
+                    " Amp: ${ampStrength.value} \n" +
+                    " Speaker: ${speakerStrength.value} \n" +
+                    " Climb: ${climbStrength.value} \n" +
+                    " Trap: ${trapStrength.value} \n" +
+                    " You should generally be concerned about my $concerns."
             Row{
                 OutlinedButton(onClick = { if (photoArray.size >= 1) { robotCard = true }}) { Text(text = "Submit", color = defaultOnPrimary) }
                 OutlinedButton(onClick = { robotCard = false }) { Text(text = "Close", color = defaultOnPrimary) }
-                OutlinedButton(onClick = {}) { Text(text = "Download", color = defaultOnPrimary) }
+                OutlinedButton(onClick = { download(photoArray,scoutedTeamNumber,string,photoAmount)}) { Text(text = "Download", color = defaultOnPrimary) }
                 OutlinedButton(onClick = { backStack.push(RootNode.NavTarget.MainMenu) }) { Text(text = "Back", color = defaultOnPrimary)
                 }
             }
@@ -408,6 +418,10 @@ actual class PitsScoutMenu actual constructor(
                         robotLength, robotWidth, ampStrength.value, speakerStrength.value,
                         climbStrength.value, trapStrength.value, concerns,scoutName.value)
                 }
+//                Image(
+//                    painter = painterResource(photoArray[0].toAwtImage()),
+//                    contentDescription = ""
+//                )
             }
         }
     }

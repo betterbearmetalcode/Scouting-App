@@ -60,7 +60,7 @@ class RootNode(
             NavTarget.LoginPage -> LoginNode(buildContext, backStack, scoutName, comp)
             NavTarget.MainMenu -> MainMenu(buildContext, backStack, robotStartPosition,scoutName, comp, team)
             NavTarget.MatchScouting -> AutoTeleSelectorNode(buildContext,robotStartPosition, team, backStack)
-            NavTarget.PitsScouting -> PitsScoutMenu(buildContext,backStack,pitsPerson,ampStrength,speakerStrength,trapStrength,climbStrength,scoutName)
+            NavTarget.PitsScouting -> PitsScoutMenu(buildContext,backStack,pitsPerson,scoutName)
         }
 
     @Composable
@@ -91,8 +91,14 @@ fun loadData(match: Int, team: MutableIntState, robotStartPosition: MutableIntSt
             2 -> ToggleableState.On
             else -> ToggleableState.Off
         }
+
+
+
+
+
         val help = matchScoutArray[robotStartPosition.intValue]?.get(match)?.split('/') ?: createOutput(team, robotStartPosition).split('/')
         team.intValue = parseInt(help[1])
+
         autoSpeakerNum.intValue = parseInt(help[3])
         autoAmpNum.intValue = parseInt(help[4])
         autoSMissed.intValue = parseInt(help[5])
@@ -105,14 +111,15 @@ fun loadData(match: Int, team: MutableIntState, robotStartPosition: MutableIntSt
         m3.value = intToState(parseInt(help[12]))
         m4.value = intToState(parseInt(help[13]))
         m5.value = intToState(parseInt(help[14]))
-        teleSpeakerNum.intValue = parseInt(help[15])
-        teleAmpNum.intValue = parseInt(help[16])
-        teleTrapNum.intValue = parseInt(help[17])
-        teleSMissed.intValue = parseInt(help[18])
-        teleAMissed.intValue = parseInt(help[19])
-        lostComms.intValue = parseInt(help[20])
-        teleNotes.value = help[21]
-    //reset()
+        autoStop.intValue = parseInt(help[15])
+        teleSpeakerNum.intValue = parseInt(help[16])
+        teleAmpNum.intValue = parseInt(help[17])
+//        telePassed.intValue = parseInt(help[18])
+        teleTrapNum.intValue = parseInt(help[19])
+        teleSMissed.intValue = parseInt(help[20])
+        teleAMissed.intValue = parseInt(help[21])
+        lostComms.intValue = parseInt(help[22])
+        teleNotes = mutableStateOf(help[23])
     }
 }
 
@@ -136,4 +143,5 @@ fun reset(){
     f1.value = ToggleableState.Off
     f2.value = ToggleableState.Off
     f3.value = ToggleableState.Off
+    autoStop.intValue = 0
 }

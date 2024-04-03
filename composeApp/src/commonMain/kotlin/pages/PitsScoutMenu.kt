@@ -12,10 +12,6 @@ expect class PitsScoutMenu(
     buildContext: BuildContext,
     backStack: BackStack<RootNode.NavTarget>,
     pitsPerson: MutableState<String>,
-    ampStrength: MutableState<Boolean>,
-    speakerStrength: MutableState<Boolean>,
-    climbStrength: MutableState<Boolean>,
-    trapStrength: MutableState<Boolean>,
     scoutName: MutableState<String>
 ) : Node {
     @Composable

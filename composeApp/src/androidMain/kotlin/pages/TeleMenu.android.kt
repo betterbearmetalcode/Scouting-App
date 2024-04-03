@@ -59,6 +59,7 @@ actual fun TeleMenu (
 
         EnumerableValue(label = "Speaker", value = teleSpeakerNum)//It no worky?
         EnumerableValue(label = "Amp", value = teleAmpNum)
+        EnumerableValue(label = "Shuttled", value = telePassed)
         EnumerableValue(label = "Trap", value = teleTrapNum)
         Spacer(modifier = Modifier.height(30.dp))
         EnumerableValue(label = "S Missed", value = teleSMissed)

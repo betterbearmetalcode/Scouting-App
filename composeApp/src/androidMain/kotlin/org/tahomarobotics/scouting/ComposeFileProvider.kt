@@ -9,14 +9,14 @@ class  ComposeFileProvider : FileProvider(
     R.xml.filepaths
 ) {
     companion object {
-        fun getImageUri(context: Context): Uri {
+        fun getImageUri(context: Context, fileName: String): Uri {
 
 
 
             val directory = File(context.cacheDir, "images")
             directory.mkdirs()
             val file = File.createTempFile(
-                "selected_image_",
+                fileName,
                 ".jpg",
                 directory,
 

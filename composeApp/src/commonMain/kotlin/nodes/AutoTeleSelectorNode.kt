@@ -78,13 +78,14 @@ val autoSMissed = mutableIntStateOf(0)
 val autoAMissed = mutableIntStateOf(0)
 val teleSpeakerNum  =  mutableIntStateOf(0)
 val teleAmpNum  = mutableIntStateOf(0)
+val telePassed = mutableIntStateOf(0)
 val teleTrapNum = mutableIntStateOf(0)
 val teleSMissed = mutableIntStateOf(0)
 val teleAMissed = mutableIntStateOf(0)
-val lostComms = mutableIntStateOf(0)
-val teleNotes = mutableStateOf("")
+var lostComms = mutableIntStateOf(0)
+val autoStop = mutableIntStateOf(0)
+var teleNotes = mutableStateOf("")
 
-val rotateCheckboxes = mutableStateOf(false)
 
 fun createOutput(team: MutableIntState, robotStartPosition: MutableIntState): String {
     fun stateToInt(state: ToggleableState) = when (state) {
@@ -94,15 +95,37 @@ fun createOutput(team: MutableIntState, robotStartPosition: MutableIntState): St
     }
 
     val teleNotesFinal = if (teleNotes.value == "") "No Comments" else teleNotes.value
-    return match.value + "/" + team.value + "/" +
-            robotStartPosition.value + "/" + autoSpeakerNum.value + "/" +
-            autoAmpNum.value + "/" + autoSMissed.value + "/" +
-            autoAMissed.value + "/" + stateToInt(f1.value) + "/" +
-            stateToInt(f2.value) + "/" + stateToInt(f3.value) + "/" +
-            stateToInt(m1.value) + "/" + stateToInt(m2.value) + "/" +
-            stateToInt(m3.value) + "/" + stateToInt(m4.value) + "/" +
-            stateToInt(m5.value) + "/" + teleSpeakerNum.value + "/" +
-            teleAmpNum.value + "/" + teleTrapNum.value + "/" +
-            teleSMissed.value + "/" + teleAMissed.value + "/" +
-            lostComms.value + "/" + teleNotesFinal
+    return delimString("/",
+        match.value,
+        team.intValue.toString(),
+        robotStartPosition.intValue.toString(),
+        autoSpeakerNum.intValue.toString(),
+        autoAmpNum.intValue.toString(),
+        autoSMissed.intValue.toString(),
+        autoAMissed.intValue.toString(),
+        stateToInt(f1.value).toString(),
+        stateToInt(f2.value).toString(),
+        stateToInt(f3.value).toString(),
+        stateToInt(m1.value).toString(),
+        stateToInt(m2.value).toString(),
+        stateToInt(m3.value).toString(),
+        stateToInt(m4.value).toString(),
+        stateToInt(m5.value).toString(),
+        autoStop.intValue.toString(),
+        teleSpeakerNum.intValue.toString(),
+        teleAmpNum.intValue.toString(),
+//        telePassed.intValue.toString(),
+        teleTrapNum.intValue.toString(),
+        teleSMissed.intValue.toString(),
+        teleAMissed.intValue.toString(),
+        lostComms.intValue.toString(),
+        teleNotesFinal
+    )
+}
+
+private fun delimString(delimiter: String, vararg inputs: String) : String {
+    val endString = StringBuilder()
+    inputs.forEach { endString.append (it + delimiter) }
+    endString.deleteAt(endString.lastIndex)
+    return endString.toString()
 }

@@ -25,7 +25,6 @@ import org.json.JSONException
 import setTeam
 import java.lang.Integer.parseInt
 
-
 @Composable
 actual fun AutoTeleSelectorMenu(
     match: MutableState<String>,
@@ -115,19 +114,6 @@ actual fun AutoTeleSelectorMenu(
                 textStyle = TextStyle.Default.copy(fontSize = 31.sp),
                 singleLine = true,
             )
-//            Text(
-//                text = "${team.intValue}",
-//                modifier = Modifier
-//                    .align(Alignment.CenterVertically)
-//                    .padding(horizontal = 25.dp),
-//                fontSize = 31.sp,
-//                color = if (
-//                    positionName.lowercase().contains("b")) {
-//                        Color(red = 0.1f, green = Color.Cyan.green - 0.4f, blue = Color.Cyan.blue - 0.2f)
-//                } else {
-//                    Color.Red
-//                }
-//            )
 
             VerticalDivider(
                 color = defaultPrimaryVariant,
@@ -149,8 +135,6 @@ actual fun AutoTeleSelectorMenu(
                     match.value = temp.slice(0..<temp.length.coerceAtMost(5))
                     if(match.value != ""){
                         loadData(parseInt(temp), team, robotStartPosition)
-                    }
-                    if(match.value != "") {
                         matchScoutArray[robotStartPosition.intValue]?.set(parseInt(match.value),
                             createOutput(team, robotStartPosition)
                         )
