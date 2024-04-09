@@ -61,14 +61,6 @@ class AutoTeleSelectorNode(
 }
 
 
-val f1 = mutableStateOf(ToggleableState(false))
-val f2 = mutableStateOf(ToggleableState(false))
-val f3 = mutableStateOf(ToggleableState(false))
-val m1 = mutableStateOf(ToggleableState(false))
-val m2 = mutableStateOf(ToggleableState(false))
-val m3 = mutableStateOf(ToggleableState(false))
-val m4 = mutableStateOf(ToggleableState(false))
-val m5 = mutableStateOf(ToggleableState(false))
 
 val match = mutableStateOf("1")
 val autoSpeakerNum = mutableIntStateOf(0)
@@ -76,6 +68,7 @@ val autoAmpNum = mutableIntStateOf(0)
 val collected = mutableIntStateOf(0)
 val autoSMissed = mutableIntStateOf(0)
 val autoAMissed = mutableIntStateOf(0)
+var autos = mutableStateOf("")
 val teleSpeakerNum  =  mutableIntStateOf(0)
 val teleAmpNum  = mutableIntStateOf(0)
 val telePassed = mutableIntStateOf(0)
@@ -94,7 +87,7 @@ fun createOutput(team: MutableIntState, robotStartPosition: MutableIntState): St
         ToggleableState.On -> 2
     }
 
-    val teleNotesFinal = if (teleNotes.value == "") "No Comments" else teleNotes.value
+    val teleNotesFinal = if (teleNotes.value == "") "${autos.value}:No Comments:${scoutName.value}" else "${autos.value}:${teleNotes.value}:${scoutName.value}"
     return delimString("/",
         match.value,
         team.intValue.toString(),
@@ -103,18 +96,10 @@ fun createOutput(team: MutableIntState, robotStartPosition: MutableIntState): St
         autoAmpNum.intValue.toString(),
         autoSMissed.intValue.toString(),
         autoAMissed.intValue.toString(),
-        stateToInt(f1.value).toString(),
-        stateToInt(f2.value).toString(),
-        stateToInt(f3.value).toString(),
-        stateToInt(m1.value).toString(),
-        stateToInt(m2.value).toString(),
-        stateToInt(m3.value).toString(),
-        stateToInt(m4.value).toString(),
-        stateToInt(m5.value).toString(),
         autoStop.intValue.toString(),
         teleSpeakerNum.intValue.toString(),
         teleAmpNum.intValue.toString(),
-//        telePassed.intValue.toString(),
+        telePassed.intValue.toString(),
         teleTrapNum.intValue.toString(),
         teleSMissed.intValue.toString(),
         teleAMissed.intValue.toString(),
