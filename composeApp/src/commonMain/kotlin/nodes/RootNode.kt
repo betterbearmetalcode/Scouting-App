@@ -112,9 +112,9 @@ fun loadData(match: Int, team: MutableIntState, robotStartPosition: MutableIntSt
         m4.value = intToState(parseInt(help[13]))
         m5.value = intToState(parseInt(help[14]))
         autoStop.intValue = parseInt(help[15])
-        teleSpeakerNum.intValue = parseInt(help[16])
-        teleAmpNum.intValue = parseInt(help[17])
-//        telePassed.intValue = parseInt(help[18])
+        telePassed.intValue = parseInt(help[16])
+        teleSpeakerNum.intValue = parseInt(help[17])
+        teleAmpNum.intValue = parseInt(help[18])
         teleTrapNum.intValue = parseInt(help[19])
         teleSMissed.intValue = parseInt(help[20])
         teleAMissed.intValue = parseInt(help[21])
@@ -144,4 +144,6 @@ fun reset(){
     f2.value = ToggleableState.Off
     f3.value = ToggleableState.Off
     autoStop.intValue = 0
+    telePassed.intValue = 0
+    teleNotes.value = ""
 }
