@@ -82,6 +82,8 @@ val telePassed = mutableIntStateOf(0)
 val teleTrapNum = mutableIntStateOf(0)
 val teleSMissed = mutableIntStateOf(0)
 val teleAMissed = mutableIntStateOf(0)
+val teleSReceived = mutableIntStateOf(0)
+val teleAReceived = mutableIntStateOf(0)
 var lostComms = mutableIntStateOf(0)
 val autoStop = mutableIntStateOf(0)
 var teleNotes = mutableStateOf("")
@@ -114,10 +116,12 @@ fun createOutput(team: MutableIntState, robotStartPosition: MutableIntState): St
         autoStop.intValue.toString(),
         teleSpeakerNum.intValue.toString(),
         teleAmpNum.intValue.toString(),
-//        telePassed.intValue.toString(),
+        telePassed.intValue.toString(),
         teleTrapNum.intValue.toString(),
         teleSMissed.intValue.toString(),
         teleAMissed.intValue.toString(),
+        teleSReceived.intValue.toString(),
+        teleAReceived.intValue.toString(),
         lostComms.intValue.toString(),
         teleNotesFinal
     )

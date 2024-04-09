@@ -114,27 +114,31 @@ fun loadData(match: Int, team: MutableIntState, robotStartPosition: MutableIntSt
         autoStop.intValue = parseInt(help[15])
         teleSpeakerNum.intValue = parseInt(help[16])
         teleAmpNum.intValue = parseInt(help[17])
-//        telePassed.intValue = parseInt(help[18])
+        telePassed.intValue = parseInt(help[18])
         teleTrapNum.intValue = parseInt(help[19])
         teleSMissed.intValue = parseInt(help[20])
         teleAMissed.intValue = parseInt(help[21])
-        lostComms.intValue = parseInt(help[22])
-        teleNotes = mutableStateOf(help[23])
+        teleSReceived.intValue = parseInt(help[22])
+        teleAReceived.intValue = parseInt(help[23])
+        lostComms.intValue = parseInt(help[24])
+        teleNotes = mutableStateOf(help[25])
     }
 }
 
 fun reset(){
-    autoSpeakerNum.value = 0
-    autoAmpNum.value = 0
-    collected.value = 0
-    autoSMissed.value = 0
-    autoAMissed.value = 0
-    lostComms.value = 0
-    teleSpeakerNum.value = 0
-    teleAmpNum.value = 0
-    teleTrapNum.value = 0
-    teleSMissed.value = 0
-    teleAMissed.value = 0
+    autoSpeakerNum.intValue = 0
+    autoAmpNum.intValue = 0
+    collected.intValue = 0
+    autoSMissed.intValue = 0
+    autoAMissed.intValue = 0
+    lostComms.intValue = 0
+    teleSpeakerNum.intValue = 0
+    teleAmpNum.intValue = 0
+    teleTrapNum.intValue = 0
+    teleSMissed.intValue = 0
+    teleAMissed.intValue = 0
+    teleSReceived.intValue = 0
+    teleAReceived.intValue = 0
     m1.value = ToggleableState.Off
     m2.value = ToggleableState.Off
     m3.value = ToggleableState.Off

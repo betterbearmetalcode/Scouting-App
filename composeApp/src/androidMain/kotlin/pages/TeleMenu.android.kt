@@ -61,9 +61,17 @@ actual fun TeleMenu (
         EnumerableValue(label = "Amp", value = teleAmpNum)
         EnumerableValue(label = "Shuttled", value = telePassed)
         EnumerableValue(label = "Trap", value = teleTrapNum)
+
         Spacer(modifier = Modifier.height(30.dp))
+
         EnumerableValue(label = "S Missed", value = teleSMissed)
         EnumerableValue(label = "A Missed", value = teleAMissed)
+
+        Spacer(modifier = Modifier.height(30.dp))
+
+        EnumerableValue(label = "S Received", value = teleSReceived)
+        EnumerableValue(label = "A Received", value = teleAReceived)
+
         Row {
             Text("Lost Comms?")
             Checkbox(
@@ -72,7 +80,7 @@ actual fun TeleMenu (
         }
 
 
-        HorizontalDivider(color = Color.Black, thickness = 4.dp)
+        HorizontalDivider(color = Color.Yellow, thickness = 4.dp)
 
         Comments(teleNotes, isScrollEnabled)
 

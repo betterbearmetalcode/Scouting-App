@@ -164,16 +164,6 @@ actual fun AutoTeleSelectorMenu(
 
         Box(modifier = Modifier.fillMaxWidth()) {
 
-            Row(Modifier.align(Alignment.CenterStart)) {
-                Text(
-                    "Vertical Orientation",
-                    fontSize = 20.sp,
-                    modifier = Modifier
-                        .align(Alignment.CenterVertically)
-                )
-                Spacer(Modifier.width(5.dp))
-            }
-
             Row(
                 Modifier
                     .align(Alignment.CenterEnd)
