@@ -36,10 +36,7 @@ class RootNode(
     private var robotStartPosition = mutableIntStateOf(0)
     private var pitsPerson = mutableStateOf("P1")
     private var comp =  mutableStateOf("")
-    private val ampStrength = mutableStateOf(false)
-    private val speakerStrength = mutableStateOf(false)
-    private val climbStrength = mutableStateOf(false)
-    private val trapStrength = mutableStateOf(false)
+
 
     sealed class NavTarget : Parcelable {
         @Parcelize
@@ -100,9 +97,9 @@ fun loadData(match: Int, team: MutableIntState, robotStartPosition: MutableIntSt
         autoSMissed.intValue = parseInt(help[5])
         autoAMissed.intValue = parseInt(help[6])
         autoStop.intValue = parseInt(help[7])
-        teleSpeakerNum.intValue = parseInt(help[8])
-        teleAmpNum.intValue = parseInt(help[9])
-        telePassed.intValue = parseInt(help[10])
+        telePassed.intValue = parseInt(help[8])
+        teleSpeakerNum.intValue = parseInt(help[9])
+        teleAmpNum.intValue = parseInt(help[10])
         teleTrapNum.intValue = parseInt(help[11])
         teleSMissed.intValue = parseInt(help[12])
         teleAMissed.intValue = parseInt(help[13])
