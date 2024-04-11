@@ -151,7 +151,7 @@ actual class MainMenu actual constructor(
                                 .border(BorderStroke(color = Color.Yellow, width = 3.dp))
                                 .size(100.dp, 100.dp)
                                 .background(color = Color(60, 30, 30)),
-                            text =  { Text("R1", fontSize = 22.sp) }
+                            text =  { Text("R1", fontSize = 22.sp, color = Color.White) }
                         )
                         DropdownMenuItem(
                             onClick = {
@@ -166,7 +166,7 @@ actual class MainMenu actual constructor(
                                 .border(BorderStroke(color = Color.Yellow, width = 3.dp))
                                 .size(100.dp, 100.dp)
                                 .background(color = Color(30, 30, 60)),
-                            text = { Text("B1", fontSize = 22.sp) }
+                            text = { Text("B1", fontSize = 22.sp, color = Color.White) }
                         )
                     }
                     Row {
@@ -183,7 +183,7 @@ actual class MainMenu actual constructor(
                                 .border(BorderStroke(color = Color.Yellow, width = 3.dp))
                                 .size(100.dp, 100.dp)
                                 .background(color = Color(60, 30, 30)),
-                            text = { Text("R2", fontSize = 22.sp) }
+                            text = { Text("R2", fontSize = 22.sp, color = Color.White) }
                         )
                         DropdownMenuItem(
                             onClick = {
@@ -198,7 +198,7 @@ actual class MainMenu actual constructor(
                                 .border(BorderStroke(color = Color.Yellow, width = 3.dp))
                                 .size(100.dp, 100.dp)
                                 .background(color = Color(30, 30, 60)),
-                            text = { Text("B2", fontSize = 22.sp) }
+                            text = { Text("B2", fontSize = 22.sp, color = Color.White) }
                         )
                     }
                     Row {
@@ -215,7 +215,7 @@ actual class MainMenu actual constructor(
                                 .border(BorderStroke(color = Color.Yellow, width = 3.dp))
                                 .size(100.dp, 100.dp)
                                 .background(color = Color(60, 30, 30)),
-                            text = { Text("R3", fontSize = 22.sp) }
+                            text = { Text("R3", fontSize = 22.sp, color = Color.White) }
                         )
                         DropdownMenuItem(
                             onClick = {
@@ -230,7 +230,7 @@ actual class MainMenu actual constructor(
                                 .border(BorderStroke(color = Color.Yellow, width = 3.dp))
                                 .size(100.dp, 100.dp)
                                 .background(color = Color(30, 30, 60)),
-                            text = { Text("B3", fontSize = 22.sp) }
+                            text = { Text("B3", fontSize = 22.sp, color = Color.White) }
                         )
                     }
                 }

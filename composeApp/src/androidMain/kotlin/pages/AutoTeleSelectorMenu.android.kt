@@ -20,6 +20,7 @@ import defaultOnBackground
 import defaultOnPrimary
 import defaultPrimaryVariant
 import exportScoutData
+import getCurrentTheme
 import nodes.*
 import org.json.JSONException
 import setTeam
@@ -102,10 +103,11 @@ actual fun AutoTeleSelectorMenu(
                     println(createOutput(team,robotStartPosition))
                 },
                 colors = TextFieldDefaults.colors(
-                    focusedContainerColor = defaultBackground,
-                    unfocusedContainerColor = defaultBackground,
-                    focusedTextColor = textColor,
-                    unfocusedTextColor = textColor
+                    unfocusedContainerColor = getCurrentTheme().background,
+                    unfocusedTextColor = getCurrentTheme().onPrimary,
+                    focusedContainerColor = getCurrentTheme().background,
+                    focusedTextColor = getCurrentTheme().onPrimary,
+                    cursorColor = getCurrentTheme().onSecondary
                 ),
                 modifier = Modifier
                     .align(Alignment.CenterVertically)
@@ -149,10 +151,11 @@ actual fun AutoTeleSelectorMenu(
                 }, 
                 modifier = Modifier.fillMaxWidth(),
                 colors = TextFieldDefaults.colors(
-                    focusedContainerColor = defaultBackground,
-                    unfocusedContainerColor = defaultBackground,
-                    focusedTextColor = defaultOnPrimary,
-                    unfocusedTextColor = defaultOnPrimary
+                    unfocusedContainerColor = getCurrentTheme().background,
+                    unfocusedTextColor = getCurrentTheme().onPrimary,
+                    focusedContainerColor = getCurrentTheme().background,
+                    focusedTextColor = getCurrentTheme().onPrimary,
+                    cursorColor = getCurrentTheme().onSecondary
                 ),
                 singleLine = true,
                 textStyle = TextStyle.Default.copy(fontSize = 28.sp)
