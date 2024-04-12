@@ -15,6 +15,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.bumble.appyx.components.backstack.BackStack
 import com.bumble.appyx.components.backstack.operation.push
+import androidx.compose.ui.graphics.Color
 import compKey
 import defaultError
 import defaultOnPrimary
@@ -65,14 +66,17 @@ actual fun LoginMenu(
             OutlinedTextField(
                 value = scoutName.value,
                 onValueChange = {scoutName.value = it},
-                placeholder = { Text("First Name Last Name") },
+                placeholder = { Text("First, Last Name") },
                 shape = RoundedCornerShape(15.dp),
-                colors = TextFieldDefaults.colors(
+                colors = OutlinedTextFieldDefaults.colors(
                     unfocusedContainerColor = getCurrentTheme().background,
                     unfocusedTextColor = getCurrentTheme().onPrimary,
                     focusedContainerColor = getCurrentTheme().background,
                     focusedTextColor = getCurrentTheme().onPrimary,
-                    cursorColor = getCurrentTheme().onSecondary)
+                    cursorColor = getCurrentTheme().onSecondary,
+                    focusedBorderColor = Color.Cyan,
+                    unfocusedBorderColor = getCurrentTheme().secondary
+                )
             )
         }
         Box(modifier = Modifier.padding(15.dp).fillMaxWidth()) {
