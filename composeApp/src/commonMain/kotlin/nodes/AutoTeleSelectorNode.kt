@@ -88,8 +88,11 @@ fun createOutput(team: MutableIntState, robotStartPosition: MutableIntState): St
         ToggleableState.Indeterminate -> 1
         ToggleableState.On -> 2
     }
-
-    val teleNotesFinal = if (teleNotes.value == "") "${autos.value}:No Comments:${scoutName.value}" else "${autos.value}:${teleNotes.value}:${scoutName.value}"
+    if (autos.value.isEmpty()){ autos.value = " "}
+    autos.value = autos.value.replace(":","")
+    if (teleNotes.value.isEmpty()){ teleNotes.value = "No Comments"}
+    teleNotes.value = teleNotes.value.replace(":","")
+    val teleNotesFinal = "autopath:${autos.value}:${teleNotes.value}:${scoutName.value}"
     return delimString("/",
         match.value,
         team.intValue.toString(),

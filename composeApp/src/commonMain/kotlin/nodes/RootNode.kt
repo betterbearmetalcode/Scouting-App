@@ -103,30 +103,34 @@ fun loadData(match: Int, team: MutableIntState, robotStartPosition: MutableIntSt
         teleTrapNum.intValue = parseInt(help[11])
         teleSMissed.intValue = parseInt(help[12])
         teleAMissed.intValue = parseInt(help[13])
-        lostComms.intValue = parseInt(help[14])
+        teleSReceived.intValue = parseInt(help[14])
+        teleAReceived.intValue = parseInt(help[15])
+        lostComms.intValue = parseInt(help[16])
 
-        val teleCommentsSplit = help[15].split(':')
-        autos.value = teleCommentsSplit[0]
-        teleNotes.value = teleCommentsSplit[1]
-        scoutName.value = teleCommentsSplit[2]
+        val teleCommentsSplit = help[17].split(':')
+        autos.value = teleCommentsSplit[1]
+        teleNotes.value = teleCommentsSplit[2]
+        scoutName.value = teleCommentsSplit[3]
         println(autos)
 
     }
 }
 
 fun reset(){
-    autoSpeakerNum.value = 0
-    autoAmpNum.value = 0
-    collected.value = 0
-    autoSMissed.value = 0
-    autoAMissed.value = 0
+    autoSpeakerNum.intValue = 0
+    autoAmpNum.intValue = 0
+    collected.intValue = 0
+    autoSMissed.intValue = 0
+    autoAMissed.intValue = 0
     autos.value = ""
-    lostComms.value = 0
-    teleSpeakerNum.value = 0
-    teleAmpNum.value = 0
-    teleTrapNum.value = 0
-    teleSMissed.value = 0
-    teleAMissed.value = 0
+    lostComms.intValue = 0
+    teleSpeakerNum.intValue = 0
+    teleAmpNum.intValue = 0
+    teleTrapNum.intValue = 0
+    teleSMissed.intValue = 0
+    teleAMissed.intValue = 0
+    teleSReceived.intValue = 0
+    teleAReceived.intValue = 0
     autoStop.intValue = 0
     telePassed.intValue = 0
     teleNotes.value = ""
