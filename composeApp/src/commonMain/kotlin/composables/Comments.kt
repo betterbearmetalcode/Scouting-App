@@ -15,7 +15,7 @@ import defaultBackground
 import defaultOnBackground
 import defaultOnPrimary
 import defaultPrimaryVariant
-
+import androidx.compose.ui.graphics.Color
 @Composable
 fun Comments(text: MutableState<String>, isScrollEnabled: MutableState<Boolean>) {
     Column {
@@ -39,10 +39,10 @@ fun Comments(text: MutableState<String>, isScrollEnabled: MutableState<Boolean>)
                     .size(400.dp, 75.dp),
                 colors = TextFieldDefaults.outlinedTextFieldColors(
                     backgroundColor = defaultBackground,
-                    focusedBorderColor = defaultOnBackground,
+                    focusedBorderColor = Color.Cyan,
                     unfocusedBorderColor = defaultOnBackground,
                     textColor = defaultOnPrimary,
-                    cursorColor = defaultPrimaryVariant
+                    cursorColor = defaultPrimaryVariant,
                 )
             )
 
