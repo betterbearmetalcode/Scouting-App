@@ -127,5 +127,6 @@ fun reset(){
     teleSMissed.value = 0
     teleAMissed.value = 0
     autoStop.intValue = 0
+    telePassed.intValue = 0
     teleNotes.value = ""
 }
