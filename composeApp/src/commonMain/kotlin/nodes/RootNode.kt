@@ -36,10 +36,7 @@ class RootNode(
     private var robotStartPosition = mutableIntStateOf(0)
     private var pitsPerson = mutableStateOf("P1")
     private var comp =  mutableStateOf("")
-    private val ampStrength = mutableStateOf(false)
-    private val speakerStrength = mutableStateOf(false)
-    private val climbStrength = mutableStateOf(false)
-    private val trapStrength = mutableStateOf(false)
+
 
     sealed class NavTarget : Parcelable {
         @Parcelize
@@ -92,10 +89,6 @@ fun loadData(match: Int, team: MutableIntState, robotStartPosition: MutableIntSt
             else -> ToggleableState.Off
         }
 
-
-
-
-
         val help = matchScoutArray[robotStartPosition.intValue]?.get(match)?.split('/') ?: createOutput(team, robotStartPosition).split('/')
         team.intValue = parseInt(help[1])
 
@@ -103,49 +96,38 @@ fun loadData(match: Int, team: MutableIntState, robotStartPosition: MutableIntSt
         autoAmpNum.intValue = parseInt(help[4])
         autoSMissed.intValue = parseInt(help[5])
         autoAMissed.intValue = parseInt(help[6])
-        f1.value = intToState(parseInt(help[7]))
-        f2.value = intToState(parseInt(help[8]))
-        f3.value = intToState(parseInt(help[9]))
-        m1.value = intToState(parseInt(help[10]))
-        m2.value = intToState(parseInt(help[11]))
-        m3.value = intToState(parseInt(help[12]))
-        m4.value = intToState(parseInt(help[13]))
-        m5.value = intToState(parseInt(help[14]))
-        autoStop.intValue = parseInt(help[15])
-        teleSpeakerNum.intValue = parseInt(help[16])
-        teleAmpNum.intValue = parseInt(help[17])
-        telePassed.intValue = parseInt(help[18])
-        teleTrapNum.intValue = parseInt(help[19])
-        teleSMissed.intValue = parseInt(help[20])
-        teleAMissed.intValue = parseInt(help[21])
-        teleSReceived.intValue = parseInt(help[22])
-        teleAReceived.intValue = parseInt(help[23])
-        lostComms.intValue = parseInt(help[24])
-        teleNotes = mutableStateOf(help[25])
+        autoStop.intValue = parseInt(help[7])
+        telePassed.intValue = parseInt(help[8])
+        teleSpeakerNum.intValue = parseInt(help[9])
+        teleAmpNum.intValue = parseInt(help[10])
+        teleTrapNum.intValue = parseInt(help[11])
+        teleSMissed.intValue = parseInt(help[12])
+        teleAMissed.intValue = parseInt(help[13])
+        lostComms.intValue = parseInt(help[14])
+
+        val teleCommentsSplit = help[15].split(':')
+        autos.value = teleCommentsSplit[0]
+        teleNotes.value = teleCommentsSplit[1]
+        scoutName.value = teleCommentsSplit[2]
+        println(autos)
+
     }
 }
 
 fun reset(){
-    autoSpeakerNum.intValue = 0
-    autoAmpNum.intValue = 0
-    collected.intValue = 0
-    autoSMissed.intValue = 0
-    autoAMissed.intValue = 0
-    lostComms.intValue = 0
-    teleSpeakerNum.intValue = 0
-    teleAmpNum.intValue = 0
-    teleTrapNum.intValue = 0
-    teleSMissed.intValue = 0
-    teleAMissed.intValue = 0
-    teleSReceived.intValue = 0
-    teleAReceived.intValue = 0
-    m1.value = ToggleableState.Off
-    m2.value = ToggleableState.Off
-    m3.value = ToggleableState.Off
-    m4.value = ToggleableState.Off
-    m5.value = ToggleableState.Off
-    f1.value = ToggleableState.Off
-    f2.value = ToggleableState.Off
-    f3.value = ToggleableState.Off
+    autoSpeakerNum.value = 0
+    autoAmpNum.value = 0
+    collected.value = 0
+    autoSMissed.value = 0
+    autoAMissed.value = 0
+    autos.value = ""
+    lostComms.value = 0
+    teleSpeakerNum.value = 0
+    teleAmpNum.value = 0
+    teleTrapNum.value = 0
+    teleSMissed.value = 0
+    teleAMissed.value = 0
     autoStop.intValue = 0
+    telePassed.intValue = 0
+    teleNotes.value = ""
 }
