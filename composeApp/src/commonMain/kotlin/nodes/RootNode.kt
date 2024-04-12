@@ -110,6 +110,7 @@ fun loadData(match: Int, team: MutableIntState, robotStartPosition: MutableIntSt
         teleNotes.value = teleCommentsSplit[1]
         scoutName.value = teleCommentsSplit[2]
         println(autos)
+
     }
 }
 
