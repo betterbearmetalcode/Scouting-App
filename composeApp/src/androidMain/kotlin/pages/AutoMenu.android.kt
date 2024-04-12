@@ -90,7 +90,7 @@ actual fun AutoMenu(
         OutlinedTextField(
             value = autos.value,
             onValueChange ={autos.value = it},
-            colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = Color.Cyan, unfocusedBorderColor = Color.Yellow,focusedContainerColor = Color(6,9,13), unfocusedContainerColor = Color(6,9,13) ,focusedTextColor = defaultOnPrimary, unfocusedTextColor = defaultOnPrimary),
+            colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = Color.Cyan, unfocusedBorderColor = Color.Yellow,focusedContainerColor = Color(6,9,13), unfocusedContainerColor = Color(6,9,13) ,focusedTextColor = defaultOnPrimary, unfocusedTextColor = defaultOnPrimary, cursorColor = defaultOnPrimary),
             shape = RoundedCornerShape(15.dp),
             placeholder ={Text("AUTOS", color = Color.White)},
             modifier = Modifier
