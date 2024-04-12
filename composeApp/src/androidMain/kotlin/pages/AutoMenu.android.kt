@@ -4,6 +4,7 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -16,9 +17,10 @@ import androidx.compose.ui.unit.sp
 import com.bumble.appyx.components.backstack.BackStack
 import com.bumble.appyx.components.backstack.operation.pop
 import com.bumble.appyx.components.backstack.operation.push
-import composables.AutoCheckboxesHorizontal
-import composables.AutoCheckboxesVertical
+//import composables.AutoCheckboxesHorizontal
+//import composables.AutoCheckboxesVertical
 import composables.EnumerableValue
+import defaultOnPrimary
 import defaultSecondary
 import exportScoutData
 import keyboardAsState
@@ -51,8 +53,8 @@ actual fun AutoMenu(
     if(!isKeyboardOpen){
         isScrollEnabled.value = true
     }
-    val flippingAuto = remember { mutableStateOf(false)}
-    val rotateAuto = remember { mutableStateOf(false)}
+//    val flippingAuto = remember { mutableStateOf(false)}
+//    val rotateAuto = remember { mutableStateOf(false)}
 
 
     Column(
@@ -70,20 +72,32 @@ actual fun AutoMenu(
         EnumerableValue(label = "S Missed", value = autoSMissed)
         EnumerableValue(label = "A Missed", value = autoAMissed)
 
-        if(rotateAuto.value){
-            AutoCheckboxesVertical(flippingAuto)
-        }else{
-            AutoCheckboxesHorizontal(flippingAuto)
-        }
+//        if(rotateAuto.value){
+//            AutoCheckboxesVertical(flippingAuto)
+//        }else{
+//            AutoCheckboxesHorizontal(flippingAuto)
+//        }
+//
+//        Column {
+//            OutlinedButton(onClick = { flippingAuto.value = !flippingAuto.value }) {
+//                Text(text = "Flip Auto Boxes", color = Color.White)
+//            }
+//            OutlinedButton(onClick = { rotateAuto.value = !rotateAuto.value }) {
+//                Text(text = "Rotate Auto Boxes", color = Color.White)
+//            }
+//        }
 
-        Column {
-            OutlinedButton(onClick = { flippingAuto.value = !flippingAuto.value }) {
-                Text(text = "Flip Auto Boxes", color = Color.White)
-            }
-            OutlinedButton(onClick = { rotateAuto.value = !rotateAuto.value }) {
-                Text(text = "Rotate Auto Boxes", color = Color.White)
-            }
-        }
+        OutlinedTextField(
+            value = autos.value,
+            onValueChange ={autos.value = it},
+            colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = Color.Cyan, unfocusedBorderColor = Color.Yellow,focusedContainerColor = Color(6,9,13), unfocusedContainerColor = Color(6,9,13) ,focusedTextColor = defaultOnPrimary, unfocusedTextColor = defaultOnPrimary),
+            shape = RoundedCornerShape(15.dp),
+            placeholder ={Text("AUTOS", color = Color.White)},
+            modifier = Modifier
+                .fillMaxWidth(9f / 10f)
+                .align(Alignment.CenterHorizontally)
+                .height(70.dp)
+        )
 
         Row(){
             Text(text = "Auto Stop ⚠\uFE0F",
@@ -132,5 +146,6 @@ actual fun AutoMenu(
                 color = Color.Yellow
             )
         }
+        Text(scoutName.value)
     }
 }
